@@ -1,16 +1,18 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Main from './Main';
-import Login from './userComponent/Login';
+import UserLogin from './userComponent/UserLogin';
+import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/MyPage';
+import Main from './Main';
 
-function App() {
+const App = () => {
   return (
-    <Routes>
-      <Route path='/' element={<Main />} />
-      <Route path='/login' element={<Login />}/>
-      <Route path='/myPage' element={<MyPage />}/>
-    </Routes>
+      
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/login' element={<UserLogin />}/>
+        <Route path='/myPage' element={<MyPage />}/>
+        <Route path='/logOut' element={<LogOut />}/>
+      </Routes>
   );
 }
 
