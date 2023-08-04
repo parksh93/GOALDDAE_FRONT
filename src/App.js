@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import { Route, Routes } from 'react-router-dom';
+import UserLogin from './userComponent/UserLogin';
+import LogOut from './userComponent/LogOut';
+import MyPage from './userComponent/MyPage';
+import Main from './Main';
 
-function App() {
-  const [message, setMessage]=useState([]);
-  useEffect(()=>{
-    fetch("/api/demo-web")
-        .then((response)=>{
-          return response.json();
-        })
-        .then((data)=>{
-            setMessage(data);
-        });
-  },[]);
+const App = () => {
   return (
-    <div>
-        {message}
-    </div>
+      <Routes>
+        <Route path='/' element={<Main />} />
+        <Route path='/login' element={<UserLogin />}/>
+        <Route path='/logOut' element={<LogOut />}/>
+        <Route path='/myPage' element={<MyPage />}/>
+      </Routes>
   );
 }
 
