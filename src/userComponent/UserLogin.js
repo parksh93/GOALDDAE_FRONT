@@ -28,7 +28,7 @@ const UserLogin = () => {
                         })});
 
         const data = await response.json();
-        if(data[0] === true){
+        if(data=== true){
             navigate("/")
         }else{
             setLoginCheckMsg("아이디와 비밀번호를 확인해주세요")
