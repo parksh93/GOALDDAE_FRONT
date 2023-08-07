@@ -6,8 +6,7 @@ const LogOut = () => {
     const logOut = async () => {
         const response = await fetch("/user/logout",{method: 'POST'});
         const data = await response.json();
-    
-        if(data[0] === true){
+        if(data === true){
             navigate("/")
         }
     }
