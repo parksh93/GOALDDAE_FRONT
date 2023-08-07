@@ -1,9 +1,13 @@
 import LoginInfo from './LoginInfo';
+import TimeLine from './auth/timeLine/timeLine';
+import PrimarySearchAppBar from './auth/navigation/Navigation';
+
 const Main = () => {
     return(
         <div>
+            <PrimarySearchAppBar />
             <LoginInfo />
-            <h1>메인</h1>
+            <TimeLine />
         </div>
     )
 }
