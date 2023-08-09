@@ -49,11 +49,10 @@ const submitLogin = () => {
         
     }
 
-    const onChacnge = useCallback(e => {
+    const onChange = useCallback(e => {
         const changeUser = {
             ...user,
             [e.target.name]: e.target.value
-
         }
 
         setUser(changeUser);
@@ -61,8 +60,8 @@ const submitLogin = () => {
 
     return (
         <div>
-            <input type="text" name="id" placeholder="아이디" onChange={onChacnge} value={user.id} onKeyDown={onKeyPress} className="inputId"/><br/>
-            <input type='password' name="password" placeholder="비밀번호" onChange={onChacnge} value={user.password} onKeyDown={onKeyPress} className="inputPw"/><br/>
+            <input type="text" name="id" placeholder="아이디" onChange={onChange} value={user.id} onKeyDown={onKeyPress} className="inputId"/><br/>
+            <input type='password' name="password" placeholder="비밀번호" onChange={onChange} value={user.password} onKeyDown={onKeyPress} className="inputPw"/><br/>
             <input type='button' value="로그인" onClick={submitLogin}/>
 
             <p style={{color: 'red'}}>{loginCheckMsg}</p>

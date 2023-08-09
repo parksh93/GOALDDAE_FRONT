@@ -1,0 +1,20 @@
+.input {
+    width: 60%;
+}
+
+.logo{
+    width: 150px;
+    height: 150px;
+}
+
+.logoSection {
+    width: 100%;
+    text-align: center;
+}
+
+.section {
+    padding: 50px;
+    margin-left: 25%;
+    width: 40%;
+    border: 2px solid green;
+}
