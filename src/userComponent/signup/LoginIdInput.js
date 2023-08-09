@@ -28,6 +28,7 @@ function LoginIdInput({
 
   const checkLoginId = useCallback(() => {
     if (value.trim() !== "") {
+
       fetch(`/user/checkLoginId`, {
         method: "POST",
         headers: {
@@ -67,7 +68,7 @@ function LoginIdInput({
           color="success"
           className={inputStyle}
           />
-        <CheckBnt onClick={checkLoginId} className={btnStyle} color="success">
+        <CheckBnt onClick={checkLoginId} className={btnStyle}>
           중복확인
         </CheckBnt>
     </div>

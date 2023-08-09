@@ -7,7 +7,7 @@ import CertificateInput from "./CertificateInput";
 import NicknameInput from "./NicknameInput";
 import Checkbox from "@mui/material/Checkbox";
 import PasswordInput from "./PasswordInput";
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, Radio, RadioGroup } from "@mui/material";
 import Footer from "../../Footer";
 import PhoneNumberInput from "./PhoneNumberInput";
 import styled from "@emotion/styled";
@@ -56,6 +56,7 @@ const SignupMain = () => {
           label="이메일"
           value={email}
           setValue={setEmail}
+          certificateCode={certificationCode}
           setCertifi={setCertificationCode}
           // regexCheck={regex.email}
           successText="인증번호가 전송되었습니다."
@@ -64,18 +65,21 @@ const SignupMain = () => {
           divStyle={styles.div}
           btnStyle={styles.submitBtn}
         />
-        <CertificateInput
-          label="인증번호"
-          cerVal={certificationCode}
-          value={certificateCheck}
-          setValue={setCertificateCheck}
-          // regexCheck={regex.email}
-          successText="확인되었습니다."
-          errorText="인증번호가 일치하지 않습니다"
-          inputStyle={styles.input}
-          divStyle={styles.div}
-          btnStyle={styles.submitBtn}
-        />
+        {certificationCode !== "" ?
+            <CertificateInput
+            label="인증번호"
+            cerVal={certificationCode}
+            value={certificateCheck}
+            setValue={setCertificateCheck}
+            // regexCheck={regex.email}
+            successText="확인되었습니다."
+            errorText="인증번호가 일치하지 않습니다"
+            inputStyle={styles.input}
+            divStyle={styles.div}
+            btnStyle={styles.submitBtn}
+            />
+          :''
+        }
         <NicknameInput
           label="닉네임"
           value={nickname}
@@ -101,18 +105,21 @@ const SignupMain = () => {
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
+          className={styles.genderRadioCotain}
+          color="success"
         >
-          <Radio value="female" color="success"/> 남성
-          <Radio value="male" color="success"/> 여성
+          <Radio value="남성" className={styles.genderRadio} color="success" id="male"/> <label className={styles.genderText} htmlFor="male">남성</label>
+          <Radio value="여성" className={styles.genderRadio} color="success" id="female"/> <label className={styles.genderText} htmlFor="female">여성</label>
         </RadioGroup>
+      </section>
         <div className={styles.singupBtnDiv}>
-          <Checkbox color="success" />
-          <a href="#">개인정보 이용약관</a>에 대해 동의합니다.
-          <CheckBnt color="success" className={styles.singupBtn}>
+          <Checkbox color="success"/>
+          <a href="#" className={styles.terms}>개인정보 이용약관</a>에 대해 동의합니다.
+
+          <CheckBnt className={styles.singupBtn}>
             회원가입
           </CheckBnt>
         </div>
-      </section>
       <Footer />
     </div>
   );
@@ -122,11 +129,11 @@ export default SignupMain;
 
 const CheckBnt = styled(Button)`
   top: 10px;
-  width: 90%;
+  width: 55%;
+  display: block;
   height: 40px;
-  border: 2px solid green;
+  border: 2px solid #108B0C;
   color: white;
-  background: green;
+  background: #108B0C;
   font-size: 16px;
-  border-radius: 100px;
 `;

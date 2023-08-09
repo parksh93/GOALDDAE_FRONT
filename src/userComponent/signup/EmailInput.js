@@ -16,6 +16,7 @@ function EmailInput({
   btnStyle,
   isCheck,
   setIsCheck,
+  certificateCode,
   setCertifi,
 }) {
   const [isError, setIsError] = useState(false);
@@ -67,9 +68,15 @@ function EmailInput({
         color="success"
         className={inputStyle}
       />
+      {certificateCode === "" ? 
       <CheckBnt onClick={sendEmail} color="success" className={btnStyle}>
         인증번호
       </CheckBnt>
+      :
+      <CheckBnt onClick={sendEmail} color="success" className={btnStyle}>
+        재전송
+      </CheckBnt>
+      }
     </div>
   );
 }

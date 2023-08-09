@@ -56,6 +56,7 @@ const onBlueePassConcord = useCallback(() => {
           value={value}
           className={inputStyle}
           color="success"
+          onBlur={onBlueePassConcord}
           />
         <br />
         <TextField
