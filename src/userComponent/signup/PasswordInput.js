@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { TextField } from "@mui/material";
-import styled from "@emotion/styled";
 
-export default function PasswordInput({
+function PasswordInput({
   label,
   type,
   value,
   maxValue,
   setValue,
-  className,
+  inputStyle,
+  divStyle,
   // regexCheck,
   successText,
   errorText,
@@ -45,16 +45,16 @@ const onBlueePassConcord = useCallback(() => {
 
 
   return (
-      <Container>
+      <div className={divStyle}>
         <TextField
           label={label}
           error={isErrorPass}
           helperText={helperTextPass}
-          variant="standard"
+          variant="outlined"
           type={type}
           onChange={onChangePassword}
           value={value}
-          className={className}
+          className={inputStyle}
           color="success"
           />
         <br />
@@ -62,19 +62,18 @@ const onBlueePassConcord = useCallback(() => {
           label="비밀번호 확인"
           error={isErrorPassCheck}
           helperText={helperTextpassCheck}
-          variant="standard"
+          variant="outlined"
           type={type}
           onChange={onChangePasswordCheck}
           onBlur={onBlueePassConcord}
           value={passwordCheck}
-          className={className}
+          className={inputStyle}
+          style={{marginTop: '20px'}}
           color="success"
           />
-      </Container>
+      </div>
   );
 }
-const Container = styled.div`
-  position: relative;
-`;
 
+export default React.memo(PasswordInput);
 

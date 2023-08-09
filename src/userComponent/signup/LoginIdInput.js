@@ -1,20 +1,21 @@
 import React, { useCallback, useState } from "react";
-import styled from "@emotion/styled";
 import { Button, TextField } from "@mui/material";
+import styled from "@emotion/styled";
 
-export default function LoginIdInput({
+function LoginIdInput({
   label,
   type,
   value,
   maxValue,
   setValue,
-  className,
+  inputStyle,
+  divStyle,
+  btnStyle,
   //   regexCheck,
   successText,
   errorText,
-  handleValueCheck,
   isCheck,
-  setIsCheck,
+  setIsCheck
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
@@ -26,7 +27,6 @@ export default function LoginIdInput({
   };
 
   const checkLoginId = useCallback(() => {
-    console.log(value);
     if (value.trim() !== "") {
       fetch(`/user/checkLoginId`, {
         method: "POST",
@@ -48,40 +48,40 @@ export default function LoginIdInput({
             setHelperText(errorText);
           }
         });
+    }else{
+      setHelperText("아이디를 입력하세요.")
+      setIsError(true);
     }
   });
 
   return (
-    <Container>
+    <div className={divStyle}>
         <TextField
           label={label}
           error={isError}
           helperText={helperText}
-          variant="standard"
+          variant="outlined"
           type={type}
           onChange={OnChange}
           value={value}
           color="success"
-          className={className}
-        />
-        <CheckBnt onClick={checkLoginId} color="success">
+          className={inputStyle}
+          />
+        <CheckBnt onClick={checkLoginId} className={btnStyle} color="success">
           중복확인
         </CheckBnt>
-    </Container>
+    </div>
   );
 }
 
-const Container = styled.div`
-  position: relative;
-`;
+export default React.memo(LoginIdInput);
 
 const CheckBnt = styled(Button)`
-  right: 0;
-  top: 10px;
-  width: 100px;
-  height: 40px;
-  border: 2px solid green;
-  color: green;
-  font-size: 16px;
-  border-radius: 100px;
+right: 0;
+width: 100px;
+height: 55px;
+border: 1px solid green;
+color: green;
+font-size: 16px;
+margin-left: 10px;
 `;

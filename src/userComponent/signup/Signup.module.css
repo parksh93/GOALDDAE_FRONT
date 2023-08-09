@@ -1,0 +1,33 @@
+.input {
+    width: 65%;
+}
+.div {
+    margin-bottom: 20px;
+    padding-left: 10%;
+}
+
+.logo{
+    width: 200px;
+    height: 200px;
+}
+
+.logoSection {
+    width: 100%;
+    text-align: center;
+}
+
+.section {
+    padding: 40px;
+    margin-left: 23%;
+    width: 50%;
+    /* border: 2px solid green; */
+}
+
+.singupBtnDiv {
+    margin-top: 50px;
+    margin-left: 10%;
+}
+
+.singupBtn:hover {
+    color: black;
+}
