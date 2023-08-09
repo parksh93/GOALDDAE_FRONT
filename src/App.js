@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Mypage from './component/Mypage';
 
 function App() {
   const [message, setMessage]=useState([]);
@@ -14,6 +15,7 @@ function App() {
   return (
     <div>
         {message}
+        <Mypage />
     </div>
   );
 }
