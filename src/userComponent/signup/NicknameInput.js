@@ -6,33 +6,32 @@ function NicknameInput({
   label,
   type,
   value,
-  maxValue,
   setValue,
   inputStyle,
   divStyle,
   btnStyle,
-  //   regexCheck,
   successText,
   errorText,
-  isCheck,
-  setIsCheck,
+  setNicknameOk
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
 
   const OnChange = (e) => {
-    setValue(e.target.value);
+    setValue(e.target.value.trim());
     setHelperText("");
     setIsError(false);
+    setNicknameOk(false);
   };
 
   const checkNickname = useCallback(() => {
-    if (value.trim() !== "") {
-      fetch("/user/checkNickname", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
+    if(value.length <= 5){
+      if (value.trim() !== "") {
+        fetch("/user/checkNickname", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
         body: JSON.stringify({
           nickname: value,
         }),
@@ -42,15 +41,23 @@ function NicknameInput({
           if (data[0] === true) {
             setHelperText(successText);
             setIsError(false);
+            setNicknameOk(true);
           } else {
             setHelperText(errorText);
             setIsError(true);
+            setNicknameOk(false);
           }
         });
     }else{
-      setHelperText("닉네임을 입력하세요.")
-      setIsError(true)
+      setHelperText("닉네임을 입력하세요.");
+      setIsError(true);
+      setNicknameOk(false);
     }
+  }else{
+    setHelperText("유효하지 않은 닉네임입니다.");
+    setIsError(true);
+    setNicknameOk(false);
+  }
   });
 
   return (
@@ -66,9 +73,10 @@ function NicknameInput({
         color="success"
         className={inputStyle}
       />
-      <CheckBnt onClick={checkNickname} color="success" className={btnStyle}>
+      <CheckBnt onClick={checkNickname} color="success" className={btnStyle} st>
         중복확인
       </CheckBnt>
+      <p style={{fontSize:"10px"}}>* 닉네임은 5글자까지 입력 가능합니다.</p>
     </div>
   );
 }

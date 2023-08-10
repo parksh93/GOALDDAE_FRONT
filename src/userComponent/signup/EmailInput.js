@@ -6,29 +6,43 @@ function EmailInput({
   label,
   type,
   value,
-  maxValue,
   setValue,
-  //   regexCheck,
   successText,
   errorText,
   inputStyle,
   divStyle,
   btnStyle,
-  isCheck,
-  setIsCheck,
   certificateCode,
   setCertifi,
+  setEmailOk
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
+  const [regexCheck, setRegexCheck] = useState(false);
+  const emailRegEx =  /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
 
   const OnChange = (e) => {
-    setValue(e.target.value);
+    setValue(e.target.value.trim());
     setHelperText("");
     setIsError(false);
+    setEmailOk(false);
   };
+
+  const checkEmail = (e) => {
+    if(e.target.value.trim() !== ""){
+      if(emailRegEx.test(e.target.value)) {
+        setRegexCheck(true);
+      }else{
+        setRegexCheck(false);
+        setHelperText(errorText);
+        setIsError(true);
+        setEmailOk(false);
+      }
+    }
+}
+
   const sendEmail = useCallback(() => {
-    if (value.trim() !== "") {
+    if (value.trim() !== "" && regexCheck) {
       fetch(`/sendEmail`, {
         method: "POST",
         headers: {
@@ -42,16 +56,20 @@ function EmailInput({
         .then((data) => {
           if (data === false) {
             setHelperText(errorText);
+            setHelperText("이미 사용중인 이메일입니다.")
             setIsError(true);
+            setEmailOk(false);
           } else {
             setHelperText(successText);
             setIsError(false);
             setCertifi(data.certificationCode);
+            setEmailOk(true);
           }
         });
     }else{
       setHelperText("이메일을 입력하세요.");
       setIsError(true);
+      setEmailOk(false);
     }
   });
 
@@ -67,16 +85,11 @@ function EmailInput({
         value={value}
         color="success"
         className={inputStyle}
+        onBlur={checkEmail}
       />
-      {certificateCode === "" ? 
       <CheckBnt onClick={sendEmail} color="success" className={btnStyle}>
-        인증번호
+        {certificateCode === "" ? "인증번호" : "재전송"}
       </CheckBnt>
-      :
-      <CheckBnt onClick={sendEmail} color="success" className={btnStyle}>
-        재전송
-      </CheckBnt>
-      }
     </div>
   );
 }

@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Signup.module.css";
-// import regex from "../src/Shared/regex";
 import LoginIdInput from "./LoginIdInput";
 import EmailInput from "./EmailInput";
 import CertificateInput from "./CertificateInput";
 import NicknameInput from "./NicknameInput";
 import Checkbox from "@mui/material/Checkbox";
 import PasswordInput from "./PasswordInput";
-import { Button, Radio, RadioGroup } from "@mui/material";
+import { Button } from "@mui/material";
 import Footer from "../../Footer";
 import PhoneNumberInput from "./PhoneNumberInput";
 import styled from "@emotion/styled";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Collapse from "@mui/material/Collapse";
+import GenderRaido from "./GenderRaido";
+import BirthInput from "./BirthInput";
+import SignupModal from "./SignupModal";
+import { useNavigate } from "react-router-dom";
 
 const SignupMain = () => {
   const [loginId, setLoginId] = useState("");
@@ -20,9 +26,116 @@ const SignupMain = () => {
   const [certificateCheck, setCertificateCheck] = useState("");
   const [nickname, setNickname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [gender, setGender] = useState("");
+  const [birth, setBirth] = useState("");
 
+  const [loginIdOk, setLoginIdOk] = useState(false);
+  const [passwordOk, setPasswordOk] = useState(false);
+  const [emailOk, setEmailOk] = useState(false);
+  const [certificationOk, setCertificationOk] = useState(false);
+  const [nicknameOk, setNicknameOk] = useState(false);
+  const [phoneNumberOk, setPhoneNumberOk] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [city, setCity] = useState("");
+  const [area, setArea] = useState("");
+  const [activityClass, setActivityClass] = useState(0);
+
+  const [signOk, setSignOk] = useState(false);
+
+  const navigate = useNavigate();
+
+  const onChangeCheckBox = useCallback(() => {
+    if (checked) {
+      setChecked(false);
+    } else {
+      setChecked(true);
+    }
+  });
+
+  const submit = useCallback(() => {
+    if (
+      loginIdOk &&
+      passwordOk &&
+      emailOk &&
+      certificationOk &&
+      nicknameOk &&
+      phoneNumberOk &&
+      checked &&
+      gender !== "" &&
+      birth !== ""
+    ) {
+      
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      
+      setOpen(true);
+      setAlertSeverity("success");
+      setAlertTitle("회원가입 성공");
+      setAlertMsg("회원가입을 축하드립니다. 잠시후 메인 페이지로 이동합니다.");
+      
+      setModalOpen(true);
+
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setOpen(true);
+      setAlertSeverity("error");
+      setAlertTitle("회원가입 실패");
+      setAlertMsg(
+        "입력하지 않았거나, 완료되지 않은 작업이 있습니다. 다시 확인해주세요."
+      );
+      setTimeout(()=>setOpen(false), 3000);
+    }
+  });
+
+  useEffect(()=> {
+    if(signOk){
+      fetch("/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          loginId: loginId,
+          password: password,
+          email: email,
+          nickname: nickname,
+          phoneNumber: phoneNumber,
+          birth: birth,
+          gender: gender,
+          preferredCity: city,
+          preferredArea: area,
+          activityClass: activityClass,
+          authority: "user",
+        }),
+      }).then(() => {
+        console.log("asdas")
+        setModalOpen(false);
+        navigate("/")
+      });
+    }
+  },[signOk])
   return (
     <div className={styles.container}>
+      <Collapse in={open}>
+        <Alert severity={alertSeverity}>
+          <AlertTitle>
+            <b>{alertTitle}</b>
+          </AlertTitle>
+          {alertMsg}
+        </Alert>
+      </Collapse>
       <section className={styles.logoSection}>
         <a href="/">
           <img src="./img/goalddaeLogo.png" className={styles.logo} />
@@ -34,23 +147,23 @@ const SignupMain = () => {
           value={loginId}
           setValue={setLoginId}
           maxValue={10}
-          // regexCheck={regex.nickname}
           successText="사용 가능한 아이디입니다."
           errorText="사용할 수 없는 아이디입니다."
           inputStyle={styles.input}
           divStyle={styles.div}
           btnStyle={styles.submitBtn}
+          setLoginIdOk={setLoginIdOk}
         />
         <PasswordInput
           label="비밀번호"
           type="password"
           value={password}
           setValue={setPassword}
-          // regexCheck={regex.password}
           maxValue={10}
           errorText="비밀번호 형식을 확인해주세요"
           inputStyle={styles.input}
           divStyle={styles.div}
+          setPasswordOk={setPasswordOk}
         />
         <EmailInput
           label="이메일"
@@ -58,68 +171,80 @@ const SignupMain = () => {
           setValue={setEmail}
           certificateCode={certificationCode}
           setCertifi={setCertificationCode}
-          // regexCheck={regex.email}
           successText="인증번호가 전송되었습니다."
           errorText="이메일 형식을 확인해주세요"
           inputStyle={styles.input}
           divStyle={styles.div}
           btnStyle={styles.submitBtn}
+          setEmailOk={setEmailOk}
         />
-        {certificationCode !== "" ?
-            <CertificateInput
+        {certificationCode !== "" ? (
+          <CertificateInput
             label="인증번호"
             cerVal={certificationCode}
             value={certificateCheck}
             setValue={setCertificateCheck}
-            // regexCheck={regex.email}
             successText="확인되었습니다."
             errorText="인증번호가 일치하지 않습니다"
             inputStyle={styles.input}
             divStyle={styles.div}
             btnStyle={styles.submitBtn}
-            />
-          :''
-        }
+            setCrtificationOk={setCertificationOk}
+          />
+        ) : (
+          ""
+        )}
         <NicknameInput
           label="닉네임"
           value={nickname}
           setValue={setNickname}
-          // regexCheck={regex.email}
           successText="사용 가능한 닉네임입니다."
           errorText="사용할 수 없는 닉네임입니다."
           inputStyle={styles.input}
           divStyle={styles.div}
           btnStyle={styles.submitBtn}
+          setNicknameOk={setNicknameOk}
         />
         <PhoneNumberInput
           label="핸드폰 번호"
           value={phoneNumber}
           setValue={setPhoneNumber}
-          // regexCheck={regex.email}
           successText="확인"
           errorText="전화번호 형식을 다시 확인해주세요."
           inputStyle={styles.input}
           divStyle={styles.div}
+          setPhoneNumberOk={setPhoneNumberOk}
         />
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          className={styles.genderRadioCotain}
-          color="success"
-        >
-          <Radio value="남성" className={styles.genderRadio} color="success" id="male"/> <label className={styles.genderText} htmlFor="male">남성</label>
-          <Radio value="여성" className={styles.genderRadio} color="success" id="female"/> <label className={styles.genderText} htmlFor="female">여성</label>
-        </RadioGroup>
+        <BirthInput styles={styles} birth={birth} setBirth={setBirth} />
+        <GenderRaido styles={styles} setGender={setGender} />
       </section>
-        <div className={styles.singupBtnDiv}>
-          <Checkbox color="success"/>
-          <a href="#" className={styles.terms}>개인정보 이용약관</a>에 대해 동의합니다.
-
-          <CheckBnt className={styles.singupBtn}>
-            회원가입
-          </CheckBnt>
-        </div>
+      <div className={styles.singupBtnDiv}>
+        <Checkbox
+          color="success"
+          checked={checked}
+          onChange={onChangeCheckBox}
+        />
+        (필수){" "}
+        <a href="#" className={styles.terms}>
+          개인정보 이용약관
+        </a>
+        에 대해 동의합니다.
+        <CheckBnt className={styles.singupBtn} onClick={submit}>
+          회원가입
+        </CheckBnt>
+        <SignupModal
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          styles={styles}
+          city={city}
+          setCity={setCity}
+          area={area}
+          setArea={setArea}
+          activityClass={activityClass}
+          setActivityClass={setActivityClass}
+          setSignOk={setSignOk}
+        />
+      </div>
       <Footer />
     </div>
   );
@@ -132,8 +257,8 @@ const CheckBnt = styled(Button)`
   width: 55%;
   display: block;
   height: 40px;
-  border: 2px solid #108B0C;
+  border: 2px solid #108b0c;
   color: white;
-  background: #108B0C;
+  background: #108b0c;
   font-size: 16px;
 `;

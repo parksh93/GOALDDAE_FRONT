@@ -6,31 +6,29 @@ function LoginIdInput({
   label,
   type,
   value,
-  maxValue,
   setValue,
   inputStyle,
   divStyle,
   btnStyle,
-  //   regexCheck,
   successText,
   errorText,
-  isCheck,
-  setIsCheck
+  setLoginIdOk
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
 
   const OnChange = (e) => {
-    setValue(e.target.value);
+    setValue(e.target.value.trim());
     setHelperText('');
     setIsError(false);
+    setLoginIdOk(false)
   };
 
   const checkLoginId = useCallback(() => {
     if (value.trim() !== "") {
-
-      fetch(`/user/checkLoginId`, {
-        method: "POST",
+        if(value.length <= 10){
+        fetch(`/user/checkLoginId`, {
+          method: "POST",
         headers: {
           "Content-type": "application/json",
         },
@@ -44,16 +42,24 @@ function LoginIdInput({
           if (data[0] === true) {
             setIsError(false);
             setHelperText(successText);
-        } else {
+            setLoginIdOk(true)
+          } else {
             setIsError(true);
             setHelperText(errorText);
+            setLoginIdOk(false);
           }
         });
+      }else{
+        setHelperText("올바르지 않은 아이디입니다.")
+        setIsError(true);
+        setLoginIdOk(false);
+      }
     }else{
       setHelperText("아이디를 입력하세요.")
       setIsError(true);
+      setLoginIdOk(false);
     }
-  });
+    });
 
   return (
     <div className={divStyle}>
@@ -71,6 +77,7 @@ function LoginIdInput({
         <CheckBnt onClick={checkLoginId} className={btnStyle}>
           중복확인
         </CheckBnt>
+        <p style={{fontSize: "10px"}}>* 아이디는 최대 10글자까지 가능합니다.</p>
     </div>
   );
 }

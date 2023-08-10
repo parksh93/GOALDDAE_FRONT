@@ -8,39 +8,38 @@ function CertificateInput({
   value,
   cerVal,
   setValue,
-  //   regexCheck,
   successText,
   errorText,
   inputStyle,
   divStyle,
   btnStyle,
-  handleValueCheck,
-  isCheck,
-  setIsCheck,
-  setCertifi,
+  setCrtificationOk
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
 
   const OnChange = (e) => {
-    setValue(e.target.value);
+    setValue(e.target.value.trim());
     setHelperText("");
     setIsError(false);
+    setCrtificationOk(false);
   };
 
   const onClick = useCallback(() => {
     if(value.trim() !== ""){
-
       if (value === cerVal) {
         setHelperText(successText);
         setIsError(false);
+        setCrtificationOk(true);
       } else {
         setHelperText(errorText);
         setIsError(true);
+        setCrtificationOk(false);
       }
     }else{
       setHelperText("인증번호를 입력하세요.")
       setIsError(true);
+      setCrtificationOk(false);
     }
   });
 
