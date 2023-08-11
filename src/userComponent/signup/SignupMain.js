@@ -17,6 +17,7 @@ import GenderRaido from "./GenderRaido";
 import BirthInput from "./BirthInput";
 import SignupModal from "./SignupModal";
 import { useNavigate } from "react-router-dom";
+import TermsModal from "./TermsModal";
 
 const SignupMain = () => {
   const [loginId, setLoginId] = useState("");
@@ -47,6 +48,7 @@ const SignupMain = () => {
   const [area, setArea] = useState("");
   const [activityClass, setActivityClass] = useState(0);
 
+  const [termsModalOpen, setTermsModalOpen] = useState(false);
   const [signOk, setSignOk] = useState(false);
 
   const navigate = useNavigate();
@@ -58,6 +60,10 @@ const SignupMain = () => {
       setChecked(true);
     }
   });
+
+  const openTermsModal = () => {
+    setTermsModalOpen(true);
+  }
 
   const submit = useCallback(() => {
     if (
@@ -224,14 +230,21 @@ const SignupMain = () => {
           checked={checked}
           onChange={onChangeCheckBox}
         />
-        (필수){" "}
-        <a href="#" className={styles.terms}>
-          개인정보 이용약관
+        <b style={{color:'red', fontSize:'15px'}}>(필수) </b>
+        <a onClick={openTermsModal} className={styles.terms}>
+          개인정보 수집 및 이용약관
         </a>
-        에 대해 동의합니다.
+        에 동의합니다.
         <CheckBnt className={styles.singupBtn} onClick={submit}>
           회원가입
         </CheckBnt>
+        <TermsModal
+          onChangeCheckBox={onChangeCheckBox}
+          checked={checked}
+          styles={styles}
+          modalOpen = {termsModalOpen}
+          setModalOpen={setTermsModalOpen}
+        />
         <SignupModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
