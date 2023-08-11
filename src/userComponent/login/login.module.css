@@ -1,0 +1,35 @@
+.logo {
+    width: 200px;
+    height: 200px;
+}
+
+.logSection{
+    width: 100%;
+    text-align: center;
+}
+
+.loginSection {
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 12px;
+}
+
+.loginBtn:hover {
+    color: black;
+}
+
+.input {
+    width: 40%;
+}
+.loginBtnSection{
+    text-align: center;
+    width: 80%;
+    margin-left: 34%;
+}
+
+.msg {
+    margin-left: 34%;
+    color: red;
+    font-size: 13px;
+}
