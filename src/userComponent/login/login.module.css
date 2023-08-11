@@ -33,3 +33,22 @@
     color: red;
     font-size: 13px;
 }
+
+.etcBtnSection {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.etcBtn {
+    margin-right: 12px;
+    text-decoration: none;
+    color: green;
+}
+
+.etcBtn:hover {
+    color: lightgray;
+}
+
+.screen {
+    color: lightgray;
+}
