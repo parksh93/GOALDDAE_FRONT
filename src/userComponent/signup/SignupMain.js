@@ -7,7 +7,6 @@ import NicknameInput from "./NicknameInput";
 import Checkbox from "@mui/material/Checkbox";
 import PasswordInput from "./PasswordInput";
 import { Button } from "@mui/material";
-import Footer from "../../Footer";
 import PhoneNumberInput from "./PhoneNumberInput";
 import styled from "@emotion/styled";
 import Alert from "@mui/material/Alert";
@@ -258,7 +257,6 @@ const SignupMain = () => {
           setSignOk={setSignOk}
         />
       </div>
-      <Footer />
     </div>
   );
 };

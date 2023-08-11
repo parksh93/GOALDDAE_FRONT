@@ -428,8 +428,9 @@ function TermsModal({
             color="success"
             checked={checked}
             onChange={() => onChangeCheckBox()}
+            id="check"
           />
-          <span style={{fontSize:'14px'}}><b>위 약관에 동의합니다.</b></span>
+          <label style={{fontSize:'14px'}} htmlFor="check"><b>위 약관에 동의합니다.</b></label>
           <CheckBnt
             className={styles.modalBtn}
             onClick={() => setModalOpen(false)}
