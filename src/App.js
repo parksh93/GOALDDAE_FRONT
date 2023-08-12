@@ -5,20 +5,23 @@ import MyPage from './userComponent/MyPage';
 import Main from './Main';
 import SignupMain from './userComponent/signup/SignupMain';
 import Footer from './Footer';
+import { UserProvider } from './userComponent/userContext/UserContext';
 
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/login' element={<UserLogin />}/>
-        <Route path='/logOut' element={<LogOut />}/>
-        <Route path='/myPage' element={<MyPage />}/>
-        <Route path='/signup' element={<SignupMain/>}/>
-      </Routes>
-      <Footer/>
-    </>
+    <UserProvider> 
+      <>
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/login' element={<UserLogin />}/>
+          <Route path='/logOut' element={<LogOut />}/>
+          <Route path='/myPage' element={<MyPage />}/>
+          <Route path='/signup' element={<SignupMain/>}/>
+        </Routes>
+        <Footer/> 
+     </>
+    </UserProvider>
   );
 }
 
