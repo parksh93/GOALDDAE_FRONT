@@ -1,5 +1,6 @@
 import { UserProvider } from "./userComponent/userContext/UserContext"
 import LoginInfo from './LoginInfo';
+import ImageSlide from './auth/imageSlide/ImageSlide';
 
 const Main = () => {
     return(
@@ -7,6 +8,7 @@ const Main = () => {
             <div>
                 <LoginInfo />
                 <h1>메인</h1>
+                <ImageSlide />
             </div>
         </UserProvider>
     )
