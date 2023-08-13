@@ -8,6 +8,7 @@ import Footer from './Footer';
 import { UserProvider } from './userComponent/userContext/UserContext';
 
 
+
 const App = () => {
   return (
     <UserProvider> 
@@ -18,6 +19,7 @@ const App = () => {
           <Route path='/logOut' element={<LogOut />}/>
           <Route path='/myPage' element={<MyPage />}/>
           <Route path='/signup' element={<SignupMain/>}/>
+          
         </Routes>
         <Footer/> 
      </>
