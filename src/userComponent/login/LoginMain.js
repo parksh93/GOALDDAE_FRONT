@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import LoginIdInput from "./LoginIdInput";
