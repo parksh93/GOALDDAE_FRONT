@@ -1,0 +1,33 @@
+.logo {
+    width: 200px;
+    height: 200px;
+}
+
+.logoSection{
+    width: 100%;
+    text-align: center;
+}
+
+.findBtnSection {
+    text-align: center;
+}
+
+.findIdBtn, .findPwBtn {
+    font-size: 18px;
+    margin-left: 20px;
+    font-weight: 400;
+}
+.mainSession{
+    text-align: center;
+}
+
+.input {
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.okBtn {
+    margin-left: 35%;
+}
+

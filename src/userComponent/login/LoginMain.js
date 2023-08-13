@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
 import LoginIdInput from "./LoginIdInput";
@@ -69,7 +69,7 @@ const UserLogin = () => {
           다시 확인해주세요.
         </Alert>
       </Collapse>
-      <section className={styles.logSection}>
+      <section className={styles.logoSection}>
         <a href="/">
           <img src="./img/goalddaeLogo.png" className={styles.logo} />
         </a>
@@ -101,8 +101,8 @@ const UserLogin = () => {
         </CheckBnt>
       </section>
       <section className={styles.etcBtnSection}>
-        <Link to="#" className={styles.etcBtn}>아이디 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
-        <Link to="#" className={styles.etcBtn}>비밀번호 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
+        <Link to="/find/1" className={styles.etcBtn}>아이디 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
+        <Link to="/find/2" className={styles.etcBtn}>비밀번호 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
         <Link to="/signup" className={styles.etcBtn}>회원가입</Link>
       </section>
     </div>
