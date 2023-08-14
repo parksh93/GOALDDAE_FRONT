@@ -8,12 +8,14 @@ import Footer from './Footer';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import Match from './auth/match/Match';
 import Navigation from './auth/navigation/Navigation';
+import LoginInfo from './LoginInfo';
 
 const App = () => {
   return (
     <UserProvider> 
       <>
         <Navigation />
+        <LoginInfo />
             <Routes>
               <Route path='/' element={<Main />} />
               <Route path='/login' element={<UserLogin />}/>
