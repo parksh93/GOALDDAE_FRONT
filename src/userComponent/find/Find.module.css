@@ -46,3 +46,33 @@
     font-size: 13px;
 }
 
+.goLoginBtnLink {
+    text-decoration: none;
+    color: white
+}
+
+.goLoginBtn:hover {
+    color: black;
+}
+
+.modalMainDiv {
+    text-align: center;
+}
+
+.closeBtn {
+    float: right;
+    display: block;
+    width: 30px;
+    height: 30px;
+    color: gray;
+}
+
+.closeBtn:hover {
+    color: red;
+}
+
+.loginId {
+    font-weight: 400;
+    font-size: 40px;
+    color: green;
+}

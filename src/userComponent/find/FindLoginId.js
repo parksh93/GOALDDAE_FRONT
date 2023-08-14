@@ -2,24 +2,29 @@ import React, { useState, useCallback } from "react";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
+import {useNavigate} from 'react-router-dom'
+import FindSuccessModal from "./FindSuccessModal";
 
 const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertContent }) => {
   const [sendMailOk, setSendMailOk] = useState(false);
   const [certified, setCertified] = useState(false);
-  const [nickname, setNickname] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [certificationcode, setCertificationcode] = useState("");
   const [certificationcodeCheck, setCertificationcodeCheck] = useState("");
   const [errorMsg, setErrorMsg] = useState('');
   const [okMsg,setOkMsg] = useState('');
   const [loginId, setLoginId] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const onChangeNickname = useCallback(
+  const navigate = useNavigate();
+
+  const onChangeName = useCallback(
     (e) => {
-      setNickname(e.target.value.trim());
+      setName(e.target.value.trim());
       setErrorMsg('');
     },
-    [nickname]
+    [name]
   );
 
   const onChangeEmail = useCallback(
@@ -41,23 +46,23 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
     );
     
     const onClickSendEmail = useCallback(() => {
-    if(nickname !== ""){
+    if(name !== ""){
       if(email !== ""){
         fetch("/user/findLoginId", {
           method: "POST",
           headers: {
-            "Contnet-type": "application/json"
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            nickname: nickname,
+            name: name,
             email: email
           })
         }).then(res => res.json())
         .then(data => {
-          if(data !== null){
-            console.log(data);
-            setLoginId(data);
-
+          
+          if(data.loginId !== null){
+            setLoginId(data.loginId);
+ 
             setOpen(true);
             setSeverity("success");
             setAlertTitle("인증번호 전송 완료");
@@ -67,14 +72,15 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
             fetch(`/sendEmailFindLoginId/${email}`,{method: "get"})
             .then(res => res.json())
             .then(data => {
-              setCertificationcode(data);
+              setCertificationcode(data.certificationCode);
               setSendMailOk(true);
             });
+
           }else {
             setOpen(true);
             setSeverity("error");
             setAlertTitle("아이디 찾기 실패");
-            setAlertContent("해당 닉네임과 이메일로 가입된 회원이 없습니다. 다시 확인해주세요.");
+            setAlertContent("해당 이름과 이메일로 가입된 회원이 없습니다. 다시 확인해주세요.");
             setTimeout(() => setOpen(false), 2000);
           }
         })
@@ -91,22 +97,36 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
       if(certificationcode === certificationcodeCheck){
         setOkMsg("인증되었습니다.");
         setCertified(true);
+      }else{
+        setErrorMsg("인증번호가 일치하지 않습니다.");
       }
     }else{
       setErrorMsg("인증번호를 입력해주세요.");
     }
   });
+
+  const onClickSubmit = useCallback(() => {
+    if(certified) {
+      setModalOpen(true);
+    }else {
+      setOpen(true);
+      setSeverity("error");
+      setAlertTitle("아이디 찾기 실패");
+      setAlertContent("먼저 이메일을 통해 인증해주세요.");
+      setTimeout(() => setOpen(false), 2000);
+    }
+  })
   return (
     <div className={styles.findMenuDiv}>
       <section className={styles.container}>
         <TextField
-          label="닉네임"
+          label="이름"
           variant="outlined"
           type="text"
           color="success"
           className={styles.input}
-          value={nickname}
-          onChange={onChangeNickname}
+          value={name}
+          onChange={onChangeName}
           style={{marginTop: '20px'}}
         />
         <br />
@@ -141,8 +161,14 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
          <p className={styles.okMsg}>{okMsg}</p>
       </section>
       <section className={styles.oKBtnSection}>
-        <CheckBnt className={styles.okBtn}>확인</CheckBnt>
+        <CheckBnt className={styles.okBtn} onClick={onClickSubmit}>확인</CheckBnt>
       </section>
+      <FindSuccessModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        value={loginId}
+        styles={styles}
+      />
     </div>
   );
 };

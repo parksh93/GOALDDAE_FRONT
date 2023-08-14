@@ -24,7 +24,7 @@ const FindMain = () => {
     color: "",
   });
   const [open, setOpen] = useState(false);
-  const [severity, setSeverity] = useState('');
+  const [severity, setSeverity] = useState('success');
   const [alertTitle, setAlertTitle] = useState('');
   const [alertContent, setAlertContent] = useState('');
 

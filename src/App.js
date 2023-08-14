@@ -7,7 +7,6 @@ import SignupMain from './userComponent/signup/SignupMain';
 import Footer from './Footer';
 import FindMain from './userComponent/find/FindMain';
 
-
 const App = () => {
   return (
     <>
