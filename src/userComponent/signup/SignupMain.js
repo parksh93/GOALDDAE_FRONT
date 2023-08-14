@@ -241,7 +241,7 @@ const SignupMain = () => {
           checked={checked}
           onChange={onChangeCheckBox}
         />
-        <b style={{color:'red', fontSize:'15px'}}>(필수) </b>
+        <span className={styles.essential}>(필수) </span>
         <a onClick={openTermsModal} className={styles.terms}>
           개인정보 수집 및 이용약관
         </a>
