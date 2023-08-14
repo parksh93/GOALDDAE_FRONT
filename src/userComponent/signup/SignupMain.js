@@ -17,6 +17,7 @@ import BirthInput from "./BirthInput";
 import SignupModal from "./SignupModal";
 import { useNavigate } from "react-router-dom";
 import TermsModal from "./TermsModal";
+import NameInput from "./NameInput";
 
 const SignupMain = () => {
   const [loginId, setLoginId] = useState("");
@@ -24,6 +25,7 @@ const SignupMain = () => {
   const [email, setEmail] = useState("");
   const [certificationCode, setCertificationCode] = useState("");
   const [certificateCheck, setCertificateCheck] = useState("");
+  const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("");
@@ -70,6 +72,7 @@ const SignupMain = () => {
       passwordOk &&
       emailOk &&
       certificationOk &&
+      name !== "" &&
       nicknameOk &&
       phoneNumberOk &&
       checked &&
@@ -115,6 +118,7 @@ const SignupMain = () => {
           loginId: loginId,
           password: password,
           email: email,
+          name: name,
           nickname: nickname,
           phoneNumber: phoneNumber,
           birth: birth,
@@ -127,7 +131,7 @@ const SignupMain = () => {
       }).then(() => {
         console.log("asdas")
         setModalOpen(false);
-        navigate("/")
+        navigate("/login")
       });
     }
   },[signOk])
@@ -199,6 +203,14 @@ const SignupMain = () => {
         ) : (
           ""
         )}
+          <NameInput
+            label="이름"
+            value={name}
+            setValue={setName}
+            errorText="이름을 입력해주세요"
+            inputStyle={styles.input}
+            divStyle={styles.div}
+          />
         <NicknameInput
           label="닉네임"
           value={nickname}
