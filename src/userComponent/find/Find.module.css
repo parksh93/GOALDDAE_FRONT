@@ -13,21 +13,36 @@
 }
 
 .findIdBtn, .findPwBtn {
-    font-size: 18px;
+    font-size: 15px;
     margin-left: 20px;
-    font-weight: 400;
+    font-weight: 100;
 }
 .mainSession{
-    text-align: center;
+    margin-left: 35%;
 }
 
 .input {
-    width: 30%;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    width: 40%;
 }
 
-.okBtn {
-    margin-left: 35%;
+.container {
+    margin-top: 20px;
+}
+
+.okBtn:hover {
+    color: black;
+}
+.oKBtnSection {
+    margin-top: 20px;
+}
+
+.errorMsg {
+    color: red;
+    font-size: 13px;
+}
+
+.okMsg {
+    color: green;
+    font-size: 13px;
 }
 
