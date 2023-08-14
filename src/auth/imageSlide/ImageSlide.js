@@ -41,7 +41,6 @@ const ImageSlide = () => {
 const NextArrow = ({ onClick }) => {
   return (
     <button onClick={onClick} type='button' className="slick-next" />
-    
   );
 };
 
