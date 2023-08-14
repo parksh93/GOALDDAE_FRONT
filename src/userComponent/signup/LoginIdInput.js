@@ -26,7 +26,7 @@ function LoginIdInput({
 
   const checkLoginId = useCallback(() => {
     if (value.trim() !== "") {
-        if(value.length <= 10){
+        if(value.length <= 10 && value.length >= 5){
         fetch(`/user/checkLoginId`, {
           method: "POST",
         headers: {
@@ -77,7 +77,7 @@ function LoginIdInput({
         <CheckBnt onClick={checkLoginId} className={btnStyle}>
           중복확인
         </CheckBnt>
-        <p style={{fontSize: "10px"}}>* 아이디는 최대 10글자까지 가능합니다.</p>
+        <p style={{fontSize: "10px"}}>* 아이디는 최소 5글자에서 최대 10글자까지 가능합니다.</p>
     </div>
   );
 }
