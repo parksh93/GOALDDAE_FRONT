@@ -1,0 +1,118 @@
+.input {
+    width: 65%;
+}
+
+.genderRadioCotain{
+    margin-left: 9%;
+}
+
+.genderText{
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.div {
+    margin-bottom: 20px;
+    padding-left: 10%;
+}
+
+.logo{
+    width: 200px;
+    height: 200px;
+}
+
+.logoSection {
+    width: 100%;
+    text-align: center;
+}
+
+.terms {
+    text-decoration: none;
+    color: darkslategrey;
+    font-weight: 550;
+}
+
+.terms:active{
+    color: lightslategrey;
+}
+
+.section {
+    padding: 40px;
+    margin-left: 25%;
+    width: 50%;
+    /* border: 2px solid green; */
+}
+
+.singupBtnDiv {
+    margin-top: 5px;
+    margin-left: 32%;
+}
+
+.singupBtn:hover {
+    color: black;
+}
+
+.passShowBtn{
+    border: none;
+    background: none;
+}
+
+.key {
+    margin-top: 15px;
+    font-size: 30px;
+    color: green;
+    margin-left: 5px;
+}
+.checkKey {
+    margin-top: 30px;
+    font-size: 30px;
+    color: green;
+    margin-left: 5px;
+}
+
+.birth {
+    margin-left: 10%;
+    height: 50px;
+    width: 30%;
+    font-size: 15px;
+    padding-left: 10px;
+    border: 1px solid rgb(185, 181, 181);
+    border-radius:5px;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding-right: 10px;
+
+}
+
+.birth::before {
+    content: attr(data-placeholder);
+    width: 100%;
+}
+
+.birth:focus::before,
+.birth:valid::before {
+  display: none;
+}
+
+.modalInput {
+    width: 100%;
+    margin-bottom: 20px;
+    display: block;
+    margin-top: 20px;
+}
+
+.modalBtn {
+    margin-top: 20px;
+}
+
+.modalBtn:hover {
+    color: black;
+}
+
+.termsModalInput {
+   height: 150px;
+   overflow-y:scroll;
+   border: 1px solid black;
+   resize: none;
+   width: 100%;
+   margin-bottom: 20px;
+}
