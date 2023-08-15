@@ -69,7 +69,7 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
             setAlertContent("해당 이메일로 인증번호가 전송되었습니다.");
             setTimeout(() => setOpen(false), 2000);
 
-            fetch(`/sendEmailFindLoginId/${email}`,{method: "get"})
+            fetch(`/sendEmailFind/${email}`,{method: "get"})
             .then(res => res.json())
             .then(data => {
               setCertificationcode(data.certificationCode);
