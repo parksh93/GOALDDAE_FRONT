@@ -6,6 +6,7 @@ import FindLoginId from "./FindLoginId";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
+import FindPassword from "./FindPassword";
 
 const FindMain = () => {
   let { findMenuNum } = useParams();
@@ -118,8 +119,14 @@ const FindMain = () => {
             setAlertTitle= {setAlertTitle}
             setAlertContent = {setAlertContent}
           />
-        ) : (
-          "비밀번호 찾기화면"
+          ) : (
+            <FindPassword
+              styles={styles} 
+              setOpen={setOpen}
+              setSeverity = {setSeverity}
+              setAlertTitle= {setAlertTitle}
+              setAlertContent = {setAlertContent}
+            />
         )}
       </section>
     </div>

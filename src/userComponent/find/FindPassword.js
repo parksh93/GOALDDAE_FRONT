@@ -2,29 +2,23 @@ import React, { useState, useCallback } from "react";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import {useNavigate} from 'react-router-dom'
-import FindSuccessModal from "./FindSuccessModal";
 
-const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertContent }) => {
+const FindPassword = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertContent }) => {
   const [sendMailOk, setSendMailOk] = useState(false);
   const [certified, setCertified] = useState(false);
-  const [name, setName] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [email, setEmail] = useState("");
   const [certificationcode, setCertificationcode] = useState("");
   const [certificationcodeCheck, setCertificationcodeCheck] = useState("");
   const [errorMsg, setErrorMsg] = useState('');
   const [okMsg,setOkMsg] = useState('');
-  const [loginId, setLoginId] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
 
-  const navigate = useNavigate();
-
-  const onChangeName = useCallback(
+  const onChangeId = useCallback(
     (e) => {
-      setName(e.target.value.trim());
+      setLoginId(e.target.value.trim());
       setErrorMsg('');
     },
-    [name]
+    [loginId]
   );
 
   const onChangeEmail = useCallback(
@@ -46,23 +40,20 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
     );
     
     const onClickSendEmail = useCallback(() => {
-    if(name !== ""){
+    if(loginId !== ""){
       if(email !== ""){
-        fetch("/user/findLoginId", {
+        fetch("/user/findPassword", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            name: name,
+            loginId: loginId,
             email: email
           })
         }).then(res => res.json())
         .then(data => {
-          
-          if(data.loginId !== null){
-            setLoginId(data.loginId);
- 
+          if(data[0] !== true){
             setOpen(true);
             setSeverity("success");
             setAlertTitle("인증번호 전송 완료");
@@ -79,8 +70,8 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
           }else {
             setOpen(true);
             setSeverity("error");
-            setAlertTitle("아이디 찾기 실패");
-            setAlertContent("해당 이름과 이메일로 가입된 회원이 없습니다. 다시 확인해주세요.");
+            setAlertTitle("비밀번호 찾기 실패");
+            setAlertContent("해당 아이디와 이메일로 가입된 회원이 없습니다. 다시 확인해주세요.");
             setTimeout(() => setOpen(false), 2000);
           }
         })
@@ -88,7 +79,7 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
         setErrorMsg("이메일을 입력해주세요.");
       }
     }else{
-      setErrorMsg("이름을 입력해주세요.");
+      setErrorMsg("아이디를 입력해주세요.");
     }
   });
   
@@ -107,11 +98,16 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
 
   const onClickSubmit = useCallback(() => {
     if(certified) {
-      setModalOpen(true);
+      fetch(`/sendEmailChangePassword/${email}`,{method: "get"});
+      setOpen(true);
+      setSeverity("success");
+      setAlertTitle("비밀번호 변경 메일 발송");
+      setAlertContent("해당 이메일로 비밀번호를 변경할 수 있는 주소를 발송했습니다.");
+      setTimeout(() => setOpen(false), 2000);
     }else {
       setOpen(true);
       setSeverity("error");
-      setAlertTitle("아이디 찾기 실패");
+      setAlertTitle("비밀번호 찾기 실패");
       setAlertContent("먼저 이메일을 통해 인증해주세요.");
       setTimeout(() => setOpen(false), 2000);
     }
@@ -120,13 +116,13 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
     <div className={styles.findMenuDiv}>
       <section className={styles.container}>
         <TextField
-          label="이름"
+          label="아이디"
           variant="outlined"
           type="text"
           color="success"
           className={styles.input}
-          value={name}
-          onChange={onChangeName}
+          value={loginId}
+          onChange={onChangeId}
           style={{marginTop: '20px'}}
         />
         <br />
@@ -163,17 +159,11 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
       <section className={styles.oKBtnSection}>
         <CheckBnt className={styles.okBtn} onClick={onClickSubmit}>확인</CheckBnt>
       </section>
-      <FindSuccessModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        value={loginId}
-        styles={styles}
-      />
     </div>
   );
 };
 
-export default React.memo(FindLoginId);
+export default React.memo(FindPassword);
 
 const CheckBnt = styled(Button)`
   top: 10px;
