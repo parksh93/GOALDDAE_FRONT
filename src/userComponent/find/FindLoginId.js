@@ -88,7 +88,7 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
         setErrorMsg("이메일을 입력해주세요.");
       }
     }else{
-      setErrorMsg("닉네임을 입력해주세요.");
+      setErrorMsg("이름을 입력해주세요.");
     }
   });
   
