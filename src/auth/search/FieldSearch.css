@@ -79,8 +79,8 @@
   border-radius: 0 0 16px 16px;
   list-style-type: none;
   z-index: 3;
-  max-height: 160px; 
-  overflow: auto;
+  max-height: 160px; /* 드롭다운 높이 */
+  overflow: auto; /* 최대 높이를 넘어갈 경우 스크롤바를 자동으로 생성 */
   width: 300px; 
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15); 
   min-height: 160px; 
@@ -88,13 +88,13 @@
 
 /* 드롭다운 리스트 항목 스타일 */
 .DropDownItem {
-  padding: 16px 16px; /* 수정된 코드: 상하 패딩 값 증가 */
+  padding: 16px 16px; 
   font-size: 16px;
-  line-height: 28px; /* 줄 간격 조절이 필요한 경우 이 값을 조정해주세요 */
+  line-height: 28px; /* 줄 간격 조절 */
   cursor: pointer;
   background-color: #ffffff;
   border-bottom: 1px solid #e5e5e5;
-  letter-spacing: 1px; /* 추가된 코드 */
+  letter-spacing: 1px;
 }
 
 /* 선택된 드롭다운 리스트 항목 스타일 */
@@ -110,6 +110,7 @@
   font-style: italic;
 }
 
+/* 검색창 지역 스타일 */
 .ViewAllMatches {
   display: flex;
   justify-content: center;
@@ -118,6 +119,7 @@
   color: #007bff; 
 }
 
+/* 검색창 지역 스타일 */
 .EmphasizedText {
   font-weight: bold;
 }
