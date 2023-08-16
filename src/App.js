@@ -4,23 +4,32 @@ import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/MyPage';
 import Main from './Main';
 import SignupMain from './userComponent/signup/SignupMain';
-import Footer from './Footer';
+import { UserProvider } from './userComponent/userContext/UserContext';
+import Match from './auth/match/Match';
+import Navigation from './auth/navigation/Navigation';
+import LoginInfo from './LoginInfo';
 import FindMain from './userComponent/find/FindMain';
+import Footer from './Footer';
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/login' element={<UserLogin />}/>
-        <Route path='/logOut' element={<LogOut />}/>
-        <Route path='/myPage' element={<MyPage />}/>
-        <Route path='/signup' element={<SignupMain/>}/>
-        <Route path='/find' element={<FindMain />} />
-        <Route path='/find/:findMenuNum' element={<FindMain />} />
-      </Routes>
-      <Footer/>
-    </>
+    <UserProvider> 
+      <>
+        <Navigation />
+        <LoginInfo />
+            <Routes>
+              <Route path='/' element={<Main />} />
+              <Route path='/login' element={<UserLogin />}/>
+              <Route path='/logOut' element={<LogOut />}/>
+              <Route path='/myPage' element={<MyPage />}/>
+              <Route path='/signup' element={<SignupMain/>}/>
+              <Route path='/find' element={<FindMain />} />
+              <Route path='/find/:findMenuNum' element={<FindMain />} />
+              <Route path='/Match' element={<Match />} />
+            </Routes>
+          <Footer/> 
+     </>
+    </UserProvider>
   );
 }
 
