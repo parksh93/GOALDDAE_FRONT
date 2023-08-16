@@ -98,7 +98,16 @@ const FindPassword = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCon
 
   const onClickSubmit = useCallback(() => {
     if(certified) {
-      fetch(`/sendEmailChangePassword/${email}`,{method: "get"});
+      fetch(`/sendEmailChangePassword`,{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          loginId: loginId,
+          email: email
+        })
+      });
       setOpen(true);
       setSeverity("success");
       setAlertTitle("비밀번호 변경 메일 발송");
