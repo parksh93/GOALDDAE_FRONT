@@ -15,18 +15,22 @@ const FieldSearch = () => {
   const wholeBoxRef = useRef(null);
   const navigate = useNavigate();
 
+  /* 검색창 클릭 시 '지역, 구장 이름으로 찾기'를 지워서 검색어를 입력할 수 있게 함*/
   const handleInputFocus = () => {
     if (inputValue === '지역, 구장 이름으로 찾기') {
       setInputValue('');
     }
   };
 
+  /* 검색어가 비어있는 상태에서 검색창 밖을 클릭하면 '지역, 구장 이름으로 찾기' 표시 */
   const handleInputBlur = () => {
     if (inputValue.trim() === '') {
       setInputValue('지역, 구장 이름으로 찾기');
     }
   };
 
+  /* axios를 이용해 검색어와 일치하거나 검색어가 포함된 구장 정보를 받아 검색결과로 나옴 */
+  /* 캐시 작업 */
   const showDropDownList = useCallback(
     debounce(async () => {
       if (inputValue === '') {
@@ -55,6 +59,8 @@ const FieldSearch = () => {
     [inputValue, setIsHaveInputValue, setDropDownList, dropDownCache]
   );
 
+  /*  검색창에 입력 중인 검색어를 기반으로, axios를 이용해 /search/city API에 
+      GET 요청을 보내어 검색어가 포함된 도시 이름을 받아 도시 이름이 없으면 빈 string을 반환*/
   const fetchCityName = async (partialCityName) => {
     try {
       const response = await axios.get('/search/city', {
@@ -72,6 +78,8 @@ const FieldSearch = () => {
     return '';
   };
 
+   /* 검색창에 입력이 되면, 검색어 상태를 업데이트하고, fetchCityName 함수를 호출해 
+      검색어에서 포함된 도시 이름을 추출하여 completedCityName 상태를 업데이트 */
   const changeInputValue = async (event) => {
     setInputValue(event.target.value);
     setIsHaveInputValue(true);
@@ -79,12 +87,14 @@ const FieldSearch = () => {
     setCompletedCityName(completedName);
   };
 
+  /* Dropdown list의 각 요소를 클릭하면, 클릭한 요소에 대응하는 필드 ID를 이용해 /Match?fieldId=${fieldId} 이동*/
   const clickDropDownItem = (clickedItem, fieldId) => {
     setInputValue('지역, 구장 이름으로 찾기');
     setIsHaveInputValue(false);
     navigate(`/Match?fieldId=${fieldId}`);
   };
 
+  /* 검색창에서 엔터키, 방향키 사용하게끔 */
   const handleDropDownKey = (event) => {
     if (isHaveInputValue) {
       if (
@@ -112,10 +122,12 @@ const FieldSearch = () => {
     }
   };
 
+  /*  검색창 입력값에 대해 debounce를 적용하여 API 요청을 수정적으로 보내 서버 과부하 방지*/
   useEffect(() => {
     showDropDownList();
   }, [inputValue, showDropDownList]);
 
+  /* handleClickOutside : 모달 밖을 클릭할 경우 dropdownList가 닫힘*/
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
