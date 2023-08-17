@@ -6,6 +6,7 @@ import Main from './Main';
 import SignupMain from './userComponent/signup/SignupMain';
 import Footer from './Footer';
 import FindMain from './userComponent/find/FindMain';
+import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/signup' element={<SignupMain/>}/>
         <Route path='/find' element={<FindMain />} />
         <Route path='/find/:findMenuNum' element={<FindMain />} />
+        <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
       </Routes>
       <Footer/>
     </>

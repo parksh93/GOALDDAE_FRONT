@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import {useNavigate} from 'react-router-dom'
 import FindSuccessModal from "./FindSuccessModal";
 
 const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertContent }) => {
@@ -16,8 +15,6 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
   const [okMsg,setOkMsg] = useState('');
   const [loginId, setLoginId] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-
-  const navigate = useNavigate();
 
   const onChangeName = useCallback(
     (e) => {
@@ -62,7 +59,12 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
           
           if(data.loginId !== null){
             setLoginId(data.loginId);
- 
+            
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+
             setOpen(true);
             setSeverity("success");
             setAlertTitle("인증번호 전송 완료");
@@ -77,6 +79,11 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
             });
 
           }else {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+
             setOpen(true);
             setSeverity("error");
             setAlertTitle("아이디 찾기 실패");
@@ -109,6 +116,11 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
     if(certified) {
       setModalOpen(true);
     }else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
       setOpen(true);
       setSeverity("error");
       setAlertTitle("아이디 찾기 실패");
@@ -124,7 +136,7 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
           variant="outlined"
           type="text"
           color="success"
-          className={styles.input}
+          className={styles.inputFindLoginId}
           value={name}
           onChange={onChangeName}
           style={{marginTop: '20px'}}
@@ -135,7 +147,7 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
           variant="outlined"
           type="text"
           color="success"
-          className={styles.input}
+          className={styles.inputFindLoginId}
           value={email}
           onChange={onChangeEmail}
           style={{marginTop: '20px'}}

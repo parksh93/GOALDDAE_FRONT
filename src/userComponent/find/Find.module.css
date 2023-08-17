@@ -21,8 +21,12 @@
     margin-left: 35%;
 }
 
-.input {
+.inputFindLoginId {
     width: 40%;
+}
+
+.inputFindPassword {
+    width: 53%;
 }
 
 .container {
