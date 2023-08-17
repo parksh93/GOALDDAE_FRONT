@@ -28,11 +28,11 @@
 
 .terms {
     text-decoration: none;
-    color: darkslategrey;
+    color: rgb(46, 116, 72);
     font-weight: 550;
 }
 
-.terms:active{
+.terms:hover{
     color: lightslategrey;
 }
 
@@ -115,4 +115,9 @@
    resize: none;
    width: 100%;
    margin-bottom: 20px;
+}
+
+.essential {
+    color:red;
+    font-size: 15px;
 }

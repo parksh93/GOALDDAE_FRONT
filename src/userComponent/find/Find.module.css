@@ -1,0 +1,78 @@
+.logo {
+    width: 200px;
+    height: 200px;
+}
+
+.logoSection{
+    width: 100%;
+    text-align: center;
+}
+
+.findBtnSection {
+    text-align: center;
+}
+
+.findIdBtn, .findPwBtn {
+    font-size: 15px;
+    margin-left: 20px;
+    font-weight: 100;
+}
+.mainSession{
+    margin-left: 35%;
+}
+
+.input {
+    width: 40%;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.okBtn:hover {
+    color: black;
+}
+.oKBtnSection {
+    margin-top: 20px;
+}
+
+.errorMsg {
+    color: red;
+    font-size: 13px;
+}
+
+.okMsg {
+    color: green;
+    font-size: 13px;
+}
+
+.goLoginBtnLink {
+    text-decoration: none;
+    color: white
+}
+
+.goLoginBtn:hover {
+    color: black;
+}
+
+.modalMainDiv {
+    text-align: center;
+}
+
+.closeBtn {
+    float: right;
+    display: block;
+    width: 30px;
+    height: 30px;
+    color: gray;
+}
+
+.closeBtn:hover {
+    color: red;
+}
+
+.loginId {
+    font-weight: 400;
+    font-size: 40px;
+    color: green;
+}
