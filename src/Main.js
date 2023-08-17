@@ -7,7 +7,6 @@ const Main = () => {
     return (
         <UserProvider> 
             <div>
-                <h1>메인</h1>
                 <ImageSlide />
                 <TimeLine />
             </div>

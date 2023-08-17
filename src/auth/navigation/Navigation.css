@@ -25,3 +25,9 @@
   display: inline-block;
   max-width: 400px;
   }
+
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+  
