@@ -37,8 +37,11 @@ function ChangeLostPasswordMain() {
 
           setOpen(true);
           setAlertTitle("비밀번호 변경 실패");
-          setAlertContent("처리중 예기치 못한 발생했습니다.");
-          setTimeout(() => setOpen(false), 2000);
+          setAlertContent("처리중 예기치 못한 문제가 발생했습니다. 비밀번호 찾기 페이지로 이동합니다.");
+          setTimeout(() => {
+            setOpen(false)
+            navigate("/find/2")
+          }, 2000);
         }else{
           navigate("/login");
         }
