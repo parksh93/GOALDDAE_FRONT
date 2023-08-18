@@ -8,8 +8,9 @@ import FriendAdd from './auth/page/tableOperate/tableFriend/FriendAdd';
 import FriendBlock from './auth/page/tableOperate/tableFriend/FriendBlock';
 import FriendList from './auth/page/tableOperate/tableFriend/FriendList';
 import FieldReservation from './auth/page/tableOperate/tableFieldReservation/FieldReservation';
+import TeamMatchResult from './auth/page/tableOperate/tableTeam/TeamMatchResult';
+import MatchTeam from './auth/page/tableOperate/tableMatch/MatchTeam';
 import MatchIndividual from './auth/page/tableOperate/tableMatch/MatchIndividual';
-import MatchTeam from './auth/page/tableOperate/tableMatch/TeamMatch';
 
 const Main = () => {
     return (
@@ -24,9 +25,10 @@ const Main = () => {
                 <FriendBlock />
                 <FriendList />
                 <FieldReservation />
-                <MatchIndividual />
-                <MatchTeam />
 
+                <TeamMatchResult />
+                <MatchTeam />
+                <MatchIndividual />
             </div>
         </UserProvider>
     );
