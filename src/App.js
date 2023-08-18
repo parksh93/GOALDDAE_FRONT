@@ -16,7 +16,6 @@ const App = () => {
     <UserProvider> 
       <>
         <Navigation />
-        <LoginInfo />
             <Routes>
               <Route path='/' element={<Main />} />
               <Route path='/login' element={<UserLogin />}/>
