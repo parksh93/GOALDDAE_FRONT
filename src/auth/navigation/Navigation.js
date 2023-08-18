@@ -1,7 +1,7 @@
 import "./Navigation.css";
 import { Link } from "react-router-dom";
 import FieldSearch from "../search/FieldSearch";
-import LoginInfo from "../../LoginInfo";
+import LoginInfo from "../../loginInfo/LoginInfo";
 
 const Navigation = () => {
   return (

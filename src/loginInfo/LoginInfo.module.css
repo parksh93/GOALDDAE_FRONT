@@ -23,6 +23,18 @@
     color: white;
   }
   
+.profileImg {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+  border: 1px solid black;
+}
+
+.userNickname {
+    display: inline;
+}
+
 /* 768px 이하 화면 크기에 대한 반응형 스타일 */
 @media (max-width: 768px) {
     .button {

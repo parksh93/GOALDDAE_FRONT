@@ -5,11 +5,11 @@ import MyPage from './userComponent/MyPage';
 import Main from './Main';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider } from './userComponent/userContext/UserContext';
-import Match from './auth/match/Match';
 import Navigation from './auth/navigation/Navigation';
-import LoginInfo from './LoginInfo';
+import LoginInfo from './loginInfo/LoginInfo';
 import FindMain from './userComponent/find/FindMain';
-import Footer from './Footer';
+import Footer from './footer/Footer';
+import Match from './auth/page/match/Match';
 
 const App = () => {
   return (
@@ -24,7 +24,9 @@ const App = () => {
               <Route path='/signup' element={<SignupMain/>}/>
               <Route path='/find' element={<FindMain />} />
               <Route path='/find/:findMenuNum' element={<FindMain />} />
+
               <Route path='/Match' element={<Match />} />
+              <Route path='/friend-list' element={<friend-list />} />
             </Routes>
           <Footer/> 
      </>

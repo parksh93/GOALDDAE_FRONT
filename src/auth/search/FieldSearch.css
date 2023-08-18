@@ -4,8 +4,10 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  /* position: fixed; */
   display: inline-block;
   max-width: 400px;
+  z-index: 999;
 }
 
 /* 입력창 및 삭제 버튼 컨테이너 */

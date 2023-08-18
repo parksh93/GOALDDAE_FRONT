@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import FieldReservation from '../page/fieldReservation/FieldReservation';
+import FieldReservation from '../tableOperate/tableFieldReservation/FieldReservation';
 
 const Match = () => {
   const location = useLocation();

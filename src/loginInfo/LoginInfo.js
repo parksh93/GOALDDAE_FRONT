@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./css/user/LoginInfo.module.css";
+import styles from "./LoginInfo.module.css";
 import buttonStyles from "./LoginInfo.module.css";  
-
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
