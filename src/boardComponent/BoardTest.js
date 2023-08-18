@@ -59,7 +59,7 @@ function BoardTest() {
 
   const handlePageClick = async () => {
     try {
-      const response = await axios.get(`/board/list/${pageNum}`);
+      const response = await axios.get(`/board/list?page=${pageNum}`);
       const data = response.data;
       setPageInfo(data);
     } catch (error) {
@@ -143,7 +143,10 @@ function BoardTest() {
                     <li key={item.id}>
                     <p>작성자: {item.writer}</p>
                     <p>제목: {item.title}</p>
-                    <p>작성시간: {item.writeDate}</p>
+                    <p>내용: {item.content}</p>
+                    <p>댓글수: {item.replyCount}</p>
+                    <p>좋아요수: {item.heart}</p>
+                    <p>조회수: {item.count}</p>
                     </li>
                 ))}
             </ul>
