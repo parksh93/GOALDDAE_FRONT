@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const FriendAdd = () => {
-  const [friendAddName, setFriendAddName] = useState("");
+  const [friendAdd, setFriendAdd] = useState("");
 
-  const createTable = async (friendAddName) => {
+  const createTable = async (friendAdd) => {
     try {
-      const encodedFriendAddName = encodeURIComponent(friendAddName);
+      const encodedFriendAdd = encodeURIComponent(friendAdd);
       const response = await axios.post("/api/friend-add/create-table", null, {
         params: {
-            friendAdd: encodedFriendAddName,
+            friendAdd: encodedFriendAdd,
         }
       });
       console.log(response.data);
@@ -19,12 +19,12 @@ const FriendAdd = () => {
   };
 
   const handleChange = (e) => {
-    setFriendAddName(e.target.value);
+    setFriendAdd(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTable(friendAddName);
+    createTable(friendAdd);
   };
 
   return (
@@ -32,7 +32,7 @@ const FriendAdd = () => {
         <form onSubmit={handleSubmit}>
         <label>
         친구신청 테이블명:
-          <input type="text" value={friendAddName} onChange={handleChange} />
+          <input type="text" value={friendAdd} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>
       </form>

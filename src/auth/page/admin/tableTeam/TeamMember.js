@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const TeamMember = () => {
-  const [teamMemberName, setTeamMemberName] = useState("");
+  const [teamMember, setTeamMember] = useState("");
 
-  const createTable = async (TeamMemberName) => {
+  const createTable = async (TeamMember) => {
     try {
-      const encodedTeamMemberName = encodeURIComponent(TeamMemberName);
+      const encodedTeamMember = encodeURIComponent(TeamMember);
       const response = await axios.post("/api/team-member/create-table", null, {
         params: {
-          teamMember: encodedTeamMemberName,
+          teamMember: encodedTeamMember,
         }
       });
       console.log(response.data);
@@ -19,12 +19,12 @@ const TeamMember = () => {
   };
 
   const handleChange = (e) => {
-    setTeamMemberName(e.target.value);
+    setTeamMember(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTable(teamMemberName);
+    createTable(teamMember);
   };
   
 
@@ -32,8 +32,8 @@ const TeamMember = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-        팀멤버 테이블 생성
-          <input type="text" value={teamMemberName} onChange={handleChange} />
+        팀멤버 테이블 생성:
+          <input type="text" value={teamMember} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>
       </form>

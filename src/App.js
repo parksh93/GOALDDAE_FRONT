@@ -10,6 +10,7 @@ import LoginInfo from './loginInfo/LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import Footer from './footer/Footer';
 import Match from './auth/page/match/Match';
+import Admin from './auth/page/admin/Admin';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
 
               <Route path='/Match' element={<Match />} />
               <Route path='/friend-list' element={<friend-list />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           <Footer/> 
      </>

@@ -31,7 +31,7 @@ const MatchTeam = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-        팀매치 테이블 생성
+        팀매치 테이블 생성:
           <input type="text" value={matchTeam} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>

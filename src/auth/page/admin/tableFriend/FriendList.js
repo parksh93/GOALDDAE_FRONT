@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const FriendList = () => {
-  const [friendListName, setfriendListName] = useState("");
+  const [friendList, setfriendList] = useState("");
 
-  const createTable = async (friendListName) => {
+  const createTable = async (friendList) => {
     try {
-      const encodedFriendListName = encodeURIComponent(friendListName);
+      const encodedFriendList = encodeURIComponent(friendList);
       const response = await axios.post("/api/friend-list/create-table", null, {
         params: {
-            friendList: encodedFriendListName,
+            friendList: encodedFriendList,
         }
       });
       console.log(response.data);
@@ -19,12 +19,12 @@ const FriendList = () => {
   };
 
   const handleChange = (e) => {
-    setfriendListName(e.target.value);
+    setfriendList(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTable(friendListName);
+    createTable(friendList);
   };
 
   return (
@@ -32,7 +32,7 @@ const FriendList = () => {
         <form onSubmit={handleSubmit}>
         <label>
         친구목록 테이블명:
-          <input type="text" value={friendListName} onChange={handleChange} />
+          <input type="text" value={friendList} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>
       </form>

@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const TeamApply = () => {
-  const [teamApplyName, setTeamApplyName] = useState("");
+  const [teamApply, setTeamApply] = useState("");
 
-  const createTable = async (teamApplyName) => {
+  const createTable = async (teamApply) => {
     try {
-      const encodedTeamApplyName = encodeURIComponent(teamApplyName);
+      const encodedTeamApply = encodeURIComponent(teamApply);
       const response = await axios.post("/api/team-apply/create-table", null, {
         params: {
-          teamApply: encodedTeamApplyName,
+          teamApply: encodedTeamApply,
         }
       });
       console.log(response.data);
@@ -19,20 +19,20 @@ const TeamApply = () => {
   };
 
   const handleChange = (e) => {
-    setTeamApplyName(e.target.value);
+    setTeamApply(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTable(teamApplyName);
+    createTable(teamApply);
   };
   
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-        팀가입신청 테이블 생성
-          <input type="text" value={teamApplyName} onChange={handleChange} />
+        팀가입신청 테이블 생성:
+          <input type="text" value={teamApply} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>
       </form>

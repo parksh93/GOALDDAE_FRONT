@@ -31,7 +31,7 @@ const MatchIndividual = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-        개인매치 테이블 생성
+        개인매치 테이블 생성:
           <input type="text" value={matchIndividual} onChange={handleChange} />
         </label>
         <button type="submit">생성</button>
