@@ -11,6 +11,7 @@ import LoginInfo from './LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import Footer from './Footer';
+import SoccerFieldMain from './soccerField/SoccerFieldMain';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
               <Route path='/find/:findMenuNum' element={<FindMain />} />
               <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
+              <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
             </Routes>
           <Footer/> 
      </>
