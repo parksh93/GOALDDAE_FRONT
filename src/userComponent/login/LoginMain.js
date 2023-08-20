@@ -39,6 +39,10 @@ const UserLogin = () => {
     if (data === true) {
       navigate("/");
     } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       setOpen(true);
       setTimeout(() => setOpen(false), 2000);
     }
