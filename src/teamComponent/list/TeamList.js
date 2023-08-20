@@ -29,27 +29,40 @@ const TeamList = ({ teamId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [noNewData, setNoNewData] = useState(false);
     const [selectedArea, setSelectedArea] = useState('');
+    const [recruiting, setRecruiting] = useState(false); // Default is recruiting
 
-    const fetchTeamList = async (pageNum, area = '') => {
+    const fetchTeamList = async (pageNum, area = '', recruiting = true) => {
         try {
             setIsLoading(true);
-
+    
             let requestPath;
-
+    
             if (area) {
                 if (area === '모든지역') {
-                    requestPath = '/team/list';
-                } else {
-                    requestPath = '/team/list/area';
+                    if (recruiting) {   // 모든지역, recruiting = true
+                        requestPath = 'team/list/recruiting';   
+                    } else {    // 모든지역, recruiting false
+                        requestPath = '/team/list';
+                    }
+                } else {    // area !== 모든지역 
+                    if (recruiting) {   // 다른 지역, recruiting = true
+                        requestPath = '/team/list/areaAndRecruiting';
+                    } else {    // 다른 지역, recruiting = false
+                        requestPath = '/team/list/area';
+                    }
                 }
-            } else {
-                requestPath = '/team/list';
-            }
-                        
-            const response = await axios.get(`${requestPath}?page=${pageNum}&area=${area}`);
-            
+            } else {    // arae === null
+                if (recruiting) {   // area === null, recruiting = true
+                    requestPath = '/team/list/recruiting';
+                } else {    // area === null, recruiting = false
+                    requestPath = '/team/list';
+                }
+            }            
+    
+            const response = await axios.get(`${requestPath}?page=${pageNum}&area=${area}&recruiting=${recruiting}`);
+    
             const newTeamList = response.data;
-
+    
             if (!newTeamList.some(newTeam => teamList.some(oldTeam => oldTeam.teamId === newTeam.teamId))) {
                 if (newTeamList.length === 0) {
                     setNoNewData(true);
@@ -63,8 +76,8 @@ const TeamList = ({ teamId }) => {
     };
 
     useEffect(() => {
-        fetchTeamList(page, selectedArea);
-    }, [page, selectedArea]);
+        fetchTeamList(page, selectedArea, recruiting); // Include recruiting parameter
+    }, [page, selectedArea, recruiting]); // Include recruiting dependency
 
     const handleScroll = throttle(() => {
         const scrollTop = Math.max(
@@ -77,7 +90,7 @@ const TeamList = ({ teamId }) => {
         );
         const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight - 400 && !isLoading) {
+        if (scrollTop + clientHeight >= scrollHeight - 300 && !isLoading) {
             setPage((prevPage) => prevPage + 1);
         }
     }, 300);
@@ -95,12 +108,13 @@ const TeamList = ({ teamId }) => {
         setTeamList([]);
         setPage(1);
         setNoNewData(false);
+    };
 
-        if (newSelectedArea === "모든지역") {
-            fetchTeamList(1);
-        } else {
-            fetchTeamList(1, newSelectedArea);
-        }
+    const toggleRecruiting = () => {
+        setRecruiting((prevRecruiting) => !prevRecruiting);
+        setTeamList([]); // Reset team list
+        setPage(1); // Reset page
+        setNoNewData(false); // Reset noNewData flag
     };
 
     return (
@@ -110,6 +124,9 @@ const TeamList = ({ teamId }) => {
                     <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
             </select>
+            <button onClick={toggleRecruiting}>
+                {recruiting ? '모집중 팀' : '전체 팀'}
+            </button>
             {teamList.map((team) => (
                 <div key={team.teamId}>
                     <h3>{team.teamProfileImgUrl} | {team.teamName}</h3>

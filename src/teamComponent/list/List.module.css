@@ -33,4 +33,14 @@ input {
     box-sizing: border-box;
 }
 
+.recruiting-button {
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.recruiting-button:hover {
+    background-color: #ddd; /* 원하는 hover 배경색으로 변경 */
+}
