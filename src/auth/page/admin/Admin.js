@@ -8,6 +8,7 @@ import MatchTeam from "./tableMatch/MatchTeamTable";
 import MatchIndividual from "./tableMatch/MatchIndividualTable";
 import TeamApply from "./tableTeam/TeamApplyTable";
 import TeamMatchResult from "./tableTeam/TeamMatchResultTable";
+import SoccerFieldTable from "./tableSoccerField/SoccerFieldTable";
 
 const Admin = () => {
   return (
@@ -27,6 +28,8 @@ const Admin = () => {
             <TeamApply />
             <TeamMember />
             <TeamMatchResult />
+
+            <SoccerFieldTable />
     </>
   );
 }
