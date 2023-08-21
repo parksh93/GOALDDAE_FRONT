@@ -25,7 +25,6 @@ function BoardListPage() {
     // 페이지 정보를 가져오는 요청
     axios.get(`/board/list?type=${type}&name=${name}&page=${page}`).then((response) => {
       setPageData(response.data);
-      console.log(response.data);
       setTotalPageNum(response.data.pageInfo.totalPages)
     });
   }, [location.search]);
@@ -53,11 +52,6 @@ function BoardListPage() {
 
   return (
     <div>
-        
-      <Link to={`/board`}>
-        <h1>자유게시판</h1>
-      </Link>
-
       <table>
         <thead>
           <tr>

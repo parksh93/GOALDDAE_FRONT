@@ -11,10 +11,7 @@ import LoginInfo from './LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import Footer from './Footer';
-import BoardListPage from './boardComponent/BoardListPage';
-import BoardDetailPage from './boardComponent/BoardDetailPage';
-import BoardWritePage from './boardComponent/BoardWritePage';
-import BoardEditPage from './boardComponent/BoardEditPage';
+import BoardMainPage from './boardComponent/BoardMainPage';
 
 const App = () => {
   return (
@@ -32,10 +29,7 @@ const App = () => {
               <Route path='/find/:findMenuNum' element={<FindMain />} />
               <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
-              <Route path='/board' element={<BoardListPage />} />
-              <Route path='/board/detail/:id' element={<BoardDetailPage />} />
-              <Route path='/board/write' element={<BoardWritePage />} />
-              <Route path='/board/edit/:id' element={<BoardEditPage />} />
+              <Route path='/board/*' element={<BoardMainPage />} />
             </Routes>
           <Footer/> 
      </>
