@@ -144,7 +144,7 @@ const FieldSearch = () => {
     };
   }, []);
 
-  return (
+return (
     <div className="WholeBox" ref={wholeBoxRef}>
       <div
         className={`InputBox ${
