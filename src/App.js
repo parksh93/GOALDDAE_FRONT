@@ -9,8 +9,8 @@ import Navigation from './auth/navigation/Navigation';
 import LoginInfo from './loginInfo/LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import Footer from './footer/Footer';
-import Match from './auth/page/match/Match';
 import Admin from './auth/page/admin/Admin';
+import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 
 const App = () => {
   return (
@@ -26,9 +26,9 @@ const App = () => {
               <Route path='/find' element={<FindMain />} />
               <Route path='/find/:findMenuNum' element={<FindMain />} />
 
-              <Route path='/Match' element={<Match />} />
               <Route path='/friend-list' element={<friend-list />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
             </Routes>
           <Footer/> 
      </>

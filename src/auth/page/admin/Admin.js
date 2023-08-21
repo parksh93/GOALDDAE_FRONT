@@ -1,13 +1,13 @@
-import FieldReservation from "./tableFieldReservation/FieldReservation";
-import TeamMember from "./tableTeam/TeamMember";
-import FriendAccept from "./tableFriend/FriendAccept";
-import FriendAdd from "./tableFriend/FriendAdd";
-import FriendBlock from "./tableFriend/FriendBlock";
-import FriendList from "./tableFriend/FriendList";
-import MatchTeam from "./tableMatch/MatchTeam";
-import MatchIndividual from "./tableMatch/MatchIndividual";
-import TeamApply from "./tableTeam/TeamApply";
-import TeamMatchResult from "./tableTeam/TeamMatchResult";
+import FieldReservation from "./tableFieldReservation/FieldReservationTable";
+import TeamMember from "./tableTeam/TeamMemberTable";
+import FriendAccept from "./tableFriend/FriendAcceptTable";
+import FriendAdd from "./tableFriend/FriendAddTable";
+import FriendBlock from "./tableFriend/FriendBlockTable";
+import FriendList from "./tableFriend/FriendListTable";
+import MatchTeam from "./tableMatch/MatchTeamTable";
+import MatchIndividual from "./tableMatch/MatchIndividualTable";
+import TeamApply from "./tableTeam/TeamApplyTable";
+import TeamMatchResult from "./tableTeam/TeamMatchResultTable";
 
 const Admin = () => {
   return (
