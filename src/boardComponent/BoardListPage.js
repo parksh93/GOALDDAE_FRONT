@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../userComponent/userContext/UserContext";
 
 function BoardListPage() {
     
@@ -9,10 +10,13 @@ function BoardListPage() {
   const [searchType, setSearchType] = useState("");
   const [searchName, setSearchName] = useState("");
 
-  const location = useLocation(); // 현재 경로 정보
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+
+  const { userInfo } = useUser();
 
   useEffect(() => {
+
+    console.log(userInfo)
     // URL에서 query string 파라미터 추출
     const page = parseInt(searchParams.get("page")) || 1;
     const type = searchParams.get("type") || "";
@@ -27,7 +31,7 @@ function BoardListPage() {
       setPageData(response.data);
       setTotalPageNum(response.data.pageInfo.totalPages)
     });
-  }, [location.search]);
+  }, [searchParams, userInfo]);
 
   const handleSearch = () => {
     // 검색 버튼 클릭 시 페이지를 1로 초기화하고 요청

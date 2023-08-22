@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useUser } from "../userComponent/userContext/UserContext";
 
 const BoardWritePage = () => {
-  const [userId] = useState(1); // 임시로 userId 설정
-  const [writer] = useState('작성자1'); // 임시로 작성자 설정
+
+  const { userInfo } = useUser();
+
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [img1, setImg1] = useState('');
@@ -23,8 +26,8 @@ const BoardWritePage = () => {
 
   const handleSave = () => {
     const postData = {
-      userId,
-      writer,
+      userId : userInfo.id,
+      writer : userInfo.nickname,
       title,
       content,
       img1,

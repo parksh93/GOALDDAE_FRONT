@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import BoardListPage from "./BoardListPage";
-import BoardDetailPage from "./BoardDetailPage";
 import BoardWritePage from "./BoardWritePage";
 import BoardEditPage from "./BoardEditPage";
+import BoardDetailPage from "./BoardDetailPage";
 
 const BoardMainPage = () => {
   return (

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../userComponent/userContext/UserContext";
 
 const BoardDetailPage = () => {
+
+  const { userInfo } = useUser();
+
   const { id } = useParams();
-  const [userInfo] = useState({ id: 1 }); // 현재 읽고 있는 유저의 id, 임시로 1 할당
 
   const [boardDetail, setBoardDetail] = useState({});
   const [heartInfo, setHeartInfo] = useState({ heartCount: 0, hearted: false });
@@ -64,7 +67,7 @@ const BoardDetailPage = () => {
     const requestData = {
       boardId: id,
       userId: userInfo.id,
-      writer: userInfo.id, // 임시로 userId 할당
+      writer: userInfo.nickname, 
       content: newReplyContent,
       parentId: newReplyParentId,
     };
