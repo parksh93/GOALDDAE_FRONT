@@ -1,0 +1,13 @@
+.kakopayBtn {
+    background: none;
+    border: none;
+}
+
+.kakaopayBtnDiv {
+    display: inline;
+    float: right;;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+
