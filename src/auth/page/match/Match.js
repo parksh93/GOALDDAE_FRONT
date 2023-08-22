@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import FieldReservation from '../admin/tableFieldReservation/FieldReservation';
 
 const Match = () => {
   const location = useLocation();
@@ -11,7 +12,8 @@ const Match = () => {
 
   return (
     <>
-        <div>매치 페이지</div>
+        <h3>매치 페이지</h3>
+        <FieldReservation />
     </>
   )
 }

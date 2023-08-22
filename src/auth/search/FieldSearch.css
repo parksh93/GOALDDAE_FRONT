@@ -4,8 +4,10 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  /* position: fixed; */
   display: inline-block;
   max-width: 400px;
+  z-index: 999;
 }
 
 /* 입력창 및 삭제 버튼 컨테이너 */
@@ -122,4 +124,42 @@
 /* 검색창 지역 스타일 */
 .EmphasizedText {
   font-weight: bold;
+}
+
+/* 모바일 화면 크기에 따른 스타일 조절 */
+@media screen and (max-width: 767px) {
+  .WholeBox {
+    max-width: 300px;
+  }
+
+  .InputBox {
+    width: auto;
+  }
+
+  /* 폰트 크기 변경 */
+  .DropDownBox {
+    width: auto;
+    font-size: 12px; 
+  }
+
+  .TextInput-inactiveBorderRadius {
+    width: auto;
+    height: auto;
+  }
+
+  /* 입력창 폰트 크기 변경 */
+  .Input {
+    font-size: 14px; 
+  }
+
+  /* 입력 취소 버튼 폰트 크기 변경 */
+  .DeleteButton {
+    font-size: 12px; 
+    margin-right: 8px;
+  }
+
+  /* 드롭다운 리스트 항목 폰트 크기 변경 */
+  .DropDownItem {
+    font-size: 14px; 
+  }
 }
