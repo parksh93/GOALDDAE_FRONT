@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import throttle from 'lodash/throttle';
+import styles from './TeamMain.module.css';
 
 
 const areaOptions = [
@@ -23,7 +25,7 @@ const areaOptions = [
     { value: "제주", label: "제주" },
 ];
 
-const TeamList = ({ teamId }) => {
+const TeamList = ({}) => {
     const [teamList, setTeamList] = useState([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +42,7 @@ const TeamList = ({ teamId }) => {
             if (area) {
                 if (area === '모든지역') {
                     if (recruiting) {   // 모든지역, recruiting = true
-                        requestPath = 'team/list/recruiting';   
+                        requestPath = '/team/list/recruiting';   
                     } else {    // 모든지역, recruiting false
                         requestPath = '/team/list';
                     }
@@ -76,8 +78,8 @@ const TeamList = ({ teamId }) => {
     };
 
     useEffect(() => {
-        fetchTeamList(page, selectedArea, recruiting); // Include recruiting parameter
-    }, [page, selectedArea, recruiting]); // Include recruiting dependency
+        fetchTeamList(page, selectedArea, recruiting); 
+    }, [page, selectedArea, recruiting]); 
 
     const handleScroll = throttle(() => {
         const scrollTop = Math.max(
@@ -119,26 +121,39 @@ const TeamList = ({ teamId }) => {
 
     return (
         <div>
-            <select value={selectedArea} onChange={handleAreaChange}>
-                {areaOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
-                ))}
-            </select>
-            <button onClick={toggleRecruiting}>
-                {recruiting ? '모집중 팀' : '전체 팀'}
-            </button>
+            <div className={styles.filtes}>
+                <select className={styles.areaFilter} value={selectedArea} onChange={handleAreaChange}>
+                    {areaOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                </select>
+                <button className={styles.recruitingBtn} onClick={toggleRecruiting}>
+                    {recruiting ? '모집중 팀' : '전체 팀'}
+                </button>
+                <button className={styles.teamCreateLinkBtn}>
+                    <Link to="/team/save">팀 생성</Link>
+                </button>
+            </div>
             {teamList.map((team) => (
-                <div key={team.teamId}>
-                    <h3>{team.teamProfileImgUrl} | {team.teamName}</h3>
-                    <div>
+                <div className={styles.teamCard} key={team.teamId}>
+                    <h3>
+                        <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} /> {team.teamName}
+                        <br />
+                    </h3>
+                    <div className={styles.teamInfo}>
                         <p>
-                            {team.area} | {team.averageAge} | {team.entryGender} | <span style={{ color: team.recruiting ? 'red' : 'black' }}>{team.recruiting ? '모집중' : '모집종료'}</span>
+                            {team.area} | {team.averageAge} | {team.entryGender} | 
+                            <span className={team.recruiting ? styles.teamRecruiting : ''}>
+                                {team.recruiting ? '모집중' : '모집종료'}
+                            </span>
                         </p>
                     </div>
                 </div>
             ))}
-            {isLoading && <p>불러오는 중...</p>}
-            {noNewData && <p>데이터가 없습니다.</p>}
+            <div className={styles.loading}>
+                {isLoading && <h3>불러오는 중...</h3>}
+                {noNewData && <h3>데이터가 없습니다.</h3>}
+            </div>
         </div>
     );
 };

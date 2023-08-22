@@ -1,0 +1,99 @@
+/* 필터 */
+.filtes{
+    width: 55%;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+.areaFilter{
+    border: 2px solid rgb(7, 130, 48);
+    padding: 5px;
+    border-radius: 10%;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.recruitingBtn {
+    background-color: transparent;
+    border: 2px solid rgb(7, 130, 48);
+    padding: 5px 10px;
+    border-radius: 10%;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+
+.recruitingBtn:hover {
+    color: #fff;
+    background-color: rgb(7, 130, 48);
+}
+
+.recruitingBtn:active {
+    color: #fff;
+    background-color: rgb(7, 130, 48);
+}
+
+.teamCreateLinkBtn{
+    border: 2px solid rgb(7, 130, 48);
+    padding: 5px 10px;
+    border-radius: 10%;
+}
+
+.recruitingBtn:hover {
+    color: #fff;
+    background-color: rgb(7, 130, 48); /* 원하는 hover 배경색으로 변경 */
+}
+
+
+
+/* 검색참 */
+.WholeBox{
+    padding: 10px;
+}
+
+.DeleteButton{
+    cursor: pointer;
+}
+
+.DropDownBox{
+    display: block;
+    margin: 0 auto;
+    padding: 8px 0;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
+    list-style-type: none;
+    z-index: 3
+}
+
+
+
+
+/* teamList */
+.teamCard {
+    border: 2px solid #ccc;
+    padding: 5px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 60%;
+}
+  
+.teamProfileImg {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+ 
+.teamRecruiting {
+    color: red;
+}
+  
+.loading{
+    margin: 0 auto;
+    width: 10%;
+    color:#8d8d8d
+}

@@ -1,50 +1,167 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState, useCallback } from "react";
+import styles from './TeamMain.module.css';
+import { useNavigate } from "react-router-dom";
 
-function TeamSearch() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [teams, setTeams] = useState([]);
-    const [filteredTeams, setFilteredTeams] = useState([]);
+const TeamSearch = () => {
+    const [inputValue, setInputValue] = useState('팀 이름 검색')
+    const [isHaveInputValue, setIsHaveInputValue] = useState(false);
+    const [dropDownList, setDropDownList] = useState([]);
+    const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
+    const [completedTeamName, setCompletedTeamName] = useState('');
+    const [dropDownCache, setDropDownCache] = useState({});  
 
-    useEffect(()=> {
-        fetchTeams();
-    }, []);
+    const wholeBoxRef = useRef(null);
+    const navigate = useNavigate();
 
-    const fetchTeams = async () => {
-        try{
-            const response = await axios.get('/list/search/teamName');
-            setTeams(response.data);
-            setFilteredTeams(response.data);
-        }catch(error){
-            console.error('팀 정보를 가져오지 못 했습니다.', error);
+    /* 검색창 클릭 시 '팀 이름 검색'를 지움*/
+    const handleInputFocus = () => {
+        if (inputValue === '팀 이름 검색') {
+            setInputValue('');
         }
     };
-    
-    const handleSearchChange = (event) => {
-        const newSearchTerm = event.target.value;
-        setSearchTerm(newSearchTerm);
-        const filtered = teams.filter(team =>
-            team.name.toLowerCase().includes(newSearchTerm.toLowerCase())
-        );
-        setFilteredTeams(filtered);
+
+    /* 검색창이 비어져있을 때 검색창 밖 클릭하면 '팀 이름 검색' 표시  */
+    const handleInputBlur = () => {
+        if (inputValue.trim() === '') {
+          setInputValue('팀 이름 검색');
+        }
+      };
+
+    const showDropDownList = useCallback(async() => {
+        if (inputValue === '') {
+          setIsHaveInputValue(false)
+          setDropDownList([])
+        } else {
+            try {
+                const response = await axios.get('team/search/teamName', {
+                    params: { searchTerm: inputValue }
+                })
+                setDropDownList(response.data)
+                setDropDownCache((prevState) => ({
+                    ...prevState,
+                    [inputValue]: response.data,
+                  }));
+            } catch (error) {
+                console.error('서버 요청 중 에러가 발생했습니다.', error);
+                console.error('에러 응답 데이터:', error.response.data);
+                console.error('에러 응답 상태:', error.response.status);
+                console.error('에러 응답 헤더:', error.response.headers);
+            }            
+        }
+    }, [inputValue, setIsHaveInputValue, setDropDownList, setDropDownCache]);
+
+    const fetchTeamName = async (partialTeamName) => {
+        try{
+            const response = await axios.get('/team/search/teamName',{
+                params : {searchTerm : partialTeamName },
+            });
+
+            if (response.status === 200 ) {
+                return response.data[0] || '';
+            }else {
+                console.error('서버 응답이 올바르지 않습니다.', response);
+            }
+        } catch(error) {
+            console.error('서버 요청 중 에러가 발생했습니다.', error)
+        }
+        return '';
+    };  
+
+    const changeInputValue = async(event) => {
+        setInputValue(event.target.value);
+        setIsHaveInputValue(true);
+        const completedName = await fetchTeamName(event.target.value);
+        setCompletedTeamName(completedName);
     };
 
-    return(
-        <div>
-        <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Search team..."
-        />
-        <ul>
-            {filteredTeams.map(team => (
-                <li key={team.id}>{team.name}</li>
-        ))}
-        </ul>
-    </div>
-    );
+    const clickDropDownItem = (clickedItem, id) => {
+        setInputValue(clickedItem)
+        setIsHaveInputValue(false)
+        navigate(`/team/detailid?id=${id}`);
+    }
 
+    const handleDropDownKey = event => {
+        //input에 값이 있을때만 작동
+        if (isHaveInputValue) {
+          if (
+            event.key === 'ArrowDown' &&
+            dropDownList.length - 1 > dropDownItemIndex
+          ) {
+            setDropDownItemIndex(dropDownItemIndex + 1)
+          }
+    
+          if (event.key === 'ArrowUp' && dropDownItemIndex >= 0)
+            setDropDownItemIndex(dropDownItemIndex - 1)
+          if (event.key === 'Enter' && dropDownItemIndex >= 0) {
+            clickDropDownItem(dropDownList[dropDownItemIndex])
+            setDropDownItemIndex(-1)
+          }
+        }
+    }
+    
+    useEffect(() => {
+        showDropDownList()
+    }, [inputValue])
+
+    /* 모달 밖을 클릭할 경우 dropdownList가 닫힘*/
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                wholeBoxRef &&
+                wholeBoxRef.current &&
+                !wholeBoxRef.current.contains(event.target)
+            ) {
+                setIsHaveInputValue(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
+
+return (
+    <div className={styles.WholeBox}>
+        <div className={`InputBox ${styles.InputBox}`} isHaveInputValue={isHaveInputValue}>
+        <input
+            className={styles.Input}
+            type='text'
+            value={inputValue}
+            onChange={changeInputValue}
+            onKeyUp={handleDropDownKey}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+        />
+        <div className={styles.DeleteButton} onClick={() => setInputValue('')}>
+            &times;
+        </div>
+        </div>
+        {isHaveInputValue && (
+        <div className={styles.DropDownBox}>
+            {dropDownList.length === 0 && (
+            <li className={styles.NoResult}>해당하는 단어가 없습니다</li>
+            )}
+            <ul>
+                {dropDownList.map((dropDownItem, dropDownIndex) => {
+                return (
+                    <li
+                    key={dropDownIndex}
+                    onClick={() => clickDropDownItem(dropDownItem.teamName, dropDownItem.id)}
+                    onMouseOver={() => setDropDownItemIndex(dropDownIndex)}
+                    className={
+                        dropDownItemIndex === dropDownIndex ? 'selected' : ''
+                    }
+                    >
+                    {dropDownItem.teamName}
+                    </li>
+                )
+                })}
+            </ul>
+        </div>
+        )}
+    </div>
+    )
 }
 
 export default TeamSearch;
