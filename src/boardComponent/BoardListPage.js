@@ -12,11 +12,9 @@ function BoardListPage() {
 
   const [searchParams] = useSearchParams();
 
-  const { userInfo } = useUser();
 
   useEffect(() => {
 
-    console.log(userInfo)
     // URL에서 query string 파라미터 추출
     const page = parseInt(searchParams.get("page")) || 1;
     const type = searchParams.get("type") || "";
@@ -31,7 +29,7 @@ function BoardListPage() {
       setPageData(response.data);
       setTotalPageNum(response.data.pageInfo.totalPages)
     });
-  }, [searchParams, userInfo]);
+  }, [searchParams]);
 
   const handleSearch = () => {
     // 검색 버튼 클릭 시 페이지를 1로 초기화하고 요청

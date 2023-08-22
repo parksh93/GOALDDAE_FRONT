@@ -21,6 +21,7 @@ const BoardWritePage = () => {
   };
 
   const handleImg1Change = (e) => {
+    console.log(userInfo)
     setImg1(e.target.value);
   };
 
