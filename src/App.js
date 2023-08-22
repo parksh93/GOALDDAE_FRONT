@@ -12,6 +12,8 @@ import Footer from './footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 
+import Team from './auth/page/team/Team';
+
 const App = () => {
   return (
     <UserProvider> 
@@ -29,6 +31,7 @@ const App = () => {
               <Route path='/friend-list' element={<friend-list />} />
               <Route path="/admin" element={<Admin />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
+              <Route path="/Team" element={<Team />} />
             </Routes>
           <Footer/> 
      </>

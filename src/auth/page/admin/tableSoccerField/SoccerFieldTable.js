@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import './SoccerFieldTable.css'; 
 
 const SoccerFieldTable = () => {
-  // 상태 선언
-  const [id, setId] = useState(0);
+  const [id, setId] = useState('');
   const [fieldName, setFieldName] = useState('');
-  const [toiletStatus, setToiletStatus] = useState(0);
-  const [showerStatus, setShowerStatus] = useState(0);
-  const [parkingStatus, setParkingStatus] = useState(0);
+  const [toiletStatus, setToiletStatus] = useState('');
+  const [showerStatus, setShowerStatus] = useState('');
+  const [parkingStatus, setParkingStatus] = useState('');
   const [requirements, setRequirements] = useState('');
   const [fieldSize, setFieldSize] = useState('');
   const [fieldImg1, setFieldImg1] = useState('');
   const [fieldImg2, setFieldImg2] = useState('');
   const [fieldImg3, setFieldImg3] = useState('');
-  const [reservationFree, setReservationFree] = useState(0);
-  const [inOutStatus, setInOutStatus] = useState('');
-  const [grassStatus, setGrassStatus] = useState('');
+  const [reservationFree, setReservationFree] = useState('');
+  const [inOutWhether, setInOutWhether] = useState('');
+  const [grassWhether, setGrassWhether] = useState('');
   const [region, setRegion] = useState('');
 
-  // 폼 제출 처리 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // 입력값 검증
+    if (!id || !fieldName || !toiletStatus || !showerStatus || !parkingStatus || !requirements || !fieldSize || !fieldImg1 || !fieldImg2 || !fieldImg3 || !reservationFree || !inOutWhether || !grassWhether || !region) {
+      alert('모든 필드를 입력해 주세요.');
+      return;
+    }
+  
     try {
       const soccerField = {
         id: id,
@@ -34,108 +42,161 @@ const SoccerFieldTable = () => {
         fieldImg2: fieldImg2,
         fieldImg3: fieldImg3,
         reservationFree: reservationFree,
-        inOutStatus: inOutStatus,
-        grassStatus: grassStatus,
+        inOutWhether: inOutWhether,
+        grassWhether: grassWhether, 
         region: region,
       };
-      const response = await axios.post('/api/MainController/addSoccerField', soccerField);
-      // 서버로부터 데이터를 얻은 후 처리
-      // 예: 결과 메시지 표시, 입력 필드 초기화 등
-    } catch (error) {
-      console.error(error);
+      const response = await axios.post('/addSoccerField', soccerField);
+  
+      if (response.status === 200) { // 요청이 성공적으로 완료되었을 경우
+        console.log(`생성 완료: ${fieldName}`);
+      } else { // 그 외 상태 코드일 경우, 생성이 실패한 것으로 간주함
+        console.error(`생성 실패, 상태 코드: ${response.status}`);
+        alert('구장 추가에 실패했습니다.');
+      }
+    } catch (error) { // 응답에 에러가 발생한 경우
+      console.error('구장 추가 중 에러 발생:', error);
+      alert('구장 추가에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
-  // 렌더링
   return (
     <div>
-      <h1>구장 등록</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            아이디 
-            <input type="number" value={id} onChange={(e) => setId(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            구장 이름
-            <input type="text" value={fieldName} onChange={(e) => setFieldName(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            화장실 여부
-            <input type="number" value={toiletStatus} onChange={(e) => setToiletStatus(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            샤워시설 여부
-            <input type="number" value={showerStatus} onChange={(e) => setShowerStatus(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            주차장 여부
-            <input type="number" value={parkingStatus} onChange={(e) => setParkingStatus(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            요구사항
-            <input type="text" value={requirements} onChange={(e) => setRequirements(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            구장 크기
-            <input type="text" value={fieldSize} onChange={(e) => setFieldSize(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            구장 이미지 1
-            <input type="text" value={fieldImg1} onChange={(e) => setFieldImg1(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            구장 이미지 2
-            <input type="text" value={fieldImg2} onChange={(e) => setFieldImg2(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            구장 이미지 3
-            <input type="text" value={fieldImg3} onChange={(e) => setFieldImg3(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            예약 가능 여부
-            <input type="number" value={reservationFree} onChange={(e) => setReservationFree(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            실내/실외 여부
-            <input type="text" value={inOutStatus} onChange={(e) => setInOutStatus(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            잔디 여부
-            <input type="text" value={grassStatus} onChange={(e) => setGrassStatus(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            지역
-            <input type="text" value={region} onChange={(e) => setRegion(e.target.value)} />
-          </label>
-        </div>
-        <input type="submit" value="추가" />
+      <h3>구장 등록</h3>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+      
+      <div className="input-wrapper">
+      <Box mb={2}>
+        <TextField
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          label="구장PK ID(Number)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={fieldName}
+          onChange={(e) => setFieldName(e.target.value)}
+          label="구장 이름"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={toiletStatus}
+          onChange={(e) => setToiletStatus(e.target.value)}
+          label="화장실 여부(true or false)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={showerStatus}
+          onChange={(e) => setShowerStatus(e.target.value)}
+          label="샤워시설 여부(true or false)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={parkingStatus}
+          onChange={(e) => setParkingStatus(e.target.value)}
+          label="주차장 여부(true or false)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={requirements}
+          onChange={(e) => setRequirements(e.target.value)}
+          label="요구사항"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={fieldSize}
+          onChange={(e) => setFieldSize(e.target.value)}
+          label="구장 크기"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={fieldImg1}
+          onChange={(e) => setFieldImg1(e.target.value)}
+          label="구장 이미지 1"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={fieldImg2}
+          onChange={(e) => setFieldImg2(e.target.value)}
+          label="구장 이미지 2"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={fieldImg3}
+          onChange={(e) => setFieldImg3(e.target.value)}
+          label="구장 이미지 3"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={reservationFree}
+          onChange={(e) => setReservationFree(e.target.value)}
+          label="예약 가능 여부(0 or 1)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={inOutWhether}
+          onChange={(e) => setInOutWhether(e.target.value)}
+          label="실내/실외 여부(0 or 1)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={grassWhether}
+          onChange={(e) => setGrassWhether(e.target.value)}
+          label="잔디 여부(0 or 1)"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      <Box mb={2}>
+        <TextField
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}
+          label="지역"
+          variant="outlined"
+          className="input-field"
+        />
+      </Box>
+      </div>
+
+      <div className="buttons-container">
+        <button type="submit" className="submit-button">추가</button>
+      </div>
       </form>
     </div>
   );
