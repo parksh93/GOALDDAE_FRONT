@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import './SoccerFieldTable.css'; 
 
 const SoccerFieldTable = () => {
-  const [id, setId] = useState('');
   const [fieldName, setFieldName] = useState('');
   const [toiletStatus, setToiletStatus] = useState('');
   const [showerStatus, setShowerStatus] = useState('');
@@ -15,7 +14,7 @@ const SoccerFieldTable = () => {
   const [fieldImg1, setFieldImg1] = useState('');
   const [fieldImg2, setFieldImg2] = useState('');
   const [fieldImg3, setFieldImg3] = useState('');
-  const [reservationFree, setReservationFree] = useState('');
+  const [reservationFee, setReservationFee] = useState('');
   const [inOutWhether, setInOutWhether] = useState('');
   const [grassWhether, setGrassWhether] = useState('');
   const [region, setRegion] = useState('');
@@ -23,15 +22,13 @@ const SoccerFieldTable = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // 입력값 검증
-    if (!id || !fieldName || !toiletStatus || !showerStatus || !parkingStatus || !requirements || !fieldSize || !fieldImg1 || !fieldImg2 || !fieldImg3 || !reservationFree || !inOutWhether || !grassWhether || !region) {
+    if (!fieldName || !toiletStatus || !showerStatus || !parkingStatus || !requirements || !fieldSize || !fieldImg1 || !fieldImg2 || !fieldImg3 || !reservationFee || !inOutWhether || !grassWhether || !region) {
       alert('모든 필드를 입력해 주세요.');
       return;
     }
   
     try {
       const soccerField = {
-        id: id,
         fieldName: fieldName,
         toiletStatus: toiletStatus,
         showerStatus: showerStatus,
@@ -41,40 +38,32 @@ const SoccerFieldTable = () => {
         fieldImg1: fieldImg1,
         fieldImg2: fieldImg2,
         fieldImg3: fieldImg3,
-        reservationFree: reservationFree,
+        reservationFee: reservationFee,
         inOutWhether: inOutWhether,
         grassWhether: grassWhether, 
         region: region,
       };
-      const response = await axios.post('/addSoccerField', soccerField);
+      const response = await axios.post('/SoccerField/save', soccerField);
   
-      if (response.status === 200) { // 요청이 성공적으로 완료되었을 경우
+      if (response.status === 200) { 
         console.log(`생성 완료: ${fieldName}`);
-      } else { // 그 외 상태 코드일 경우, 생성이 실패한 것으로 간주함
+      } else { 
         console.error(`생성 실패, 상태 코드: ${response.status}`);
         alert('구장 추가에 실패했습니다.');
       }
-    } catch (error) { // 응답에 에러가 발생한 경우
+    } catch (error) { 
       console.error('구장 추가 중 에러 발생:', error);
       alert('구장 추가에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
   return (
-    <div>
-      <h3>구장 등록</h3>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h3 style={{ textAlign: 'center' }}>구장 등록</h3>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width:'100%' }}>
       
       <div className="input-wrapper">
-      <Box mb={2}>
-        <TextField
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          label="구장PK ID(Number)"
-          variant="outlined"
-          className="input-field"
-        />
-      </Box>
+      
       <Box mb={2}>
         <TextField
           value={fieldName}
@@ -158,8 +147,8 @@ const SoccerFieldTable = () => {
       </Box>
       <Box mb={2}>
         <TextField
-          value={reservationFree}
-          onChange={(e) => setReservationFree(e.target.value)}
+          value={reservationFee}
+          onChange={(e) => setReservationFee(e.target.value)}
           label="예약 가능 여부(0 or 1)"
           variant="outlined"
           className="input-field"
@@ -193,10 +182,14 @@ const SoccerFieldTable = () => {
         />
       </Box>
       </div>
-
-      <div className="buttons-container">
-        <button type="submit" className="submit-button">추가</button>
-      </div>
+      <div 
+          style={{ 
+          display: 'flex', 
+          justifyContent: 'center',
+          marginRight: '180px'
+          }}>
+             <button type="submit" className="submit-button">추가</button>
+        </div>
       </form>
     </div>
   );
