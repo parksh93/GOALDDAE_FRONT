@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useUser } from "../userComponent/userContext/UserContext";
+import { useUser } from "../../userComponent/userContext/UserContext";
+import TextField from '@mui/material/TextField';
+import styles from './BoardWrite.module.css'
 
 const BoardWritePage = () => {
 
@@ -21,7 +23,6 @@ const BoardWritePage = () => {
   };
 
   const handleImg1Change = (e) => {
-    console.log(userInfo)
     setImg1(e.target.value);
   };
 
@@ -47,14 +48,33 @@ const BoardWritePage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>글 작성</h1>
-      <input type="text" value={title} onChange={handleTitleChange} placeholder="제목" />
-      <textarea value={content} onChange={handleContentChange} placeholder="내용" />
-      <input type="text" value={img1} onChange={handleImg1Change} placeholder="이미지1" />
-      <Link to={`/board`}>
-        <button onClick={handleSave}>작성</button>
-      </Link>
+      <div>        
+        <TextField fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
+      </div>
+      <div>        
+        <TextField
+          fullWidth
+          margin="normal"
+          value={content}
+          onChange={handleContentChange}
+          id="content-area"
+          multiline
+          rows={10}
+        />
+      </div>
+      <div>    
+        <TextField fullWidth margin="normal" value={img1} onChange={handleImg1Change} id="img-area" placeholder="이미지1" variant="standard" />
+      </div>
+      <div className={styles.buttonContainer}>
+        <Link to={`/board?page=&type=&name=`} className={styles.listButton}>
+          <button onClick={handleSave}>작성</button>
+        </Link>
+        <Link to={`/board?page=&type=&name=`} className={styles.listButton}>
+          <button>취소</button>
+        </Link>
+      </div>
     </div>
   );
 };

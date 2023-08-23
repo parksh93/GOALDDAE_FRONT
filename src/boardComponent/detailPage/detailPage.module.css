@@ -1,0 +1,69 @@
+.container {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .postSection {
+    align-items: center;
+
+  }
+
+  .heartSection {
+    text-align : center;
+  }
+  
+  .postDetailContainer {
+    text-align: center;
+  }
+  
+  .postTitle {
+    font-size: 24px;
+    margin: 10px 0;
+    text-align: left;
+  }
+  
+  .postMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .author {
+    font-weight: bold;
+  }
+  
+  .info {
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .separator {
+    border: 0.5px solid gray;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .postImage {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+  
+  .content {
+    text-align: left;
+    margin: 10px 0;
+  }
+
+  .detailButton {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #108b0c;
+    border: none;
+    color: white;
+    cursor: pointer;
+    float: right;
+  }
+  

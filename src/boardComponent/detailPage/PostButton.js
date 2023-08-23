@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "./detailPage.module.css";
 
 const PostButton = ({ boardDetail, userInfo }) => {
 
@@ -33,16 +34,16 @@ const PostButton = ({ boardDetail, userInfo }) => {
   return (
     <div>
       {userInfo.id === boardDetail.userId ? (
-        <div>
+        <>
           <Link to={`/board/edit/${boardDetail.id}`}>
-            <button>수정</button>
+            <button className={styles.detailButton}>수정</button>
           </Link>
-          <button onClick={handleDelete}>삭제</button>
-        </div>
+          <button onClick={handleDelete} className={styles.detailButton}>삭제</button>
+        </>
       ) : (
-        <div>
+        <>
           {!isReporting ? (
-            <button onClick={() => setIsReporting(true)}>신고</button>
+            <button onClick={() => setIsReporting(true)} className={styles.detailButton}>신고</button>
           ) : (
             <div>
               <textarea
@@ -53,11 +54,11 @@ const PostButton = ({ boardDetail, userInfo }) => {
               <button onClick={() => setIsReporting(false)}>취소</button>
             </div>
           )}
-        </div>
+        </>
       )}   
 
       <Link to="/board">
-        <button>목록으로 돌아가기</button>
+        <button className={styles.detailButton}>목록으로 돌아가기</button>
       </Link>
 
     </div>

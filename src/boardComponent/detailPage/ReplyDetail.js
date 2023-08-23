@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { formatDate } from '../dateUtils';
 
 const ReplyDetail = ({ boardDetail, userInfo }) => {
 
@@ -85,25 +86,27 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
             <div key={reply.id}>
               <p>
                 작성자: {reply.writer}, 댓글 내용: {reply.content},
-                작성일: {reply.writeDate}
+                작성일: {formatDate(reply.writeDate)}
                 {reply.status === 1
                   ? " (삭제된 댓글입니다)"
                   : reply.status === 2
                   ? " (관리자에 의해 삭제된 댓글입니다)"
                   : ""}
               </p>
+              <div>
               {userInfo.id === reply.userId && (
-                <div>
+                <>
                   {/* 수정 버튼 */}
                   <button onClick={() => handleEditClick(reply.id, reply.content)}>
                     수정
                   </button>
                   {/* 삭제 버튼 */}
                   <button onClick={() => handleDelete(reply.id)}>삭제</button>
-                </div>
+                </>
               )}
               {userInfo.id !== reply.userId && <button>신고</button>}
               <button onClick={() => setNewReplyParentId(reply.id)}>답글달기</button>
+              </div>
               {/* 수정 폼 */}
               {editingCommentId === reply.id && (
                 <div>
@@ -120,7 +123,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                   <div key={child.id}>
                     <p>
                       작성자: {child.writer}, 댓글 내용: {child.content},
-                      작성일: {child.replyWriteDate}
+                      작성일: {formatDate(child.replyWriteDate)}
                     </p>
                     {/* 답글 수정 버튼 */}
                     {userInfo.id === child.userId && (

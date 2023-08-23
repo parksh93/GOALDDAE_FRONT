@@ -1,16 +1,13 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import BoardListPage from "./BoardListPage";
-import BoardWritePage from "./BoardWritePage";
-import BoardEditPage from "./BoardEditPage";
-import BoardDetailPage from "./BoardDetailPage";
+import BoardListPage from "./listPage/BoardListPage";
+import BoardWritePage from "./writePage/BoardWritePage";
+import BoardEditPage from "./writePage/BoardEditPage";
+import BoardDetailPage from "./detailPage/BoardDetailPage";
 
 const BoardMainPage = () => {
   return (
     <div>
-      <Link to={`/board`}>
-        <h1>자유게시판</h1>
-      </Link>
       <Routes>
         <Route path="/" element={<BoardListPage />} />
         <Route path="/detail/:id" element={<BoardDetailPage />} />

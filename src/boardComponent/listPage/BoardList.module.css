@@ -1,0 +1,119 @@
+
+.container {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  th {
+    padding: 10px;
+    font-weight: bold;
+    background-color: #fafafa;
+  }
+  
+  .tableHeader {
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .tableTitle {
+    text-align: left;
+    width: 400px;
+  }
+  
+  .pageButtons {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .numButton {
+    margin: 0 1px;
+  }
+  
+  .prevButton, .nextButton {
+    margin: 0 5px;
+  }
+  
+  .prevButton:hover, .nextButton:hover {
+    background-color: #f0f0f0;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background-color: #108b0c;
+    border: none;
+    color: #fafafa;
+    cursor: pointer;
+  }
+  
+  select, input {
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  .searchButton {
+    margin-left: 5px;
+  }
+
+  .searchContainer {
+    text-align: center; /* 검색 창을 가운데로 정렬 */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagingContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagingButton {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+}
+
+.writeLink {
+  text-align: right;
+  margin-top: 10px;
+  display: block;
+}
+
+.writeButton {
+  padding: 5px 10px;
+  background-color: #108b0c;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  margin-top: 15px;
+}
+
+a {
+    color: inherit; /* 현재 텍스트 색상 상속 */
+    text-decoration: none; /* 밑줄 제거 */
+  }
+  
+  /* hover 상태일 때 스타일 적용 */
+  a:hover {
+    text-decoration: underline; /* 밑줄 표시 */
+  }
+  

@@ -2,6 +2,12 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Badge from '@mui/material/Badge';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import { red } from "@mui/material/colors";
+import styles from "./detailPage.module.css";
 
 const HeartDetail = ({ boardDetail, userInfo }) => {
 
@@ -52,14 +58,35 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
 
 
   return (
-    <div>
+    <div
+    sx={{
+        '& > :not(style)': {
+          m: 2,
+        },
+      }} className={styles.heartSection}>
         {heartInfo && (
-            <div>
-                <p>좋아요 수: {heartInfo.heartCount}</p>
-                <button onClick={handleLike}>
-                {heartInfo.hearted ? "좋아요 취소" : "좋아요"}
-                </button>
-            </div>            
+            <>
+                <span onClick={handleLike}>
+                {heartInfo.hearted ? (
+                    <Tooltip title="좋아요 취소">
+                        <Badge badgeContent={heartInfo.heartCount} color="success" >
+                            <IconButton sx={{color : red[700]}} size="large">
+                                <FavoriteIcon />
+                            </IconButton>                            
+                        </Badge>
+                    </Tooltip>
+                ) 
+                : (
+                    <Tooltip title="좋아요">
+                        <Badge badgeContent={heartInfo.heartCount} color="success">
+                            <IconButton size="large">
+                                <FavoriteIcon />
+                            </IconButton>                            
+                        </Badge>
+                    </Tooltip>
+                    )}
+                </span>
+            </>            
         )}     
     </div>
   );
