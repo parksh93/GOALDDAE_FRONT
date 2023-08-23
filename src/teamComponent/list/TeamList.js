@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import throttle from 'lodash/throttle';
 import styles from './TeamMain.module.css';
+import TeamSearch from './TeamSearch';
+
 
 
 const areaOptions = [
@@ -32,6 +34,8 @@ const TeamList = ({}) => {
     const [noNewData, setNoNewData] = useState(false);
     const [selectedArea, setSelectedArea] = useState('');
     const [recruiting, setRecruiting] = useState(false); // Default is recruiting
+
+    const navigate = useNavigate();
 
     const fetchTeamList = async (pageNum, area = '', recruiting = true) => {
         try {
@@ -77,6 +81,7 @@ const TeamList = ({}) => {
         }
     };
 
+    // 무한스크롤
     useEffect(() => {
         fetchTeamList(page, selectedArea, recruiting); 
     }, [page, selectedArea, recruiting]); 
@@ -119,6 +124,10 @@ const TeamList = ({}) => {
         setNoNewData(false); // Reset noNewData flag
     };
 
+    const handleTeamClick = (id) => {
+        navigate(`/team/detail/${id}`);
+    };
+
     return (
         <div>
             <div className={styles.filtes}>
@@ -130,21 +139,26 @@ const TeamList = ({}) => {
                 <button className={styles.recruitingBtn} onClick={toggleRecruiting}>
                     {recruiting ? '모집중 팀' : '전체 팀'}
                 </button>
-                <button className={styles.teamCreateLinkBtn}>
-                    <Link to="/team/save">팀 생성</Link>
-                </button>
+                    <TeamSearch /> 
+                    <div className={styles.teamCreateLinkBtnWrapper}>
+                        <Link to="/team/save" className={styles.teamCreateLinkBtn}>
+                            팀 생성
+                        </Link>
+                    </div>
             </div>
             {teamList.map((team) => (
-                <div className={styles.teamCard} key={team.teamId}>
+                <div 
+                className={styles.teamCard} key={team.id}
+                onClick={() => handleTeamClick(team.id)}>
                     <h3>
                         <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} /> {team.teamName}
                         <br />
                     </h3>
                     <div className={styles.teamInfo}>
                         <p>
-                            {team.area} | {team.averageAge} | {team.entryGender} | 
+                            {team.area} | {team.averageAge} | {team.entryGender} |  
                             <span className={team.recruiting ? styles.teamRecruiting : ''}>
-                                {team.recruiting ? '모집중' : '모집종료'}
+                                {team.recruiting ? ' 모집중' : ' 모집종료'}
                             </span>
                         </p>
                     </div>

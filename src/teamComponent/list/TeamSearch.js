@@ -2,6 +2,7 @@ import axios from "axios";
 import React, {useEffect, useRef, useState, useCallback } from "react";
 import styles from './TeamMain.module.css';
 import { useNavigate } from "react-router-dom";
+import { debounce } from "@mui/material";
 
 const TeamSearch = () => {
     const [inputValue, setInputValue] = useState('팀 이름 검색')
@@ -23,33 +24,35 @@ const TeamSearch = () => {
 
     /* 검색창이 비어져있을 때 검색창 밖 클릭하면 '팀 이름 검색' 표시  */
     const handleInputBlur = () => {
-        if (inputValue.trim() === '') {
+        if (inputValue.trim() === '' && isHaveInputValue) {
           setInputValue('팀 이름 검색');
         }
       };
 
-    const showDropDownList = useCallback(async() => {
-        if (inputValue === '') {
-          setIsHaveInputValue(false)
-          setDropDownList([])
-        } else {
-            try {
-                const response = await axios.get('team/search/teamName', {
-                    params: { searchTerm: inputValue }
-                })
-                setDropDownList(response.data)
-                setDropDownCache((prevState) => ({
-                    ...prevState,
-                    [inputValue]: response.data,
-                  }));
-            } catch (error) {
-                console.error('서버 요청 중 에러가 발생했습니다.', error);
-                console.error('에러 응답 데이터:', error.response.data);
-                console.error('에러 응답 상태:', error.response.status);
-                console.error('에러 응답 헤더:', error.response.headers);
-            }            
-        }
-    }, [inputValue, setIsHaveInputValue, setDropDownList, setDropDownCache]);
+    const showDropDownList = useCallback(
+        debounce(async() => {
+            const trimmedInputValue = inputValue.replace(/\s+/g, '').toLowerCase(); // Remove all whitespace
+            if (inputValue === '') {
+                setIsHaveInputValue(false)
+                setDropDownList([])
+            } else {
+                try {
+                    const searchTerms = trimmedInputValue.split(" ");
+                    const response = await axios.get('/team/search/teamName', {
+                        params: { searchTerm: trimmedInputValue }
+                    })
+                    setDropDownList(response.data)
+                    setDropDownCache((prevState) => ({
+                        ...prevState,
+                        [trimmedInputValue]: response.data,
+                    }));
+                } catch (error) {
+                    console.error('서버 요청 중 에러가 발생했습니다.', error);
+                }            
+            }
+        }, 10),
+        [inputValue, setIsHaveInputValue, setDropDownList, setDropDownCache]
+    );
 
     const fetchTeamName = async (partialTeamName) => {
         try{
@@ -75,10 +78,10 @@ const TeamSearch = () => {
         setCompletedTeamName(completedName);
     };
 
-    const clickDropDownItem = (clickedItem, id) => {
+    const clickDropDownItem = (clickedItem, teamId) => {
         setInputValue(clickedItem)
         setIsHaveInputValue(false)
-        navigate(`/team/detailid?id=${id}`);
+        navigate(`/team/detail/${teamId}`);
     }
 
     const handleDropDownKey = event => {
@@ -122,7 +125,7 @@ const TeamSearch = () => {
     }, []);
 
 return (
-    <div className={styles.WholeBox}>
+    <div className={styles.WholeBox} ref={wholeBoxRef}>
         <div className={`InputBox ${styles.InputBox}`} isHaveInputValue={isHaveInputValue}>
         <input
             className={styles.Input}
@@ -142,7 +145,7 @@ return (
             {dropDownList.length === 0 && (
             <li className={styles.NoResult}>해당하는 단어가 없습니다</li>
             )}
-            <ul>
+            <ul className={styles.DropDownItem}>
                 {dropDownList.map((dropDownItem, dropDownIndex) => {
                 return (
                     <li

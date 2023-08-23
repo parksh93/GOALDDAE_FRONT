@@ -7,6 +7,7 @@ import SignupMain from './userComponent/signup/SignupMain';
 import Footer from './Footer';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import TeamMain from './teamComponent/TeamMain';
+import TeamDetail from './teamComponent/list/TeamDetail';
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
           <Route path='/signup' element={<SignupMain/>}/>
 
           <Route path='/team/list' element={<TeamMain/>}/>
-
+          <Route path='/team/detail/:id' element={<TeamDetail />} />
         </Routes>
         <Footer/> 
      </>

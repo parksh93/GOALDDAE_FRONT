@@ -1,55 +1,71 @@
 /* 필터 */
 .filtes{
-    width: 55%;
-    cursor: pointer;
-    text-align: center;
-
+    width: 100%;
+    display: flex; /* flex 컨테이너로 설정 */
+    flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 다음 줄로 내려가도록 설정 */
+    justify-content: flex-start; /* 요소들을 왼쪽으로 정렬 */
+    align-items: center; /* 요소들을 수직 가운데로 정렬 */
+    position: relative;
 }
 
 .areaFilter{
-    border: 2px solid rgb(7, 130, 48);
-    padding: 5px;
+    background-color: #ffffff;
+    color: #1a921e;
+    border: 2px solid #1a921e;
+    padding: 5px ;
     border-radius: 10%;
-    transition: background-color 0.3s;
-    margin-right: 10px;
+    margin-left: 210px;
     cursor: pointer;
 }
 
 .recruitingBtn {
-    background-color: transparent;
-    border: 2px solid rgb(7, 130, 48);
+    background-color: #1a921e;
+    color: #fff;
+    border: 2px solid #1a921e;
     padding: 5px 10px;
     border-radius: 10%;
     transition: background-color 0.3s;
-    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 .recruitingBtn:hover {
-    color: #fff;
-    background-color: rgb(7, 130, 48);
+    color: #1a921e;
+    background-color: rgb(255, 255, 255);
 }
-
-.recruitingBtn:active {
-    color: #fff;
-    background-color: rgb(7, 130, 48);
-}
-
-.teamCreateLinkBtn{
-    border: 2px solid rgb(7, 130, 48);
-    padding: 5px 10px;
-    border-radius: 10%;
-}
-
-.recruitingBtn:hover {
-    color: #fff;
-    background-color: rgb(7, 130, 48); /* 원하는 hover 배경색으로 변경 */
-}
-
-
 
 /* 검색참 */
 .WholeBox{
     padding: 10px;
+    margin-left: 420px;
+}
+
+.InputBox{
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #1a921e;
+    z-index: 3;
+    
+}
+
+.inputBox:focus-within {
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  }
+
+.inputBox:focus {
+border: 2px solid #1a921e;
+}
+
+.Input {
+    color: #005103;
+    flex: 1 0 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
 }
 
 .DeleteButton{
@@ -57,16 +73,48 @@
 }
 
 .DropDownBox{
+    position: absolute;
+    list-style-type: none;
+    width: 300px;
     display: block;
     margin: 0 auto;
     padding: 8px 0;
     background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid #1a921e;
     border-top: none;
     border-radius: 0 0 16px 16px;
-    box-shadow: 0 10px 10px rgb(0, 0, 0, 0.3);
+    box-shadow: 0 3px 3px rgba(0, 147, 10, 0.3);
+    z-index: 4
+}
+
+.DropDownItem{
     list-style-type: none;
-    z-index: 3
+    color: #1a921e;
+    padding: 0 16px;
+}
+
+.DropDownItem:hover{
+    background-color: rgb(234, 245, 233);
+    padding: 10px;
+    font-Weight: bold;
+}
+
+
+.teamCreateLinkBtn{
+    background-color: #1a921e;
+    color: #fff;
+    border: 2px solid #1a921e;
+    padding: 5px 10px;
+    border-radius: 10%;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+    display: inline-block; /* 레이블 요소를 인라인 블록으로 표시 */
+    cursor: pointer;
+}
+
+.teamCreateLinkBtn:hover {
+    color: #1a921e;
+    background-color: rgb(255, 255, 255);
 }
 
 
@@ -74,12 +122,19 @@
 
 /* teamList */
 .teamCard {
-    border: 2px solid #ccc;
-    padding: 5px;
+    border: 1px solid #1a921e;
+    padding: 1px;
     margin: 0 auto;
-    margin-bottom: 10px;
+    margin-top: 10px;
     text-align: center;
-    width: 60%;
+    width: 70%;
+    cursor: pointer;
+}
+
+.teamCard:hover{
+    border: 2px solid #1a921e;
+    background-color: rgb(234, 245, 233);
+
 }
   
 .teamProfileImg {
@@ -93,7 +148,8 @@
 }
   
 .loading{
+    width: 50%;
     margin: 0 auto;
-    width: 10%;
+    text-align: center;
     color:#8d8d8d
 }
