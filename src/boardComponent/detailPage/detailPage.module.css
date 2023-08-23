@@ -41,7 +41,7 @@
   }
   
   .separator {
-    border: 0.5px solid gray;
+    border: 0.5px solid #bbbbbb;
     width: 100%;
     margin: 20px 0;
   }
@@ -65,5 +65,6 @@
     color: white;
     cursor: pointer;
     float: right;
+    border-radius: 3px;
   }
   

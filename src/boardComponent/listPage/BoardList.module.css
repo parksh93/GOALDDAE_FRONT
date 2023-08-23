@@ -57,6 +57,7 @@
     border: none;
     color: #fafafa;
     cursor: pointer;
+    border-radius: 3px;
   }
   
   select, input {
@@ -105,6 +106,7 @@
   position: absolute;
   right: 20px;
   margin-top: 15px;
+  border-radius: 3px;
 }
 
 a {

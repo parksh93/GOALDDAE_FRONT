@@ -11,7 +11,7 @@ const PostDetail = ({ boardDetail}) => {
         <p className={styles.info}>{boardDetail.count} 조회수 / {formatDate(boardDetail.writeDate)}</p>
       </div>
       <hr className={styles.separator} />
-      <img src={boardDetail.img1} alt="이미지" className={styles.postImage} />
+      <img src={boardDetail.img1} alt="" className={styles.postImage} />
       <p className={styles.content}>{boardDetail.content}</p>
     </div>
   );

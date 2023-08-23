@@ -30,9 +30,10 @@ const BoardDetailPage = () => {
           <div className={styles.postSection}>
             <PostDetail boardDetail={boardDetail} userInfo={userInfo} />
             <br />
-            <HeartDetail boardDetail={boardDetail} userInfo={userInfo} />
-            <PostButton boardDetail={boardDetail} userInfo={userInfo} />
+            <HeartDetail boardDetail={boardDetail} userInfo={userInfo} />            
           </div>
+          <hr className={styles.separator} />
+          <PostButton boardDetail={boardDetail} userInfo={userInfo} />
           <br />
           <ReplyDetail boardDetail={boardDetail} userInfo={userInfo} />
         </>
