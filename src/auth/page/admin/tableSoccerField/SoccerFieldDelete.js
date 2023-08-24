@@ -14,7 +14,7 @@ const SoccerFieldDelete = () => {
         const response = await axios.get('/SoccerField/search');
         setSoccerFields(response.data);
       } catch (error) {
-        console.error('Failed to fetch soccer fields:', error);
+        console.error(error);
       }
     };
   
@@ -27,8 +27,8 @@ const SoccerFieldDelete = () => {
         try {
           await axios.post('/SoccerField/delete', { id: selectedFieldId });
           alert('구장이 성공적으로 제거되었습니다.');
-          setSelectedFieldId(''); // 선택된 필드 초기화
-          fetchSoccerFields(); // Delete 후 다시 리스트를 불러옵니다.
+          setSelectedFieldId(''); 
+          fetchSoccerFields(); 
         } catch (error) {
           console.error(error);
           alert('구장 제거 중 오류가 발생했습니다.');
@@ -40,7 +40,6 @@ const SoccerFieldDelete = () => {
       <div>
         <h1>구장 목록</h1>
   
-        {/* Dropdown for field selection */}
          <select value={selectedFieldId} onChange={(e) => setSelectedFieldId(e.target.value)}>
            <option value="">-- 구장 선택 --</option>
            {soccerFields.map(field => (
@@ -48,7 +47,6 @@ const SoccerFieldDelete = () => {
            ))}
          </select>
   
-         {/* Delete button */}
          {selectedFieldId && (
            <>
              <button onClick={handleDelete}>선택한 구장 제거</button>

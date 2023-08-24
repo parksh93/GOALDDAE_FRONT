@@ -1,0 +1,49 @@
+.required-box1 {
+    border: 2px solid green;
+    padding: 16px;
+    margin-bottom: 16px;
+    margin-left: 30px;
+    width: 20%;
+  }
+
+  .required-box2 {
+    border: 2px solid green;
+    padding: 16px;
+    margin-bottom: 16px;
+    margin-left: 30px;
+    width: 20%;
+  }
+  
+  .required-box3 {
+    border: 2px solid green;
+    padding: 16px;
+    margin-bottom: 16px;
+    margin-left: 30px;
+    width: 20%;
+  }
+  
+  .required-label {
+    background-color: white;
+    color: green;
+    position: relative;
+    top: -12px;
+    left: 8px;
+    padding: 0 8px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .custom-focus-input {
+    color: green;
+    border-color: green;
+}
+
+.focus-clicked .MuiInputLabel-root.Mui-focused {
+    color: green;
+}
+
+.focus-clicked .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: green;
+}
+  
+  
