@@ -47,10 +47,15 @@ const TeamDetail = () => {
             <p>입단성별: {teamInfo.entryGender}</p>
             <p>선호시간 : {teamInfo.preferredTime}</p>
             <p>선호요일: {teamInfo.preferredDay}</p>
-            <p>모집여부: {teamInfo.recruiting ? "모집 중" : "모집 종료"}</p>
+            {teamInfo.recruiting ? (
             <button className='applyBtn' onClick={handleApply}>
-              가입신청
+              모집중
             </button>
+          ) : (
+            <button className='applyBtn' disabled>
+              모집종료
+            </button>
+          )}
         </div>
       ) : (
         <p>팀 정보를 불러오는 중...</p>
