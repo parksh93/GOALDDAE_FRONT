@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useRef, useState, useCallback } from "react";
-import styles from './TeamMain.module.css';
+import styles from './List.module.css';
 import { useNavigate } from "react-router-dom";
 import { debounce } from "@mui/material";
 
@@ -29,30 +29,42 @@ const TeamSearch = () => {
         }
       };
 
-    const showDropDownList = useCallback(
-        debounce(async() => {
-            const trimmedInputValue = inputValue.replace(/\s+/g, '').toLowerCase(); // Remove all whitespace
+      const showDropDownList = useCallback(
+        debounce(async (inputValue = '') => {
+            const trimmedInputValue = inputValue.replace(/\s+/g, '').toLowerCase();
             if (inputValue === '') {
-                setIsHaveInputValue(false)
-                setDropDownList([])
+                setIsHaveInputValue(false);
+                setDropDownList([]);
             } else {
-                try {
-                    const searchTerms = trimmedInputValue.split(" ");
-                    const response = await axios.get('/team/search/teamName', {
-                        params: { searchTerm: trimmedInputValue }
-                    })
-                    setDropDownList(response.data)
-                    setDropDownCache((prevState) => ({
-                        ...prevState,
-                        [trimmedInputValue]: response.data,
-                    }));
-                } catch (error) {
-                    console.error('서버 요청 중 에러가 발생했습니다.', error);
-                }            
+                let cachedResults = dropDownCache[trimmedInputValue];
+                if (cachedResults) {
+                    setDropDownList(cachedResults);
+                } else {
+                    try {
+                        const searchTerms = trimmedInputValue.split(" ");
+                        const response = await axios.get('/team/search/teamName', {
+                            params: { searchTerm: trimmedInputValue }
+                        });
+                        setDropDownList(response.data);
+                        setDropDownCache((prevState) => ({
+                            ...prevState,
+                            [trimmedInputValue]: response.data,
+                        }));
+                    } catch (error) {
+                        console.error('서버 요청 중 에러가 발생했습니다.', error);
+                    }
+                }
             }
-        }, 10),
-        [inputValue, setIsHaveInputValue, setDropDownList, setDropDownCache]
+        }, 300),
+        []
     );
+
+    const handleAutocompleteChange = (event) => {
+        const newValue = event.target.value;
+        setInputValue(newValue);
+        setIsHaveInputValue(true);
+        showDropDownList(newValue);
+    }
 
     const fetchTeamName = async (partialTeamName) => {
         try{
@@ -104,7 +116,7 @@ const TeamSearch = () => {
     }
     
     useEffect(() => {
-        showDropDownList()
+        showDropDownList(inputValue)
     }, [inputValue])
 
     /* 모달 밖을 클릭할 경우 dropdownList가 닫힘*/

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import styles from './TeamMain.module.css';
+import styles from './Detail.module.css';
 
 const TeamDetail = () => {
   const { id } = useParams(); // React Router의 useParams 훅을 사용하여 URL의 쿼리 파라미터 값을 가져옴
@@ -20,20 +20,37 @@ const TeamDetail = () => {
       });
   }, [id]);
 
+  const handleApply = () => {
+    // 가입신청 로직을 추가하세요
+    // axios.post('/apply', { teamId: id })
+    //   .then(response => {
+    //     // 가입신청 성공 시 처리
+    //   })
+    //   .catch(error => {
+    //     // 가입신청 실패 시 처리
+    //   });
+  };
+  
   return (
     <div>
       {error ? (
         <p>존재하지 않는 팀입니다.</p>
       ) : teamInfo ? (
         <div className={styles.teamInfo}>
-          <h2>{teamInfo.teamName}</h2>
+          <h2>
+            <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl} />
+            {teamInfo.teamName}
+          </h2>
             <p>지역: {teamInfo.area}</p>
             <p>평균나이: {teamInfo.averageAge}</p>
             <p>입단비: {teamInfo.entryfee}</p>
             <p>입단성별: {teamInfo.entryGender}</p>
             <p>선호시간 : {teamInfo.preferredTime}</p>
             <p>선호요일: {teamInfo.preferredDay}</p>
-            <p>모집여부: {teamInfo.recruiting}</p>
+            <p>모집여부: {teamInfo.recruiting ? "모집 중" : "모집 종료"}</p>
+            <button className='applyBtn' onClick={handleApply}>
+              가입신청
+            </button>
         </div>
       ) : (
         <p>팀 정보를 불러오는 중...</p>

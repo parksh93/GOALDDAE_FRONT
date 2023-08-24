@@ -7,7 +7,7 @@ import SignupMain from './userComponent/signup/SignupMain';
 import Footer from './Footer';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import TeamMain from './teamComponent/TeamMain';
-import TeamDetail from './teamComponent/list/TeamDetail';
+import TeamDetail from './teamComponent/detail/TeamDetail';
 
 const App = () => {
   return (

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import throttle from 'lodash/throttle';
-import styles from './TeamMain.module.css';
+import styles from './List.module.css';
 import TeamSearch from './TeamSearch';
+import MyTeam from './MyTeam';
 
 
 
@@ -146,6 +147,7 @@ const TeamList = ({}) => {
                         </Link>
                     </div>
             </div>
+            <MyTeam /> 
             {teamList.map((team) => (
                 <div 
                 className={styles.teamCard} key={team.id}
@@ -166,7 +168,7 @@ const TeamList = ({}) => {
             ))}
             <div className={styles.loading}>
                 {isLoading && <h3>불러오는 중...</h3>}
-                {noNewData && <h3>데이터가 없습니다.</h3>}
+                {noNewData && <h3>해당하는 팀이 없습니다.</h3>}
             </div>
         </div>
     );
