@@ -43,7 +43,7 @@ function EmailInput({
 
   const sendEmail = useCallback(() => {
     if (value.trim() !== "" && regexCheck) {
-      fetch(`/sendEmail`, {
+      fetch(`/sendEmailSignup`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
