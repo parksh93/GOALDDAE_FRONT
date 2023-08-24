@@ -12,6 +12,8 @@ import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import Footer from './Footer';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
+import UserChatList from './chat/UserChatList';
+import UserChatRoom from './chat/UserChatRoom';
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
               <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
+              <Route path='/userChatList' element={<UserChatList />} />
+              <Route path='/userChatDetail' element={<UserChatRoom />} />
             </Routes>
           <Footer/> 
      </>

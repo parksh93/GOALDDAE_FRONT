@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Payment from "../paument/Payment";
+import Payment from "../payment/Payment";
 import styles from "./SoccerField.module.css";
 
 const SoccerFieldMain = () => {
