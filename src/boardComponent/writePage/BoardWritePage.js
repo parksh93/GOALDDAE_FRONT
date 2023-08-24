@@ -39,6 +39,7 @@ const BoardWritePage = () => {
     axios.post('/board/save', postData)
       .then((response) => {
         console.log('글이 성공적으로 저장되었습니다:', response.data);
+        window.location.href = "/board";
         // 글 저장 후 필요한 동작 추가
       })
       .catch((error) => {
@@ -49,12 +50,13 @@ const BoardWritePage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>글 작성</h1>
+      <h2>글 작성</h2>
       <div>        
-        <TextField fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
+        <TextField color="success" fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
       </div>
       <div>        
         <TextField
+          color="success"
           fullWidth
           margin="normal"
           value={content}
@@ -65,13 +67,15 @@ const BoardWritePage = () => {
         />
       </div>
       <div>    
-        <TextField fullWidth margin="normal" value={img1} onChange={handleImg1Change} id="img-area" placeholder="이미지1" variant="standard" />
+        <TextField color="success" fullWidth margin="normal" value={img1} onChange={handleImg1Change} id="img-area" placeholder="이미지1" variant="standard" />
       </div>
       <div className={styles.buttonContainer}>
-        <Link to={`/board?page=&type=&name=`} className={styles.listButton}>
-          <button onClick={handleSave}>작성</button>
-        </Link>
-        <Link to={`/board?page=&type=&name=`} className={styles.listButton}>
+        {title && 
+          <Link className={styles.listButton}>
+            <button onClick={handleSave} className={styles.listButton}>작성</button>
+          </Link>    
+        }
+        <Link onClick={() => window.location.href = "/board"} className={styles.listButton}>
           <button>취소</button>
         </Link>
       </div>

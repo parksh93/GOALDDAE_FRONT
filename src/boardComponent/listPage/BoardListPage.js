@@ -66,22 +66,23 @@ function BoardListPage() {
             <th className={styles.tableHeader}>글쓴이</th>
             <th className={styles.tableHeader}>작성일</th>
             <th className={styles.tableHeader}>조회수</th>
-            <th className={styles.tableHeader}>좋아요수</th>
+            <th className={styles.tableHeader}>좋아요</th>
           </tr>
         </thead>
         <tbody>
           {pageData.pageInfo && pageData.pageInfo.content.map((board) => (
-            <tr key={board.id}>
-              <td>{board.id}</td>
+            <tr key={board.id} className={styles.listTable}>
+              <td className={styles.listTable}>{board.id}</td>
               <td className={styles.tableTitle}>
-                {board.img1 !== "" && board.img1 !== null ? <ImageIcon fontSize="small" color="success" /> : <TextsmsOutlinedIcon fontSize="small" color="success"/>}{" "}
+                {board.img1 !== "" && board.img1 !== null ? <ImageIcon fontSize="small" color="success" className={styles.imgIcon} /> 
+                : <TextsmsOutlinedIcon fontSize="small" color="success" className={styles.imgIcon}/>}{" "}
                 <Link to={`/board/detail/${board.id}`}>{board.title}</Link>
                 {board.replyCount !== 0 && ` [${board.replyCount}]`}
               </td>
-              <td>{board.writer}</td>
-              <td>{formatDate(board.writeDate)}</td>
-              <td>{board.count}</td>
-              <td>{board.heart}</td>
+              <td className={styles.listTable}>{board.writer}</td>
+              <td className={styles.listTable}>{formatDate(board.writeDate)}</td>
+              <td className={styles.listTable}>{board.count}</td>
+              <td className={styles.listTable}>{board.heart}</td>
             </tr>
           ))}
         </tbody>

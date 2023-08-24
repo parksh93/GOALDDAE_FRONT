@@ -6,8 +6,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import { red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import styles from "./detailPage.module.css";
+import ShareIcon from '@mui/icons-material/Share';
 
 const HeartDetail = ({ boardDetail, userInfo }) => {
 
@@ -55,22 +56,26 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
         }
         };
 
+        const handleCopyClipBoard = async (text) => {
+            try {
+              await navigator.clipboard.writeText(text);
+              alert('클립보드에 링크가 복사되었습니다.');
+            } catch (e) {
+              alert('복사에 실패하였습니다');
+            }
+        };
+
 
 
   return (
-    <div
-    sx={{
-        '& > :not(style)': {
-          m: 2,
-        },
-      }} className={styles.heartSection}>
+    <div className={styles.heartSection}>
         {heartInfo && (
             <>
                 <span onClick={handleLike}>
                 {heartInfo.hearted ? (
                     <Tooltip title="좋아요 취소">
                         <Badge badgeContent={heartInfo.heartCount} color="success" >
-                            <IconButton sx={{color : red[700]}} size="large">
+                            <IconButton sx={{color : red[700]}} size="large" className={styles.heartIcon}>
                                 <FavoriteIcon />
                             </IconButton>                            
                         </Badge>
@@ -79,13 +84,18 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
                 : (
                     <Tooltip title="좋아요">
                         <Badge badgeContent={heartInfo.heartCount} color="success">
-                            <IconButton size="large">
+                            <IconButton size="large" className={styles.heartIcon}>
                                 <FavoriteIcon />
                             </IconButton>                            
                         </Badge>
                     </Tooltip>
                     )}
                 </span>
+                <Tooltip title="공유하기">
+                    <IconButton size="large">
+                    <ShareIcon sx={{color : grey[850]}} onClick={() => {handleCopyClipBoard(`/board/${boardDetail.id}`)}} className={styles.shareIcon}/>             
+                    </IconButton>                    
+                </Tooltip>
             </>            
         )}     
     </div>

@@ -4,6 +4,8 @@
     max-width: 800px;
     padding: 20px;
     position: relative;
+    color: #202020;
+    font-size: 15px;
   }
 
   .buttonContainer {

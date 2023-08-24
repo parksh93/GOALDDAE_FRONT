@@ -4,34 +4,33 @@
     max-width: 900px;
     padding: 20px;
     position: relative;
+    color: #202020;
+    font-size: 15px;
   }
   
   table {
     width: 100%;
     border-collapse: collapse;
-    border-bottom: 1px solid #ddd;
   }
-  
-  th, td {
+
+  .listTable {
     border-bottom: 1px solid #ddd;
-    padding: 10px;
+    padding: 11px;
     text-align: center;
-  }
-  
-  th {
-    padding: 10px;
-    font-weight: bold;
-    background-color: #fafafa;
-  }
-  
+  } 
+
   .tableHeader {
+    padding: 10px;
     font-weight: bold;
     border-bottom: 2px solid #ddd;
+    background-color: #fafafa;
   }
 
   .tableTitle {
     text-align: left;
     width: 400px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
   }
   
   .pageButtons {
@@ -47,15 +46,11 @@
     margin: 0 5px;
   }
   
-  .prevButton:hover, .nextButton:hover {
-    background-color: #f0f0f0;
-  }
-  
   button {
     padding: 5px 10px;
     background-color: #108b0c;
     border: none;
-    color: #fafafa;
+    color: #f0f0f0;
     cursor: pointer;
     border-radius: 3px;
   }
@@ -109,13 +104,16 @@
   border-radius: 3px;
 }
 
+.imgIcon {
+  margin-bottom: -4px;
+}
+
 a {
-    color: inherit; /* 현재 텍스트 색상 상속 */
-    text-decoration: none; /* 밑줄 제거 */
+    color: inherit;
+    text-decoration: none;
   }
   
-  /* hover 상태일 때 스타일 적용 */
   a:hover {
-    text-decoration: underline; /* 밑줄 표시 */
+    text-decoration: underline; 
   }
   

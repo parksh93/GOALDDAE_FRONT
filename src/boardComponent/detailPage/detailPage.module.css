@@ -3,11 +3,12 @@
     max-width: 900px;
     padding: 20px;
     position: relative;
+    color: #202020;
+    font-size: 15px;
   }
   
   .postSection {
     align-items: center;
-
   }
 
   .heartSection {
@@ -16,6 +17,7 @@
   
   .postDetailContainer {
     text-align: center;
+    padding: 5px 8px;
   }
   
   .postTitle {
@@ -33,17 +35,28 @@
   
   .author {
     font-weight: bold;
+    margin-bottom: -5px;
+    width: 130px;
+    text-align: left;
+    margin-left: 5px;
   }
   
   .info {
     font-size: 12px;
     color: gray;
+    margin-bottom: -5px;
   }
   
   .separator {
     border: 0.5px solid #bbbbbb;
     width: 100%;
     margin: 20px 0;
+  }
+
+  .rSeparator {
+    border: 0.5px solid #ddd;
+    width: 100%;
+    margin: 10px 0;
   }
   
   .postImage {
@@ -62,9 +75,60 @@
     margin: 5px;
     background-color: #108b0c;
     border: none;
-    color: white;
+    color: #f0f0f0;
     cursor: pointer;
     float: right;
     border-radius: 3px;
   }
+
+  .shareIcon {
+    margin-left: 30px;
+  }
+
+  .heartIcon {
+    margin: -10px;
+  }
+
+  .replyTable {
+    margin: 5px 0px;
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 0.5px solid #eaeaea;
+  }
+
+  .rrTable {
+    margin: 4px 0px;
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 0.5px solid #f0f0f0;
+  }
   
+  .replyButtons {
+    text-align: right;
+  }
+  
+  .replyButtons button {
+    margin-left: 8px;
+  }
+
+  .replyContent {
+    text-align: left;
+    padding-bottom: 15px;
+    padding-top: 10px;
+  }
+
+  .arrowIcon {
+    width: 50px;
+  }
+
+  .textArea {
+    width: 10000px;
+  }
+
+  .sendIcon {
+    width: 80px;
+    text-align: center;
+    margin-bottom: -25px;
+    margin-left: 10px;
+    cursor: pointer;
+  }

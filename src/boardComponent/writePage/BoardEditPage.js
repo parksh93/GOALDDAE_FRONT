@@ -71,10 +71,11 @@ const BoardEditPage = () => {
     <div className={styles.container}>
       <h1>글 수정</h1>
       <div>        
-        <TextField fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
+        <TextField color="success" fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
       </div>
       <div>        
         <TextField
+          color="success"
           fullWidth
           margin="normal"
           value={content}
@@ -85,13 +86,15 @@ const BoardEditPage = () => {
         />
       </div>
       <div>    
-        <TextField fullWidth margin="normal" value={img1} onChange={handleImg1Change} id="img-area" placeholder="이미지1" variant="standard" />
+        <TextField color="success" fullWidth margin="normal" value={img1} onChange={handleImg1Change} id="img-area" placeholder="이미지1" variant="standard" />
       </div>
       <div className={styles.buttonContainer}>
-        <Link to={`/board/detail/${id}`} className={styles.listButton}>
-          <button onClick={handleUpdate}>작성</button>
-        </Link>
-        <Link to={`/board/detail/${id}`} className={styles.listButton}>
+        {title && 
+          <Link onClick={() => window.location.href = `/board/detail/${id}`} className={styles.listButton}>
+            <button onClick={handleUpdate}>작성</button>
+          </Link>
+        }
+        <Link onClick={() => window.location.href = `/board/detail/${id}`} className={styles.listButton}>
           <button>취소</button>
         </Link>
       </div>
