@@ -1,8 +1,10 @@
+import React, {useState, useEffect} from 'react';
+
 import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
-import MyPage from './userComponent/MyPage';
 import Main from './Main';
+import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import Navigation from './auth/navigation/Navigation';
@@ -36,6 +38,7 @@ const App = () => {
           <Footer/> 
      </>
     </UserProvider>
+
   );
 }
 
