@@ -3,6 +3,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { FormControl, FormControlLabel, Radio, RadioGroup, FormLabel } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './SoccerFieldTable.css';
 
 const SoccerFieldTable = () => {
@@ -14,11 +15,30 @@ const SoccerFieldTable = () => {
   const [fieldImg1, setFieldImg1] = useState('');
   const [fieldImg2, setFieldImg2] = useState('');
   const [fieldImg3, setFieldImg3] = useState('');
-  const [reservationFee, setReservationFee] = useState(0);
+  const [reservationFee, setReservationFee] = useState('');
   const [inOutWhether, setInOutWhether] = useState(undefined);
   const [grassWhether, setGrassWhether] = useState(undefined);
   const [region, setRegion] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+
+  const [fieldImg1Preview, setFieldImg1Preview] = useState(null);
+  const [fieldImg2Preview, setFieldImg2Preview] = useState(null);
+  const [fieldImg3Preview, setFieldImg3Preview] = useState(null);
+
+  const handleFileChange = (e, setter, previewSetter) => {
+    const file = e.target.files[0];
+    setter(file);
+  
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      previewSetter(reader.result);
+    };
+    
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      previewSetter(null);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +58,7 @@ const SoccerFieldTable = () => {
         grassWhether: grassWhether, 
         region: region,
       };
+
       const response = await axios.post('/soccerField/save', soccerField);
   
       if (response.status === 200) { 
@@ -52,33 +73,26 @@ const SoccerFieldTable = () => {
     }
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#4caf50', 
+      },
+    },
+  });
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <h1 style={{ textAlign: 'center' }}>구장 등록</h1>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width:'100%' }}>
-            <div className="required-box1">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent:'center'}}>
+            <div className="required-box" style={{ display: 'flex', flexDirection: 'column'}}>
               <div className="required-label">필수 입력</div>
               <Box mb={2}>
                 <TextField
                   value={fieldName}
-                  onChange={(e) => setFieldName(e.target.value)}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
+                  onChange={(e) =>setFieldName(e.target.value)}
                   label="구장 이름"
                   variant="outlined"
-                  className={`input-field required-field custom-focus-input ${isFocused ? 'focus-clicked' : ''}`}
-                  InputLabelProps={{
-                    classes: {
-                      focused: "custom-focus-input",
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: "custom-focus-input",
-                      focused: "custom-focus-input",
-                    },
-                  }}
                 />
               </Box>
               <Box mb={2}>
@@ -87,7 +101,6 @@ const SoccerFieldTable = () => {
                   onChange={(e) => setRegion(e.target.value)}
                   label="지역"
                   variant="outlined"
-                  className="input-field required-field"
                 />
               </Box>
               <Box mb={2}>
@@ -96,7 +109,6 @@ const SoccerFieldTable = () => {
                   onChange={(e) => setFieldSize(e.target.value)}
                   label="구장 크기"
                   variant="outlined"
-                  className="input-field required-field"
                 />
               </Box>
               <Box mb={2}>
@@ -105,12 +117,11 @@ const SoccerFieldTable = () => {
                   onChange={(e) => setReservationFee(e.target.value)}
                   label="대관비"
                   variant="outlined"
-                  className="input-field required-field"
                 />
               </Box>
           </div>
 
-          <div className="required-box2">
+          <div className="required-box" style={{ display: 'flex', flexDirection: 'column'}}>
               <div className="required-label">필수 선택</div>
             <Box mb={2}>
               <FormControl component="fieldset">
@@ -188,49 +199,42 @@ const SoccerFieldTable = () => {
               </FormControl>
             </Box>
             </div>
-
-            <div className="required-box2">
-              <div className="required-label">이미지 첨부</div>
-            <Box mb={2}>
-              <TextField
-                value={fieldImg1}
-                onChange={(e) => setFieldImg1(e.target.value)}
-                label="구장 이미지 1"
-                variant="outlined"
-                className="input-field"
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                value={fieldImg2}
-                onChange={(e) => setFieldImg2(e.target.value)}
-                label="구장 이미지 2"
-                variant="outlined"
-                className="input-field"
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                value={fieldImg3}
-                onChange={(e) => setFieldImg3(e.target.value)}
-                label="구장 이미지 3"
-                variant="outlined"
-                className="input-field"
-              />
-            </Box>
+            <div className="required-box" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
+              <div className="required-label">이미지 업로드(테스트중)</div>
+                <Box mb={2}>
+                   <label htmlFor="fieldImg1">구장 이미지1 </label>
+                    <input
+                      type="file"
+                      onChange={(e) => handleFileChange(e, setFieldImg1, setFieldImg1Preview)}
+                      className="input-field"
+                    />
+                    {fieldImg1 && <img src={fieldImg1Preview} alt="" className="preview-image" />}
+                </Box>
+                <Box mb={2}>
+                  <label htmlFor="fieldImg1">구장 이미지2 </label>
+                    <input
+                      type="file"
+                      onChange={(e) => handleFileChange(e, setFieldImg2, setFieldImg2Preview)}
+                      className="input-field"
+                    />
+                      {fieldImg2 && <img src={fieldImg2Preview} alt="" className="preview-image" />}
+                </Box>
+                <Box mb={2}>
+                  <label htmlFor="fieldImg1">구장 이미지3 </label>
+                    <input
+                      type="file"
+                      onChange={(e) => handleFileChange(e, setFieldImg3, setFieldImg3Preview)}
+                      className="input-field"
+                    />
+                      {fieldImg3 && <img src={fieldImg3Preview} alt="" className="preview-image" />}
+                </Box>
             </div>
-          <div 
-              style={{ 
-              display: 'flex', 
-              justifyContent: 'center',
-              marginRight: '180px'
-              }}>
-                <button type="submit" className="submit-button">추가</button>
-            </div>
+                <div className="form-container">
+                  <button type="submit" className="submit-button">추가</button>
+                </div>
           </form>
-        </div>
-    </>
-  );
+      </ThemeProvider>
+  );  
 };
 
 export default SoccerFieldTable;

@@ -11,7 +11,7 @@ const SoccerFieldDelete = () => {
   
     const fetchSoccerFields = async () => {
       try {
-        const response = await axios.get('/SoccerField/search');
+        const response = await axios.get('/soccerField/search');
         setSoccerFields(response.data);
       } catch (error) {
         console.error(error);
@@ -21,11 +21,11 @@ const SoccerFieldDelete = () => {
     const handleDelete = async () => {
       if (!selectedFieldId) return;
       
-      const confirmation = window.confirm('정말로 이 구장을 제거하시겠습니까?');
+      const confirmation = window.confirm('정말로 해당 구장을 제거하시겠습니까?');
       
       if (confirmation) {
         try {
-          await axios.post('/SoccerField/delete', { id: selectedFieldId });
+          await axios.post('/soccerField/delete', { id: selectedFieldId });
           alert('구장이 성공적으로 제거되었습니다.');
           setSelectedFieldId(''); 
           fetchSoccerFields(); 
@@ -38,7 +38,7 @@ const SoccerFieldDelete = () => {
   
     return (
       <div>
-        <h1>구장 목록</h1>
+        <h1>구장 삭제</h1>
   
          <select value={selectedFieldId} onChange={(e) => setSelectedFieldId(e.target.value)}>
            <option value="">-- 구장 선택 --</option>

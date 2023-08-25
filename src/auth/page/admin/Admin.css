@@ -1,0 +1,14 @@
+.box {
+  width: 200px;
+}
+
+.box div,
+.box a {
+  padding: 10px;
+  text-decoration: none;
+}
+
+.menu div,
+.menu a {
+  padding-left: 30px;
+}
