@@ -3,28 +3,35 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import styles from './BoardWrite.module.css'
+import { useUser } from '../../userComponent/userContext/UserContext';
 
 const BoardEditPage = () => {
   const { id } = useParams();
 
+  const { userInfo } = useUser();
+
+  const [userId, setuserId] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [img1, setImg1] = useState('');
 
   useEffect(() => {
-    // 글 상세 정보 가져오기
+    if (userInfo && userInfo.id !== null){
+      // 글 상세 정보 가져오기
     axios.get(`/board/detail/${id}`)
-      .then((response) => {
-        const { title: fetchedTitle, content: fetchedContent, img1: fetchedImg1 } = response.data;
-        setTitle(fetchedTitle);
-        setContent(fetchedContent);
-        setImg1(fetchedImg1);
-      })
-      .catch((error) => {
-        console.error('글 상세 정보를 가져오는 중 에러 발생:', error);
-        // 에러 처리 로직 추가
-      });
-  }, [id]);
+    .then((response) => {
+      const { userId: fetchedUserId, title: fetchedTitle, content: fetchedContent, img1: fetchedImg1 } = response.data;
+      setuserId(fetchedUserId)
+      setTitle(fetchedTitle);
+      setContent(fetchedContent);
+      setImg1(fetchedImg1);
+    })
+    .catch((error) => {
+      console.error('글 상세 정보를 가져오는 중 에러 발생:', error);
+      // 에러 처리 로직 추가
+    });
+    }    
+  }, [userInfo, id]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -59,17 +66,11 @@ const BoardEditPage = () => {
   };
 
   return (
-    // <div>
-    //   <h1>글 수정</h1>
-    //   <input type="text" value={title} onChange={handleTitleChange} placeholder="제목" />
-    //   <textarea value={content} onChange={handleContentChange} placeholder="내용" />
-    //   <input type="text" value={img1} onChange={handleImg1Change} placeholder="이미지1" />    
-    //   <Link to={`/board/detail/${id}`}>
-    //     <button onClick={handleUpdate}>수정</button>
-    //   </Link>
-    // </div>
     <div className={styles.container}>
-      <h1>글 수정</h1>
+      {userInfo && userInfo.id === userId &&
+      (
+        <>
+              <h2>글 수정</h2>
       <div>        
         <TextField color="success" fullWidth margin="normal" value={title} onChange={handleTitleChange} id="title-area" label="제목" variant="standard" />
       </div>
@@ -98,6 +99,9 @@ const BoardEditPage = () => {
           <button>취소</button>
         </Link>
       </div>
+        </>
+      )
+      }
     </div>
   );
 };

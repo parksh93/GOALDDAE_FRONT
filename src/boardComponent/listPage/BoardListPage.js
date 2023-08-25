@@ -45,6 +45,17 @@ function BoardListPage() {
 
   const pageButtons = [];
   for (let pageNum = startPageNum; pageNum <= endPageNum; pageNum++) {
+    if(pageNum === currentPageNum){
+      pageButtons.push(
+        <span
+          key={pageNum}
+          className={styles.currentPageButton}
+        >
+          {pageNum}
+        </span>
+      );
+      continue;
+    }
     pageButtons.push(
       <Link
         to={`/board?type=${searchType}&name=${searchName}&page=${pageNum}`}
@@ -80,7 +91,7 @@ function BoardListPage() {
                 {board.replyCount !== 0 && ` [${board.replyCount}]`}
               </td>
               <td className={styles.listTable}>{board.writer}</td>
-              <td className={styles.listTable}>{formatDate(board.writeDate)}</td>
+              <td className={styles.tableDate}>{formatDate(board.writeDate)}</td>
               <td className={styles.listTable}>{board.count}</td>
               <td className={styles.listTable}>{board.heart}</td>
             </tr>

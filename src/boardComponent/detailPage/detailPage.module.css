@@ -3,7 +3,7 @@
     max-width: 900px;
     padding: 20px;
     position: relative;
-    color: #202020;
+    color: #242424;
     font-size: 15px;
   }
   
@@ -24,6 +24,7 @@
     font-size: 24px;
     margin: 10px 0;
     text-align: left;
+    color: #393939;
   }
   
   .postMeta {
@@ -39,6 +40,7 @@
     width: 130px;
     text-align: left;
     margin-left: 5px;
+    color: #444444;
   }
   
   .info {
@@ -68,25 +70,16 @@
   .content {
     text-align: left;
     margin: 10px 0;
+    white-space: pre-wrap;
   }
 
   .detailButton {
-    padding: 5px 10px;
-    margin: 5px;
-    background-color: #108b0c;
+    padding: -1px;
+    margin: 3px;
     border: none;
-    color: #f0f0f0;
-    cursor: pointer;
     float: right;
+    /* background-color: #108b0c; */
     border-radius: 3px;
-  }
-
-  .shareIcon {
-    margin-left: 30px;
-  }
-
-  .heartIcon {
-    margin: -10px;
   }
 
   .replyTable {
@@ -115,6 +108,7 @@
     text-align: left;
     padding-bottom: 15px;
     padding-top: 10px;
+    white-space: pre-wrap;
   }
 
   .arrowIcon {
@@ -122,13 +116,24 @@
   }
 
   .textArea {
-    width: 10000px;
+    width: 1000px;
   }
 
   .sendIcon {
-    width: 80px;
+    width: 20px;
     text-align: center;
-    margin-bottom: -25px;
+    margin-bottom: -30px;
     margin-left: 10px;
     cursor: pointer;
+  }
+
+  .deletedReply {
+    color: gray;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 10px solid #ffffff;
+  }
+
+  .replyButtons{
+    margin: -10px;
   }

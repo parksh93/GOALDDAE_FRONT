@@ -2,7 +2,9 @@ import React from "react";
 import { formatDate } from '../dateUtils';
 import styles from "./detailPage.module.css"; // CSS 모듈 가져오기
 
-const PostDetail = ({ boardDetail}) => {
+
+const PostDetail = ({boardDetail}) => {
+
   return (
     <div>
       <div className={styles.postDetailContainer}>
@@ -15,7 +17,7 @@ const PostDetail = ({ boardDetail}) => {
       <hr className={styles.separator} />
       <div className={styles.postDetailContainer}>
         <img src={boardDetail.img1} alt="" className={styles.postImage} />
-        <p className={styles.content}>{boardDetail.content}</p>
+        <div className={styles.content}>{boardDetail.content}</div>
       </div>
     </div>
   );

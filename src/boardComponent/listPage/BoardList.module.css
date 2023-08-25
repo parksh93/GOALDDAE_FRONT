@@ -4,7 +4,7 @@
     max-width: 900px;
     padding: 20px;
     position: relative;
-    color: #202020;
+    color: #242424;
     font-size: 15px;
   }
   
@@ -17,7 +17,15 @@
     border-bottom: 1px solid #ddd;
     padding: 11px;
     text-align: center;
-  } 
+  }
+  
+  .tableDate {
+    font-size: 14px;
+    color: #464646;
+    border-bottom: 1px solid #ddd;
+    padding: 11px;
+    text-align: center;
+  }
 
   .tableHeader {
     padding: 10px;
@@ -39,7 +47,15 @@
   }
 
   .numButton {
-    margin: 0 1px;
+    padding: 0 2px;
+    margin: 0 2px;
+  }
+
+  .currentPageButton {
+    padding: 0 2px;
+    margin: 0 2px;
+    color: #335c2c;
+    text-decoration: underline;
   }
   
   .prevButton, .nextButton {
@@ -93,14 +109,14 @@
 }
 
 .writeButton {
-  padding: 5px 10px;
+  padding: 3px 6px;
   background-color: #108b0c;
   border: none;
   color: white;
   cursor: pointer;
   position: absolute;
   right: 20px;
-  margin-top: 15px;
+  margin-top: 20px;
   border-radius: 3px;
 }
 

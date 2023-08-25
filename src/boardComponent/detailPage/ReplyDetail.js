@@ -65,17 +65,20 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
       };
     
       const handleDelete = (id) => {
-        // 댓글 삭제 요청
-        axios.delete(`/reply/user/${id}`).then(() => {
+        const confirmDelete = window.confirm("댓글을 삭제하시겠습니까?");
+        if (confirmDelete) {
+          // 댓글 삭제 요청
+          axios.delete(`/reply/user/${id}`).then(() => {
           // 댓글 삭제 후 댓글 목록을 다시 불러옴
           axios.get(`/reply/list/${boardDetail.id}`).then((response) => {
             setReplyList(response.data.replies);
           });
         });
+        }
       };
 
       const handleEditClick = (commentId, content) => {
-        if(editingCommentId == commentId){
+        if(editingCommentId === commentId){
           setEditingCommentId(null);
           setEditedCommentContent("");
         } else {
@@ -110,9 +113,9 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
           {replyList.map((reply) => (
             <div key={reply.id}>              
               {reply.status === 1
-                  ? <span>(삭제된 댓글입니다)</span>
+                  ? <div className={styles.deletedReply}>(삭제된 댓글입니다)</div>
                   : reply.status === 2
-                  ? <span>(관리자에 의해 삭제된 댓글입니다)</span>
+                  ? <div className={styles.deletedReply}>(관리자에 의해 삭제된 댓글입니다)</div>
                   : (
                     <>
                     <table className={styles.replyTable}>
@@ -126,17 +129,25 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                       {userInfo.id === reply.userId && (
                     <>
                       {/* 수정 버튼 */}
-                      <button onClick={() => handleEditClick(reply.id, reply.content)}>
-                        수정
-                      </button>
-                      {/* 삭제 버튼 */}
-                      <button onClick={() => handleDelete(reply.id)}>삭제</button>
+                      <Tooltip title="수정">
+                          <IconButton size="large">
+                            <EditIcon sx={{color : "#75956b"}} onClick={() => handleEditClick(reply.id, reply.content)} className={styles.replyButtons}/>             
+                          </IconButton>                    
+                      </Tooltip>
+                      {/* 삭제 버튼 */}                      
+                      <Tooltip title="삭제">
+                          <IconButton size="large">
+                            <DeleteIcon sx={{color : "#75956b"}} onClick={() => handleDelete(reply.id)} className={styles.replyButtons}/>             
+                          </IconButton>                    
+                      </Tooltip>
                     </>
                   )}
                   {userInfo.id !== reply.userId &&
-                    <button onClick={handleReport(reply.id, reply.userId)} className={styles.detailButton}>
-                      신고
-                    </button>
+                    <Tooltip title="신고">
+                      <IconButton size="large" onClick={() => handleReport(reply.id, reply.userId)}>
+                        <ReportIcon sx={{color : "#75956b"}} className={styles.replyButtons}/>             
+                      </IconButton>                    
+                    </Tooltip>
                    }
                     </td>
                   </tr>
@@ -165,7 +176,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                         <SendIcon  className={styles.sendIcon}
                           onClick={() => handleEditSubmit(reply.id, editedCommentContent)}
                           fontSize="large"
-                          color="success"/>                 
+                          sx={{color : "#75956b"}}/>                 
                       </Tooltip>                      
                     </td>
                   </tr>                                    
@@ -177,7 +188,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                     <table className={styles.rrTable}>
                     <tr>
                     <td rowSpan={2} className={styles.arrowIcon}>
-                      <SubdirectoryArrowRightIcon sx={{color : grey[850]}} />
+                      <SubdirectoryArrowRightIcon sx={{color : grey[500]}} />
                     </td>
                     <td className={styles.author}>{child.writer}</td>
                     <td className={styles.info}>{formatDate(child.replyWriteDate)}</td>                
@@ -185,17 +196,26 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                     {/* 답글 수정 버튼 */}
                     {userInfo.id === child.userId && (
                       <div>
-                        <button onClick={() => handleEditClick(child.id, child.content)}>
-                          수정
-                        </button>
-                        {/* 답글 삭제 버튼 */}
-                        <button onClick={() => handleDelete(child.id)}>삭제</button>
+                      {/* 수정 버튼 */}
+                      <Tooltip title="수정">
+                          <IconButton size="large">
+                            <EditIcon sx={{color : "#75956b"}} onClick={() => handleEditClick(child.id, child.content)} className={styles.replyButtons}/>             
+                          </IconButton>                    
+                      </Tooltip>
+                      {/* 삭제 버튼 */}                      
+                      <Tooltip title="삭제">
+                          <IconButton size="large">
+                            <DeleteIcon sx={{color : "#75956b"}} onClick={() => handleDelete(child.id)} className={styles.replyButtons}/>             
+                          </IconButton>                    
+                      </Tooltip>
                       </div>
                     )}
                     {userInfo.id !== child.userId &&
-                      <button onClick={handleReport(child.id, child.userId)} className={styles.detailButton}>
-                        신고
-                      </button>
+                      <Tooltip title="신고">
+                        <IconButton size="large" onClick={() => handleReport(child.id, child.userId)}>
+                          <ReportIcon sx={{color : "#75956b"}} className={styles.replyButtons}/>             
+                        </IconButton>                    
+                      </Tooltip>
                      }
                     </td>
                     </tr>
@@ -220,7 +240,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                                 <SendIcon  className={styles.sendIcon}
                                   onClick={() => handleEditSubmit(child.id, editedCommentContent)}
                                   fontSize="large"
-                                  color="success"/>                 
+                                  sx={{color : "#75956b"}}/>                 
                               </Tooltip>                      
                             </td>
                           </tr>                                    
@@ -246,7 +266,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                           <SendIcon  className={styles.sendIcon}
                             onClick={() => handleReplySubmit()}
                             fontSize="large"
-                            color="success"/>                 
+                            sx={{color : "#75956b"}}/>                 
                         </Tooltip>                      
                       </td>
                     </tr>                                    
@@ -274,7 +294,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                       <SendIcon  className={styles.sendIcon}
                         onClick={() => handleReplySubmit()}
                         fontSize="large"
-                        color="success"/>                 
+                        sx={{color : "#75956b"}}/>                 
                     </Tooltip>                      
                   </td>
                 </tr>                                    

@@ -74,8 +74,8 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
                 <span onClick={handleLike}>
                 {heartInfo.hearted ? (
                     <Tooltip title="좋아요 취소">
-                        <Badge badgeContent={heartInfo.heartCount} color="success" >
-                            <IconButton sx={{color : red[700]}} size="large" className={styles.heartIcon}>
+                        <Badge badgeContent={heartInfo.heartCount} color="success" className={styles.badge}>
+                            <IconButton sx={{color : red[700], margin : "-5px"}} size="large" className={styles.heartIcon}>
                                 <FavoriteIcon />
                             </IconButton>                            
                         </Badge>
@@ -83,8 +83,8 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
                 ) 
                 : (
                     <Tooltip title="좋아요">
-                        <Badge badgeContent={heartInfo.heartCount} color="success">
-                            <IconButton size="large" className={styles.heartIcon}>
+                        <Badge badgeContent={heartInfo.heartCount} color="success" className={styles.badge}>
+                            <IconButton sx={{margin : "-5px"}} size="large" className={styles.heartIcon}>
                                 <FavoriteIcon />
                             </IconButton>                            
                         </Badge>
@@ -92,8 +92,8 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
                     )}
                 </span>
                 <Tooltip title="공유하기">
-                    <IconButton size="large">
-                    <ShareIcon sx={{color : grey[850]}} onClick={() => {handleCopyClipBoard(`/board/${boardDetail.id}`)}} className={styles.shareIcon}/>             
+                    <IconButton sx={{marginLeft : "20px"}} size="large"  className={styles.shareIcon}>
+                    <ShareIcon sx={{color : grey[850]}} onClick={() => {handleCopyClipBoard(`/board/${boardDetail.id}`)}}/>             
                     </IconButton>                    
                 </Tooltip>
             </>            
