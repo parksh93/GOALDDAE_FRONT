@@ -11,6 +11,7 @@ import Navigation from './auth/navigation/Navigation';
 import LoginInfo from './loginInfo/LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
+import BoardMainPage from './boardComponent/BoardMainPage';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
 import Footer from './footer/Footer';
 import Match from './auth/page/match/Match';
@@ -31,6 +32,7 @@ const App = () => {
               <Route path='/find/:findMenuNum' element={<FindMain />} />
               <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
+              <Route path='/board/*' element={<BoardMainPage />} />
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
               <Route path='/friend-list' element={<friend-list />} />
               <Route path="/admin" element={<Admin />} />
