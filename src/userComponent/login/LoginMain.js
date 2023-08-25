@@ -37,8 +37,12 @@ const UserLogin = () => {
 
     const data = await response.json();
     if (data === true) {
-      navigate("/");
+      navigate(-1);
     } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       setOpen(true);
       setTimeout(() => setOpen(false), 2000);
     }
