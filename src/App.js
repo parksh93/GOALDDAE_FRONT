@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import Main from './Main';
-import MyPage from './userComponent/MyPage';
+import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import Match from './auth/match/Match';
@@ -17,14 +17,6 @@ const App = () => {
   return (
     <UserProvider> 
       <>
-        <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='/login' element={<UserLogin />}/>
-          <Route path='/logOut' element={<LogOut />}/>
-          <Route path='/myPage' element={<MyPage />}/>
-          <Route path='/signup' element={<SignupMain/>}/>
-        </Routes>
-        <Footer/> 
         <Navigation />
         <LoginInfo />
             <Routes>
