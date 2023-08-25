@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./css/user/LoginInfo.module.css";
-
+import styles from "./LoginInfo.module.css";
+import buttonStyles from "./LoginInfo.module.css";  
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -36,15 +36,17 @@ const LoginInfo = () => {
   }, [userInfo]);
 
   return (
-    <div style={{ border: "1px solid black", width: "100%", height: "70px" }}>
-      <div style={{ float: "right" }}>
-        {userInfo === "" ? (
-          <div>
-            <Link to="/login">로그인</Link>
-            <br />
-            <Link to="/signup">회원가입</Link>
-          </div>
-        ) : (
+    <>
+      {userInfo === "" ? (
+        <div className={styles.btnContainer}>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <button className={buttonStyles.button}>로그인</button>
+          </Link>
+          <Link to="/signup" style={{ textDecoration: "none" }}>
+            <button className={buttonStyles.button}>회원가입</button>
+          </Link>
+        </div>
+      ) : (
           <div>
             <img src={userInfo.profileImgUrl} className={styles.profileImg} />
             <HtmlTooltip
@@ -60,8 +62,7 @@ const LoginInfo = () => {
             </HtmlTooltip>
           </div>
         )}
-      </div>
-    </div>
+      </>
   );
 };
 

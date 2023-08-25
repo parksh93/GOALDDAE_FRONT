@@ -1,0 +1,22 @@
+.reservationFree {
+    display: inline;
+    float: left;
+    margin-left: 20px;
+    padding-top: 25px;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.reservationFreeFont {
+    display: inline;
+    background-color: rgb(46, 185, 46);
+    margin-right: 10px;
+    padding: 12px;
+    font-size: 25px;
+    color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-weight: 600;
+}

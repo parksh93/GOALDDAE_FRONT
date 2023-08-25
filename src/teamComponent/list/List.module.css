@@ -1,4 +1,4 @@
-/* 필터 */
+/* 필터 (TeamList) */
 .filtes{
     width: 100%;
     flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 다음 줄로 내려가도록 설정 */
@@ -34,7 +34,7 @@
     background-color: rgb(255, 255, 255);
 }
 
-/* 검색참 */
+/* 검색참(TeamSearch) */
 .WholeBox{
     padding: 10px;
     margin-left: 420px;
@@ -127,8 +127,7 @@
 
 
 
-
-/* 팀 리스트 */
+/* 팀 리스트 (TeamList) */
 .teamCard {
     border: 1px solid #ababab;
     border-radius: 5px;
@@ -157,7 +156,8 @@
 }
   
 
-/* 내 팀 */
+
+/* 내 팀 (MyTeam) */
 .myTeamCard{
     border: 2px solid #1a921e;
     border-radius: 5px;
@@ -175,7 +175,15 @@
 
 }
 
-.notice{
+.noticeCheckTeam{
+    color: #1a921e;
+}
+
+.noticeNoTeam{
+    color: #1a921e;
+}
+
+.noticeLogin{
     color: #1a921e;
 }
 

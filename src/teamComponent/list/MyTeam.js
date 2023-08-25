@@ -25,16 +25,22 @@ const MyTeam = () => {
     }
   }, [userInfo]);
 
+  const warpLoginPage = () => {
+    navigate(`/login`);
+  };
+
   return (
     <div className={styles.myTeamCard}>
       {userInfo ? (
         <div>
-          <h2>내 팀 정보</h2>
           {loading ? ( // 로딩 중일 때
-            <p className={styles.notice}>팀을 확인하는 중...</p>
+            <div className={styles.noticeCheckTeam} > 
+              <p>팀을 확인하는 중...</p>
+            </div>
           ) : teamInfo ? (
             <div>
-              <p>팀 이름: {teamInfo.teamName}</p>
+              <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl} /> 
+              {teamInfo.teamName}
               <p>지역: {teamInfo.area}</p>
               <p>평균나이: {teamInfo.averageAge}</p>
               <p>입단비: {teamInfo.entryfee}</p>
@@ -43,11 +49,15 @@ const MyTeam = () => {
               <p>선호요일: {teamInfo.preferredDay}</p>
             </div>
           ) : (
-            <p className={styles.notice}>팀에 가입해주세요.</p>
+            <div className={styles.noticeNoTeam} > 
+              <p>가입된 팀이 없습니다. 팀에 가입해주세요.</p>
+            </div>
           )}
         </div>
       ) : (
-        <p className={styles.notice}>로그인 후 팀 정보를 확인할 수 있습니다.</p>
+        <div className={styles.noticeLogin} onClick={()=> warpLoginPage()}> 
+          <p>로그인 후 팀 정보를 확인할 수 있습니다. (로그인하러 가기) </p>
+        </div>
       )}
     </div>
   );

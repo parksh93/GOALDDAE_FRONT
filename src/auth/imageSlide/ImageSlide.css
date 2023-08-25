@@ -3,6 +3,8 @@
 .image-slide-container {
     max-width: 1000px; /* 가로 */
     margin: 0 auto;
+    z-index: 1;
+
   }
   
   .img {
