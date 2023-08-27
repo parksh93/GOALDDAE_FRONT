@@ -15,7 +15,6 @@ function Footer() {
                     <span className={style.helpContent}>02) 000 0000 0000</span>
                 </div>
             </div>
-            <img src='./img/glass.png' className={style.glassImg}/>
         </div>
 
     )
