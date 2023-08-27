@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.recruitingBtn {
+.recruitingFilter {
     background-color: #1a921e;
     color: #fff;
     border: 2px solid #1a921e;
@@ -29,19 +29,15 @@
     cursor: pointer;
 }
 
-.recruitingBtn:hover {
-    color: #1a921e;
-    background-color: rgb(255, 255, 255);
-}
-
-/* 검색참(TeamSearch) */
+/* 검색창(TeamSearch) */
 .WholeBox{
     padding: 10px;
-    margin-left: 420px;
+    margin-left: 470px;
 }
 
 .InputBox{
     width: 300px;
+    height: 20px;
     display: flex;
     flex-direction: row;
     border: 1px solid #1a921e;
@@ -51,7 +47,7 @@
 
 .InputBox:hover,.InputBox:focus-within {
     border: 2px solid #1a921e;
-    padding: 5px;
+    padding: 10px;
 }
 
 .InputBox input[value="팀 이름 검색"] {
@@ -62,6 +58,7 @@
 
 .Input {
     color: #000000;
+    height: 20px;
     flex: 1 0 0;
     margin: 0;
     padding: 0;
@@ -81,13 +78,13 @@
     width: 300px;
     display: block;
     margin: 0 auto;
-    padding: 8px 5px;
+    padding: 10px 10px;
     background-color: white;
     border: 2px solid #1a921e;
     border-top: none;
     border-radius: 0 0 16px 16px;
     box-shadow: 0 3px 3px rgba(0, 147, 10, 0.3);
-    z-index: 4
+    z-index: 2
 }
 
 .DropDownItem{
@@ -110,7 +107,7 @@
     padding: 5px 10px;
     border-radius: 3px;
     transition: background-color 0.3s;
-    margin-left: 10px;
+    margin-left: 5px;
     display: inline-block; /* 레이블 요소를 인라인 블록으로 표시 */
     cursor: pointer;
 }
@@ -126,21 +123,17 @@
 
 
 
-
 /* 팀 리스트 (TeamList) */
 .teamCard {
-    border: 1px solid #ababab;
-    border-radius: 5px;
+    border-bottom: 1px solid #d5d5d5;
     padding: 1px;
     margin: 0 auto;
     margin-top: 10px;
-    text-align: center;
     width: 70%;
     cursor: pointer;
 }
 
 .teamCard:hover{
-    border: 2px solid #1a921e;
     background-color: rgb(234, 245, 233);
 
 }
@@ -156,35 +149,42 @@
 }
   
 
-
 /* 내 팀 (MyTeam) */
-.myTeamCard{
-    border: 2px solid #1a921e;
+.card{
+    display: flex;
+    align-items: center;
+    border: 1px solid #7d7d7d;
+    height: 250px;
     border-radius: 5px;
-    padding: 1px;
     margin: 0 auto;
     margin-top: 10px;
-    text-align: center;
     width: 70%;
-    cursor: pointer;
 }
 
-.myTeamCard:hover{
-    border: 4px solid #1a921e;
+
+
+.card:hover{
+    border: 3px solid #1a921e;
     background-color: rgb(234, 245, 233);
 
 }
 
 .noticeCheckTeam{
+    margin: 10px;
     color: #1a921e;
+    cursor: pointer;
 }
 
 .noticeNoTeam{
+    margin: 10px;
     color: #1a921e;
+    cursor: pointer;
 }
 
 .noticeLogin{
+    margin: 10px;
     color: #1a921e;
+    cursor: pointer;
 }
 
 

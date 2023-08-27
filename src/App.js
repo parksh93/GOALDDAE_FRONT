@@ -15,6 +15,7 @@ import Match from './auth/page/match/Match';
 import Admin from './auth/page/admin/Admin';
 import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
+import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 
 
 const App = () => {
@@ -37,7 +38,8 @@ const App = () => {
               <Route path="/admin" element={<Admin />} />
             
               <Route path='/team/list' element={<TeamMain/>}/>
-          <Route path='/team/detail/:id' element={<TeamDetail />} />
+              <Route path='/team/detail/:id' element={<TeamDetail />} />
+              <Route path='/team/myTeamDetail/:id' element={<MyTeamDetail />} />
             </Routes>
           <Footer/> 
      </>

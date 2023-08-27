@@ -12,7 +12,7 @@ const MyTeam = () => {
 
   useEffect(() => {
     if (userInfo) {
-      axios.get(`/team/myTeam/${userInfo.id}`)
+      axios.get(`/team/myTeam/${userInfo.teamId}`)
         .then(response => {
           setTeamInfo(response.data);
         })
@@ -29,8 +29,16 @@ const MyTeam = () => {
     navigate(`/login`);
   };
 
+  const wrapTeamCreate = () => {
+    navigate(`/team/teamCreate`)  
+  }
+
+  const handleMyTeamClick = (id) => {
+    navigate(`/team/myTeamDetail/${id}`);
+  };
+
   return (
-    <div className={styles.myTeamCard}>
+    <div className={styles.card}>
       {userInfo ? (
         <div>
           {loading ? ( // 로딩 중일 때
@@ -38,24 +46,27 @@ const MyTeam = () => {
               <p>팀을 확인하는 중...</p>
             </div>
           ) : teamInfo ? (
-            <div>
-              <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl} /> 
-              {teamInfo.teamName}
-              <p>지역: {teamInfo.area}</p>
-              <p>평균나이: {teamInfo.averageAge}</p>
-              <p>입단비: {teamInfo.entryfee}</p>
-              <p>입단성별: {teamInfo.entryGender}</p>
-              <p>선호시간 : {teamInfo.preferredTime}</p>
-              <p>선호요일: {teamInfo.preferredDay}</p>
+            <div className={styles.myTeamCard} onClick={() => handleMyTeamClick(teamInfo.id)}>
+              <h3>
+                <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl} /> 
+                {teamInfo.teamName}
+              </h3>
+              <p>
+                {teamInfo.area} | {teamInfo.averageAge} {teamInfo.entryfee} | {teamInfo.entryGender} | 
+                {teamInfo.recruiting ? ' 모집중' : ' 모집종료'}
+              </p>
+              <p>
+                {teamInfo.preferredTime} | {teamInfo.preferredDay}
+              </p>
             </div>
           ) : (
-            <div className={styles.noticeNoTeam} > 
-              <p>가입된 팀이 없습니다. 팀에 가입해주세요.</p>
+            <div className={styles.noticeNoTeam} onClick={() => wrapTeamCreate()} > 
+              <p>가입된 팀이 없습니다. 팀에 가입하거나 팀을 생성해주세요. (팀 생성하러 가기) </p>
             </div>
           )}
         </div>
       ) : (
-        <div className={styles.noticeLogin} onClick={()=> warpLoginPage()}> 
+        <div className={styles.noticeLogin} onClick={warpLoginPage}> 
           <p>로그인 후 팀 정보를 확인할 수 있습니다. (로그인하러 가기) </p>
         </div>
       )}

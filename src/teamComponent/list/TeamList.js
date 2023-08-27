@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import throttle from 'lodash/throttle';
 import styles from './List.module.css';
@@ -98,7 +98,7 @@ const TeamList = ({}) => {
         );
         const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight - 300 && !isLoading) {
+        if (scrollTop + clientHeight >= scrollHeight - 400 && !isLoading) {
             setPage((prevPage) => prevPage + 1);
         }
     }, 300);
@@ -118,11 +118,11 @@ const TeamList = ({}) => {
         setNoNewData(false);
     };
 
-    const toggleRecruiting = () => {
-        setRecruiting((prevRecruiting) => !prevRecruiting);
-        setTeamList([]); // Reset team list
-        setPage(1); // Reset page
-        setNoNewData(false); // Reset noNewData flag
+    const handleRecruitingChange = (event) => {
+        setRecruiting(event.target.value === 'recruiting');
+        setTeamList([]); // 팀리스트 리셋
+        setPage(1); // 페이지 리셋
+        setNoNewData(false);
     };
 
     const handleTeamClick = (id) => {
@@ -131,30 +131,26 @@ const TeamList = ({}) => {
 
     return (
         <div>
+            <MyTeam /> 
             <div className={styles.filtes}>
                 <select className={styles.areaFilter} value={selectedArea} onChange={handleAreaChange}>
                     {areaOptions.map(option => (
                         <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                 </select>
-                <button className={styles.recruitingBtn} onClick={toggleRecruiting}>
-                    {recruiting ? '모집중 팀' : '전체 팀'}
-                </button>
+                <select className={styles.recruitingFilter} value={recruiting ? 'recruiting' : 'all'} onChange={handleRecruitingChange}>
+                    <option value="all">전체 팀</option>
+                    <option value="recruiting">모집중 팀</option>
+                </select>
                     <TeamSearch /> 
-                    <div className={styles.teamCreateLinkBtnWrapper}>
-                        <Link to="/team/save" className={styles.teamCreateLinkBtn}>
-                            팀 생성
-                        </Link>
-                    </div>
+                   
             </div>
-            <MyTeam /> 
             {teamList.map((team) => (
                 <div 
                 className={styles.teamCard} key={team.id}
                 onClick={() => handleTeamClick(team.id)}>
                     <h3>
                         <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} /> {team.teamName}
-                        <br />
                     </h3>
                     <div className={styles.teamInfo}>
                         <p>
