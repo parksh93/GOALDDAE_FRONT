@@ -1,115 +1,33 @@
-.lastContent {
-    margin-left: 10px;
-    font-size: 12px;
-}
-.channelDiv{
-    margin-bottom: 20px;
-    margin-left: 30px;
-    width: 90%;
-    padding-left: 20px;
-    word-break:break-all
+.chatMainContainer {
+    height: 700px;
 }
 
-.channelDiv:hover{
-    background: rgb(247, 245, 245);
+.chaList {
+    /* display: inline-block; */
+    float: left;
+    width: 38%;
 }
 
-.channelName {
-    font-weight: bold;
-}
-
-.unReadCnt{
-    float: right;
-    font-size: 13px;
-    border-radius: 50%;
-    width: 17px;
-    text-align: center;
-    margin-right: 50px;
-}
-
-.senderName {
-    font-weight: 600;
-}
-
-.messageContent {
-    text-align: center;
-}
-
-.messageContentDiv {
-    height: fit-content;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    display: inline-block;
-    padding: 7px;
-    max-width: 80%;
-    word-break:break-all
-}
-
-.sendDate{
-    font-size: 12px;
-    color: gray;
-    margin-right: 5px;
+.chatRoom {
     margin-left: 5px;
+     display: inline-block;
+     width: 61%;
 }
 
-.messagesMainDiv{
-    margin-top: 10px;
-    overflow-y: auto;
-    height: 400px;
-    overflow-x: hidden;
-}
-
-.inputDiv{
-    text-align: center;
-    display: inline-block; 
-    border: solid 1.5px lightgray; 
-    background-color: #ffffff; 
-    width: 50%;
-    padding-top: 5px;
-    padding-bottom: 5px;
+.outChatRoomDiv {
+    background-color: rgb(246, 246, 246);
+    height: 640px;
     border-radius: 10px;
-}
-
-.messageText {
-    background-color: transparent;
-    width: 90%; 
-    border: none; 
-    resize: none;
-    outline: none;
-    /* font-weight: bold; */
-    font-size: 16px;
-    font-family: 'Open Sans', sans-serif;
-}
-
-.messageText:active {
-    border: none;
-}
-.sendBtn {
-    background-color: #4CC150; 
-    width: 30px; 
-    height: 30px;
-    border: solid 1px #4CC150;  
-    font-size: 9pt; 
-    border-radius: 50%;
-    color: white;
-}
-
-.sendBtn:hover {
-    background-color: lightgray;
-    border: solid 1px lightgray;  
-}
-
-.sendDiv {
     text-align: center;
 }
 
-.return{
-    margin-top: 12px;
-    margin-left: 10px;
-    font-size: 20px;
+.icon {
+    color: rgb(177, 177, 177);
+    font-size: 50px;
+    margin-top: 35%;
 }
 
-.chatRoomName {
-    display: inline;
-    margin-left: 10px;
+.outChatRoomMsg {
+    font-size: 30px;
+    color: rgb(177, 177, 177);
 }

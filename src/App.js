@@ -14,6 +14,7 @@ import Footer from './Footer';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
 import UserChatList from './chat/UserChatList';
 import UserChatRoom from './chat/UserChatRoom';
+import UserChatMain from './chat/UserChatMain';
 
 const App = () => {
   return (
@@ -32,13 +33,13 @@ const App = () => {
               <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
-              <Route path='/userChatList' element={<UserChatList />} />
-              <Route path='/userChatDetail' element={<UserChatRoom />} />
+                <Route path='/userChat' element={<UserChatMain />} />
+              {/* <Route path='/userChatDetail' element={<UserChatRoom />} /> */}
             </Routes>
           <Footer/> 
-     </>
+      </>
     </UserProvider>
-  );
+);
 }
 
 export default App;
