@@ -20,7 +20,7 @@ function ChangeLostPasswordMain() {
   const onClick = () => {
     if(passwordOk) {
       fetch("/user/changePassword",{
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json"
         },
@@ -43,7 +43,7 @@ function ChangeLostPasswordMain() {
             navigate("/find/2")
           }, 2000);
         }else{
-          navigate("/login");
+          navigate("/");
         }
       });
     }else{

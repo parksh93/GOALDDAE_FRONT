@@ -13,6 +13,9 @@ import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import BoardMainPage from './boardComponent/BoardMainPage';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
+import UserChatList from './chat/UserChatList';
+import UserChatRoom from './chat/UserChatRoom';
+import UserChatMain from './chat/UserChatMain';
 import Footer from './footer/Footer';
 import Match from './auth/page/match/Match';
 import Admin from './auth/page/admin/Admin';
@@ -34,13 +37,13 @@ const App = () => {
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
               <Route path='/board/*' element={<BoardMainPage />} />
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
+              <Route path='/userChat' element={<UserChatMain />} />
               <Route path='/friend-list' element={<friend-list />} />
               <Route path="/admin" element={<Admin />} />
             </Routes>
           <Footer/> 
-     </>
+      </>
     </UserProvider>
-
   );
 }
 
