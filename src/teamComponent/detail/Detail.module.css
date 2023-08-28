@@ -30,39 +30,127 @@
 
 
 /* TeamDetail */
-.leftContainer{
-    width: 40%;
+.container {
+    width: 80%;
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 30px;
+}
+  
+.leftContainer {
+    width: 30%;
+    padding-bottom: 10px;
+    border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+}
+  
+.teamInfo1{
+    padding-left: 15px;
 }
 
-.teamProfile{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.2rem;}
-
-.teamInfo{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.teamIntroduce {
+    padding: 30px;
+    width: 300px;
+    border: 1px solid #cccccc;
+    flex-grow: 1;
+    font-size: 20px;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
 }
 
-.recruitingBtn {
-    display: flex;
-    justify-content: center;
+.teamIntroduceContent.expanded {
+    max-height: none;
+    overflow: auto;
 }
 
-.teamIntroduce{
-    border: 2px solid #9f9f9f;
-    padding: 60px;
+.recruitingBtn{
+    text-align: center; /* 텍스트 가운데 정렬 */
+    padding-bottom: 10px;
 }
 
+.recruitingTrueBtn{
+    background-color: #1a921e;
+    color: #fff;
+    border: 1px solid #1a921e;
+    transition: background-color 0.3s;
+    width: 320px;
+    height: 50px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.recruitingTrueBtn:hover{
+    color: #1a921e;
+    background-color: rgb(255, 255, 255);
+}
+
+.recruitingFalseBtn{
+    width: 320px;
+    height: 50px;
+    border-radius: 3px;
+}
+  
+/* 가입신청 모달 */
 .teamName{
     font-Weight: bold;
 }
 
+.applyBtn{
+    background-color: #1a921e;
+    border: 1px solid #1a921e;
+    color: #fff;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.applyBtn:hover{
+    color: #1a921e;
+    background-color: rgb(255, 255, 255);
+}
+
+.closeBtn {
+    background-color: #1a921e;
+    border: 1px solid #1a921e;
+    color: #fff;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.closeBtn:hover{
+    color: #1a921e;   
+    background-color: rgb(255, 255, 255);
+}
+
+.okBtn{
+    background-color: #1a921e;
+    border: 1px solid #1a921e;
+    color: #fff;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.okBtn:hover{
+    color: #1a921e;   
+    background-color: rgb(255, 255, 255);
+}
 
 
 /* 실패 모달(failModal) */
@@ -76,23 +164,131 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  .failModalContent {
+}
+
+.failModalContent {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
+}
   
+/* 내 팀 디테일(myTeamDetail) */
+.myTeamContainer{
+    width: 100%;
+    display: flex;
+    width: 80%;
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 30px;
+}
 
+.myTeamLeftContainer {
+    width: 40%;
+    padding-bottom: 10px;
+    border: 1px solid #cccccc;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 250px;
+    border-radius: 5px;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+}
 
-/* 모달 전체 적용 */
+.myTeamInfoContainer{
+    padding-left: 15px;
+}
+
+.myTeamRightContainer{
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+}
+
+.myTeamFilters{
+    margin: 30px;
+}
+
+.myTeamInfoFilter{
+    background-color: #ffffff;
+    color: #000000;
+    margin-right: 2px;
+    font-size: large;
+    border: none;
+    cursor: pointer;
+}
+
+.myTeamInfoFilter:hover{
+    font-weight: bold;
+}
+
+.myTeamMatchFilter{
+    background-color: #ffffff;
+    color: #000000;
+    margin-right: 2px;
+    font-size: large;
+    border: none;
+    cursor: pointer;
+}
+
+.myTeamMatchFilter:hover{
+    font-weight: bold;
+}
+
+.myTeamMemberFilter{
+    background-color: #ffffff;
+    color: #000000;
+    margin-right: 2px;
+    font-size: large;
+    border: none;
+    cursor: pointer;
+}
+
+.myTeamMemberFilter:hover{
+    font-weight: bold;
+}
+
+.activeTab {
+    font-weight: bold;
+}
+
+.teamDetailUpdateBtn{
+    background-color: #1a921e;
+    color: #fff;
+    margin-top: 40px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px #1a921e;
+    width: 450px;
+    height: 50px;
+    font-size: 15px;
+}
+
+.teamDetailUpdateBtn:hover{
+    background-color: #fff;
+    color: #1a921e;
+}
+
+.myTeamBox {
+    margin-left: 20px;
+    padding-left: 20px;
+    width: 600px;
+    flex-grow: 1;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.myTeamIntroduce{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+/* 모달 전체 적용 
 .closeBtn {
-    position: absolute;
     top: 10px;
     right: 10px;
     font-size: 18px;
     cursor: pointer;
 }
-
+*/

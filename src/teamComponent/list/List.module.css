@@ -1,3 +1,35 @@
+.Paper {
+    background-color: #f8f8f8; /* 회색 배경색 */
+    border: 1px solid #e0e0e0; /* 회색 테두리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    border-radius: 4px; /* 둥근 테두리 */
+}
+
+.teamInfoContainer {
+    display: flex; /* flexbox 사용 */
+    align-items: center; /* 요소들을 세로 중앙 정렬 */
+    gap: 10px; /* 이미지와 팀 정보 간격 설정 */
+  }
+
+.circularImageContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .circularImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+  }
+  
+  .circularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
 /* 필터 (TeamList) */
 .filtes{
     width: 100%;
@@ -10,8 +42,8 @@
 
 .areaFilter{
     background-color: #ffffff;
-    color: #1a921e;
-    border: 2px solid #1a921e;
+    color: #000000;
+    border: 1px solid #c1c1c1;
     padding: 5px ;
     border-radius: 3px;
     margin-left: 210px;
@@ -19,9 +51,9 @@
 }
 
 .recruitingFilter {
-    background-color: #1a921e;
-    color: #fff;
-    border: 2px solid #1a921e;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #c1c1c1;
     padding: 5px 10px;
     border-radius: 3px;
     transition: background-color 0.3s;
@@ -40,13 +72,13 @@
     height: 20px;
     display: flex;
     flex-direction: row;
-    border: 1px solid #1a921e;
+    border: 1px solid #000000;
     z-index: 3;
     border-radius: 3px;
 }
 
 .InputBox:hover,.InputBox:focus-within {
-    border: 2px solid #1a921e;
+    border: 1px solid #000000;
     padding: 10px;
 }
 
@@ -80,10 +112,10 @@
     margin: 0 auto;
     padding: 10px 10px;
     background-color: white;
-    border: 2px solid #1a921e;
+    border: 2px solid #000000;
     border-top: none;
     border-radius: 0 0 16px 16px;
-    box-shadow: 0 3px 3px rgba(0, 147, 10, 0.3);
+    box-shadow: 0 3px 3px rgba(214, 214, 214, 0.3);
     z-index: 2
 }
 
@@ -94,7 +126,7 @@
 }
 
 .DropDownItem:hover{
-    background-color: rgb(234, 245, 233);
+    background-color: rgb(230, 230, 230);
     padding: 10px;
     font-Weight: bold;
 }
@@ -127,6 +159,7 @@
 .teamCard {
     border-bottom: 1px solid #d5d5d5;
     padding: 1px;
+    padding-left: 10px;
     margin: 0 auto;
     margin-top: 10px;
     width: 70%;
@@ -134,13 +167,13 @@
 }
 
 .teamCard:hover{
-    background-color: rgb(234, 245, 233);
+    background-color: rgb(239, 239, 239)
 
 }
   
 .teamProfileImg {
-    width: 80px;
-    height: 80px;
+    width: 10px;
+    height: auto;
     margin-right: 10px;
 }
  
@@ -153,37 +186,42 @@
 .card{
     display: flex;
     align-items: center;
-    border: 1px solid #7d7d7d;
+    border: 1px solid #b7b7b7;
     height: 250px;
     border-radius: 5px;
+    padding-left: 10px;
     margin: 0 auto;
     margin-top: 10px;
     width: 70%;
+
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
 }
 
-
-
 .card:hover{
-    border: 3px solid #1a921e;
-    background-color: rgb(234, 245, 233);
+    border: 2px solid #c8c8c8;
+}
 
+.myTeamCard{
+    cursor: pointer;
 }
 
 .noticeCheckTeam{
     margin: 10px;
-    color: #1a921e;
+    color: #6d6d6d;
     cursor: pointer;
 }
 
 .noticeNoTeam{
     margin: 10px;
-    color: #1a921e;
+    color: #6d6d6d;
     cursor: pointer;
 }
 
 .noticeLogin{
     margin: 10px;
-    color: #1a921e;
+    color: #6d6d6d;
     cursor: pointer;
 }
 

@@ -146,13 +146,15 @@ const TeamList = ({}) => {
                    
             </div>
             {teamList.map((team) => (
-                <div 
-                className={styles.teamCard} key={team.id}
-                onClick={() => handleTeamClick(team.id)}>
-                    <h3>
-                        <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} /> {team.teamName}
-                    </h3>
-                    <div className={styles.teamInfo}>
+                <div className={styles.teamCard} key={team.id} onClick={() => handleTeamClick(team.id)}>
+                    <div className={styles.teamInfoContainer}>
+                    <div className={styles.circularImageContainer}>
+                        <div className={styles.circularImage}>
+                            <img className={styles.teamProfileImgUrl} src="/img/testImg2.jpg" alt={team.teamName} />
+                        </div>
+                    </div>
+                <div className={styles.teamInfo}>
+                    <h3>{team.teamName}</h3>
                         <p>
                             {team.area} | {team.averageAge} | {team.entryGender} |  
                             <span className={team.recruiting ? styles.teamRecruiting : ''}>
@@ -161,6 +163,7 @@ const TeamList = ({}) => {
                         </p>
                     </div>
                 </div>
+            </div>
             ))}
             <div className={styles.loading}>
                 {isLoading && <h3>불러오는 중...</h3>}

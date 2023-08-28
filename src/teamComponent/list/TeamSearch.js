@@ -137,7 +137,7 @@ const TeamSearch = () => {
     }, []);
 
 return (
-    <div className={styles.WholeBox} ref={wholeBoxRef}>
+    <div className={`${styles.WholeBox} ${styles.paperEffect}`} ref={wholeBoxRef}>
         <div className={`InputBox ${styles.InputBox}`} isHaveInputValue={isHaveInputValue}>
         <input
             className={styles.Input}

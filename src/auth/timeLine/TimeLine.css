@@ -1,0 +1,58 @@
+.timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px; /* 세로 위치 조정 */
+  }
+  
+  /* 가로 위치 조정 */
+  .timeline-date-item {
+    display: inline-block;
+    margin-left: 30px;  
+    margin-right: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+  }
+  
+
+/* 약 768px 이하의 화면 크기에 대한 스타일 */
+@media only screen and (max-width: 768px) {
+    .timeline-date-item {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+  
+  /* 약 480px 이하의 화면 크기에 대한 스타일 */
+  @media only screen and (max-width: 480px) {
+    .timeline-date-item {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  /* 클릭 시 축소 효과 */
+  .timeline-date-item:active {
+    transform: scale(1.5); 
+  }
+
+  .prev-date-btn,
+  .next-date-btn {
+    padding: 0 6px;
+    margin: 0;
+    background: transparent;
+  }
+  
+  ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+  }
+  
+.saturday div:last-child {
+  color: blue;
+}
+
+.sunday div:last-child {
+  color: red;
+}

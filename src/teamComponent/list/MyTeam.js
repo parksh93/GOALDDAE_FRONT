@@ -29,8 +29,8 @@ const MyTeam = () => {
     navigate(`/login`);
   };
 
-  const wrapTeamCreate = () => {
-    navigate(`/team/teamCreate`)  
+  const wrapTeamSave = () => {
+    navigate(`/team/teamSave`)  
   }
 
   const handleMyTeamClick = (id) => {
@@ -38,7 +38,7 @@ const MyTeam = () => {
   };
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${styles.paperEffect}`}>
       {userInfo ? (
         <div>
           {loading ? ( // 로딩 중일 때
@@ -60,7 +60,7 @@ const MyTeam = () => {
               </p>
             </div>
           ) : (
-            <div className={styles.noticeNoTeam} onClick={() => wrapTeamCreate()} > 
+            <div className={styles.noticeNoTeam} onClick={() => wrapTeamSave()} > 
               <p>가입된 팀이 없습니다. 팀에 가입하거나 팀을 생성해주세요. (팀 생성하러 가기) </p>
             </div>
           )}
