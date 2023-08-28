@@ -1,10 +1,10 @@
 .chatListContainer{
-    margin-left: 5px;
+    margin-left: 30px;
     /* width: 500px; */
     padding: 10px;
     margin-top: 20px;
     box-shadow: 5px 5px 5px lightgray;
-    height: 600px;
+    height: 700px;
     overflow: none;
     position: relative;
 }
@@ -40,6 +40,22 @@
 .chatListTitleDiv{
     margin-bottom: 20px;
     margin-left: 20px;
+}
+.chatListTitle {
+    display: inline;
+}
+
+.selectChatDiv {
+    display: inline;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.selectChat {
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 17px;
 }
 
 .lastContent {

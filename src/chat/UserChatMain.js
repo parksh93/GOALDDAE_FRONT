@@ -4,6 +4,7 @@ import styles from "./UserChat.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment/moment";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
+import Loading from "../loading/Loading";
 
 const UserChatMain = () => {
   const [projectId, setProjectId] = useState("");
@@ -12,6 +13,7 @@ const UserChatMain = () => {
   const [channelId, setChannelId] = useState("");
   const [channelName, setChannelName] = useState("");
   const [openRoomState, setOpenRoomState] = useState(false);
+  const [openLoading, setOpenLoading] = useState(true);
 
   const ncloudchat = require("ncloudchat");
   const nc = new ncloudchat.Chat();
@@ -31,12 +33,26 @@ const UserChatMain = () => {
 
     // 처음 메시지 수신
     setMessageList([]);
+    let offset = 0;
+    let per_page = 100;
     const filter = { channel_id: channelId };
     const sort = { created_at: 1 };
-    const option = { offset: 0, per_page: 100 };
-
+    let option = { offset: offset, per_page: per_page };
+    
     getMessages(filter, sort, option, channelId);
 
+    // const promise = nc.countUnread(channelId);
+    
+    // promise.then((appData) => {
+    //   if(appData.unread > 0){
+    //     offset += per_page;
+    //     per_page = appData.unread;
+    //     option = { offset: offset, per_page: per_page };
+
+    //     getMessages(filter, sort, option, channelId);
+    //   }
+    // });
+    
     setOpenRoomState(true);
   }, []);
 
@@ -62,6 +78,7 @@ const UserChatMain = () => {
         },
       ]);
     }
+    setOpenLoading(false);
   };
 
   // 문자 보낸 시간 초기화
@@ -94,10 +111,12 @@ const UserChatMain = () => {
           projectId={projectId}
           openChannelRoom={openChannelRoom}
           setProjectId={setProjectId}
+          setOpenLoading={setOpenLoading}
         />
       </div>
       <div className={styles.chatRoom}>
         {openRoomState === true ? (
+          openLoading ? <Loading/> :
           <UserChatRoom
             messageList={messageList}
             messagesLen={messagesLen}
@@ -107,6 +126,7 @@ const UserChatMain = () => {
             setMessageList={setMessageList}
             projectId={projectId}
             getMessages={getMessages}
+            openRoomState={openRoomState}
             setOpenRoomState={setOpenRoomState}
             formatDate={formatDate}
           />

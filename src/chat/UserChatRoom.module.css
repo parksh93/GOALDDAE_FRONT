@@ -33,7 +33,7 @@
 .messagesMainDiv{
     margin-top: 10px;
     overflow-y: auto;
-    height: 500px;
+    height: 530px;
     overflow-x: hidden;
     margin: 20px;
 }
@@ -48,7 +48,6 @@
     border-radius: 20px;
 }
 .inputDiv{
-    text-align: center;
     display: inline-block; 
     border: solid 1.5px lightgray; 
     background-color: #ffffff; 
@@ -62,14 +61,14 @@
 .messageText {
     height: fit-content;
     background-color: transparent;
-    width: 80%; 
+    width: 85%; 
     border: none; 
     resize: none;
     outline: none;
-    /* font-weight: bold; */
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     max-height: 150px;
+    margin-right: 10px;
 }
 
 .messageText::-webkit-scrollbar {

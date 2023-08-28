@@ -25,6 +25,7 @@ const UserChatRoom = ({
   messagesLen,
   setMessageList,
   setMessagesLen,
+  openRoomState,
   setOpenRoomState,
   formatDate,
 }) => {
@@ -38,8 +39,8 @@ const UserChatRoom = ({
 
   const [message, setMessage] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isPlay = useRef(true);
-  
+  const isPlay = useRef(false);
+
   //   const [file, setFile] = useState('');
 
   const onChangeMessage = useCallback((e) => {
@@ -92,24 +93,26 @@ const UserChatRoom = ({
     scrollToBottom();
     startInterval();
   }, [messageList]);
-  
+
   function startInterval() {
-    setInterval(() => {
-      if(isPlay.current){
-        // 읽지 않은 문자 체크
-        const promise = getUnread();
-        promise.then((appData) => {
-          // 읽지 않은 문자가 있을때 해당 메세지 가져옴
-          if (appData.unread > 0) {
-            getNewMessages(appData.unread);
-          }
-        });
+    if (openRoomState) {
+      if (!isPlay.current) {
+        isPlay.current = true;
+        setInterval(() => {
+          // 읽지 않은 문자 체크
+          const promise = getUnread();
+          promise.then((appData) => {
+            // 읽지 않은 문자가 있을때 해당 메세지 가져옴
+            if (appData.unread > 0) {
+              getNewMessages(appData.unread);
+            }
+          });
 
-        setTimeout(()=> isPlay.current = true, 5000);
+          setTimeout(() => (isPlay.current = false), 1000);
+        }, 3000);
       }
-    },5000);
+    }
   }
-
 
   // 처음 실행시 스크롤바 맨아래에 오도록 설정
   const scrollToBottom = useCallback(() => {
@@ -122,8 +125,12 @@ const UserChatRoom = ({
   useEffect(() => {
     if (message !== "") {
       userMessageRef.current.style.height = "auto";
+      userMessageRef.current.style.overflow = "auto";
       userMessageRef.current.style.height =
         userMessageRef.current.scrollHeight + "px";
+    } else {
+      userMessageRef.current.style.overflow = "hidden";
+      userMessageRef.current.style.height = "15px";
     }
   }, [message]);
 
@@ -133,18 +140,13 @@ const UserChatRoom = ({
   });
 
   const getNewMessages = useCallback(async (unread) => {
-    isPlay.current = false;
-    console.log("messageLen==============",messagesLen);
-    console.log("unread==============",unread);
     const filter = { channel_id: channelId };
     const sort = { created_at: 1 };
     const option = { offset: messagesLen, per_page: unread };
-    console.log("option ====================", option)
 
     const messages = await nc.getMessages(filter, sort, option);
 
     setMessagesLen(messages.totalCount);
-    console.log("new message==============",messages);
 
     for (const message of messages.edges) {
       let sendDate = formatDate(message);
@@ -154,19 +156,31 @@ const UserChatRoom = ({
         message_id: message.node.message_id,
         sort_id: message.node.sort_id,
       });
-      console.log("왜 두번되는거야 ㅅㅂ");
 
-      setMessageList((messageList) => [
-        ...messageList,
-        {
-          node: message.node,
-          sendDate: sendDate,
-        },
-      ]);
+      if (messageList.length > 0) {
+        if (message.node.channel_id === messageList[0].node.channel_id) {
+          for (const beforMessage of messageList) {
+            if (beforMessage.node.message_id !== message.node.message_id) {
+               insertMessageList(sendDate, message);
+               break;
+            }
+          }
+        }
+      } else {
+        insertMessageList(sendDate, message);
+      }
     }
   });
 
-
+  function insertMessageList(sendDate, message) {
+    setMessageList((messageList) => [
+      ...messageList,
+      {
+        node: message.node,
+        sendDate: sendDate,
+      },
+    ]);
+  }
   // 메세지 전송
   const sendMessage = async () => {
     if (message.trim() !== "") {

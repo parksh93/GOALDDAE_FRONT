@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import cookie from "react-cookies";
 import styles from "./UserChatList.module.css";
 import { CiChat1 } from "react-icons/ci";
+import { BiUser, BiGroup } from "react-icons/bi";
 
-const UserChat = ({openChannelRoom, setProjectId}) => {
+const UserChat = ({openChannelRoom, setProjectId, setOpenLoading}) => {
   const ncloudchat = require("ncloudchat");
   const [myChannelList, setMyChannelList] = useState([]);
+  const [chatType, setChatType] = useState(0);
+  const listRef = useRef(false);
 
   const nc = new ncloudchat.Chat();
 
@@ -50,13 +53,24 @@ const UserChat = ({openChannelRoom, setProjectId}) => {
         setMyChannelList([]);
         getChannelList();
       });
-}, []);
+    }, []);
+    
+  setInterval(() => {
+    if(!listRef.current){
+        listRef.current = true;
+        setMyChannelList([]);
+        getChannelList();
+        setTimeout(() => listRef.current = false, 5000)
+    }
+  },5000);
 
-setInterval(() => {
-  // setMyChannelList([])
-  // getChannelList();
-},5000);
-
+  const selectChat = () => {
+    if(chatType === 0){
+      setChatType(1);
+    }else{
+      setChatType(0);
+    }
+  }
   const createChannel = useCallback(async () => {
     // 채팅 생성
     const channel = await nc.createChannel({
@@ -87,10 +101,9 @@ setInterval(() => {
           channelLastContent = channelList.node.last_message.content;
           if (channelLastContent.length > 20) {
               const subContent = channelLastContent.substring(0, 20);
-              
               channelLastContent = subContent + "...";
             }
-        }
+      }
 
       if (subscriptions.totalCount > 0) {
         for (const channelInfo of subscriptions.edges) {
@@ -98,19 +111,20 @@ setInterval(() => {
             // 읽지 않은 문자 체크
             const promise = nc.countUnread(channelInfo.node.channel_id);
             promise.then((appData) => {
-              setMyChannelList((myChannelList) => [
-                ...myChannelList,
-                {
-                  channelInfo: channelInfo,
-                  lastContent: channelLastContent,
-                  unReadCnt: appData.unread,
-                },
-              ]);
+                setMyChannelList((myChannelList) => [
+                  ...myChannelList,
+                  {
+                    channelInfo: channelInfo,
+                    lastContent: channelLastContent,
+                    unReadCnt: appData.unread,
+                  },
+                ]);
             });
           }
         }
       }
     }
+    
   };
 
   // // 접속 종료
@@ -125,6 +139,10 @@ setInterval(() => {
           채팅
           <CiChat1 />
         </h2>
+        <div className={styles.selectChatDiv}>
+          <span className={styles.selectChat} style={chatType === 0 ? {color: "black"} : {color: "lightgray"}} onClick={selectChat}>개인<BiUser onClick={selectChat}/></span>
+          <span className={styles.selectChat} style={chatType === 1 ? {color: "black"} : {color: "lightgray"}} onClick={selectChat}>팀<BiGroup onClick={selectChat}/></span>
+        </div>
       </div>
       <div className={styles.chatListMain}>
         {myChannelList.length === 0 ? (
@@ -136,6 +154,7 @@ setInterval(() => {
           myChannelList.map((myChannel) => (
             <div
               onClick={async () => {
+                setOpenLoading(true);
                 openChannelRoom(myChannel.channelInfo.node.channel_id, myChannel.channelInfo.node.channel.name);
               }
             }

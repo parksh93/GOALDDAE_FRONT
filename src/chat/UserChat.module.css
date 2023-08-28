@@ -1,22 +1,23 @@
 .chatMainContainer {
-    height: 700px;
+    height: 800px;
 }
 
 .chaList {
     /* display: inline-block; */
     float: left;
-    width: 38%;
+    width: 32%;
 }
 
 .chatRoom {
+    margin-top: 20px;
     margin-left: 5px;
      display: inline-block;
-     width: 61%;
+     width: 65%;
 }
 
 .outChatRoomDiv {
-    background-color: rgb(246, 246, 246);
-    height: 640px;
+    background-color: rgb(243, 243, 243);
+    height: 720px;
     border-radius: 10px;
     text-align: center;
 }
@@ -24,7 +25,7 @@
 .icon {
     color: rgb(177, 177, 177);
     font-size: 50px;
-    margin-top: 35%;
+    margin-top: 30%;
 }
 
 .outChatRoomMsg {
