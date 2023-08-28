@@ -20,8 +20,10 @@ const SoccerFieldTable = () => {
   const [inOutWhether, setInOutWhether] = useState(undefined);
   const [grassWhether, setGrassWhether] = useState(undefined);
   const [region, setRegion] = useState('');
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const [fieldImg1Preview, setFieldImg1Preview] = useState(null);
   const [fieldImg2Preview, setFieldImg2Preview] = useState(null);
@@ -64,23 +66,23 @@ const SoccerFieldTable = () => {
   
       const response = await axios.post('/soccerField/save', soccerField);
   
-      if (response.status === 200) {
+        if (response.status === 200) {
         console.log(`생성 완료: ${fieldName}`);
-        setOpenSnackbar(true);
+        setOpenSuccessSnackbar(true);   
         setTimeout(() => {
-          setOpenSnackbar(false);
+          setOpenSuccessSnackbar(false);  
         }, 3000);
       } else {
         console.error(`생성 실패, 상태 코드: ${response.status}`);
         setErrorMessage(`구장 생성에 실패했습니다. ${fieldName} 생성에 실패했습니다.`);
-        setOpenSnackbar(true);
+        setOpenErrorSnackbar(true); 
       }
     } catch (error) {
       console.error('구장 추가 중 에러 발생:', error);
       setErrorMessage('구장 추가에 실패했습니다. 다시 시도해주세요.');
-      setOpenSnackbar(true);
+      setOpenErrorSnackbar(true);  
     }
-  };
+};
   
 
   const theme = createTheme({
@@ -245,19 +247,20 @@ const SoccerFieldTable = () => {
               </Paper>
               <Box>
                 <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff' }}>
-                  등록
+                등록
                 </Button>
                 <Button variant="outlined" color="secondary" onClick={() => navigate('/admin')} style={{ borderColor: 'green', color: 'green', margin: '20px' }}>
-                  취소
-                </Button>   
+                취소
+                </Button>
+                  <Snackbar open={openSuccessSnackbar} autoHideDuration={3000} onClose={() => setOpenSuccessSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                    <Alert severity="success">
+                      구장이 성공적으로 생성되었습니다.</Alert>
+                    </Snackbar>
+                      <Snackbar open={openErrorSnackbar} autoHideDuration={3000} onClose={() => setOpenErrorSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                    <Alert severity="error">{errorMessage}</Alert>
+                  </Snackbar>
+                </Box>
               </Box>
-              <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                <Alert severity="success">구장이 성공적으로 생성되었습니다.</Alert>
-              </Snackbar>
-              <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                <Alert severity="error">{errorMessage}</Alert>
-              </Snackbar>
-            </Box>
           </form>
       </ThemeProvider>
   );  
