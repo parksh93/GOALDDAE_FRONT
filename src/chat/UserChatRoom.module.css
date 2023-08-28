@@ -1,0 +1,141 @@
+.openDrawerToggle {
+    float: right;
+    margin-top: 20px;
+    margin-right: 30px;
+    font-size: 22px;
+}
+
+.senderName {
+    font-weight: 600;
+}
+
+.messageContent {
+    text-align: center;
+}
+
+.messageContentDiv {
+    height: fit-content;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 7px;
+    max-width: 80%;
+    word-break:break-all;
+}
+
+.sendDate{
+    font-size: 12px;
+    color: gray;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.messagesMainDiv{
+    margin-top: 10px;
+    overflow-y: auto;
+    height: 530px;
+    overflow-x: hidden;
+    margin: 20px;
+}
+
+.messagesMainDiv::-webkit-scrollbar {
+    background: none;
+    width: 10px;
+}
+
+.messagesMainDiv::-webkit-scrollbar-thumb {
+    background-color: rgb(228, 228, 228);
+    border-radius: 20px;
+}
+.inputDiv{
+    display: inline-block; 
+    border: solid 1.5px lightgray; 
+    background-color: #ffffff; 
+    width: 60%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.messageText {
+    height: fit-content;
+    background-color: transparent;
+    width: 85%; 
+    border: none; 
+    resize: none;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    max-height: 150px;
+    margin-right: 10px;
+}
+
+.messageText::-webkit-scrollbar {
+    background: none;
+    width: 10px;
+}
+
+.messageText::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 10px;
+}
+
+.messageText:active {
+    border: none;
+}
+.sendBtn {
+    background-color: #4CC150; 
+    width: 30px; 
+    height: 30px;
+    border: solid 1px #4CC150;  
+    font-size: 9pt; 
+    border-radius: 50%;
+    color: white;
+}
+
+.sendBtn:hover {
+    background-color: lightgray;
+    border: solid 1px lightgray;  
+}
+
+.sendDiv {
+    text-align: center;
+}
+
+.return{
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.chatRoomName {
+    display: inline;
+    margin-left: 10px;
+}
+
+.drawerMain{
+    position: relative;
+}
+
+.peopleTitle {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.chatOutBtnDiv {
+    position: absolute;
+    bottom: 0;
+}
+
+.chatOutBtn {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: rgba(216, 216, 216, 0.952);
+}
+
+.chatOutBtn:hover {
+    color: black;
+}

@@ -1,0 +1,135 @@
+
+.container {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    position: relative;
+    color: #242424;
+    font-size: 15px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .listTable {
+    border-bottom: 1px solid #ddd;
+    padding: 11px;
+    text-align: center;
+  }
+  
+  .tableDate {
+    font-size: 14px;
+    color: #464646;
+    border-bottom: 1px solid #ddd;
+    padding: 11px;
+    text-align: center;
+  }
+
+  .tableHeader {
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+    background-color: #fafafa;
+  }
+
+  .tableTitle {
+    text-align: left;
+    width: 400px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .pageButtons {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .numButton {
+    padding: 0 2px;
+    margin: 0 2px;
+  }
+
+  .currentPageButton {
+    padding: 0 2px;
+    margin: 0 2px;
+    color: #335c2c;
+    text-decoration: underline;
+  }
+  
+  .prevButton, .nextButton {
+    margin: 0 5px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background-color: #108b0c;
+    border: none;
+    color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  select, input {
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  .searchButton {
+    margin-left: 5px;
+  }
+
+  .searchContainer {
+    text-align: center; /* 검색 창을 가운데로 정렬 */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pagingContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagingButton {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+}
+
+.writeLink {
+  text-align: right;
+  margin-top: 10px;
+  display: block;
+}
+
+.writeButton {
+  padding: 3px 6px;
+  background-color: #108b0c;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  margin-top: 20px;
+  border-radius: 3px;
+}
+
+.imgIcon {
+  margin-bottom: -4px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline; 
+  }
+  
