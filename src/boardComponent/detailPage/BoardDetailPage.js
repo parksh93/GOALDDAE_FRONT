@@ -15,11 +15,9 @@ const BoardDetailPage = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.id !== null) {
-      console.log(userInfo);
       // 글 상세정보를 가져오는 요청
       axios.get(`/board/detail/${id}`).then((response) => {
         setBoardDetail(response.data);
-        console.log(response.data)
       });
     }
   }, [id, userInfo]);

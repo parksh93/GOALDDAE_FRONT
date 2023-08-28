@@ -31,7 +31,6 @@ function BoardListPage() {
     axios.get(`/board/list?type=${type}&name=${name}&page=${page}`).then((response) => {
       setPageData(response.data);
       setTotalPageNum(response.data.pageInfo.totalPages)
-      console.log(response.data)
     });
   }, [searchParams]);
 
