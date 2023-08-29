@@ -37,7 +37,7 @@ const UserLogin = () => {
 
     const data = await response.json();
     if (data === true) {
-      navigate("/");
+      navigate(-1);
     } else {
       window.scrollTo({
         top: 0,

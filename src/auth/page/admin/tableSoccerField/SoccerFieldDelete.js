@@ -15,7 +15,7 @@ const SoccerFieldDelete = () => {
 
   const fetchSoccerField = async () => {
     try {
-      const response = await axios.get('/soccerField/search');
+      const response = await axios.get('/field/search');
       setSoccerField(response.data);
     } catch (error) {
       console.error(error);
@@ -34,7 +34,7 @@ const SoccerFieldDelete = () => {
     if (!selectFieldId) return;
 
     try{
-      await axios.post('/soccerField/delete', { id: selectFieldId });
+      await axios.post('/field/delete', { id: selectFieldId });
       setSnackbarMessage('구장이 성공적으로 제거되었습니다.');
       setSnackbarOpen(true);
       setSelectFieldId('');

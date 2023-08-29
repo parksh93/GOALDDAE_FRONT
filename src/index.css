@@ -7,7 +7,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::-webkit-scrollbar {
+  background: none;
+  width: 12px;
+  background-color: rgb(240, 237, 237);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(212, 212, 212);
+  border-radius: 10px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#root {
+  overflow-x: hidden;
 }
