@@ -4,7 +4,7 @@ import styles from "./Payment.module.css";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../userComponent/userContext/UserContext";
 
-const Payment = ({ fieldId, fieldName, reservationFree }) => {
+const Payment = ({ fieldId, fieldName, reservationFee }) => {
   const navigete = useNavigate();
   const { userInfo } = useUser();
   const [franchiseKey, setFranchiseKey] = useState("");
@@ -35,7 +35,7 @@ const Payment = ({ fieldId, fieldName, reservationFree }) => {
           pay_method: "card",
           merchant_uid: "GOALDDAEIMP" + makeMerchantUid,
           name: fieldName,
-          amount: reservationFree,
+          amount: reservationFee,
           buyer_email: userInfo.email,
           buyer_name: userInfo.name,
           buyer_tel: userInfo.phoneNumber,

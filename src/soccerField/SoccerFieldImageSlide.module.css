@@ -1,0 +1,39 @@
+/* 이미지 크기 조절은 주석 참고 */
+
+.imageSlideContainer {
+    max-width: 1000px; /* 가로 */
+    margin-bottom: 40px;
+    z-index: 1;
+  }
+  
+  .img {
+    width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
+    max-height: 500px; /* 높이 */
+  }
+  
+  .slickNext,
+  .slickPrev {
+    font-size: 14px; /* 화살표 아이콘 크기 조절 */
+    color: #202020; /* 화살표 아이콘 색상 조절 */
+    position: absolute; /* 절대 위치 설정 */
+    top: 50%; /* 위에서 50% 떨어진 위치로 설정 */
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+  }
+  
+  .slickPrev {
+    left: 10px; /* 왼쪽 여백 조절 */
+    z-index: 1; 
+  }
+  
+  .slickPrev::before {
+    content: "<";
+  }
+  
+  .slickNext {
+    right: 10px; /* 왼쪽 여백 조절 */
+    z-index: 1; 
+  }
+  
+  .slickNext::before {
+    content: ">"; 
+  }

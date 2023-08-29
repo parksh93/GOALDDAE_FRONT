@@ -1,13 +1,45 @@
-.reservationFree {
+.container {
+    max-width: 1000px; /* 가로 */
+    margin: 0 auto;
+    margin-top: 30px;
+    z-index: 1;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+.infoContainer {
+    width: 800px;
+    z-index: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 600px;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.reservationContainer{
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 400px;
+    max-height: 400px;
+    margin-left: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.reservationFee {
     display: inline;
-    float: left;
+    float: right;
     margin-left: 20px;
     padding-top: 25px;
     font-size: 30px;
     font-weight: 500;
 }
 
-.reservationFreeFont {
+.reservationFeeFont {
     display: inline;
     background-color: rgb(46, 185, 46);
     margin-right: 10px;
