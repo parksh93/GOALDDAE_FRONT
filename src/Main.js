@@ -11,8 +11,6 @@ const Main = () => {
             <div>
                 <ImageSlide />
                 <TimeLine />
-
-               
             </div>
         </UserProvider>
     );

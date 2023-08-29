@@ -5,6 +5,7 @@ import buttonStyles from "./LoginInfo.module.css";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { useUser } from "../userComponent/userContext/UserContext";
 
 const LoginInfo = () => {
   const HtmlTooltip = styled(({ className, ...props }) => (
@@ -19,25 +20,29 @@ const LoginInfo = () => {
     },
   }));
 
-  const [userInfo, setUserInfo] = useState("");
-
-  const getUserInfo = async () => {
-    const response = await fetch("/user/getUserInfo", { method: "POST" });
-    if (response.status === 200) {
-      const data = await response.json();
-      setUserInfo(data);
-    }
-  };
+  const {getUserInfo, userInfo} = useUser();
+  // const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    if (userInfo === "") {
-      getUserInfo();
-    }
-  }, [userInfo]);
+    getUserInfo();
+  },[])
+  // const getUserInfo = async () => {
+  //   const response = await fetch("/user/getUserInfo", { method: "POST" });
+  //   if (response.status === 200) {
+  //     const data = await response.json();
+  //     setUserInfo(data);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (userInfo === "") {
+  //     getUserInfo();
+  //   }
+  // }, [userInfo]);
 
   return (
     <>
-      {userInfo === "" ? (
+      {userInfo === null ? (
         <div className={styles.btnContainer}>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <button className={buttonStyles.button}>로그인</button>
@@ -47,17 +52,17 @@ const LoginInfo = () => {
           </Link>
         </div>
       ) : (
-          <div>
+          <div className={styles.userInfoContainer}>
             <img src={userInfo.profileImgUrl} className={styles.profileImg} />
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <Link to="/myPage">내정보</Link>
+                  <Link to="/myPage" className={styles.tootipText}>내정보</Link>
                   <br />
-                  <Link to="/logOut">로그아웃</Link>
+                  <Link to="/logOut" className={styles.tootipText}>로그아웃</Link>
                 </React.Fragment>
               }
-            >
+              >
               <p className={styles.userNickname}>{userInfo.nickname}</p>
             </HtmlTooltip>
           </div>

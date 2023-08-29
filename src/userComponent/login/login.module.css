@@ -52,3 +52,8 @@
 .screen {
     color: lightgray;
 }
+
+.socialLoginSection {
+    text-align: center;
+    margin-top: 20px;
+}

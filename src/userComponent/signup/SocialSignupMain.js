@@ -15,26 +15,17 @@ import Collapse from "@mui/material/Collapse";
 import GenderRaido from "./GenderRaido";
 import BirthInput from "./BirthInput";
 import SignupModal from "./SignupModal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import TermsModal from "./TermsModal";
 import NameInput from "./NameInput";
 
-const SignupMain = () => {
-  const [loginId, setLoginId] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [certificationCode, setCertificationCode] = useState("");
-  const [certificateCheck, setCertificateCheck] = useState("");
-  const [name, setName] = useState("");
+const SocialSignupMain = () => {
+
   const [nickname, setNickname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("");
   const [birth, setBirth] = useState("");
 
-  const [loginIdOk, setLoginIdOk] = useState(false);
-  const [passwordOk, setPasswordOk] = useState(false);
-  const [emailOk, setEmailOk] = useState(false);
-  const [certificationOk, setCertificationOk] = useState(false);
   const [nicknameOk, setNicknameOk] = useState(false);
   const [phoneNumberOk, setPhoneNumberOk] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -53,6 +44,8 @@ const SignupMain = () => {
   const [signOk, setSignOk] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const {email} = location.state;
 
   const onChangeCheckBox = useCallback(() => {
     if (checked) {
@@ -64,34 +57,27 @@ const SignupMain = () => {
 
   const openTermsModal = () => {
     setTermsModalOpen(true);
-  }
+  };
 
   const submit = useCallback(() => {
     if (
-      loginIdOk &&
-      passwordOk &&
-      emailOk &&
-      certificationOk &&
-      name !== "" &&
       nicknameOk &&
       phoneNumberOk &&
       checked &&
       gender !== "" &&
       birth !== ""
     ) {
-      
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-      
+
       setOpen(true);
       setAlertSeverity("success");
       setAlertTitle("회원가입 성공");
       setAlertMsg("회원가입을 축하드립니다. 잠시후 메인 페이지로 이동합니다.");
-      
-      setModalOpen(true);
 
+      setModalOpen(true);
     } else {
       window.scrollTo({
         top: 0,
@@ -103,22 +89,19 @@ const SignupMain = () => {
       setAlertMsg(
         "입력하지 않았거나, 완료되지 않은 작업이 있습니다. 다시 확인해주세요."
       );
-      setTimeout(()=>setOpen(false), 3000);
+      setTimeout(() => setOpen(false), 3000);
     }
   });
 
-  useEffect(()=> {
-    if(signOk){
-      fetch("/user/signup", {
+  useEffect(() => {
+    if (signOk) {
+      fetch("/user/socialSignup", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          loginId: loginId,
-          password: password,
           email: email,
-          name: name,
           nickname: nickname,
           phoneNumber: phoneNumber,
           birth: birth,
@@ -126,14 +109,13 @@ const SignupMain = () => {
           preferredCity: city,
           preferredArea: area,
           activityClass: activityClass,
-          authority: "user",
         }),
       }).then(() => {
         setModalOpen(false);
-        navigate("/")
+        navigate("/");
       });
     }
-  },[signOk])
+  }, [signOk]);
   return (
     <div className={styles.container}>
       <Collapse in={open}>
@@ -150,66 +132,6 @@ const SignupMain = () => {
         </a>
       </section>
       <section className={styles.section}>
-        <LoginIdInput
-          label="아이디"
-          value={loginId}
-          setValue={setLoginId}
-          maxValue={10}
-          successText="사용 가능한 아이디입니다."
-          errorText="사용할 수 없는 아이디입니다."
-          inputStyle={styles.input}
-          divStyle={styles.div}
-          btnStyle={styles.submitBtn}
-          setLoginIdOk={setLoginIdOk}
-        />
-        <PasswordInput
-          label="비밀번호"
-          type="password"
-          value={password}
-          setValue={setPassword}
-          maxValue={10}
-          errorText="비밀번호 형식을 확인해주세요"
-          inputStyle={styles.input}
-          divStyle={styles.div}
-          setPasswordOk={setPasswordOk}
-        />
-        <EmailInput
-          label="이메일"
-          value={email}
-          setValue={setEmail}
-          certificateCode={certificationCode}
-          setCertifi={setCertificationCode}
-          successText="인증번호가 전송되었습니다."
-          errorText="이메일 형식을 확인해주세요"
-          inputStyle={styles.input}
-          divStyle={styles.div}
-          btnStyle={styles.submitBtn}
-          setEmailOk={setEmailOk}
-        />
-        {certificationCode !== "" ? (
-          <CertificateInput
-            label="인증번호"
-            cerVal={certificationCode}
-            value={certificateCheck}
-            setValue={setCertificateCheck}
-            successText="확인되었습니다."
-            errorText="인증번호가 일치하지 않습니다"
-            inputStyle={styles.input}
-            divStyle={styles.div}
-            btnStyle={styles.submitBtn}
-            setCrtificationOk={setCertificationOk}
-          />
-        ) : (
-          ""
-        )}
-          <NameInput
-            label="이름"
-            value={name}
-            setValue={setName}
-            errorText="이름을 입력해주세요"
-            inputStyle={styles.input}
-            divStyle={styles.div}
-          />
         <NicknameInput
           label="닉네임"
           value={nickname}
@@ -246,13 +168,13 @@ const SignupMain = () => {
         </a>
         에 동의합니다.
         <CheckBnt className={styles.singupBtn} onClick={submit}>
-          회원가입
+          추가 정보 입력
         </CheckBnt>
         <TermsModal
           onChangeCheckBox={onChangeCheckBox}
           checked={checked}
           styles={styles}
-          modalOpen = {termsModalOpen}
+          modalOpen={termsModalOpen}
           setModalOpen={setTermsModalOpen}
         />
         <SignupModal
@@ -272,7 +194,7 @@ const SignupMain = () => {
   );
 };
 
-export default SignupMain;
+export default SocialSignupMain;
 
 const CheckBnt = styled(Button)`
   top: 10px;

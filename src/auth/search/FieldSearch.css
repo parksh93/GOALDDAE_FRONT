@@ -20,7 +20,7 @@
   z-index: 3;
   margin-bottom: 0;
   height: 48px; 
-
+  margin-top: 10px;
   background-color: white;
   box-shadow: 0 1px 6px rgba(32,33,36,0.28); 
 }

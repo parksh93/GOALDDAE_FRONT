@@ -8,6 +8,7 @@ import PasswordInput from "./PasswordInput";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
+import GoogleLogin from "./GoogleLogin";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -103,6 +104,9 @@ const UserLogin = () => {
         <CheckBnt className={styles.loginBtn} onClick={submitLogin}>
           로그인
         </CheckBnt>
+      </section>
+      <section className={styles.socialLoginSection}>
+        <GoogleLogin />
       </section>
       <section className={styles.etcBtnSection}>
         <Link to="/find/1" className={styles.etcBtn}>아이디 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
