@@ -13,7 +13,7 @@ import Admin from './auth/page/admin/Admin';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
 
-import TeamCreate from './auth/page/team/TeamCreate';
+import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 
@@ -38,7 +38,7 @@ const App = () => {
               <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
               <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
-              <Route path="/admin/team/save" element={<TeamCreate />} />
+              <Route path="/admin/team/save" element={<TeamSaveTable />} />
             </Routes>
           <Footer/> 
      </>

@@ -35,7 +35,7 @@ const SoccerFieldUpdate = () => {
 
     const fetchSoccerField = async () => {
       try {
-          const response = await axios.get('/soccerField/search');
+          const response = await axios.get('/field/search');
           setSoccerField(response.data);
       } catch (error) {
           console.error(`Error: ${error}`);
@@ -75,7 +75,7 @@ const SoccerFieldUpdate = () => {
     event.preventDefault();
   
     try {
-      await axios.put(`/soccerField/update`, selectSoccerField);
+      await axios.put(`/field/update`, selectSoccerField);
       setSuccessMessage(`${selectSoccerField.fieldName} 수정되었습니다.`);
       setOpenSuccessSnackbar(true);
       fetchSoccerField();
@@ -160,22 +160,28 @@ const SoccerFieldUpdate = () => {
                           <FormControl component="fieldset">
                             <FormLabel component="toilet">화장실 유무</FormLabel>
                             <RadioGroup row aria-label="toiletStatus" name="toiletStatus" value={selectSoccerField.toiletStatus} onChange={e => setSelectSoccerField({...selectSoccerField, toiletStatus: e.target.value})}>
-                              <FormControlLabel value="1" control={<Radio />} label="있음" />
-                              <FormControlLabel value="0" control={<Radio />} label="없음" />
+                              <FormControlLabel value="true" control={<Radio />} label="있음" />
+                              <FormControlLabel value="false" control={<Radio />} label="없음" />
                             </RadioGroup>
                           </FormControl>
                           <FormControl component="fieldset">
-                            <FormLabel component="shower">샤워실 유무</FormLabel>
-                            <RadioGroup row aria-label="showerStatus" name="showerStatus" value={selectSoccerField.showerStatus} onChange={e => setSelectSoccerField({...selectSoccerField, showerStatus: e.target.value})}>
-                              <FormControlLabel value="1" control={<Radio />} label="있음" />
-                              <FormControlLabel value="0" control={<Radio />} label="없음" />
-                            </RadioGroup>
-                          </FormControl>
+                          <FormLabel component="legend">샤워실 유무</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-label="showerStatus"
+                            name="showerStatus"
+                            value={selectSoccerField.showerStatus}
+                            onChange={(e) => setSelectSoccerField({...selectSoccerField, showerStatus: e.target.value === "true"})}
+                          >
+                            <FormControlLabel value={true} control={<Radio />} label="있음" />
+                            <FormControlLabel value={false} control={<Radio />} label="없음" />
+                          </RadioGroup>
+                        </FormControl>
                           <FormControl component="fieldset">
                             <FormLabel component="parking">주차장 여부</FormLabel>
                             <RadioGroup row aria-label="parkingStatus" name="parkingStatus" value={selectSoccerField.parkingStatus} onChange={e => setSelectSoccerField({...selectSoccerField, parkingStatus: e.target.value})}>
-                              <FormControlLabel value="1" control={<Radio />} label="있음" />
-                              <FormControlLabel value="0" control={<Radio />} label="없음" />
+                              <FormControlLabel value="true" control={<Radio />} label="있음" />
+                              <FormControlLabel value="false" control={<Radio />} label="없음" />
                             </RadioGroup>
                           </FormControl>
                         </Paper>

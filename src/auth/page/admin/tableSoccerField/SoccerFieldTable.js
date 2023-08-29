@@ -64,7 +64,7 @@ const SoccerFieldTable = () => {
         region: region,
       };
   
-      const response = await axios.post('/soccerField/save', soccerField);
+      const response = await axios.post('/field/save', soccerField);
   
         if (response.status === 200) {
         console.log(`생성 완료: ${fieldName}`);
@@ -170,6 +170,7 @@ const SoccerFieldTable = () => {
                   </RadioGroup>
                 </FormControl>
               </Box>
+
               <Box mb={2}>
                 <FormControl component="fieldset">
                   <FormLabel component="legend">화장실 유무</FormLabel>
@@ -178,10 +179,10 @@ const SoccerFieldTable = () => {
                     aria-label="toiletStatus"
                     name="toilet-status"
                     value={toiletStatus}
-                    onChange={(e) => setToiletStatus(parseInt(e.target.value))}
+                    onChange={(e) => setToiletStatus(e.target.value === "true")}
                   >
-                    <FormControlLabel value={1} control={<Radio />} label="있음" />
-                    <FormControlLabel value={0} control={<Radio />} label="없음" />
+                    <FormControlLabel value={true} control={<Radio />} label="있음" />
+                    <FormControlLabel value={false} control={<Radio />} label="없음" />
                   </RadioGroup>
                 </FormControl>
               </Box>
@@ -193,10 +194,10 @@ const SoccerFieldTable = () => {
                     aria-label="showerStatus"
                     name="shower-status"
                     value={showerStatus}
-                    onChange={(e) => setShowerStatus(parseInt(e.target.value))}
+                    onChange={(e) => setShowerStatus(e.target.value === "true")}
                   >
-                    <FormControlLabel value={1} control={<Radio />} label="있음" />
-                    <FormControlLabel value={0} control={<Radio />} label="없음" />
+                    <FormControlLabel value={true} control={<Radio />} label="있음" />
+                    <FormControlLabel value={false} control={<Radio />} label="없음" />
                   </RadioGroup>
                 </FormControl>
               </Box>
@@ -208,10 +209,10 @@ const SoccerFieldTable = () => {
                     aria-label="parkingStatus"
                     name="parking-status"
                     value={parkingStatus}
-                    onChange={(e) => setParkingStatus(parseInt(e.target.value))}
+                    onChange={(e) => setParkingStatus(e.target.value === "true")}
                   >
-                    <FormControlLabel value={1} control={<Radio />} label="있음" />
-                    <FormControlLabel value={0} control={<Radio />} label="없음" />
+                    <FormControlLabel value={true} control={<Radio />} label="있음" />
+                    <FormControlLabel value={false} control={<Radio />} label="없음" />
                   </RadioGroup>
                 </FormControl>
               </Box>

@@ -9,7 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
 
-const TeamCreate = () => {
+const TeamSaveTable = () => {
   const [teamName, setTeamName] = useState('');
   const [area, setArea] = useState('');
   const [averageAge, setAverageAge] = useState('');
@@ -139,4 +139,4 @@ const TeamCreate = () => {
     );
 };
 
-export default TeamCreate;
+export default TeamSaveTable;
