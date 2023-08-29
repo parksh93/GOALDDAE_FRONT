@@ -41,7 +41,7 @@ const FieldSearch = () => {
           setDropDownList(dropDownCache[inputValue]);
         } else {
           try {
-            const response = await axios.get('/search/soccerField', {
+            const response = await axios.get('/soccerField/search', {
               params: { searchTerm: inputValue },
             });
 
@@ -63,7 +63,7 @@ const FieldSearch = () => {
       GET 요청을 보내어 검색어가 포함된 도시 이름을 받아 도시 이름이 없으면 빈 string을 반환*/
   const fetchCityName = async (partialCityName) => {
     try {
-      const response = await axios.get('/search/city', {
+      const response = await axios.get('/soccerField/search/city', {
         params: { searchTerm: partialCityName },
       });
 

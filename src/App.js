@@ -8,17 +8,17 @@ import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider } from './userComponent/userContext/UserContext';
 import Navigation from './auth/navigation/Navigation';
-import LoginInfo from './loginInfo/LoginInfo';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import BoardMainPage from './boardComponent/BoardMainPage';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
-import UserChatList from './chat/UserChatList';
-import UserChatRoom from './chat/UserChatRoom';
 import UserChatMain from './chat/UserChatMain';
 import Footer from './footer/Footer';
-import Match from './auth/page/match/Match';
 import Admin from './auth/page/admin/Admin';
+import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
+import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
+import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 
 const App = () => {
   return (
@@ -33,13 +33,18 @@ const App = () => {
               <Route path='/signup' element={<SignupMain/>}/>
               <Route path='/find' element={<FindMain />} />
               <Route path='/find/:findMenuNum' element={<FindMain />} />
-              <Route path='/Match' element={<Match />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
               <Route path='/board/*' element={<BoardMainPage />} />
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
               <Route path='/userChat' element={<UserChatMain />} />
               <Route path='/friend-list' element={<friend-list />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
+
+              <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
+              <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
+              <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
+              <Route path="/admin/team/save" element={<TeamSaveTable />} />
             </Routes>
           <Footer/> 
       </>

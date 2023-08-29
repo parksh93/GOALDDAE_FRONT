@@ -41,13 +41,13 @@
       font-size: 14px;
       padding: 4px 4px;
       margin: 4px 4px;
-      width: 100%; /* 화면에 꽉 차도록 버튼 너비를 100%로 설정합니다. */
+      width: 100%; 
     }
   
     .btnContainer {
       flex-wrap: wrap;
-      gap: 0.5rem; /* 버튼 사이의 수직 간격을 좀 더 줄입니다. */
-      justify-content: space-around; /* 버튼 사이의 수평 간격이 상하좌우에서 동일하게 설정되도록 변경합니다. */
+      gap: 0.5rem; 
+      justify-content: space-around; 
     }
   }
   

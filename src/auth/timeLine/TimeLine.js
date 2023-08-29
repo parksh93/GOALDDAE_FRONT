@@ -4,6 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import axios from "axios";
+import MatchIndividual from "../page/match/MatchIndividual ";
 
 const TimeLine = () => {
   const [dates, setDates] = useState([]);
@@ -12,22 +13,29 @@ const TimeLine = () => {
 
   const fetchMatchList = async (date) => {
     try {
-      const response = await axios.get("/createIndividualMatchTable", {
-        params: { individualMatch: date },
+      const recruitStart = `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2, '0')}-${String(date).padStart(2, '0')}T00:00:00`;
+      const recruitEnd = `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2, '0')}-${String(date).padStart(2, '0')}T23:59:59`;
+
+      const response = await axios.get("/api/match-individual/find", {
+        params: {
+          matchIndividualTable: "individual_match_table",
+          recruitStart: encodeURIComponent(recruitStart),
+          recruitEnd: encodeURIComponent(recruitEnd),
+        },
       });
+      
       return response.data;
     } catch (error) {
       console.error("네트워크 에러:", error);
       return [];
-    }
+    } 
   };
 
   const generateDates = () => {
     const now = new Date();
     const timezoneOffset = now.getTimezoneOffset() * 60 * 1000;
-    now.setTime(now.getTime() + timezoneOffset + 9 * 60 * 60 * 1000);
+    now.setTime(now.getTime() + timezoneOffset);
 
-    /* 24시간마다 자동 일자 변경*/
     const datesArray = [];
     for (let i = 0; i < 15; i++) {
       const currentTime = new Date(now.getTime() + i * 24 * 60 * 60 * 1000);
@@ -45,21 +53,25 @@ const TimeLine = () => {
       generateDates();
     }, 24 * 60 * 60 * 1000);
 
+    const fetchTodayMatchList = async () => {
+      const today = new Date().getDate();
+      const fetchedMatches = await fetchMatchList(today);
+      setMatchList(fetchedMatches);
+    };
+
+    fetchTodayMatchList();
+
     return () => {
       clearInterval(timer);
     };
   }, []);
 
-  /* Next 화살표 */
-  /* 실제 화면과 보여주는 화면에 따라 계산해서 화살표를 눌림 */
   const handleNextDate = () => {
     if (currentIndex < dates.length - 8) {
-      setCurrentIndex((prevIndex) => prevIndex + 2);
+      setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
 
-  /* Prev 화살표 */
-  /* 실제 화면과 보여주는 화면에 따라 계산해서 화살표를 눌림 */
   const handlePrevDate = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
@@ -70,7 +82,6 @@ const TimeLine = () => {
 
   const handleDateClick = async (date, day) => {
     console.log(`선택된 날짜: ${date}, 요일: ${day}`);
-    // 타임라인 클릭 시 매치리스트를 가져옵니다.
     const fetchedMatches = await fetchMatchList(date);
     setMatchList(fetchedMatches);
   };
@@ -97,6 +108,7 @@ const TimeLine = () => {
       <IconButton onClick={handleNextDate} className="next-date-btn">
         <ArrowForwardIosIcon />
       </IconButton>
+      <MatchIndividual matchList={matchList} />
     </div>
   );
 };
