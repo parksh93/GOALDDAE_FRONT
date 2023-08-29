@@ -16,9 +16,9 @@ import UserChatMain from './chat/UserChatMain';
 import Footer from './footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
-import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
+import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 
 const App = () => {
   return (
@@ -38,13 +38,14 @@ const App = () => {
               <Route path='/soccer_field/:fieldId' element={<SoccerFieldMain />} />
               <Route path='/userChat' element={<UserChatMain />} />
               <Route path='/friend-list' element={<friend-list />} />
-              <Route path="/admin" element={<Admin />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
 
+              <Route path="/admin" element={<Admin />} />
               <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
               <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
-              <Route path="/admin/team/save" element={<TeamSaveTable />} />
+
+              <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             </Routes>
           <Footer/> 
       </>
