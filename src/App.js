@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
@@ -21,7 +20,6 @@ import SocialSignupMain from './userComponent/signup/SocialSignupMain';
 const App = () => {
   return (
     <UserProvider> 
-      <>
         <Navigation />
             <Routes>
               <Route path='/' element={<Main />} />
@@ -41,7 +39,6 @@ const App = () => {
               <Route path="/admin" element={<Admin />} />
             </Routes>
           <Footer/> 
-      </>
     </UserProvider>
   );
 }

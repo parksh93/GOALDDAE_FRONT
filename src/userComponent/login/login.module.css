@@ -1,6 +1,8 @@
 .logo {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: 80px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .logoSection{
@@ -47,6 +49,7 @@
 
 .etcBtn:hover {
     color: lightgray;
+    text-decoration: none;
 }
 
 .screen {
@@ -55,5 +58,12 @@
 
 .socialLoginSection {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 50px;
+}
+
+.socialLoginSection hr {
+    width: 32%;
+    border: 0;
+    height: 1px;
+    background: lightgray;
 }

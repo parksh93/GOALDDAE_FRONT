@@ -1,16 +1,19 @@
 .navbar {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
   padding: 10px;
   font-size: 16px;
-  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
   z-index: 999;
   height: 70px;
+  /* position: fixed; */
+}
+
+.logoAndSearchDiv {
+  display: inline-block;
 }
 
 .search {
@@ -28,7 +31,8 @@
   }
 
   .logo img {
-    height: 40px;
+    height: 55px;
     width: auto;
+    margin-left: 15px;
   }
   

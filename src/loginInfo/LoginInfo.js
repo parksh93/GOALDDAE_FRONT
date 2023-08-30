@@ -23,25 +23,12 @@ const LoginInfo = () => {
   const {getUserInfo, userInfo} = useUser();
   // const [userInfo, setUserInfo] = useState(null);
 
-  useEffect(() => {
-    getUserInfo();
-  },[])
-  // const getUserInfo = async () => {
-  //   const response = await fetch("/user/getUserInfo", { method: "POST" });
-  //   if (response.status === 200) {
-  //     const data = await response.json();
-  //     setUserInfo(data);
-  //   }
-  // };
-
   // useEffect(() => {
-  //   if (userInfo === "") {
-  //     getUserInfo();
-  //   }
-  // }, [userInfo]);
+  //   getUserInfo();
+  // },[])
 
   return (
-    <>
+    <div className={styles.container}>
       {userInfo === null ? (
         <div className={styles.btnContainer}>
           <Link to="/login" style={{ textDecoration: "none" }}>
@@ -57,7 +44,7 @@ const LoginInfo = () => {
             <HtmlTooltip
               title={
                 <React.Fragment>
-                  <Link to="/myPage" className={styles.tootipText}>내정보</Link>
+                  <Link to="/myPage" className={styles.tootipText}>내 정보</Link>
                   <br />
                   <Link to="/logOut" className={styles.tootipText}>로그아웃</Link>
                 </React.Fragment>
@@ -67,7 +54,7 @@ const LoginInfo = () => {
             </HtmlTooltip>
           </div>
         )}
-      </>
+      </div>
   );
 };
 

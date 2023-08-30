@@ -9,6 +9,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import GoogleLogin from "./GoogleLogin";
+import { useUser } from "../userContext/UserContext";
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
   const [loginCheckMsg, setLoginCheckMsg] = useState("");
   const [open, setOpen] = useState(false);
+  const {validToken} = useUser();
 
   const onKeyPress = useCallback((e) => {
     if (e.key === "Enter") {
@@ -38,6 +40,7 @@ const UserLogin = () => {
 
     const data = await response.json();
     if (data === true) {
+      validToken();
       navigate(-1);
     } else {
       window.scrollTo({
@@ -69,7 +72,7 @@ const UserLogin = () => {
           <AlertTitle>
             <b>{"로그인 실패"}</b>
           </AlertTitle>
-          존재하지 않는 아이디이거나, 아이디와 비밀번호가 일치하지 않습니다.{" "}
+          존재하지 않는 아이디이거나, 아이디와 비밀번호가 일치하지 않습니다.
           <br />
           다시 확인해주세요.
         </Alert>
@@ -106,6 +109,7 @@ const UserLogin = () => {
         </CheckBnt>
       </section>
       <section className={styles.socialLoginSection}>
+        <hr/>
         <GoogleLogin />
       </section>
       <section className={styles.etcBtnSection}>

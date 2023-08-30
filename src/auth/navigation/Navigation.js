@@ -7,14 +7,16 @@ const Navigation = () => {
   return (
     <>
       <div className="navbar">
-        <div className="logo">
-          <Link to="/">
-            <img src="/img/goalddae_title_logo.png" alt="로고" />
-          </Link>
-        </div>
-        <div className="search-results">
-          <div className="search">
-            <FieldSearch />
+        <div className="logoAndSearchDiv">
+          <div className="logo">
+            <Link to="/">
+              <img src="/img/goalddaeLogo.png" alt="로고" />
+            </Link>
+          </div>
+          <div className="search-results">
+            <div className="search">
+              <FieldSearch />
+            </div>
           </div>
         </div>
         <LoginInfo />
