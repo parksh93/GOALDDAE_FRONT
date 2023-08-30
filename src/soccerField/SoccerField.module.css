@@ -1,8 +1,9 @@
 .container {
-    max-width: 1000px; /* 가로 */
+    max-width: 900px; /* 가로 */
     margin: 0 auto;
     margin-top: 30px;
     z-index: 1;
+    color: #222222
 }
 
 .flexContainer {
@@ -15,17 +16,21 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 600px;
-    margin-right: 8px;
+    margin-right: 5px;
+}
+
+.info {
     border: 1px solid #ddd;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .reservationContainer{
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: 400px;
+    flex-basis: 500px;
     max-height: 400px;
-    margin-left: 8px;
+    margin-left: 5px;
     padding: 10px;
     border: 1px solid #ddd;
 }
@@ -51,4 +56,9 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     font-weight: 600;
+}
+
+.off {
+    text-decoration: line-through;
+    color: #aaaaaa;
 }
