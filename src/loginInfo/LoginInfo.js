@@ -20,13 +20,8 @@ const LoginInfo = () => {
     },
   }));
 
-  const {getUserInfo, userInfo} = useUser();
-  // const [userInfo, setUserInfo] = useState(null);
-
-  // useEffect(() => {
-  //   getUserInfo();
-  // },[])
-
+  const {userInfo} = useUser();
+  
   return (
     <div className={styles.container}>
       {userInfo === null ? (

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./login.module.css";
 import { Button } from "@mui/material";
@@ -8,7 +8,7 @@ import PasswordInput from "./PasswordInput";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
-import GoogleLogin from "./GoogleLogin";
+import SocialLogin from "./SocialLogin";
 import { useUser } from "../userContext/UserContext";
 
 const UserLogin = () => {
@@ -18,7 +18,19 @@ const UserLogin = () => {
   const [password, setPassword] = useState("");
   const [loginCheckMsg, setLoginCheckMsg] = useState("");
   const [open, setOpen] = useState(false);
-  const {validToken} = useUser();
+  const {getUserInfo} = useUser();
+
+  // useEffect(() => {
+  //   if(valid){
+  //     getUserInfo();
+  //   }
+  // },[valid])
+  
+  // useEffect(() => {
+  //   if(userInfo !== null){
+  //     navigate("/");
+  //   }
+  // },[userInfo])
 
   const onKeyPress = useCallback((e) => {
     if (e.key === "Enter") {
@@ -27,7 +39,7 @@ const UserLogin = () => {
   });
 
   const getLoginCheck = async () => {
-    const response = await fetch("/user/login", {
+    await fetch("/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,20 +48,20 @@ const UserLogin = () => {
         loginId: loginId,
         password: password,
       }),
-    });
-
-    const data = await response.json();
-    if (data === true) {
-      validToken();
-      navigate(-1);
-    } else {
+    }).then(res => res.json())
+    .then(data => {
+      if (data === true) {
+        getUserInfo();
+        navigate(-1);
+      }
+    }).catch(() => {     
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
       setOpen(true);
       setTimeout(() => setOpen(false), 2000);
-    }
+    });
   };
 
   const submitLogin = useCallback(() => {
@@ -110,7 +122,7 @@ const UserLogin = () => {
       </section>
       <section className={styles.socialLoginSection}>
         <hr/>
-        <GoogleLogin />
+        <SocialLogin />
       </section>
       <section className={styles.etcBtnSection}>
         <Link to="/find/1" className={styles.etcBtn}>아이디 찾기</Link><span className={styles.screen}>|</span> &nbsp; 
