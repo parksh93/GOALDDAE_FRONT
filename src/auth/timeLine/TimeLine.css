@@ -30,7 +30,6 @@
     }
   }
 
-  /* 클릭 시 축소 효과 */
   .timeline-date-item:active {
     transform: scale(1.5); 
   }
@@ -54,4 +53,23 @@
 
 .sunday div:last-child {
   color: red;
+}
+
+.selected-date {
+  background-color: #90ee90; 
+  border-radius: 10px; 
+  box-shadow: 0px 0px 10px rgba(0,0,0,.1); 
+  padding: 15px;
+}
+
+.month-changed {
+  border-left: 1px solid #000; 
+}
+
+.month-changed:before {
+  content: "";
+  position: absolute;
+  height: 50%; /* 선의 길이 조절 */
+  border-left: 2px solid #000; /* 구분선 */
+  left: -10px; /* 왼쪽으로 움직임 */
 }

@@ -11,11 +11,12 @@ const TimeLine = () => {
     const [dates, setDates] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [matchList, setMatchList] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null); 
 
     const fetchMatchList = async (date, month, year) => {
       try {
         const fullDate= `${year}-${String(month).padStart(2,'0')}-${String(date).padStart(2,'0')}`;
-        const response = await axios.get("/individual/match", {
+        const response = await axios.get("/match/individual", {
           params: {
             date: fullDate,
           },
@@ -50,34 +51,36 @@ const TimeLine = () => {
     
     const handleDateClick = async (date, month, year, day) => {
       console.log(`선택된 날짜: ${year}-${month}-${date}, 요일: ${day}`);
+      setSelectedDate(`${year}-${month.padStart(2,'0')}-${date.padStart(2,'0')}`); 
       const fetchedMatches = await fetchMatchList(date, month, year);
       setMatchList(fetchedMatches);
   };
 
-    useEffect(() => {
+  useEffect(() => {
+    generateDates();
+  
+    const timer = setInterval(() => {
       generateDates();
-
-      const timer = setInterval(() => {
-        generateDates();
-      }, 24 * 60 * 60 * 1000);
-
-      const fetchTodayMatchList = async () => {
-        const today = new Date();
-        const date = today.getDate();
-        const month = today.getMonth() + 1; 
-        const year = today.getFullYear();
+    }, 24 * 60 * 60 * 1000);
+  
+    const fetchTodayMatchList = async () => {
+      const today = new Date();
+      const date = today.getDate();
+      const month = today.getMonth() + 1; 
+      const year = today.getFullYear();
+    
+      const fetchedMatches = await fetchMatchList(date, month, year);
       
-        const fetchedMatches = await fetchMatchList(date, month, year);
-        
-        setMatchList(fetchedMatches);
-      };
-      
-      fetchTodayMatchList();
-
-      return () => {
-        clearInterval(timer);
-      };
-    }, []);
+      setMatchList(fetchedMatches);
+    };
+    
+    fetchTodayMatchList();
+  
+    return () => {
+      clearInterval(timer);
+  };
+  }, []);
+  
 
     const handleNextDate = () => {
       if (currentIndex < dates.length - 8) {
@@ -101,18 +104,21 @@ const TimeLine = () => {
               <ArrowBackIosIcon />
             </IconButton>
             <ul>
-              {visibleDates.map((item, index) => (
-                <li
-                  key={index}
-                  className={`timeline-date-item ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}`}
-                  onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
-                >
-                  <div>
-                    <div>{item.date}</div>
-                    <div>{item.day}</div>
-                  </div>
-                </li>
-              ))}
+            {visibleDates.map((item) => (
+            <li
+              key={item.date}
+              className={`timeline-date-item 
+                ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
+                ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
+              `}
+              onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
+            >
+            <div style={{ width: '30px', textAlign: 'center' }}> 
+              <div>{item.date}</div>
+              <div>{item.day}</div>
+            </div>
+          </li>
+          ))}
             </ul>
             <IconButton onClick={handleNextDate} className="next-date-btn">
               <ArrowForwardIosIcon />
