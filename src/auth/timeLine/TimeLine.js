@@ -118,15 +118,15 @@ const TimeLine = () => {
               <ArrowForwardIosIcon />
             </IconButton>
          </div>
-        
-        {matchList.length > 0 && (
-          <>
-            {matchList.map((match) => (
-      
-               <IndividualMatch match={match} key={match.id}/>
-             ))}
-           </>
-         )}
+         {matchList.length > 0 && (
+            <>
+              {matchList.map((match) => (
+                <Box key={match.id}>
+                  <IndividualMatch match={match} />
+                </Box>
+              ))}
+            </>
+          )}
          </Box>
       </div>
     );
