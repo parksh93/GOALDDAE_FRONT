@@ -1,0 +1,23 @@
+.timeline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px; /* 세로 위치 조정 */
+  }
+  
+  /* 가로 위치 조정 */
+  .timelineDateItem {
+    display: inline-block;
+    margin: 5px 2px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .prevDateBtn,
+  .nextDateBtn {
+    padding: 0 6px;
+    margin: 0;
+    background: transparent;
+  }

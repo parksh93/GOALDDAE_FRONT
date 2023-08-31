@@ -4,6 +4,7 @@
     max-width: 900px; /* 가로 */
     margin-bottom: 40px;
     z-index: 1;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
   }
   
   .img {
@@ -11,29 +12,3 @@
     max-height: 450px; /* 높이 */
   }
   
-  .slickNext,
-  .slickPrev {
-    font-size: 14px; /* 화살표 아이콘 크기 조절 */
-    color: #202020; /* 화살표 아이콘 색상 조절 */
-    position: absolute; /* 절대 위치 설정 */
-    top: 50%; /* 위에서 50% 떨어진 위치로 설정 */
-    transform: translateY(-50%); /* 세로 중앙 정렬 */
-  }
-  
-  .slickPrev {
-    left: 10px; /* 왼쪽 여백 조절 */
-    z-index: 1; 
-  }
-  
-  .slickPrev::before {
-    content: "<";
-  }
-  
-  .slickNext {
-    right: 10px; /* 왼쪽 여백 조절 */
-    z-index: 1; 
-  }
-  
-  .slickNext::before {
-    content: ">"; 
-  }

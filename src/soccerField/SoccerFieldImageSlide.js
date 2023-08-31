@@ -34,13 +34,13 @@ const SoccerFieldImageSlide = () => {
 
 const NextArrow = ({ onClick }) => {
   return (
-    <button onClick={onClick} type='button' className={styles.slickNext} />
+    <button onClick={onClick} type='button' className='slick-next' />
   );
 };
 
 const PrevArrow = ({ onClick }) => {
   return (
-    <button onClick={onClick} type='button' className={styles.slickPrev} />
+    <button onClick={onClick} type='button' className='slick-prev' />
   );
 };
 
