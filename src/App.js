@@ -46,7 +46,7 @@ const App = () => {
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             </Routes>
-          <Footer/> 
+          {/* <Footer/>  */}
       </>
     </UserProvider>
   );

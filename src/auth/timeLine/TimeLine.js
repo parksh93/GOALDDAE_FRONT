@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import IndividualMatch from "../page/match/IndividualMatch";
+import UseWebSocket from "../../webSocket/UseWebSocket";
 import { Box } from "@material-ui/core";
 
 const TimeLine = () => {
@@ -12,6 +13,21 @@ const TimeLine = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [matchList, setMatchList] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null); 
+    const matchStatusMessage = UseWebSocket('http://localhost:8080/webSocket');
+
+    useEffect(() => {
+      if (matchStatusMessage) {
+        console.log('받은 메시지:', matchStatusMessage);
+        
+        setMatchList((prevMatchList) => 
+          prevMatchList.map((match) =>
+            match.id === matchStatusMessage.matchId
+              ? { ...match, status: matchStatusMessage.status }
+              : match
+          )
+        );
+      }
+    }, [matchStatusMessage]);    
 
     const fetchMatchList = async (date, month, year) => {
       try {

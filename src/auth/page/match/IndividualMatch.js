@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import MatchList from "./MatchList";
 
 const useStyles = makeStyles({
   divider: {
