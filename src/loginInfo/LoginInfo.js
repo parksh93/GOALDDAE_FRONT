@@ -20,7 +20,11 @@ const LoginInfo = () => {
     },
   }));
 
-  const {userInfo} = useUser();
+  const {userInfo, getUserInfo} = useUser();
+
+  useEffect(() => {
+    getUserInfo();
+  },[]);
   
   return (
     <div className={styles.container}>

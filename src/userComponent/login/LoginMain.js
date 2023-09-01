@@ -20,18 +20,6 @@ const UserLogin = () => {
   const [open, setOpen] = useState(false);
   const {getUserInfo} = useUser();
 
-  // useEffect(() => {
-  //   if(valid){
-  //     getUserInfo();
-  //   }
-  // },[valid])
-  
-  // useEffect(() => {
-  //   if(userInfo !== null){
-  //     navigate("/");
-  //   }
-  // },[userInfo])
-
   const onKeyPress = useCallback((e) => {
     if (e.key === "Enter") {
       submitLogin();
