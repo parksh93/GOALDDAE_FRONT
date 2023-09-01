@@ -1,18 +1,16 @@
 import React from 'react';
-import { UserProvider } from "./userComponent/userContext/UserContext";
+import { useUser } from "./userComponent/userContext/UserContext";
 import ImageSlide from './auth/imageSlide/ImageSlide';
 import TimeLine from './auth/timeLine/TimeLine';
-
+import {useEffect} from 'react'
 
 
 const Main = () => {
     return (
-        <UserProvider> 
-            <div>
-                <ImageSlide />
-                <TimeLine />
-            </div>
-        </UserProvider>
+        <div>
+            <ImageSlide />
+            <TimeLine />
+        </div>
     );
 }
 

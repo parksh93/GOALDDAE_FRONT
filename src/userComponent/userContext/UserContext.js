@@ -1,33 +1,37 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
+  const [valid, setValid] = useState(false);
+  const navigate = useNavigate();
 
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch("/user/getUserInfo", { method: 'POST' });
+  // 토큰 유효성 검사
+  // const validToken = async () => {
+  //  await fetch(`/user/validToken`, { method: "GET", credentials: 'include',})
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setValid(data[0]);
+  //       })
+  //       .catch(() => console.error("unValid"));
+  // };
   
-      if (response.status === 200) {
-        const data = await response.json();
-        setUserInfo(data);
-      } else {
-        // 에러 상황
-        console.error("서버 응답 에러:", response.statusText);
+  const getUserInfo = async () => {
+    await fetch("/user/getUserInfo", { method: "POST"})
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.nickname === null) {
+        navigate("/socialSignup", { state: { email: data.email } });
       }
-    } catch (error) {
-      // 네트워크 에러
-      console.error("네트워크 에러:", error);
-    }
-  }
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+      setUserInfo(data);
+    });
+  };
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserContext.Provider value={{ getUserInfo, userInfo, valid, setValid, setUserInfo }}>
       {children}
     </UserContext.Provider>
   );
