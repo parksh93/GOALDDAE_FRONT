@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Payment from "../payment/Payment";
 import styles from "./SoccerField.module.css";
 import SoccerFieldImageSlide from "./SoccerFieldImageSlide";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
@@ -80,16 +79,9 @@ const SoccerFieldMain = () => {
               </div>
               <div className={styles.reservationContainer}>
                 <h3>예약하기</h3>
-                <SoccerFieldTimeLine />
-                <Payment
-                  fieldId={fieldInfo.id}
-                  fieldName={fieldInfo.fieldName}
-                  reservationFee={fieldInfo.reservationFee}
-                />
-                <div className={styles.reservationFee}>
-                  <div className={styles.reservationFeeFont}>대관비</div>
-                  <span>{fieldInfo.reservationFee}원</span>
-                </div>
+                {fieldInfo && 
+                <SoccerFieldTimeLine fieldInfo={fieldInfo} />
+                }
               </div>
             </div>
         }
