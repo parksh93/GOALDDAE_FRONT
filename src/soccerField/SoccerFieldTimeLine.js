@@ -5,17 +5,21 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Box } from "@material-ui/core";
 import styles from './SoccerFieldTimeLine.module.css';
-import Modal from "@mui/material/Modal";
-import Payment from "../payment/Payment";
+import ReservationModal from "./ReservationModal";
 
 const SoccerFieldTimeLine = (props) => {
   const [dates, setDates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = (time) => {
+    setSelectedTime(time); // 모달 열 때 선택된 시간 정보 설정
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => setIsModalOpen(false);
 
   const generateDates = () => {
@@ -68,18 +72,6 @@ const SoccerFieldTimeLine = (props) => {
 
   const visibleDates = dates.slice(currentIndex, currentIndex + 5);
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   return (
     <div className={styles.timeline}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
@@ -119,7 +111,7 @@ const SoccerFieldTimeLine = (props) => {
                 <div key={index}>
                   <Link
                     className={styles.reservationLink}
-                    onClick={openModal}
+                    onClick={() => openModal(startTime)}
                   >
                     {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
                   </Link>
@@ -128,24 +120,14 @@ const SoccerFieldTimeLine = (props) => {
             })}
           </div>
         )}
-        <Modal
-          open={isModalOpen}
-          onClose={closeModal}
+        <ReservationModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          fieldInfo={props.fieldInfo}
+          selectedDate={selectedDate}
+          selectedTime={selectedTime}
         >
-          <Box sx={style}>
-            우웅.
-            <div>구장명 : {props.fieldInfo.fieldName}</div>
-            <div>대관비 : {props.fieldInfo.reservationFee}</div>
-            {selectedDate &&
-            <div>예약일 : {selectedDate.year}-{selectedDate.month}-{selectedDate.date}</div>
-            }
-            <Payment
-                  fieldId={props.fieldInfo.id}
-                  fieldName={props.fieldInfo.fieldName}
-                  reservationFee={props.fieldInfo.reservationFee}
-                />
-          </Box>
-        </Modal>
+        </ReservationModal>
       </Box>
     </div>
   );
