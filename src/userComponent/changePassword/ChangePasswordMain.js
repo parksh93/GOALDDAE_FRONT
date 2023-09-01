@@ -27,7 +27,8 @@ function ChangeLostPasswordMain() {
         body: JSON.stringify({
           password: password
         })
-      }).then((res) => res.json())
+      })
+      .then((res) => res.json())
       .then(data => {
         if(data[0] === false){
           window.scrollTo({

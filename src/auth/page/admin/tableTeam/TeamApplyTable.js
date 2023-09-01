@@ -7,7 +7,7 @@ const TeamApply = () => {
   const createTable = async (teamApply) => {
     try {
       const encodedTeamApply = encodeURIComponent(teamApply);
-      const response = await axios.post("/api/team-apply/create-table", null, {
+      const response = await axios.post("/team/apply/create-table", null, {
         params: {
           teamApply: encodedTeamApply,
         }

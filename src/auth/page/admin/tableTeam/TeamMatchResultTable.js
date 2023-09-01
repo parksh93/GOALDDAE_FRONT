@@ -7,7 +7,7 @@ const TeamMatchResult = () => {
   const createTable = async (teamMatchResult) => {
     try {
       const encodedTeamMatchResult = encodeURIComponent(teamMatchResult);
-      const response = await axios.post("/api/team-match-result/create-table", null, {
+      const response = await axios.post("/team/match-result/create-table", null, {
         params: {
           teamMatchResult: encodedTeamMatchResult,
         }

@@ -8,32 +8,16 @@ import MatchTeam from "./tableMatch/MatchTeam";
 import MatchIndividual from "./tableMatch/MatchIndividual";
 import TeamApply from "./tableTeam/TeamApply";
 import TeamMatchResult from "./tableTeam/TeamMatchResult";
-import {useEffect} from "react"
+import React from 'react'
+import './Admin.css';
+import SideBar from './sideBar/SideBar';
 
 const Admin = () => {
-  useEffect(() => {
-    fetch("/admin/test",{method: "GET"});
-  },[]);
-
   return (
-    <>
-        <h3>관리자 페이지</h3>
-            {/* 테이블생성*/} 
-            <FieldReservation />
-
-            <FriendAccept />
-            <FriendAdd />
-            <FriendBlock />
-            <FriendList />
-          
-            <MatchTeam />
-            <MatchIndividual />
-
-            <TeamApply />
-            <TeamMember />
-            <TeamMatchResult />
-    </>
-  );
+   <>
+    <SideBar />
+   </>
+  )
 }
 
-export default Admin; 
+export default Admin;
