@@ -2,6 +2,7 @@
     overflow: hidden;
     position: relative;
     min-height: 100%;
+    margin-bottom: 40px;
 }
 
 .input {
@@ -53,6 +54,7 @@
 .singupBtnDiv {
     margin-top: 5px;
     margin-left: 32%;
+    padding-bottom: 20px;
 }
 
 .singupBtn:hover {
