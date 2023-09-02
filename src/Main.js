@@ -6,6 +6,12 @@ import {useEffect} from 'react'
 
 
 const Main = () => {
+    const {getUserInfo} = useUser();
+
+    useEffect(() => {
+        getUserInfo();
+    },[])
+
     return (
         <div>
             <ImageSlide />

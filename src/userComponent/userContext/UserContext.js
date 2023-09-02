@@ -5,18 +5,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
-  const [valid, setValid] = useState(false);
   const navigate = useNavigate();
-
-  // 토큰 유효성 검사
-  // const validToken = async () => {
-  //  await fetch(`/user/validToken`, { method: "GET", credentials: 'include',})
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setValid(data[0]);
-  //       })
-  //       .catch(() => console.error("unValid"));
-  // };
   
   const getUserInfo = async () => {
     await fetch("/user/getUserInfo", { method: "POST"})
@@ -31,7 +20,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ getUserInfo, userInfo, valid, setValid, setUserInfo }}>
+    <UserContext.Provider value={{ getUserInfo, userInfo, setUserInfo }}>
       {children}
     </UserContext.Provider>
   );
