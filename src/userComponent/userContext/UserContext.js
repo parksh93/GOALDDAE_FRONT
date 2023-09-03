@@ -11,7 +11,6 @@ export const UserProvider = ({ children }) => {
     await fetch("/user/getUserInfo", { method: "POST"})
     .then((res) => res.json())
     .then((data) => {
-      console.log("========", data);
       if (data.nickname === null) {
         navigate("/socialSignup", { state: { email: data.email } });
       }
