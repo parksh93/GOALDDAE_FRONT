@@ -51,7 +51,11 @@ const TeamDetail = () => {
           <div className={styles.leftContainer}>
             <div className={styles.teamInfo1}>
               <h2 className={styles.teamProfile}>
-                <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
+              <div className={styles.circularImageContainer}>
+                <div className={styles.circularImage}>
+                  <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
+                </div>
+              </div>
                 {teamInfo.teamName}
               </h2>
                 <p>지역: {teamInfo.area}</p>

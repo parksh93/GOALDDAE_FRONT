@@ -60,10 +60,9 @@ const TeamSearch = () => {
     );
 
     const handleAutocompleteChange = (event) => {
-        const newValue = event.target.value;
-        setInputValue(newValue);
+        setInputValue(event.target.value);
         setIsHaveInputValue(true);
-        showDropDownList(newValue);
+        showDropDownList(event.target.value);
     }
 
     const fetchTeamName = async (partialTeamName) => {
@@ -86,8 +85,8 @@ const TeamSearch = () => {
     const changeInputValue = async(event) => {
         setInputValue(event.target.value);
         setIsHaveInputValue(true);
-        const completedName = await fetchTeamName(event.target.value);
-        setCompletedTeamName(completedName);
+        const completedTeamName  = await fetchTeamName(event.target.value);
+        setCompletedTeamName(completedTeamName );
     };
 
     const clickDropDownItem = (clickedItem, teamId) => {
@@ -99,20 +98,15 @@ const TeamSearch = () => {
     const handleDropDownKey = event => {
         //input에 값이 있을때만 작동
         if (isHaveInputValue) {
-          if (
-            event.key === 'ArrowDown' &&
-            dropDownList.length - 1 > dropDownItemIndex
-          ) {
-            setDropDownItemIndex(dropDownItemIndex + 1)
-          }
-    
-          if (event.key === 'ArrowUp' && dropDownItemIndex >= 0)
-            setDropDownItemIndex(dropDownItemIndex - 1)
-          if (event.key === 'Enter' && dropDownItemIndex >= 0) {
+            if (event.key === 'ArrowDown' && dropDownList.length - 1 > dropDownItemIndex){
+                setDropDownItemIndex(dropDownItemIndex + 1)
+            } else if (event.key === 'ArrowUp' && dropDownItemIndex >= 0)
+                setDropDownItemIndex(dropDownItemIndex - 1)
+            } else if (event.key === 'Enter' && dropDownItemIndex >= 0) {
             clickDropDownItem(dropDownList[dropDownItemIndex])
             setDropDownItemIndex(-1)
-          }
         }
+    
     }
     
     useEffect(() => {
@@ -153,24 +147,24 @@ return (
         </div>
         </div>
         {isHaveInputValue && (
-        <div className={styles.DropDownBox}>
-            {dropDownList.length === 0 && (
-            <li className={styles.NoResult}>해당하는 단어가 없습니다</li>
-            )}
-            <ul className={styles.DropDownItem}>
-                {dropDownList.map((dropDownItem, dropDownIndex) => {
-                return (
-                    <li
-                    key={dropDownIndex}
-                    onClick={() => clickDropDownItem(dropDownItem.teamName, dropDownItem.id)}
-                    onMouseOver={() => setDropDownItemIndex(dropDownIndex)}
-                    className={
-                        dropDownItemIndex === dropDownIndex ? 'selected' : ''
-                    }
-                    >
-                    {dropDownItem.teamName}
+            <div className={`${styles.DropDownBox} ${styles.paperEffect}`}>
+                {dropDownList.length === 0 && (
+                    <li className={styles.NoResult}>해당하는 팀 없습니다</li>
+                )}
+                <ul className={styles.DropDownItem}>
+                    {dropDownList.map((dropDownItem, dropDownIndex) => {
+                    return (
+                        <li
+                            key={dropDownIndex}
+                            onClick={() => clickDropDownItem(dropDownItem.teamName, dropDownItem.id)}
+                            onMouseOver={() => setDropDownItemIndex(dropDownIndex)}
+                            className={
+                                dropDownItemIndex === dropDownIndex ? 'selected' : ''
+                            }
+                        >
+                        {dropDownItem.teamName}
                     </li>
-                )
+                    )
                 })}
             </ul>
         </div>

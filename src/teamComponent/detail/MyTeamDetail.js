@@ -37,7 +37,11 @@ const MyTeamDetail = () => {
         <div className={styles.myTeamLeftContainer}>
           <div className={styles.myTeamInfoContainer}>
               <h2 className={styles.myTeamProfile}>
-                <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
+              <div className={styles.circularImageContainer}>
+                <div className={styles.circularImage}>
+                  <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
+                </div>
+              </div>
                 {teamInfo.teamName}
               </h2>
               <div className={styles.myTeamInfo}>
@@ -56,29 +60,34 @@ const MyTeamDetail = () => {
 
         <div className={styles.myTeamRightContainer}>
           <div className={styles.myTeamFilters}>
-          <button
-                className={`${styles.myTeamInfoFilter} ${selectedTab === 'info' ? styles.activeTab : ''}`}
-                onClick={() => handleTabChange('info')}
-              >
-                팀 정보
-              </button>
-              <button
-                className={`${styles.myTeamMatchFilter} ${selectedTab === 'match' ? styles.activeTab : ''}`}
-                onClick={() => handleTabChange('match')}
-              >
-                경기
-              </button>
-              <button
-                className={`${styles.myTeamMemberFilter} ${selectedTab === 'members' ? styles.activeTab : ''}`}
-                onClick={() => handleTabChange('members')}
-              >
-                팀원
-              </button>
+            <button
+              className={`${styles.myTeamInfoFilter} ${selectedTab === 'info' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('info')}
+            >
+              팀 정보
+            </button>
+            <button
+              className={`${styles.myTeamRecentMatchFilter} ${selectedTab === 'recentMatch' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('recentMatch')}
+            >
+              매치 내역
+            </button>
+            <button
+              className={`${styles.myTeamReservMatchFilter} ${selectedTab === 'reservMatch' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('reservMatch')}
+            >
+              예약 매치
+            </button>
+            <button
+              className={`${styles.myTeamMemberFilter} ${selectedTab === 'members' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('members')}
+            >
+              팀원
+            </button>
           </div>
           <div className={styles.myTeamBox}>
             {selectedTab === 'info' && (
               <div className={styles.myTeamInfoBox}>
-                <h3>팀 정보</h3>
                 <p>지역: {teamInfo.area}</p>
                 <p>평균나이: {teamInfo.averageAge}</p>
                 <p>입단비: {teamInfo.entryfee}</p>
@@ -91,9 +100,14 @@ const MyTeamDetail = () => {
                 </pre>
               </div>
             )}
-            {selectedTab === 'match' && (
-              <div className={styles.myTeamMatch}>
-                등록된 경기가 없습니다.
+            {selectedTab === 'recentMatch' && (
+              <div className={styles.myTeamRecentMatch}>
+                최근 매치 내역이 없습니다.
+              </div>
+            )}
+            {selectedTab === 'reservMatch' && (
+              <div className={styles.myTeamReservMatch}>
+                예약된 경기가 없습니다.
               </div>
             )}
             {selectedTab === 'members' && (

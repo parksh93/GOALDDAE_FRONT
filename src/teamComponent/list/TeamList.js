@@ -150,17 +150,17 @@ const TeamList = ({}) => {
                     <div className={styles.teamInfoContainer}>
                     <div className={styles.circularImageContainer}>
                         <div className={styles.circularImage}>
-                            <img className={styles.teamProfileImgUrl} src="/img/testImg2.jpg" alt={team.teamName} />
+                            <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} alt={team.teamName} />
                         </div>
                     </div>
-                <div className={styles.teamInfo}>
-                    <h3>{team.teamName}</h3>
-                        <p>
-                            {team.area} | {team.averageAge} | {team.entryGender} |  
-                            <span className={team.recruiting ? styles.teamRecruiting : ''}>
-                                {team.recruiting ? ' 모집중' : ' 모집종료'}
-                            </span>
-                        </p>
+                    <div className={styles.teamInfo}>
+                        <h3>{team.teamName}</h3>
+                            <p>
+                                <span>{team.area}</span><span>{team.averageAge}</span><span>{team.entryGender}</span>                                
+                                <span className={team.recruiting ? styles.teamRecruiting : ''}>
+                                    {team.recruiting ? ' 모집중' : ' 모집종료'}
+                                </span>
+                            </p>
                     </div>
                 </div>
             </div>
