@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from '../../userComponent/userContext/UserContext';
-
 import styles from './Detail.module.css';
+import { useParams } from 'react-router-dom';
 
 const MyTeamDetail = () => {
     const { userInfo } = useUser();
     const [teamInfo, setTeamInfo] = useState(null);
     const [error, setError] = useState(false);
     const [selectedTab, setSelectedTab] = useState('info');
+
+    const { tabName } = useParams();
+
+    useEffect(() => {
+      if (['info', 'recentMatch', 'reservMatch', 'members'].includes(tabName)) {
+        setSelectedTab(tabName);
+      }
+    }, [tabName]);
 
     useEffect(() => {
         if (userInfo) {

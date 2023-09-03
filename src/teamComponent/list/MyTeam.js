@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './List.module.css';
-import { Box } from '@mui/material';
 
 const MyTeam = () => {
   const navigate = useNavigate();
@@ -34,8 +33,8 @@ const MyTeam = () => {
     navigate(`/team/save`)  
   }
 
-  const handleMyTeamClick = (id) => {
-    navigate(`/team/myTeamDetail/${id}`);
+  const handleMyTeamClick = (id, tabName) => {
+    navigate(`/team/myTeamDetail/${id}/${tabName}`);
   };
 
   return (
@@ -59,14 +58,14 @@ const MyTeam = () => {
                     <h2>{teamInfo.teamName}</h2>
                 </div>
 
-                <div className={styles.recentMatchContainer} onClick={() => handleMyTeamClick(teamInfo.id)}>
+                <div className={styles.recentMatchContainer} onClick={() => handleMyTeamClick(teamInfo.id, 'recentMatch')}>
                   <h3>최근 매치</h3>
                     <div className={styles.recentMatchList}>
                       최근 매치가 없습니다.
                     </div>
                 </div>
 
-                <div className={styles.reservMatchContainer} onClick={() => handleMyTeamClick(teamInfo.id)}>
+                <div className={styles.reservMatchContainer} onClick={() => handleMyTeamClick(teamInfo.id, 'reservMatch')}>
                   <h3>예약 매치</h3> 
                     <div className={styles.reservMatchList}>
                       예약된 매치가 없습니다.
@@ -86,7 +85,7 @@ const MyTeam = () => {
         </div>
       ) : (
         <div className={styles.noticeLogin}> 
-          <p className={styles.noticeLoginText}  onClick={warpLoginPage}>로그인 후 팀 정보를 확인할 수 있습니다. (로그인하러 가기) </p>
+          <p className={styles.noticeLoginText} onClick={warpLoginPage}>로그인 후 팀 정보를 확인할 수 있습니다. (로그인하러 가기) </p>
         </div>
       )}
     </div>

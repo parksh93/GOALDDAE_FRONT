@@ -39,9 +39,9 @@ const App = () => {
             
               <Route path='/team/list' element={<TeamMain/>}/>
               <Route path='/team/detail/:id' element={<TeamDetail />} />
-              <Route path='/team/myTeamDetail/:id' element={<MyTeamDetail />} />
+              <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
             </Routes>
-          <Footer/> 
+          <Footer/>
      </>
     </UserProvider>
   );
