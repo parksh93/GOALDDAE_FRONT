@@ -1,33 +1,67 @@
-.footer {
-    height: 300px;
-    background: #302F2F;
-    margin-top: 100px;
+.footer{
+    /* margin-top: 20px; */
+    background: #3a3a3a;
+    height: 200%;
     color: white;
-    padding: 50px;
-}
-.title {
-    font-family: 'Anton', sans-serif;
-    font-size: 50px;
-}
-
-.content {
-    font-size: 14px;
-}
-
-.emailTitle, .helpTitle {
-    font-family: 'Anton', sans-serif;
-    font-size: 20px;
-}
-
-.emailConten, .helpConten {
-    font-size: 14px;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.notice {
-    margin-top: 8.5%;
-}
-
-.glassImg {
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 17%;
+    /* position : relative; */
+    bottom: 0;
     width: 100%;
+    /* margin-top: 20px; */
+    /* transform: transformY(-100%); */
+    /* text-align: center; */
+}
+
+.container1{
+    display: inline-block;
+}
+.container2{
+    display: inline-block;
+    margin-left: 5%;
+}
+.container3{
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 10%;
+    font-size: 12px;
+}
+
+.titleDiv{
+    margin-top: 13px;
+    /* text-align: center; */
+}
+
+.title{
+    font-family: 'Anton', sans-serif;
+    font-size: 40px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.content{
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.emailTitle, .helpTitle, .addressTitle, .businessNumberTitle{
+    font-family: 'Anton', sans-serif;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.emailContent, .helpContent, .addressContent, .businessNumberContent{
+    font-size: 14px;
+}
+
+.notice{
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.copyrightDiv {
+    margin-top: 30px;
+    font-size: 12px;
+    margin-left: 25%;
 }
