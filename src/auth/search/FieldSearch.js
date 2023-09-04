@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 import axios from 'axios';
 import './FieldSearch.css';
+import {AiOutlineSearch} from 'react-icons/ai'
 
 const FieldSearch = () => {
-  const [inputValue, setInputValue] = useState('지역, 구장 이름으로 찾기');
+  const [inputValue, setInputValue] = useState('지역, 구장 찾기');
   const [isHaveInputValue, setIsHaveInputValue] = useState(false);
   const [dropDownList, setDropDownList] = useState([]);
   const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
@@ -15,17 +16,17 @@ const FieldSearch = () => {
   const wholeBoxRef = useRef(null);
   const navigate = useNavigate();
 
-  /* 검색창 클릭 시 '지역, 구장 이름으로 찾기'를 지워서 검색어를 입력할 수 있게 함*/
-  const handleInputFocus = () => {
-    if (inputValue === '지역, 구장 이름으로 찾기') {
-      setInputValue('');
+  /*검색창 클릭 시 '지역, 구장 이름으로 찾기'를 지워서 검색어를 입력할 수 있게 함*/
+ const handleInputFocus = () => {
+  if (inputValue === '지역, 구장 찾기') {
+    setInputValue('');
     }
-  };
+ };
 
-  /* 검색어가 비어있는 상태에서 검색창 밖을 클릭하면 '지역, 구장 이름으로 찾기' 표시 */
+  /*검색어가 비어있는 상태에서 검색창 밖을 클릭하면 '지역, 구장 이름으로 찾기' 표시 */
   const handleInputBlur = () => {
-    if (inputValue.trim() === '') {
-      setInputValue('지역, 구장 이름으로 찾기');
+     if (inputValue.trim() === '') {
+      setInputValue('지역, 구장 찾기');
     }
   };
 
@@ -41,7 +42,7 @@ const FieldSearch = () => {
           setDropDownList(dropDownCache[inputValue]);
         } else {
           try {
-            const response = await axios.get('/search/soccerField', {
+            const response = await axios.get('/field/search', {
               params: { searchTerm: inputValue },
             });
 
@@ -63,7 +64,7 @@ const FieldSearch = () => {
       GET 요청을 보내어 검색어가 포함된 도시 이름을 받아 도시 이름이 없으면 빈 string을 반환*/
   const fetchCityName = async (partialCityName) => {
     try {
-      const response = await axios.get('/search/city', {
+      const response = await axios.get('/field/search/city', {
         params: { searchTerm: partialCityName },
       });
 
@@ -89,7 +90,7 @@ const FieldSearch = () => {
 
   /* Dropdown list의 각 요소를 클릭하면, 클릭한 요소에 대응하는 필드 ID를 이용해 /Match?fieldId=${fieldId} 이동*/
   const clickDropDownItem = (clickedItem, fieldId) => {
-    setInputValue('지역, 구장 이름으로 찾기');
+    // setInputValue('지역, 구장 찾기');
     setIsHaveInputValue(false);
     navigate(`/Match?fieldId=${fieldId}`);
   };
@@ -153,15 +154,17 @@ return (
             : 'TextInput-inactiveBorderRadius'
         }`}
       >
-        <input
-          className="Input"
-          type="text"
-          value={inputValue}
-          onChange={changeInputValue}
-          onKeyUp={handleDropDownKey}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-        />
+        <AiOutlineSearch className='searchIcon'/>
+          <input
+            className="Input"
+            type="text"
+            value={inputValue}
+            onChange={changeInputValue}
+            onKeyUp={handleDropDownKey}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+            // placeholder='지역, 구장 찾기'
+            />
         <div className="DeleteButton" onClick={() => setInputValue('')}>
           &times;
         </div>

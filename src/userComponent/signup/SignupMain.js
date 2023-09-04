@@ -129,9 +129,8 @@ const SignupMain = () => {
           authority: "user",
         }),
       }).then(() => {
-        console.log("asdas")
         setModalOpen(false);
-        navigate("/login")
+        navigate("/")
       });
     }
   },[signOk])
