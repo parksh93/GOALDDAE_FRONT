@@ -1,0 +1,19 @@
+.friendMain {
+    height: 400px;
+}
+
+.selectBar{
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+    width: 200px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.contentBox {
+    display: inline-block;
+    height: 100%;
+    width: 60%;
+    padding-left: 20px;
+}

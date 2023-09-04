@@ -20,6 +20,7 @@ import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTabl
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import FriendMain from "./userComponent/friend/FriendMain"
 
 const App = () => {
   return (
@@ -47,8 +48,11 @@ const App = () => {
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
 
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+
+              {/* 마이페이지에 통합 예정 */}
+              <Route path='/friend' element={<FriendMain />} />
             </Routes>
-          <Footer/> 
+        <Footer/> 
       </>
   );
 }

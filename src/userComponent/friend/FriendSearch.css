@@ -1,0 +1,109 @@
+.searchContainer{
+    height: 60px;
+}
+
+.nomalBox {
+    width: 270px;
+    box-shadow: 1px 1px 2px 2px rgb(231, 231, 231);
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    background: white;
+    margin-left: 300px;
+}
+
+.inputBox {
+    width: 85%;
+    border: none;
+    margin-top: 10px;
+}
+
+.inputBox:focus {
+   outline: none;
+}
+
+.deleteBtn{
+    font-size: 10px;
+    display: inline;
+    color: gray;
+}
+
+.noResultText{
+    color: rgb(180, 179, 179);
+    font-size: 12px;
+}
+
+.friendList {
+    min-height: 50px;
+    padding-bottom: 5px;
+    /* position: absolute; */
+    /* background: white; */
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.friendList::-webkit-scrollbar {
+    background: none;
+    width: 7px;
+}
+
+.friendList::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 10px;
+}
+.friendDiv *{
+    vertical-align: middle;
+}
+
+.friendDiv {
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.friendDiv:hover{
+    background: rgb(239, 239, 239);
+}
+
+.friendDiv:hover *{
+    background: rgb(239, 239, 239);
+}
+
+.friendImg {
+    width: auto;
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.friendNickname {
+    font-size: 15px;
+}
+
+.friendAddAndAcceptBtn, .friendWaitBtn, .chatBtn {
+    background-color: white;
+    float: right;
+    /* border-radius: 20px; */
+    margin-right: 10px;
+    margin-top: 8px;
+}
+
+.friendAddAndAcceptBtn {
+    font-size: 20px;
+    /* border: 1px solid green; */
+    color: green;
+}
+
+.friendWaitBtn {
+    font-size: 20px;
+    /* border: 1px solid rgb(212, 212, 48); */
+    color: rgb(191, 191, 45)
+}
+
+.chatBtn {
+    font-size: 20px;
+    /* border: 1px solid gray; */
+    color: gray;
+}
