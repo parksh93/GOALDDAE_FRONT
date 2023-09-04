@@ -21,16 +21,24 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-
+import MatchList from './MatchList';
+import BoardList from './BoardList';
+import editIcon from '../mypage/img/write.png';
 
 
 function Mypage() {
-  const { userInfo, setUserInfo } = useUser();
+  const [userInfo, setUserInfo] = useState("");
+  const [chosenFile, setChosenFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [profileImageUrl, setProfileImageUrl] = useState('');
   const [ isEditing, setIsEditing ] = useState(false);
   const [rangeValue, setRangeValue] = useState(10);
   const [isDuplicate, setIsDuplicate] = useState(false);
   const [nicknameChanged, setNicknameChanged] = useState(false);
   const [availableAreas, setAvailableAreas] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [viewMode, setViewMode] = useState('USER_INFO'); 
+
   const seoulAreas = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
   const gyeonggiAreas = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "하남시", "화성시"];
   const incheonAreas = ["강화군", "계양구", "남동구", "동구", "미추홀구", "부평구", "서구", "연수구", "옹진군", "중구"];
@@ -47,10 +55,58 @@ function Mypage() {
   const jeonnamAreas = ["목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"];
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  
 
-  // 선호도시 변경시, 바뀌는 것들
+
+  // 프로필사진 수정
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setChosenFile(file);
+    setImageUrl(URL.createObjectURL(file));
+  };
+
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+    
+  if (!chosenFile) {
+    console.error('파일이 선택되지 않았습니다.');
+    return;
+  }
+
+    try {
+      const formData = new FormData();
+      formData.append('file', chosenFile);
+
+      await axios.post('user/profileImg', formData,  { params: userInfo });
+      console.log('파일 전송 성공!');
+      setProfileImageUrl(URL.createObjectURL(chosenFile));
+
+      window.location.reload();
+
+    } catch (error) {
+      console.error('파일 전송 실패!', error);
+    }
+  };
+
+
+  // 프로필사진 조회
+  useEffect(() => {
+    async function fetchProfileImageUrl() {
+      try {
+        const response = await axios.get('/user/profileImgUrl');
+        setProfileImageUrl(response.data);
+      } catch (error) {
+        console.error('Failed to fetch profile image URL', error);
+      }
+    }
+
+    fetchProfileImageUrl();
+  }, []);
+
+
+
+  // 선호도시 변경시, 선호지역 및 활동반경 초기화
   const handleCityAreaChange = (event) => {
     const preferredCity = event.target.value;
     let availableAreas = [];
@@ -102,7 +158,6 @@ function Mypage() {
       setRangeValue(0);
       
     } else {
-      // handleInputChange 함수를 호출합니다.
       handleInputChange('preferredCity', event.target.value);
     }
   };
@@ -125,6 +180,8 @@ function Mypage() {
     setIsEditing(false);
   };
 
+
+  // 닉네임 중복체크
   const handleDuplicateCheck = async () => {
     const response = await axios.post('/user/checkNickname', {nickname: userInfo.nickname});
 
@@ -143,12 +200,13 @@ function Mypage() {
     }
 }
 
-  // 백엔드로 '유저정보수정하기' 전달
+  // 백엔드로 수정사항 전달
   const handleSaveClick = async () => {
     if(nicknameChanged && !isDuplicate){
       alert("닉네임 중복체크를 해주세요!");
     return;
   }
+
       const response = await axios.put('/user/update', userInfo);
       
       if (response.status === 200) {
@@ -160,7 +218,7 @@ function Mypage() {
   };
   
 
-  // 유저정보 수정하기
+  // 유저정보 수정
   const handleInputChange = (key, value) => {
     if(key === "nickname"){
       setIsDuplicate(false);
@@ -169,12 +227,13 @@ function Mypage() {
     setUserInfo(prev => ({ ...prev, [key]: value }));
   };
   
-  // 유저정보 불러오기
+  // 유저정보 조회
   useEffect(() => {
     const fetchUserData = async () => {
         const response = await axios.post('/user/getUserInfo');
         if (response.status === 200) {
           setUserInfo(response.data);
+          setImageUrl(response.data.profile_img_url);
         } else {
           console.error('에러 : ', response.statusText);
         }
@@ -183,10 +242,10 @@ function Mypage() {
   }, [setUserInfo]);
 
 
+
   return (
     <UserProvider>    
     <div className="my-page">
-
 
         <div className="user-card">
           {userInfo ? (
@@ -195,60 +254,31 @@ function Mypage() {
                 <React.Fragment>
 
                   {/* 사용자 수정 페이지 */}
-                  <div className='user-card-modify'>
-
-                  {/* <div className='inline-form'>
-                  <b>프로필 사진</b>
-                  <input type="file" onChange={handleFileChange} />
-                  {selectedFile && (
-                    <button onClick={handleUploadClick}>사진 업로드</button>
-                  )}
-                </div> */}
+                  <div className='user-card-modify'> 
 
                   <div className='inline-form'>   
                   <b>닉네임</b><p><TextField id={userInfo.nickname}
-                                              // variant="outlined"
-                                              // sx={{
-                                              //   '& .MuiOutlinedInput-root': {
-                                              //     '&:hover fieldset': {
-                                              //       borderColor: 'green',
-                                              //     },
-                                              //     '&.Mui-focused fieldset': {
-                                              //       borderColor: 'green',
-                                              //     },
-                                              //   },
-                                              // }}
-                                              defaultValue={userInfo.nickname}
-                                    onChange={(e) => handleInputChange('nickname', e.target.value)} /></p>    
+                                            defaultValue={userInfo.nickname}
+                                            onChange={(e) => handleInputChange('nickname', e.target.value)} /></p>    
                                             
                   <Button style={{borderColor: 'grey', color: 'grey', marginRight: '10px', height: '30px'}}
                           variant="outlined"
                           onClick={handleDuplicateCheck}>
                           중복체크
                   </Button>
-                  </div>
+                  </div><p></p>
 
-                  <p></p><b>전화번호</b><p><TextField id={userInfo.phoneNumber}
-                                              // variant="outlined"
-                                              // sx={{
-                                              //   '& .MuiOutlinedInput-root': {
-                                              //     '&:hover fieldset': {
-                                              //       borderColor: 'green',
-                                              //     },
-                                              //     '&.Mui-focused fieldset': {
-                                              //       borderColor: 'green',
-                                              //     },
-                                              //   },
-                                              // }}
-                                              defaultValue={userInfo.phoneNumber}
-                                    onChange={(e) => handleInputChange('phoneNumber', e.target.value)} /></p> 
+                  <b>전화번호</b><p><TextField id={userInfo.phoneNumber}
+                                            defaultValue={userInfo.phoneNumber}
+                                            onChange={(e) => handleInputChange('phoneNumber', e.target.value)} /></p> 
                     <b>선호도시</b><p> <Select
                     labelId="선호도시"
                     id="select-preferredCity"
                     value={userInfo.preferredCity}
                     onChange={handleCityAreaChange}
                     style={{ outline: '1px solid #f4f4f4', outlineOffset: '-2px' }}
-                  >
+                    >
+                   
                     <MenuItem value={""}>선택안함</MenuItem>
                     <MenuItem value={"서울"}>서울</MenuItem>
                     <MenuItem value={"경기"}>경기</MenuItem>
@@ -266,6 +296,7 @@ function Mypage() {
                     <MenuItem value={"전남"}>전남</MenuItem>
                     <MenuItem value={"전북"}>전북</MenuItem>
                     <MenuItem value={"제주"}>제주</MenuItem>
+                  
                   </Select></p>
 
                   <b>선호지역</b>
@@ -300,7 +331,13 @@ function Mypage() {
                                   /> {rangeValue}
                                 </Form.Group>
                               </Form></p>
-                  </div>
+
+                    <div className="buttons-modify">
+                      <div className='button-cancle' onClick={handleCancelClick}>취소</div>
+                      <div className='button-save' onClick={handleSaveClick}>저장</div>
+                    </div>
+
+                </div>
                 </React.Fragment>
               ) : (
                 // 사용자 UI               
@@ -310,47 +347,67 @@ function Mypage() {
                 <div style={{position: 'relative'}}> 
                 <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
                 <List component="nav" aria-label="side-nav" className="side-nav">
-                  <ListItem button component={Link} to="/myPage">
-                    <ListItemText primary="내 정보" />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button>
-                    <ListItemText primary="신청 매치" />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button divider>
-                    <ListItemText primary="내가 쓴 글" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="친구" />
-                  </ListItem>
+                <ListItem button onClick={() => setSelectedUser(null)}>
+                  <ListItemText primary="내 정보" />
+                </ListItem>
+                <Divider />
+                <ListItem button onClick={() => setViewMode('MATCH_LIST')}>
+                  <ListItemText primary="신청 매치" />
+                </ListItem>
+                <Divider />
+                <ListItem button divider onClick={() => setViewMode('BOARD_LIST')}>
+                  <ListItemText primary="내가 쓴 글" />
+                </ListItem>
+                <ListItem button>
+                  <ListItemText primary="친구" />
+                </ListItem>
                 </List>
                 </Box>
-                </div>
+                </div>            
 
-                  <div class="user-cards-wrapper">
-                  <div className='user-card-1'>
+                <div className="user-cards-wrapper">
+
+                {/* 사이드메뉴 상세페이지 */}
+                {viewMode === "MATCH_LIST" && (
+                    <MatchList />
+                  )}
+                
+                    <>
+                    <div className='user-card-1'>
                     <Col xs={6} md={4}>
-                    <Image src={profileImg} roundedCircle />
+                    {/* 이미지 수정 폼 */}
+                    <>
+                      <Image src={imageUrl || profileImageUrl || userInfo.profileImgUrl} roundedCircle />
+                    <form onSubmit={handleSubmit}>
+                    <input type="file" style={{ display: "none" }} id="fileInput" onChange={handleFileChange} />
+                    <label htmlFor="fileInput" className="profileImg-edit">
+                    <img src={editIcon} alt="edit icon" style={{ width: "20px", height: "20px", borderRadius: "0" }} />
+                    </label>
+                    {chosenFile && (<button type="submit" className="profileImg-save">저장</button>)}
+                    </form>
+                    </>
                     </Col>
-                    <div className='userInfo'>
-                    <div className='level'>
-                    <Stack spacing={1} alignItems="center">
-                    <Chip label={userInfo.level}  color="success" />
-                    </Stack>
-                    </div>
-                    <span>{userInfo.nickname}</span>
-                    <p>{userInfo.gender} </p>
-                    <p>
-                    노쇼 <span style={{ color: userInfo.noShowCnt > 0 ? 'green' : 'gray' }}>{userInfo.noShowCnt}</span>
-                    </p>
-                    </div>
-                  </div> 
 
-                    <div className='user-card-2 '>
-                    <p><b>이메일</b><text>{userInfo.email}</text></p>
-                    <p><b>생년월일</b><span>{userInfo.birth}</span></p>
-                    <p><b>전화번호</b><span>{userInfo.phoneNumber}</span></p>
+                      <div className='userInfo'>
+                        <div className='level'>
+                          <Stack spacing={1} alignItems="center">
+                            <Chip label={userInfo.level} color="success" />
+                          </Stack>
+                        </div>
+                        <span>{userInfo.nickname}</span>
+                        <p>{userInfo.gender}</p>
+                        <p>노쇼 
+                          <span style={{ color: userInfo.noShowCnt > 0 ? 'green' : 'gray' }}>
+                            {userInfo.noShowCnt}
+                          </span>
+                        </p>
+                      </div>
+                    </div> 
+
+                    <div className='user-card-2'>
+                      <p><b>이메일</b><text>{userInfo.email}</text></p>
+                      <p><b>생년월일</b><span>{userInfo.birth}</span></p>
+                      <p><b>전화번호</b><span>{userInfo.phoneNumber}</span></p>
                     </div>
 
                     <div className='user-card-3'>
@@ -358,24 +415,19 @@ function Mypage() {
                     <p><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
                     <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
                     </div>
-                    </div>
+
+                    <div className="buttons">
+                      <div className='button-modify' button onClick={handleEditClick}>수정</div>
+                  </div>
+                  </>
+                  
+                </div>
                 
                 </React.Fragment>
               )}
             </React.Fragment>
           ) : (
             <p>로딩중...</p>
-          )}
-        </div>
-
-        <div className="buttons">
-          {isEditing ? (
-            <React.Fragment>
-              <div className='button-cancle' button onClick={handleCancelClick}>취소</div>
-              <div className='button-save' button onClick={handleSaveClick}>저장</div>
-            </React.Fragment>
-          ) : (
-            <div className='button-modify' button onClick={handleEditClick}>수정</div>
           )}
         </div>
       </div>
