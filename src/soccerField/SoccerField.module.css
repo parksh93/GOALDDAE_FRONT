@@ -18,35 +18,39 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 600px;
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .info {
     background-color: #FFFFFF;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
     padding-bottom: 20px;
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
 }
 
 .reservationContainer{
+    text-align: center;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 500px;
-    max-height: 400px;
-    margin-left: 5px;
-    padding: 10px;
+    max-height: 800px;
+    margin-left: 10px;
+    padding: 15px;
     background-color: #FFFFFF;
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
 }
 
 .reservationFee {
-    display: inline;
-    float: right;
-    margin-left: 20px;
-    padding-top: 25px;
-    font-size: 30px;
+    background-color: #4caf50;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin: 8px 2px;
+    padding: 10px 40px;
     font-weight: 500;
+    text-align: center;
 }
 
 .reservationFeeFont {
@@ -78,12 +82,19 @@
     font-size: 15px;
     font-weight: bold;
     color: #333333;
-    margin: 6px 4px;
+    margin: 6px 2px;
 }
 
 .infoTitle {
     font-size: 22px;
     font-weight: bold;
     color: #333333;
-    margin: 6px 4px;
+    margin: 6px 2px;
+}
+
+.modalInfoText {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    margin: 18px 2px 15px 2px;
 }

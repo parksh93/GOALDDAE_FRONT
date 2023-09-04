@@ -78,7 +78,7 @@ const SoccerFieldMain = () => {
                 </div>                            
               </div>
               <div className={styles.reservationContainer}>
-                <h3>예약하기</h3>
+                <div className={styles.infoTitle}>예약하기</div>
                 {fieldInfo && 
                 <SoccerFieldTimeLine fieldInfo={fieldInfo} />
                 }

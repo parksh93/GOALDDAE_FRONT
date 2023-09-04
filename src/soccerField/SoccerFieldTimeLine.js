@@ -13,6 +13,8 @@ const SoccerFieldTimeLine = (props) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
+  const reservedTime = [8, 14, 18];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (time) => {
@@ -83,11 +85,11 @@ const SoccerFieldTimeLine = (props) => {
             {visibleDates.map((item, index) => (
               <li
                 key={index}
-                style={{
-                  color: item.day === "토" ? "blue" : item.day === "일" ? "red" : "#333333",
-                  backgroundColor: selectedDate && selectedDate.date === item.date ? "#F3F3F3" : "transparent",
-                }}
-                className={styles.timelineDateItem}
+                className={`
+                  ${styles.timelineDateItem} 
+                  ${selectedDate && selectedDate.date === item.date ? styles.selectedDate :
+                    item.day === "토" ? styles.saturday : item.day === "일" ? styles.sunday : ''}
+                `}
                 onClick={() => handleDateClick(item)}
               >
                 <div>
@@ -107,14 +109,24 @@ const SoccerFieldTimeLine = (props) => {
               const startTime = 6 + index * 2;
               const endTime = startTime + 2;
               const reservationFee = props.fieldInfo.reservationFee;
+              const isReserved = reservedTime.includes(startTime); // 시간이 예약된 시간인지 확인
+
               return (
                 <div key={index}>
-                  <Link
-                    className={styles.reservationLink}
-                    onClick={() => openModal(startTime)}
-                  >
-                    {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
-                  </Link>
+                  {isReserved ? (
+                    <div className={styles.reservedTime}>
+                      {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
+                    </div>
+                  ) : (
+                    <div className={styles.reservationLink}>
+                      <Link                        
+                        onClick={() => openModal(startTime)}
+                      >
+                        {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
+                      </Link>     
+                    </div>
+
+                  )}
                 </div>
               );
             })}
@@ -126,8 +138,7 @@ const SoccerFieldTimeLine = (props) => {
           fieldInfo={props.fieldInfo}
           selectedDate={selectedDate}
           selectedTime={selectedTime}
-        >
-        </ReservationModal>
+        />
       </Box>
     </div>
   );

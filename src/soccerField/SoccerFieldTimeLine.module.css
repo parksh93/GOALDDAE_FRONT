@@ -2,17 +2,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 15px; /* 세로 위치 조정 */
+    margin-top: 5px; /* 세로 위치 조정 */
+    margin-bottom: 20px;
   }
   
   /* 가로 위치 조정 */
   .timelineDateItem {
     display: inline-block;
-    margin: 5px 2px;
+    margin: 12px 2px;
     padding: 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease;
     border-radius: 5px;
+    margin-bottom: 15px;
   }
 
   .prevDateBtn,
@@ -21,3 +23,40 @@
     margin: 0;
     background: transparent;
   }
+
+  /* 예약 가능한 시간의 배경색 (초록색) */
+.reservationLink {
+  background-color: #5ab35d;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin: 8px 2px;
+  padding: 10px 60px;
+  text-align: center;
+}
+
+/* 예약 완료된 시간의 배경색 (회색) */
+.reservedTime {
+  background-color: #ccc;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin: 8px 2px;
+  color: #555;
+  padding: 10px 60px;
+  text-align: center;
+}
+
+/* 선택된 날짜의 배경색 (예약 가능한 시간일 때 초록색으로 재설정) */
+.selectedDate {
+  background-color: #4caf50;
+  color: white;
+}
+
+.saturday {
+  color: blue;
+}
+
+.sunday {
+  color: red;
+}
