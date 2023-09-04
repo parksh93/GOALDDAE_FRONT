@@ -20,6 +20,9 @@ import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTabl
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import TeamMain from './teamComponent/TeamMain';
+import TeamDetail from './teamComponent/detail/TeamDetail';
+import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 
 const App = () => {
   return (
@@ -47,6 +50,9 @@ const App = () => {
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
 
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+              <Route path='/team/list' element={<TeamMain/>}/>
+              <Route path='/team/detail/:id' element={<TeamDetail />} />
+              <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
             </Routes>
         <Footer/> 
       </>
