@@ -130,50 +130,71 @@ const handlePrevDate = () => {
 const visibleDates = dates.slice(currentIndex, currentIndex + 7);
 
 return (
-  <div className="timeline">
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
-    <Select value={selectedProvince} onChange={(e) => setSelectedProvince(e.target.value)}>
-        {provinces.map((province) =>
-          <MenuItem key={province} value={province}>{province}</MenuItem>
-        )}
-      </Select>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <IconButton onClick={handlePrevDate} className="prev-date-btn">
-          <ArrowBackIosIcon />
-        </IconButton>
-        <ul>
-        {visibleDates.map((item) => (
-        <li
-          key={item.date}
-          className={`timeline-date-item 
-            ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
-            ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
-          `}
-          onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
+    <div className="timeline">
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton onClick={handlePrevDate} className="prev-date-btn">
+            <ArrowBackIosIcon />
+          </IconButton>
+          <ul>
+          {visibleDates.map((item) => (
+          <li
+            key={item.date}
+            className={`timeline-date-item 
+              ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
+              ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
+            `}
+            onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
+          >
+          <div style={{ width: '30px', textAlign: 'center' }}> 
+            <div>{item.date}</div>
+            <div>{item.day}</div>
+          </div>  
+        </li>
+        ))}
+          </ul>
+          <IconButton onClick={handleNextDate} className="next-date-btn">
+            <ArrowForwardIosIcon />
+          </IconButton>
+      </div>
+      <div className="filter">
+        <select 
+          value={selectedProvince} 
+          onChange={(e) => setSelectedProvince(e.target.value)}
+          style={{
+            padding: '10px',
+            fontSize: window.innerWidth <= 768 ? '12px' : '14px',
+            border: 'none',
+            borderRadius: '4px',
+            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+          }}
         >
-        <div style={{ width: '30px', textAlign: 'center' }}> 
-          <div>{item.date}</div>
-          <div>{item.day}</div>
-        </div>
-      </li>
-      ))}
-        </ul>
-        <IconButton onClick={handleNextDate} className="next-date-btn">
-          <ArrowForwardIosIcon />
-        </IconButton>
-     </div>
-     {matchList.length > 0 && (
-        <>
-          {matchList.map((match) => (
-            <Box key={match.id}>
-              <IndividualMatch match={match} />
-            </Box>
-          ))}
-        </>
-      )}
-     </Box>
-  </div>
-);
+          {provinces.map((province) =>
+            <option 
+              key={province} 
+              value={province}
+              style={{
+                fontSize: window.innerWidth <= 768 ? '12px' : '13px', 
+              }}
+            >
+              {province}
+            </option>
+          )}
+        </select>
+      </div>
+
+      {matchList.length > 0 && (
+          <>
+            {matchList.map((match) => (
+              <Box key={match.id}>
+                <IndividualMatch match={match} />
+              </Box>
+            ))}
+          </>
+        )}
+      </Box>
+    </div>
+  );
 }
 
 export default TimeLine;

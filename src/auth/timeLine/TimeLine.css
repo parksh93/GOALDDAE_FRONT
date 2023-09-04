@@ -69,7 +69,14 @@
 .month-changed:before {
   content: "";
   position: absolute;
-  height: 50%; /* 선의 길이 조절 */
-  border-left: 2px solid #000; /* 구분선 */
-  left: -10px; /* 왼쪽으로 움직임 */
+  height: 50%; 
+  border-left: 2px solid #000; 
+  left: -10px; 
 }
+
+.filter {
+  margin: 20px;
+  align-self: center;
+  margin-right: 50%;
+}
+
