@@ -3,11 +3,10 @@ import React, {useState, useEffect} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
-import Main from './Main';
 import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider } from './userComponent/userContext/UserContext';
-import Navigation from './auth/navigation/Navigation';
+import Navigation from './navigation/Navigation';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import BoardMainPage from './boardComponent/BoardMainPage';
@@ -19,6 +18,7 @@ import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTabl
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import Main from './auth/page/main/Main';
 
 const App = () => {
   return (
