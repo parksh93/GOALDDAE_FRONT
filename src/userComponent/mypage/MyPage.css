@@ -5,7 +5,6 @@
   height: 1200px;
   flex-direction: column;
   background: #f8f6f6;
-  
 }
 
 .user-cards-wrapper {
@@ -46,6 +45,16 @@
     left :0;
     margin-left: 30%;
     margin-bottom: 40px;
+ }
+
+ .profileImg-cancel {
+  display:block;
+  position:absolute;
+  bottom :0;
+  left :60px;
+  margin-left: 30%;
+  margin-bottom: 40px;
+  background: #b6b6b6;
  }
 
   .userInfo span{
@@ -196,7 +205,35 @@
     max-height: 200px;
 }
 
-  .user-card-match {
+.user-card-match {
+  transform: translateY(-34px);
+  text-align: left;
+  justify-content: center;
+  align-items: left;
+  width: 700px;
+  height: 500px;
+  padding: 2em;
+  background-color: #fff;
+  margin-top : 0%;
+  box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+}
+
+  .user-card-board {
+    transform: translateY(10px);
+    text-align: left;
+    justify-content: center;
+    align-items: left;
+    width: 700px;
+    height: 450px;
+    padding: 2em;
+    background-color: #fff;
+    margin-top : -1.5%;
+    /* position : fixed;  */
+    box-shadow :0px 4px 8px rgba(128,128,128,0.2);
+  }
+
+  .user-card-friends {
+    transform: translateY(-34px);
     text-align: left;
     justify-content: center;
     align-items: left;
@@ -204,6 +241,8 @@
     height: 500px;
     padding: 2em;
     background-color: #fff;
-    margin-top: -600px;
+    margin-top : 0%;
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
   }
+
+ 

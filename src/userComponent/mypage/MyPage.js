@@ -23,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
+import FriendList from './FriendList';
 import editIcon from '../mypage/img/write.png';
 
 
@@ -37,7 +38,8 @@ function Mypage() {
   const [nicknameChanged, setNicknameChanged] = useState(false);
   const [availableAreas, setAvailableAreas] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [viewMode, setViewMode] = useState('USER_INFO'); 
+  const [viewMode, setViewMode] = useState('USER_INFO');
+
 
   const seoulAreas = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
   const gyeonggiAreas = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "하남시", "화성시"];
@@ -56,7 +58,6 @@ function Mypage() {
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
   const [selectedFile, setSelectedFile] = useState(null);
-
 
 
   // 프로필사진 수정
@@ -347,31 +348,38 @@ function Mypage() {
                 <div style={{position: 'relative'}}> 
                 <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
                 <List component="nav" aria-label="side-nav" className="side-nav">
-                <ListItem button onClick={() => setSelectedUser(null)}>
+                <ListItem button onClick={() => setViewMode('USER_INFO')}
+                sx={{ backgroundColor: viewMode === "USER_INFO" ? " #f2f2f2" : "inherit", color:viewMode === "USER_INFO" ? "black" : "inherit"}}>
                   <ListItemText primary="내 정보" />
                 </ListItem>
                 <Divider />
-                <ListItem button onClick={() => setViewMode('MATCH_LIST')}>
+                <ListItem button onClick={() => setViewMode('MATCH_LIST')}
+                sx={{ backgroundColor: viewMode === "MATCH_LIST" ? "green" : "inherit", color:viewMode === "MATCH_LIST" ? "white" : "inherit"}}>
                   <ListItemText primary="신청 매치" />
                 </ListItem>
                 <Divider />
-                <ListItem button divider onClick={() => setViewMode('BOARD_LIST')}>
+                <ListItem button divider onClick={() => setViewMode('BOARD_LIST')}
+                sx={{ backgroundColor: viewMode === "BOARD_LIST" ? "green" : "inherit", color:viewMode === "BOARD_LIST" ? "white" : "inherit"}}>
                   <ListItemText primary="내가 쓴 글" />
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={() => setViewMode('FRIEND_LIST')}
+                sx={{ backgroundColor: viewMode === "FRIEND_LIST" ? "green" : "inherit", color:viewMode === "FRIEND_LIST" ? "white" : "inherit"}}>
                   <ListItemText primary="친구" />
                 </ListItem>
                 </List>
                 </Box>
-                </div>            
+                </div>
 
                 <div className="user-cards-wrapper">
 
-                {/* 사이드메뉴 상세페이지 */}
-                {viewMode === "MATCH_LIST" && (
-                    <MatchList />
-                  )}
-                
+                {/* 사이드메뉴 상세보기 */}
+                {viewMode === "MATCH_LIST" ? (
+                  <MatchList />
+                ) : viewMode === "BOARD_LIST" ? (
+                  <BoardList userId={userInfo.id} /> 
+                ) : viewMode === "FRIEND_LIST" ? (
+                  <FriendList />
+                  ) : (
                     <>
                     <div className='user-card-1'>
                     <Col xs={6} md={4}>
@@ -383,7 +391,12 @@ function Mypage() {
                     <label htmlFor="fileInput" className="profileImg-edit">
                     <img src={editIcon} alt="edit icon" style={{ width: "20px", height: "20px", borderRadius: "0" }} />
                     </label>
-                    {chosenFile && (<button type="submit" className="profileImg-save">저장</button>)}
+                    {chosenFile && (
+                      <>
+                        <button type="submit" className="profileImg-save">저장</button>
+                        <button type="button" onClick={() => window.location.reload()} className="profileImg-cancel">취소</button>
+                      </>
+                    )}
                     </form>
                     </>
                     </Col>
@@ -420,7 +433,8 @@ function Mypage() {
                       <div className='button-modify' button onClick={handleEditClick}>수정</div>
                   </div>
                   </>
-                  
+                  )}
+
                 </div>
                 
                 </React.Fragment>
