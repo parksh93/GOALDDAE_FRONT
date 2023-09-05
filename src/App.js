@@ -5,7 +5,7 @@ import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider, useUser } from './userComponent/userContext/UserContext';
-import Navigation from './navigation/Navigation';
+import Header from './navigation/Header';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import BoardMainPage from './boardComponent/BoardMainPage';
@@ -24,7 +24,7 @@ import Main from './auth/page/main/Main';
 const App = () => {
   return (
       <>
-        <Navigation />
+        <Header />
             <Routes>
               <Route path='/' element={<Main />} />
               <Route path='/login' element={<UserLogin />}/>

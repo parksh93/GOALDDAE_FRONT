@@ -1,11 +1,15 @@
 /* 이미지 크기 조절은 주석 참고 */
-
 .image-slide-container {
-    max-width: 1000px; /* 가로 */
-    margin: 0 auto;
-    z-index: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 1000px; 
+  margin: auto; 
+  margin-top: 10px;
+}
 
-  }
+.image-slide-container .slick-slider {
+  width: 100%;
+}
   
   .img {
     width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
