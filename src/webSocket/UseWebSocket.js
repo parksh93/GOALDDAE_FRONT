@@ -10,9 +10,10 @@ const useWebSocket = (url) => {
     const stompClient = new Client({
       webSocketFactory: () => socket,
       onConnect: (frame) => {
-        console.log('연결 상태: ' + frame);
+        // 웹소켓 연결 확인할때 주석 해제하고 확인하면 됨
+        // console.log('연결 상태: ' + frame);
         stompClient.subscribe('/topic/matchStatus', (messageOutput) => {
-          console.log('Received message:', messageOutput.body); 
+          // console.log('수신:', messageOutput.body); 
           setData(JSON.parse(messageOutput.body));
         });
       },
@@ -24,7 +25,7 @@ const useWebSocket = (url) => {
       if (stompClient.connected) {
         stompClient.deactivate();
       }
-      console.log("연결 끊김");
+      // console.log("연결 끊김");
     };
   }
 )}    

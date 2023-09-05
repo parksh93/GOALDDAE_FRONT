@@ -9,11 +9,11 @@ import UseWebSocket from "../../../../webSocket/UseWebSocket";
 import { Box } from "@material-ui/core";
 
   const provinces = [
-  "서울", "경기", "인천", "강원", "대전",
-  "충남/세종", "충북", "대구","경북",
-  "부산","울산","경남","광주",
-  "전남","전북","제주"
-  ];
+    "서울", "경기", "인천", "강원", "대전",
+    "충남/세종", "충북", "대구","경북",
+    "부산","울산","경남","광주",
+    "전남","전북","제주"
+    ];
 
 const TimeLine = () => {
   const [dates, setDates] = useState([]);
@@ -21,12 +21,17 @@ const TimeLine = () => {
   const [matchList, setMatchList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const matchStatusMessage = UseWebSocket('http://localhost:8080/webSocket');
+
   const [selectedProvince, setSelectedProvince] = useState('서울');
+  const [selectedLevel, setSelectedLevel] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
 
+  // 필터를 재 선택할때마다 데이터 조회 갱신 
   useEffect(() => {
-    fetchMatchList(selectedProvince).then(setMatchList);
-  }, [selectedProvince]);
+    fetchMatchList().then(setMatchList);
+  }, [selectedProvince, selectedGender, selectedLevel]);
 
+  // 웹소켓으로 매치 목록을 실시간으로 업데이트
   useEffect(() => {
     if (matchStatusMessage) {
       console.log('받은 메시지:', matchStatusMessage);
@@ -41,25 +46,27 @@ const TimeLine = () => {
     }
   }, [matchStatusMessage]);    
 
-  const fetchMatchList = async (province, date) => {
+  const fetchMatchList = async () => {
     try {
-      const startDate = `${date}T00:00:00`;
-      const endDate = `${date}T23:59:59`;
-
+      // 타임라인 선택된 시간 00:00:00 ~ 24:00:00
+      const startTime = `${selectedDate}T00:00:00`;
+  
       const response = await axios.get("/match/individual", {
+        // 서버에 전달할 쿼리
         params: { 
-          province,
-          startDate,
-          endDate
+          province: selectedProvince,
+          startTime,
+          level: selectedLevel ? selectedLevel : '', 
+          gender: selectedGender ? selectedGender : '' 
         },
       });
       return response.data;
     } catch (error) {
-      console.error("Network error:", error);
+      // 에러 확인
+      // console.error("에러:", error);
       return [];
     }
   };
-
 
   const generateDates = () => {
     const now = new Date();
@@ -67,7 +74,9 @@ const TimeLine = () => {
     now.setTime(now.getTime() + timezoneOffset);
 
     const datesArray = [];
-    for (let i = 0; i < 15; i++) {
+    // 타임라인 금일부터 15일 뒤까지 조회
+    for (let i = 0; i < 16; i++) {
+      // 한국시간에 맞게 시간 보정
       const currentTime = new Date(now.getTime() + i * 24 * 60 * 60 * 1000);
       const day = new Intl.DateTimeFormat("ko-KR", { weekday: "short" }).format(currentTime);
       datesArray.push({ 
@@ -81,6 +90,7 @@ const TimeLine = () => {
   setDates(datesArray);
   };
 
+  // 임의 날짜 선택했을때 데이터 출력
   const handleDateClick = async (date, month, year, day) => {
     console.log(`선택된 날짜: ${year}-${month}-${date}, 요일: ${day}`);
     const selectedDateStr = `${year}-${month.padStart(2,'0')}-${date.padStart(2,'0')}`; 
@@ -92,10 +102,12 @@ const TimeLine = () => {
   useEffect(() => {
   generateDates();
 
+  // 24시간 마다 시간 동기화
   const timer = setInterval(() => {
     generateDates();
   }, 24 * 60 * 60 * 1000);
 
+  // 유저가 페이지 첫 접속 했을 때 금일 매치리스트 조회
   const fetchTodayMatchList = async () => {
     const today = new Date();
     const date = String(today.getDate()).padStart(2,'0');
@@ -103,13 +115,15 @@ const TimeLine = () => {
     const year = today.getFullYear();
 
     const selectedDateStr = `${year}-${month}-${date}`;
+
+    setSelectedDate(selectedDateStr); 
     
     const fetchedMatches = await fetchMatchList(selectedProvince, selectedDateStr);
     
     setMatchList(fetchedMatches);
   };
 
-
+  // 함수 호출 - 금일 매치리스트 
   fetchTodayMatchList();
 
   return () => { clearInterval(timer); };
@@ -127,6 +141,7 @@ const TimeLine = () => {
     }
   };
 
+  // 슬라이드 7개까지만 보이게
   const visibleDates = dates.slice(currentIndex, currentIndex + 7);
 
   return (
@@ -180,6 +195,39 @@ const TimeLine = () => {
                 {province}
               </option>
             )}
+          </select>
+          <select
+            value={selectedGender}
+            onChange={(e) => setSelectedGender(e.target.value)}
+            style={{
+              padding: "10px",
+              fontSize: window.innerWidth <= 768 ? "12px" : "14px",
+              border: "none",
+              borderRadius: "4px",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, .15)",
+            }}
+          >
+            <option value="">남녀모두</option>
+            <option value="남자">남자</option>
+            <option value="여자">여자</option>
+          </select>
+
+          <select
+            value={selectedLevel}
+            onChange={(e) => setSelectedLevel(e.target.value)}
+            style={{
+              padding: "10px",
+              fontSize: window.innerWidth <= 768 ? "12px" : "14px",
+              border: "none",
+              borderRadius: "4px",
+              boxShadow: "0 2px 5px rgba(0, 0, 0, .15)",
+            }}
+          >    
+            <option val="">레벨</option>  
+            <option val="유망주">유망주</option>   
+            <option val="세미프로">세미프로</option>   
+            <option val="프로">프로</option>   
+            <option val="월드클래스">월드클래스</option>
           </select>
         </div>
 
