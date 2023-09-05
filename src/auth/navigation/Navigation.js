@@ -1,8 +1,8 @@
 import "./Navigation.css";
-import logo from "./image/goalddaeLogo.png"
+import logo from "../image/goalddae_default_profile.Webp"
 import { Link } from "react-router-dom";
-import FieldSearch from "./search/FieldSearch";
-import LoginInfo from "../loginInfo/LoginInfo";
+import FieldSearch from "../search/FieldSearch";
+import LoginInfo from "../../loginInfo/LoginInfo";
 
 const Navigation = () => {
   return (
