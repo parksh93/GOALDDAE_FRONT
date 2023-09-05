@@ -85,11 +85,8 @@ const Payment = ({ fieldId, fieldName, reservationFee }) => {
   }
   return (
     <div>
-
-      <div className={styles.kakaopayBtnDiv}>
-        <button onClick={requestPayKakao} className={styles.kakopayBtn}>
-          <img src="../img/kakaopay.Webp" />
-        </button>
+      <div onClick={requestPayKakao} className={styles.reservationFee}>
+        대관비 {reservationFee}원 결제 및 예약하기
       </div>
     </div>
   );

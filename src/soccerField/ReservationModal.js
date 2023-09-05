@@ -96,7 +96,6 @@ const ReservationModal = ( props ) => {
               onChange={(e) => e.target.value > -1 ? setHeadCount(e.target.value) : setHeadCount(0)}
             />
             <hr className={styles.separator}/>
-            <div className={styles.reservationFee}>대관비 {props.fieldInfo.reservationFee}원 결제 및 예약하기</div>
             <Payment
                   fieldId={props.fieldInfo.id}
                   fieldName={props.fieldInfo.fieldName}
