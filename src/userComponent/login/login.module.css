@@ -1,6 +1,8 @@
 .logo {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: 80px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .logoSection{
@@ -37,6 +39,7 @@
 .etcBtnSection {
     margin-top: 30px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .etcBtn {
@@ -47,8 +50,50 @@
 
 .etcBtn:hover {
     color: lightgray;
+    text-decoration: none;
 }
 
 .screen {
     color: lightgray;
+}
+
+.socialLoginSection {
+    text-align: center;
+    margin-top: 50px;
+    
+}
+
+.socialLoginSection hr {
+    width: 32%;
+    border: 0;
+    height: 1px;
+    background: lightgray;
+}
+
+.socialBtnDiv p{
+    font-weight: 600;
+}
+
+.googleBtn {
+    border-radius: 50%;
+    width: 50px;
+    border: 2px solid lightgray;
+    height: 50px;
+    margin-top: 5px;
+}
+
+.googleBtn:hover {
+    border: 2px solid blue;
+}
+
+.naverBtn {
+    border: 2px solid #ffffff;
+    width: auto;
+    height: 54px;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+
+.naverBtn:hover {
+    border: 2px solid lightgray;
 }

@@ -29,7 +29,7 @@ const TimeLine = () => {
   // 필터를 재 선택할때마다 데이터 조회 갱신 
   useEffect(() => {
     fetchMatchList().then(setMatchList);
-  }, [selectedProvince, selectedGender, selectedLevel]);
+  }, [selectedProvince, selectedGender, selectedLevel, selectedDate]);
 
   // 웹소켓으로 매치 목록을 실시간으로 업데이트
   useEffect(() => {
@@ -92,7 +92,7 @@ const TimeLine = () => {
 
   // 임의 날짜 선택했을때 데이터 출력
   const handleDateClick = async (date, month, year, day) => {
-    console.log(`선택된 날짜: ${year}-${month}-${date}, 요일: ${day}`);
+    // console.log(`선택된 날짜: ${year}-${month}-${date}, 요일: ${day}`);
     const selectedDateStr = `${year}-${month.padStart(2,'0')}-${date.padStart(2,'0')}`; 
     setSelectedDate(selectedDateStr); 
     const fetchedMatches = await fetchMatchList(selectedProvince, selectedDateStr); 

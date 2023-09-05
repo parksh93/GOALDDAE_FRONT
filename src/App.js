@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
-import { UserProvider } from './userComponent/userContext/UserContext';
+import { UserProvider, useUser } from './userComponent/userContext/UserContext';
 import Navigation from './navigation/Navigation';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
@@ -14,6 +13,8 @@ import SoccerFieldMain from './soccerField/SoccerFieldMain';
 import UserChatMain from './chat/UserChatMain';
 import Footer from './footer/Footer';
 import Admin from './auth/page/admin/Admin';
+import SocialSignupMain from './userComponent/signup/SocialSignupMain';
+import Loading from './loading/Loading';
 import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
@@ -22,7 +23,6 @@ import Main from './auth/page/main/Main';
 
 const App = () => {
   return (
-    <UserProvider> 
       <>
         <Navigation />
             <Routes>
@@ -31,6 +31,7 @@ const App = () => {
               <Route path='/logOut' element={<LogOut />}/>
               <Route path='/myPage' element={<MyPage />}/>
               <Route path='/signup' element={<SignupMain/>}/>
+              <Route path='/socialSignup' element={<SocialSignupMain/>}/>
               <Route path='/find' element={<FindMain />} />
               <Route path='/find/:findMenuNum' element={<FindMain />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
@@ -46,9 +47,8 @@ const App = () => {
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             </Routes>
-          {/* <Footer/>  */}
+        <Footer/> 
       </>
-    </UserProvider>
   );
 }
 

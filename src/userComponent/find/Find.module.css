@@ -1,6 +1,8 @@
 .logo {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: 80px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .logoSection{
@@ -14,11 +16,12 @@
 
 .findIdBtn, .findPwBtn {
     font-size: 15px;
-    margin-left: 20px;
+    margin-right: 20px;
     font-weight: 100;
 }
 .mainSession{
     margin-left: 35%;
+    margin-bottom: 50px;
 }
 
 .inputFindLoginId {

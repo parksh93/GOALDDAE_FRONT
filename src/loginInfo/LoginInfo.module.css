@@ -1,26 +1,31 @@
+.container{
+  display: inline-block;
+  float: right;
+}
+
 .button {
-    background-color: #4caf50;
+    background-color: #ffffff;
     border: none;
-    color: white;
-    padding: 8px 16px;
+    color: rgb(156, 156, 156);
+    padding: 8px 8px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    display: inline;
+    font-size: 15px;
     cursor: pointer;
     transition-duration: 0.4s;
+    border-radius: 10px;
+    font-weight: 600;
   }
   
   .btnContainer {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
+    /* gap: 5px; */
+    margin-right: 25px;
   }
   
   .button:hover {
-    background-color: #367b3f;
-    color: white;
+    color: black;
   }
   
 .profileImg {
@@ -28,11 +33,14 @@
   width: 35px;
   height: 35px;
   margin-right: 5px;
-  border: 1px solid black;
+  /* border: 1px solid lightgray; */
 }
 
 .userNickname {
     display: inline;
+    margin-right: 50px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 /* 768px 이하 화면 크기에 대한 반응형 스타일 */
@@ -50,6 +58,17 @@
       justify-content: space-around; 
     }
   }
+
+   .userInfoContainer *{
+    vertical-align: middle;
+   }
+
+   .tootipText{
+    padding: 5px;
+    font-size: 14px;
+  }
   
-  
-  
+  .tootipText:hover {
+     text-decoration: none;
+      color: lightgray;
+   }
