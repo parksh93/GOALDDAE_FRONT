@@ -4,7 +4,7 @@ import {BsSend, BsPersonSlash} from 'react-icons/bs'
 import * as React from "react";
 
 const FriendList = ({userInfo}) => {
-    const [friendList, setFriendList] = useState(null);
+    const [friendList, setFriendList] = useState([]);
 
     useEffect(() => {
         if(userInfo !== null){
@@ -24,7 +24,7 @@ const FriendList = ({userInfo}) => {
 
     return (
         <div className={styles.friendListContainer}>
-            {friendList === null ? <span className={styles.noFriendList}>친구 목록이 없습니다</span>
+            {friendList.length === 0 ? <span className={styles.noFriendList}>친구 목록이 없습니다</span>
             :
                 friendList.map(friend => (
                     <div className={styles.contentDiv}>

@@ -1,0 +1,61 @@
+.friendAcceptContainer *{
+    vertical-align: middle;
+}
+
+.friendAcceptContainer {
+    width: 100%;
+}
+
+.contentDiv {
+    width: 100%;
+}
+
+.noFriendList{
+    color: gray;
+    margin-left: 20px;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nickAndLevelDiv {
+    display: inline-block;
+}
+
+.nickname {
+    font-size: 17px;
+    /* font-weight: 600; */
+}
+
+.check {
+    font-size: 24px;
+    /* float: right; */
+    color:gray;
+    margin-top: 3px;
+    margin-left: 20px;
+} 
+
+.check:hover {
+    color: rgb(13, 121, 4);
+}
+
+.no{
+    /* float: right; */
+    margin-left: 15px;
+    font-size: 19px;
+    color:gray;
+}
+
+.no:hover {
+    color: red;
+}
+
+.requestDate{
+    margin-left:35%;
+    font-size: 13px;
+    color: gray;
+}

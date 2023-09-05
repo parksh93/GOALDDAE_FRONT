@@ -1,0 +1,65 @@
+.friendAcceptContainer *{
+    vertical-align: middle;
+}
+
+.friendAcceptContainer {
+    width: 100%;
+}
+
+.contentDiv {
+    width: 100%;
+}
+
+.noFriendList{
+    color: gray;
+    margin-left: 20px;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nickAndLevelDiv {
+    display: inline-block;
+}
+
+.nickname {
+    font-size: 17px;
+}
+
+.date{
+    margin-left:35%;
+    font-size: 13px;
+    color: gray;
+}
+
+.waitBtn, .noBtn {
+    border-radius: 50px;
+    padding: 5px;
+    margin-left: 20px;
+    background: none;
+    width: 50px;
+}
+
+.waitBtn {
+    border: 1px solid rgb(185, 185, 3);
+    color: rgb(201, 201, 0);
+}
+
+.noBtn {
+    border: 1px solid red;
+    color: red;
+}
+
+.noBtn:active {
+    border: 1px solid lightgray;
+    color: lightgray;
+}
+
+.waitBtn:active {
+    border: 1px solid lightgray;
+    color: lightgray;
+}

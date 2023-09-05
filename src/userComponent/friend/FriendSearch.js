@@ -1,9 +1,10 @@
 import "./FriendSearch.css";
 import {useState, useCallback, useEffect} from 'react'
 import {AiOutlineClose} from 'react-icons/ai'
-import {BsPersonAdd, BsPersonExclamation, BsSend} from 'react-icons/bs'
+import {BsPersonAdd, BsPersonExclamation, BsSend, BsEmojiSmile} from 'react-icons/bs'
+import {Link} from 'react-router-dom'
 
-const FriendSearch = ({userInfo}) => {
+const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText }) => {
     const [searchValue, setSearchValue] = useState('');
     const [searchResultList, setSearchResultList] = useState(null);
 
@@ -31,10 +32,26 @@ const FriendSearch = ({userInfo}) => {
         setSearchValue("");
     }
 
+    const onClickFriendAdd = toUserId => {
+        fetch("/friend/addFriendRequest", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                toUser: toUserId,
+                fromUser: userInfo.id
+            })
+        });
+        setSearchValue("");
+        setAlertSeverity("success");
+        setAlertText("친구 신청이 완료되었습니다.");
+        setOpenAlert(true);
+        setTimeout(() => setOpenAlert(false), 2000);
+    }
+
     return (
         <div className="searchContainer">
             <div className='nomalBox'>
-                <input onChange={onchangeSearchValue} placeholder="친구 찾기" className="inputBox" value={searchValue} onBlur={() => setSearchValue("")}/>
+                <input onChange={onchangeSearchValue} placeholder="친구 찾기" className="inputBox" value={searchValue}/>
                 {searchValue !== "" ? <AiOutlineClose onClick={deleteSearchValue} className="deleteBtn" /> : ""}
                 {searchValue.trim() === "" ?
                     "" :  
@@ -54,7 +71,8 @@ const FriendSearch = ({userInfo}) => {
                                     <div className="friendDiv">
                                     <img src={unFriend.profileImgUrl} className="friendImg" />
                                     <span className="friendNickname">{unFriend.nickname}</span> 
-                                    {unFriend.friendAddCnt === 0 &&  unFriend.friendAcceptCnt === 0 ? <BsPersonAdd className="friendAddAndAcceptBtn" /> 
+                                    {unFriend.friendAddCnt === 0 &&  unFriend.friendAcceptCnt === 0 && unFriend.id !== userInfo.id ? <span><BsPersonAdd className="friendAddBtn" onClick={() => onClickFriendAdd(unFriend.id)}/></span>
+                                    : unFriend.id === userInfo.id ? <Link to="/myPage"><BsEmojiSmile className="meBtn"/></Link>
                                     :<BsPersonExclamation className="friendWaitBtn" />}
                                 </div>
                             )) : ""
