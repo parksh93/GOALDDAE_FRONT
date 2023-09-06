@@ -2,6 +2,9 @@
     font-size: 18px;
 }
 
+.selectBarMain{
+    position: absolute;
+}
 .selectBarMain > div {
     margin-bottom: 10px;
     padding: 2px;
@@ -10,8 +13,8 @@
 
 .selectBarMain > span {
     font-weight: 600;
-    margin-right: 10px;
-    font-size: 20px;
+    margin-right: 20px;
+    font-size: 25px;
 }
 
 .selectBarMain > span:hover {

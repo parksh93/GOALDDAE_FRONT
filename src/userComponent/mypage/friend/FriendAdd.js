@@ -26,7 +26,6 @@ const FriendAdd = ({
             .then(res => res.json())
             .then(data => {
                 setFriendList(data); 
-                console.log(data.acceptDate)
             })
             .catch(() => {
                 setFriendList(null);
@@ -50,26 +49,26 @@ const FriendAdd = ({
         setNoBtnText("거절");
     });
 
-    const onClickDeleteFriendRequest = useCallback((toUser) => {
+    const onClickDeleteFriendRequest = useCallback((toUser, nickname) => {
         deleteFatch(toUser);
         setAlertSeverity("error");
-        setAlertText("거절된 친구 요청이 삭제되었습니다.");
+        setAlertText(<span><b>{nickname}</b> 님의 거절된 신청이 삭제되었습니다.</span>);
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
             window.location.reload();
-        }, 1000);
+        }, 1500);
     });
 
-    const onClickCancleFriendRequest = useCallback((toUser) => {
+    const onClickCancleFriendRequest = useCallback((toUser, nickname) => {
         deleteFatch(toUser);
         setAlertSeverity("success");
-        setAlertText("친구 요청이 취소되었습니다.");
+        setAlertText(<span><b>{nickname}</b> 님에게 보낸 친구 신청이 취소되었습니다.</span>);
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
             window.location.reload();
-        }, 1000);
+        }, 1500);
     });
 
     const deleteFatch = useCallback(async (toUser) => {
@@ -84,7 +83,7 @@ const FriendAdd = ({
     })
     return (
         <div className={styles.friendAcceptContainer}>
-            {friendList === null ? <span className={styles.noFriendList}>보낸 친구 요청이 없습니다</span>
+            {friendList === null || friendList.length === 0 ? <span className={styles.noFriendList}>보낸 친구 요청이 없습니다</span>
             :
             friendList.map(friend => (
                 <div className={styles.contentDiv}>
@@ -94,8 +93,8 @@ const FriendAdd = ({
                     friend.accept === 2 ? <span className={styles.date}>{formatDate(friend.acceptDate)} 거절</span> : ""
                     }
                     {friend.accept === 3 ? 
-                        <button className={styles.waitBtn} onMouseOver={onMouseOverWaitBtn} onMouseOut={onMouseOutWaitBtn} onClick={() => onClickCancleFriendRequest(friend.id)}>{waitBtnText}</button> : friend.accept === 2 ? 
-                        <button className={styles.noBtn} onMouseOver={onMouseOverNoBtn} onMouseOut={onMouseOutNoBtn} onClick={() => onClickDeleteFriendRequest(friend.id)}>{noBtnText}</button> 
+                        <button className={styles.waitBtn} onMouseOver={onMouseOverWaitBtn} onMouseOut={onMouseOutWaitBtn} onClick={() => onClickCancleFriendRequest(friend.id, friend.nickname)}>{waitBtnText}</button> : friend.accept === 2 ? 
+                        <button className={styles.noBtn} onMouseOver={onMouseOverNoBtn} onMouseOut={onMouseOutNoBtn} onClick={() => onClickDeleteFriendRequest(friend.id, friend.nickname)}>{noBtnText}</button> 
                     : ""}
                 </div>
             ))

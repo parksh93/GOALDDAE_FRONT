@@ -1,0 +1,34 @@
+.friendMain {
+    height: 600px;
+    width: 725px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+}
+
+.selectBar{
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+    width: 300px;
+    margin-left: 20px;
+}
+
+.contentBox {
+    display: inline-block;
+    /* height: 100%; */
+    height: 500px;
+    overflow-y: auto;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.contentBox::-webkit-scrollbar {
+    background: none;
+    width: 10px;
+}
+
+.contentBox::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    color: lightgray;
+}

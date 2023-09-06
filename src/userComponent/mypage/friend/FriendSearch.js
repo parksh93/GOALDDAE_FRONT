@@ -32,7 +32,7 @@ const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText })
         setSearchValue("");
     }
 
-    const onClickFriendAdd = toUserId => {
+    const onClickFriendAdd = (toUserId, nickname) => {
         fetch("/friend/addFriendRequest", {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
@@ -43,9 +43,12 @@ const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText })
         });
         setSearchValue("");
         setAlertSeverity("success");
-        setAlertText("친구 신청이 완료되었습니다.");
+        setAlertText(<span><b>{nickname}</b> 님에게 친구 요청을 보냈습니다.</span>);
         setOpenAlert(true);
-        setTimeout(() => setOpenAlert(false), 2000);
+        setTimeout(() => {
+            setOpenAlert(false);
+            window.location.reload();
+        }, 1500);
     }
 
     return (
@@ -71,7 +74,7 @@ const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText })
                                     <div className="friendDiv">
                                     <img src={unFriend.profileImgUrl} className="friendImg" />
                                     <span className="friendNickname">{unFriend.nickname}</span> 
-                                    {unFriend.friendAddCnt === 0 &&  unFriend.friendAcceptCnt === 0 && unFriend.id !== userInfo.id ? <span><BsPersonAdd className="friendAddBtn" onClick={() => onClickFriendAdd(unFriend.id)}/></span>
+                                    {unFriend.friendAddCnt === 0 &&  unFriend.friendAcceptCnt === 0 && unFriend.id !== userInfo.id ? <span><BsPersonAdd className="friendAddBtn" onClick={() => onClickFriendAdd(unFriend.id, unFriend.nickname)}/></span>
                                     : unFriend.id === userInfo.id ? <Link to="/myPage"><BsEmojiSmile className="meBtn"/></Link>
                                     :<BsPersonExclamation className="friendWaitBtn" />}
                                 </div>

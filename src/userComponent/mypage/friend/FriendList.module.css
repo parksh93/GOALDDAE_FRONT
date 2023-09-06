@@ -1,8 +1,8 @@
-.friendAcceptContainer *{
+.friendListContainer *{
     vertical-align: middle;
 }
 
-.friendAcceptContainer {
+.friendListContainer {
     width: 100%;
 }
 
@@ -31,31 +31,45 @@
     /* font-weight: 600; */
 }
 
-.check {
-    font-size: 24px;
+.chatBtn {
+    font-size: 22px;
+    margin-left:70%;
     /* float: right; */
     color:gray;
     margin-top: 3px;
-    margin-left: 20px;
 } 
 
-.check:hover {
+.chatBtn:hover {
     color: rgb(13, 121, 4);
 }
 
-.no{
-    /* float: right; */
-    margin-left: 15px;
-    font-size: 19px;
+.deleteBtn {
+    margin-left: 10px;
+    font-size: 22px;
     color:gray;
 }
 
-.no:hover {
+.deleteBtn:hover {
+    color: black;
+}
+
+.blockBtn{
+    /* float: right; */
+    margin-left: 10px;
+    font-size: 22px;
+    color:gray;
+}
+
+.blockBtn:hover {
     color: red;
 }
 
-.requestDate{
-    margin-left:35%;
-    font-size: 13px;
-    color: gray;
+.blockOkBtn, .blockNoBtn {
+    background: none;
+    color: black;
+    font-size: 15px;
+}
+
+.blockOkBtn:hover, .blockNoBtn:hover {
+    color: lightgray;
 }

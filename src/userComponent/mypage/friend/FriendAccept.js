@@ -31,7 +31,7 @@ const FriendAccept = ({
         }
     },[userInfo]);
 
-    const onClickFriendRejection = useCallback((fromUserId) => {
+    const onClickFriendRejection = useCallback((fromUserId, nickname) => {
         fetch("/friend/friendRejection", {
             method: "PATCH",
             headers: {"Content-Type": "application/json"},
@@ -41,25 +41,43 @@ const FriendAccept = ({
             })
         });
         setAlertSeverity("error");
-        setAlertText("친구 신청이 거절되었습니다.");
+        setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 거절되었습니다.</span>);
         setOpenAlert(true);
         setTimeout(()=> {
             setOpenAlert(false);
             window.location.reload();
-        }, 1000);
+        }, 1500);
+    });
+
+    const onClickAcceptFriend = useCallback((fromUserId, nickname) => {
+        fetch("/friend/addFriend", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                toUser: userInfo.id,
+                fromUser: fromUserId
+            })
+        });
+        setAlertSeverity("success");
+        setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 수락되었습니다.</span>);
+        setOpenAlert(true);
+        setTimeout(()=> {
+            setOpenAlert(false);
+            window.location.reload();
+        }, 1500);
     });
 
     return (
         <div className={styles.friendAcceptContainer}>
-            {friendList === null ? <span className={styles.noFriendList}>받은 친구 요청이 없습니다</span>
+            {friendList === null || friendList.length === 0 ? <span className={styles.noFriendList}>받은 친구 요청이 없습니다</span>
             :
             friendList.map(friend => (
                 <div className={styles.contentDiv}>
                     <img src={friend.profileImgUrl} className={styles.profile}/>
                     <span className={styles.nickname}>{friend.nickname}</span>
                     <span className={styles.requestDate}>{formatDate(friend.requestDate)} 신청</span>
-                    <BsCheck2 className={styles.check}/>
-                    <BsXLg className={styles.no} onClick={() => onClickFriendRejection(friend.id)}/>
+                    <BsCheck2 className={styles.check} onClick={() => onClickAcceptFriend(friend.id, friend.nickname)}/>
+                    <BsXLg className={styles.no} onClick={() => onClickFriendRejection(friend.id, friend.nickname)}/>
                 </div>
             ))
             }
