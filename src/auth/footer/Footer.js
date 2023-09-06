@@ -6,14 +6,14 @@ const Footer = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <Box sx={{bgcolor: "#3a3a3a", height : isSmallScreen? "100%" : "50vh", paddingBottom:"2%", color:"white"}}>
+        <Box sx={{bgcolor: "#3a3a3a", height : isSmallScreen? "120%" : "50vh", paddingBottom:"2%", color:"white"}}>
             <Box sx={{
                 marginTop: "20%",
                 display:"flex", 
                 flexDirection: isSmallScreen ? "column" : "row", 
                 justifyContent:"flex-start"
                 }}>
-                <Box sx= {{fontSize : isSmallScreen ? "12px" : "16px", marginLeft: "10%",marginTop: "2%"}}>매치
+                <Box sx= {{fontSize : isSmallScreen ? "12px" : "14px", marginLeft : isSmallScreen ? "10%" : "5%",marginTop: "2%"}}>매치
                 <Box sx={{fontSize : isSmallScreen ? "4px" : "13px", marginTop: isSmallScreen? "2%" : "13%", color:"#969696"}}>
                     <Link to="/"><Box sx={{marginTop : isSmallScreen ? "1%" : "10%"}}>개인 매치</Box></Link>   
                     <Link to="/"><Box sx={{marginTop : isSmallScreen ? "1%" : "10%"}}>팀 매치</Box></Link> 
@@ -23,9 +23,10 @@ const Footer = () => {
                 </Box>
                 </Box>
                 <Box sx= {{
-                    fontSize : isSmallScreen ? "12px" : "16px", 
-                    marginLeft : isSmallScreen ? "10%" : "5%",
-                    marginTop : isSmallScreen ? "5%" : "2%" }}>
+                    fontSize : isSmallScreen ? "12px" : "14px", 
+                    marginLeft : isSmallScreen ? "10%" : "3%",
+                    marginTop : isSmallScreen ? "5%" : "2%",
+                    }}>
                     서비스 지역
                         <Box sx={{fontSize : isSmallScreen ? "4px" : "13px", marginTop: isSmallScreen? "2%" : "13%", color:"#969696"}}>
                             <Link to="/"><Box sx={{marginTop : isSmallScreen ? "1%" : "10%"}}>서울</Box></Link>   
@@ -47,7 +48,7 @@ const Footer = () => {
                         </Box>
                 </Box>
                 <Box sx= {{
-                    fontSize : isSmallScreen ? "12px" : "16px", 
+                    fontSize : isSmallScreen ? "12px" : "14px", 
                     marginLeft : isSmallScreen ? "10%" : "5%",
                     marginTop : isSmallScreen ? "5%" : "2%" }}>
                     골때
@@ -63,7 +64,7 @@ const Footer = () => {
                 </Box>
 
                 <Box sx= {{
-                    fontSize : isSmallScreen ? "12px" : "16px", 
+                    fontSize : isSmallScreen ? "12px" : "14px", 
                     marginLeft : isSmallScreen ? "10%" : "5%",
                     marginTop : isSmallScreen ? "5%" : "2%" }}>
                     소셜 미디어
