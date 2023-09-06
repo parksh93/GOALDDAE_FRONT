@@ -2,7 +2,7 @@ import "./Header.css";
 import logo from "./image/goalddaeLogo.png"
 import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
-import LoginInfo from "../loginInfo/LoginInfo";
+import LoginInfo from "../../loginInfo/LoginInfo";
 
 const Header = () => {
   return (
