@@ -20,6 +20,7 @@ import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTabl
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import MatchIndividual from './auth/page/match/MatchIndividual ';
 
 const App = () => {
   return (

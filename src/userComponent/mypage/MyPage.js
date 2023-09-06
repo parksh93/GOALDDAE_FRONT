@@ -38,8 +38,8 @@ function Mypage() {
   const [nicknameChanged, setNicknameChanged] = useState(false);
   const [availableAreas, setAvailableAreas] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [viewMode, setViewMode] = useState('USER_INFO');
-
 
   const seoulAreas = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
   const gyeonggiAreas = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "하남시", "화성시"];
@@ -57,7 +57,7 @@ function Mypage() {
   const jeonnamAreas = ["목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"];
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
-  const [selectedFile, setSelectedFile] = useState(null);
+
 
 
   // 프로필사진 수정

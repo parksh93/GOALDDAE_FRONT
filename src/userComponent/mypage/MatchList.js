@@ -5,7 +5,7 @@ function MatchList({ userId }) {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    axios.get(`/api/match-individual/${userId}`)
+    axios.get(`/user/match-individual/${userId}`)
       .then(response => {
         setMatches(response.data);
       })
