@@ -17,7 +17,6 @@ function MatchList({ userId }) {
   return (
     <div>
       <div className='user-card-match'>
-        <p><b>매치리스트</b></p>
         {/* <text>{userId.matches}</text> */}
     </div>
     </div>
