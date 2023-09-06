@@ -19,8 +19,20 @@
 .search {
   display: flex;
   justify-content: flex-end;
-  margin-right: 150px; 
 }
+
+/* 화면 크기가 600px 이하일 때 */
+@media (max-width: 600px) {
+  .search {
+    position: absolute; 
+    top: 25px; 
+    right: 55px;
+    width: 40%;
+    height: 50%; 
+   }
+}
+
+
 
 .WholeBox {
   position: absolute;

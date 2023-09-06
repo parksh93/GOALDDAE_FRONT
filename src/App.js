@@ -5,13 +5,13 @@ import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider, useUser } from './userComponent/userContext/UserContext';
-import Navigation from './navigation/Navigation';
+import Header from './auth/header/Header';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
 import BoardMainPage from './boardComponent/BoardMainPage';
 import SoccerFieldMain from './soccerField/SoccerFieldMain';
 import UserChatMain from './chat/UserChatMain';
-import Footer from './footer/Footer';
+import Footer from './auth/footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import SocialSignupMain from './userComponent/signup/SocialSignupMain';
 import Loading from './loading/Loading';
@@ -24,7 +24,7 @@ import Main from './auth/page/main/Main';
 const App = () => {
   return (
       <>
-        <Navigation />
+        <Header />
             <Routes>
               <Route path='/' element={<Main />} />
               <Route path='/login' element={<UserLogin />}/>

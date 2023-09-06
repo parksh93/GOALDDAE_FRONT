@@ -1,10 +1,10 @@
-import "./Navigation.css";
+import "./Header.css";
 import logo from "./image/goalddaeLogo.png"
 import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
-import LoginInfo from "../loginInfo/LoginInfo";
+import LoginInfo from "../../loginInfo/LoginInfo";
 
-const Navigation = () => {
+const Header = () => {
   return (
     <>
       <div className="navbar">
@@ -26,4 +26,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Header;
