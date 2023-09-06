@@ -1,0 +1,23 @@
+.selectBarMain *{
+    font-size: 18px;
+}
+
+.selectBarMain{
+    position: absolute;
+}
+.selectBarMain > div {
+    margin-bottom: 10px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.selectBarMain > span {
+    font-weight: 600;
+    margin-right: 20px;
+    font-size: 25px;
+}
+
+.selectBarMain > span:hover {
+    color: lightgray;
+    cursor: pointer;
+}

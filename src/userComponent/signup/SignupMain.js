@@ -110,7 +110,7 @@ const SignupMain = () => {
   useEffect(()=> {
     if(signOk){
       fetch("/user/signup", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },

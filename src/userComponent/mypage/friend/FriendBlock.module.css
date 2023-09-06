@@ -1,0 +1,52 @@
+.friendBlockContainer *{
+    vertical-align: middle;
+}
+
+.friendBlockContainer {
+    width: 100%;
+}
+
+.contentDiv {
+    width: 100%;
+}
+
+.noFriendList{
+    color: gray;
+    margin-left: 20px;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nickAndLevelDiv {
+    display: inline-block;
+}
+
+.nickname {
+    font-size: 17px;
+}
+
+.date{
+    margin-left:61%;
+    font-size: 13px;
+    color: gray;
+}
+
+.unBlockBtn {
+    border-radius: 50px;
+    padding: 5px;
+    margin-left: 20px;
+    background: none;
+    width: 50px;
+    border: 1px solid rgb(3, 185, 58);
+    color: rgb(0, 201, 67);
+}
+
+.unBlockBtn:hover {
+    border: 1px solid lightgray;
+    color: lightgray;
+}
