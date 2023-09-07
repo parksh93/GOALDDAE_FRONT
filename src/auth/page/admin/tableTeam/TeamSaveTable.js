@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Paper ,Button, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment } from '@mui/material';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Paper ,Button, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Slider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../userComponent/userContext/UserContext';
 
@@ -14,7 +14,8 @@ const TeamSaveTable = () => {
   const [entryFee, setEntryFee] = useState('');
   const [preferredDay, setPreferredDay] = useState('');
   const [preferredTime, setPreferredTime] = useState('');
-  const [averageAge, setAverageAge] = useState('');
+  const [averageAgeRangeStartIndex,setAverageAgeRangeStartIndex]=useState(0);
+  const [averageAge, setAverageAge] = useState(0);
   const [entryGender, setEntryGender] = useState('');
   const [recruiting, setRecruiting] = useState(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // 로그인 모달
@@ -59,11 +60,16 @@ const TeamSaveTable = () => {
     }
   };
 
+  const handleAverageAgeChange=(event,newValue)=>{
+    setAverageAgeRangeStartIndex(newValue);
+    setAverageAge(newValue*10);
+  }
+
   const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    if (!teamName || !area || !preferredDay || !preferredTime || !averageAge || !entryGender) {
+    if (!teamName || !area || !preferredDay || !preferredTime || !entryGender) {
       alert('모든 필수 입력 필드를 채워주세요.');
       return;
     }
@@ -221,8 +227,7 @@ const TeamSaveTable = () => {
                                     <TextField
                                         sx={{width:'32%'}}
                                         value={averageAge}
-                                        onChange={(e) => setAverageAge(e.target.value)}
-                                        label="*나이대"
+                                        label="*선호나이대"
                                         variant="outlined"
                                         inputProps={{
                                           maxLength: 2,
@@ -235,6 +240,15 @@ const TeamSaveTable = () => {
                                             </InputAdornment>
                                           )
                                         }}
+                                    />
+                                    <Slider 
+                                        sx={{width:'32%'}}
+                                        value={averageAgeRangeStartIndex}
+                                        onChange={handleAverageAgeChange}
+                                        aria-labelledby="continuous-slider"
+                                        min={0}
+                                        max={10}
+                                        step={1}
                                     />
                                     <FormControl component="fieldset">
                                         <FormLabel component="legend">*입단 성별</FormLabel>
