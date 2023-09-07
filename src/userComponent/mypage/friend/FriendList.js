@@ -5,7 +5,8 @@ import * as React from "react";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-
+import {useNavigate} from 'react-router-dom';
+import useWebSocket from '../../../webSocket/UseWebSocket';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,9 +20,18 @@ const style = {
   };
 
 
-const FriendList = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText }) => {
+const FriendList = ({
+    userInfo, 
+    setOpenAlert, 
+    setAlertSeverity, 
+    setAlertText,
+    socketData,
+    sendWebSocket
+}) => {
     const [friendList, setFriendList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const [btnClick, setBtnClick] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(userInfo !== null){
@@ -37,43 +47,53 @@ const FriendList = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText }) =
                 setFriendList(data);
             });
         }
-    },[userInfo]);
+    },[userInfo, socketData]);
 
     const onClickDeleteFriend = useCallback((friendId, nickname) => {
-        fetch("/friend/deleteFriend", {
-            method: "DELETE",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: userInfo.id,
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/deleteFriend", {
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    userId: userInfo.id,
                 friendId: friendId
-            })
-        });
-        setAlertSeverity("error");
-        setAlertText(<span><b>{nickname}</b> 님이 친구 목록에서 삭제되었습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(() => {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+               })
+            }).then(() => {
+                sendWebSocket();
+            });
+            setAlertSeverity("error");
+            setAlertText(<span><b>{nickname}</b> 님이 친구 목록에서 삭제되었습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(() => {
+                setBtnClick(false);
+                setOpenAlert(false);
+            }, 1500);
+        }
     });
 
     const onClickBlockFriend = useCallback((friendId, nickname) => {
-        fetch("/friend/blockFriend",{
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: userInfo.id,
-                friendId: friendId
-            })
-        })
-        setModalOpen(false);
-        setAlertSeverity("error");
-        setAlertText(<span><b>{nickname}</b> 님이 차단되었습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(() => {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/blockFriend",{
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    userId: userInfo.id,
+                    friendId: friendId
+               })
+            }).then(() => {
+                sendWebSocket();
+            });
+            setModalOpen(false);
+            setAlertSeverity("error");
+            setAlertText(<span><b>{nickname}</b> 님이 차단되었습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(() => {
+                setBtnClick(false);
+                setOpenAlert(false);
+            }, 1500);
+        }
     });
 
     return (
@@ -84,7 +104,15 @@ const FriendList = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText }) =
                     <div className={styles.contentDiv}>
                         <img src={friend.profileImgUrl} className={styles.profile}/>
                         <span className={styles.nickname}>{friend.nickname}</span>
-                        <BsSend className={styles.chatBtn} />
+                        <BsSend className={styles.chatBtn} 
+                                onClick={() => 
+                                    navigate("/userChat", 
+                                        {state: {
+                                                userInfo: userInfo 
+                                            }
+                                        }
+                                    )
+                        }/>
                         <BsPersonDash className={styles.deleteBtn} onClick={() => onClickDeleteFriend(friend.id, friend.nickname)}/>
                         <BsPersonSlash className={styles.blockBtn} onClick={() => setModalOpen(true)}/>
                         <Modal

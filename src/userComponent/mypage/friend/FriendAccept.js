@@ -8,9 +8,12 @@ const FriendAccept = ({
     formatDate,
     setOpenAlert,
     setAlertSeverity,
-    setAlertText
+    setAlertText,
+    socketData,
+    sendWebSocket
 }) => {
     const [friendList, setFriendList] = useState(null);
+    const [btnClick, setBtnClick] = useState(false);
 
     useEffect(() => {
         if(userInfo !== null){
@@ -29,42 +32,55 @@ const FriendAccept = ({
                 setFriendList(null);
             });
         }
-    },[userInfo]);
+    },[userInfo, socketData]);
 
     const onClickFriendRejection = useCallback((fromUserId, nickname) => {
-        fetch("/friend/friendRejection", {
-            method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: userInfo.id,
-                fromUser: fromUserId
-            })
-        });
-        setAlertSeverity("error");
-        setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 거절되었습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(()=> {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/friendRejection", {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    userId: userInfo.id,
+                    fromUser: fromUserId
+                })
+            }).then(() => {
+                sendWebSocket();
+            });
+
+            setAlertSeverity("error");
+            setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 거절되었습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(()=> {
+                setOpenAlert(false);
+                setBtnClick(false);
+            }, 1500);
+        }
+
     });
 
     const onClickAcceptFriend = useCallback((fromUserId, nickname) => {
-        fetch("/friend/addFriend", {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                toUser: userInfo.id,
-                fromUser: fromUserId
-            })
-        });
-        setAlertSeverity("success");
-        setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 수락되었습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(()=> {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/addFriend", {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    toUser: userInfo.id,
+                    fromUser: fromUserId
+                })
+            }).then(() => {
+                sendWebSocket();
+            });
+            setAlertSeverity("success");
+            setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 수락되었습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(()=> {
+                setBtnClick(false);
+                setOpenAlert(false);
+            }, 1500);
+        }
+        
     });
 
     return (

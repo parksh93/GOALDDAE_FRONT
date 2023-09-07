@@ -5,81 +5,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment/moment";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
 import Loading from "../loading/Loading";
+import {useLocation} from 'react-router-dom'
 
 const UserChatMain = () => {
-  const [projectId, setProjectId] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [messagesLen, setMessagesLen] = useState(0);
-  const [channelId, setChannelId] = useState("");
-  const [channelName, setChannelName] = useState("");
   const [openRoomState, setOpenRoomState] = useState(false);
   const [openLoading, setOpenLoading] = useState(true);
+  const location = useLocation();
 
-  const ncloudchat = require("ncloudchat");
-  const nc = new ncloudchat.Chat();
-  useEffect(() => {
-    connect();
-  }, []);
-
-  const connect = async () => {
-    await nc.initialize(projectId);
-  };
-
-  const openChannelRoom = useCallback(async (channelId, channelName) => {
-    setChannelId(channelId);
-    setChannelName(channelName);
-
-    console.log("channelId : ", channelId);
-
-    // 처음 메시지 수신
-    setMessageList([]);
-    let offset = 0;
-    let per_page = 100;
-    const filter = { channel_id: channelId };
-    const sort = { created_at: 1 };
-    let option = { offset: offset, per_page: per_page };
-    
-    getMessages(filter, sort, option, channelId);
-
-    // const promise = nc.countUnread(channelId);
-    
-    // promise.then((appData) => {
-    //   if(appData.unread > 0){
-    //     offset += per_page;
-    //     per_page = appData.unread;
-    //     option = { offset: offset, per_page: per_page };
-
-    //     getMessages(filter, sort, option, channelId);
-    //   }
-    // });
-    
-    setOpenRoomState(true);
-  }, []);
-
-  const getMessages = async (filter, sort, option, channelId) => {
-    const messages = await nc.getMessages(filter, sort, option);
-
-    setMessagesLen(messages.totalCount);
-
-    for (const message of messages.edges) {
-      let sendDate = formatDate(message);
-
-      await nc.markRead(channelId, {
-        user_id: message.node.sender.id,
-        message_id: message.node.message_id,
-        sort_id: message.node.sort_id,
-      });
-
-      setMessageList((messageList) => [
-        ...messageList,
-        {
-          node: message.node,
-          sendDate: sendDate,
-        },
-      ]);
-    }
-    setOpenLoading(false);
-  };
+  const {userInfo} = location.state;
 
   // 문자 보낸 시간 초기화
   const formatDate = (message) => {
@@ -108,9 +43,6 @@ const UserChatMain = () => {
     <div className={styles.chatMainContainer}>
       <div className={styles.chaList}>
         <UserChatList
-          projectId={projectId}
-          openChannelRoom={openChannelRoom}
-          setProjectId={setProjectId}
           setOpenLoading={setOpenLoading}
         />
       </div>
@@ -118,16 +50,6 @@ const UserChatMain = () => {
         {openRoomState === true ? (
           openLoading ? <Loading/> :
           <UserChatRoom
-            messageList={messageList}
-            messagesLen={messagesLen}
-            channelId={channelId}
-            channelName={channelName}
-            setMessagesLen={setMessagesLen}
-            setMessageList={setMessageList}
-            projectId={projectId}
-            getMessages={getMessages}
-            openRoomState={openRoomState}
-            setOpenRoomState={setOpenRoomState}
             formatDate={formatDate}
           />
         ) : (

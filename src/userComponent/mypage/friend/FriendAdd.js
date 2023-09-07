@@ -8,11 +8,14 @@ const FriendAdd = ({
     formatDate,
     setOpenAlert,
     setAlertSeverity,
-    setAlertText
+    setAlertText,
+    socketData,
+    sendWebSocket
 }) => {
     const [friendList, setFriendList] = useState(null);
     const [waitBtnText, setWaitBtnText] = useState("대기");
     const [noBtnText, setNoBtnText] = useState("거절");
+    const [btnClick, setBtnClick] = useState(false);
 
     useEffect(() => {
         if(userInfo !== null){
@@ -31,7 +34,7 @@ const FriendAdd = ({
                 setFriendList(null);
             });
         }
-    },[userInfo]);
+    },[userInfo, socketData]);
 
     const onMouseOverWaitBtn = useCallback(() => {
         setWaitBtnText("취소");
@@ -56,7 +59,6 @@ const FriendAdd = ({
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
-            window.location.reload();
         }, 1500);
     });
 
@@ -67,19 +69,24 @@ const FriendAdd = ({
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        }, 1500);   
     });
 
     const deleteFatch = useCallback(async (toUser) => {
-        await fetch("/friend/deleteFriendRequest",{
-            method: "DELETE",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                fromUser: userInfo.id,
-                toUser: toUser
-            })
-        });
+        setBtnClick(true);
+        if(!btnClick){ 
+            await fetch("/friend/deleteFriendRequest",{
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fromUser: userInfo.id,
+                    toUser: toUser
+                })
+            }).then(() => {
+                sendWebSocket();
+                setBtnClick(false);
+            });
+        }
     })
     return (
         <div className={styles.friendAcceptContainer}>

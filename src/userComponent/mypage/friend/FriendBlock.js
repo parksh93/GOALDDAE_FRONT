@@ -7,9 +7,12 @@ const FriendBlock = ({
     formatDate,
     setOpenAlert,
     setAlertSeverity,
-    setAlertText
+    setAlertText,
+    socketData,
+    sendWebSocket
 }) => {
     const [friendList, setFriendList] = useState(null);
+    const [btnClick, setBtnClick] = useState(false);
 
     useEffect(() => {
         if(userInfo !== null){
@@ -22,24 +25,29 @@ const FriendBlock = ({
                 setFriendList(null);
             });
         }
-    },[userInfo]);
+    },[userInfo, socketData]);
 
     const onClickUnblockFriend = useCallback((friendId, nickname) => {
-        fetch("/friend/unblockFriend",{
-            method: "DELETE",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: userInfo.id,
-                friendId: friendId
-            })
-        });
-        setAlertSeverity("success");
-        setAlertText(<span><b>{nickname}</b> 님의 차단이 해제되었습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(() => {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/unblockFriend",{
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    userId: userInfo.id,
+                    friendId: friendId
+                })
+            }).then(() => {
+                sendWebSocket();
+            });
+            setAlertSeverity("success");
+            setAlertText(<span><b>{nickname}</b> 님의 차단이 해제되었습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(() => {
+                setBtnClick(false);
+                setOpenAlert(false);
+            }, 1500);
+        }
     });
 
     return (

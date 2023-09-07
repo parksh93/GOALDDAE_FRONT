@@ -4,9 +4,16 @@ import {AiOutlineClose} from 'react-icons/ai'
 import {BsPersonAdd, BsPersonExclamation, BsSend, BsEmojiSmile} from 'react-icons/bs'
 import {Link} from 'react-router-dom'
 
-const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText }) => {
+const FriendSearch = ({
+    userInfo, 
+    setOpenAlert, 
+    setAlertSeverity, 
+    setAlertText,
+    sendWebSocket
+}) => {
     const [searchValue, setSearchValue] = useState('');
     const [searchResultList, setSearchResultList] = useState(null);
+    const [btnClick, setBtnClick] = useState(false);
 
     const onchangeSearchValue = useCallback(async e => {
         setSearchValue(e.target.value.trim());
@@ -33,22 +40,27 @@ const FriendSearch = ({userInfo, setOpenAlert, setAlertSeverity, setAlertText })
     }
 
     const onClickFriendAdd = (toUserId, nickname) => {
-        fetch("/friend/addFriendRequest", {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                toUser: toUserId,
-                fromUser: userInfo.id
-            })
-        });
-        setSearchValue("");
-        setAlertSeverity("success");
-        setAlertText(<span><b>{nickname}</b> 님에게 친구 요청을 보냈습니다.</span>);
-        setOpenAlert(true);
-        setTimeout(() => {
-            setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        setBtnClick(true);
+        if(!btnClick){
+            fetch("/friend/addFriendRequest", {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    toUser: toUserId,
+                    fromUser: userInfo.id
+                })
+            }).then(() => {
+                sendWebSocket();
+            });
+            setSearchValue("");
+            setAlertSeverity("success");
+            setAlertText(<span><b>{nickname}</b> 님에게 친구 요청을 보냈습니다.</span>);
+            setOpenAlert(true);
+            setTimeout(() => {
+                setBtnClick(false);
+                setOpenAlert(false);
+            }, 1500);
+        }
     }
 
     return (
