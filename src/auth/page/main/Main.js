@@ -4,6 +4,7 @@ import ImageSlide from './imageSlide/ImageSlide'
 import TimeLine from './timeLine/TimeLine';
 import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
+import Article from './article/Article';
 
 const Main = () => {
     return (
@@ -13,6 +14,7 @@ const Main = () => {
                 <ImageSlide />
                 <TimeLine />
                 <MatchListMoreDetails />
+                <Article />
             </div>
         </UserProvider>
     );
