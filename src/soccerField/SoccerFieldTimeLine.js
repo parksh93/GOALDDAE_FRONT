@@ -6,20 +6,39 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Box } from "@material-ui/core";
 import styles from './SoccerFieldTimeLine.module.css';
 import ReservationModal from "./ReservationModal";
+import { useUser } from "../userComponent/userContext/UserContext";
+import axios from "axios";
 
 const SoccerFieldTimeLine = (props) => {
+  const { userInfo } = useUser();
+
   const [dates, setDates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
-  const reservedTime = [8, 14, 18];
+  const [reservedTime, setReservedTime] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // props.fieldInfo에서 시작시간과 종료시간 추출
+  const startTimeStr = props.fieldInfo.operatingHours;
+  const closingTimeStr = props.fieldInfo.closingTime;
+
+  // 시작시간과 종료시간을 시간으로 변환
+  const openTime = parseInt((startTimeStr||'').split(":")[0]);
+  const closingTime = parseInt((closingTimeStr||'').split(":")[0]);
+
+
   const openModal = (time) => {
-    setSelectedTime(time); // 모달 열 때 선택된 시간 정보 설정
-    setIsModalOpen(true);
+
+    if(!userInfo){
+      alert("로그인 이후 이용 가능합니다.");
+      window.location.href = "/login";
+    } else{
+      setSelectedTime(time); // 모달 열 때 선택된 시간 정보 설정
+      setIsModalOpen(true);
+    }
   };
 
   const closeModal = () => setIsModalOpen(false);
@@ -40,12 +59,27 @@ const SoccerFieldTimeLine = (props) => {
         day,
       });
     }
-
     setDates(datesArray);
   };
 
   const handleDateClick = (date) => {
+    if(selectedDate === date){
+      setSelectedDate(null);
+      return;
+    }
+
     setSelectedDate(date);
+    const dateFormat = date.year*10000+date.month*100+date.date;
+    const fieldId = props.fieldInfo.id;
+
+    axios
+      .get(`/reservation/times?fieldId=${fieldId}&date=${dateFormat}`)
+      .then((response) => {
+        setReservedTime(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching reservation times:', error);
+      });
   };
 
   useEffect(() => {
@@ -105,15 +139,15 @@ const SoccerFieldTimeLine = (props) => {
         </div>
         {selectedDate && (
           <div>
-            {Array.from({ length: 8 }, (_, index) => {
-              const startTime = 6 + index * 2;
+            {Array.from({ length: (closingTime - openTime) / 2 }, (_, index) => {
+              const startTime = openTime + index * 2;
               const endTime = startTime + 2;
               const reservationFee = props.fieldInfo.reservationFee;
               const isReserved = reservedTime.includes(startTime); // 시간이 예약된 시간인지 확인
 
               return (
                 <div key={index}>
-                  {isReserved ? (
+                  {reservedTime && isReserved ? (
                     <div className={styles.reservedTime}>
                       {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
                     </div>
@@ -125,7 +159,6 @@ const SoccerFieldTimeLine = (props) => {
                         {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
                       </Link>     
                     </div>
-
                   )}
                 </div>
               );
@@ -138,6 +171,7 @@ const SoccerFieldTimeLine = (props) => {
           fieldInfo={props.fieldInfo}
           selectedDate={selectedDate}
           selectedTime={selectedTime}
+          userInfo={userInfo && userInfo}
         />
       </Box>
     </div>

@@ -6,16 +6,41 @@ import styles from "./SoccerField.module.css";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
+import axios from "axios";
 
 const ReservationModal = ( props ) => {
 
   const [headCount, setHeadCount] = useState(6);
   const [genderInfo, setGenderInfo] = useState("mixed");
+  const [level, setLevel] = useState("유망주");
 
   const handleChange = (event, newGenderInfo) => {
     setGenderInfo(newGenderInfo);
-    console.log(newGenderInfo);
   };
+
+  const handleReservation = () => {
+    const reservationData = {
+      reservedDate: props.selectedDate.year*10000+props.selectedDate.month*100+props.selectedDate.date,
+      startTime: props.selectedTime,
+      totalHours: 2,
+      soccerFieldId: props.fieldInfo.id,
+      userId: props.userInfo.id,
+      playerNumber: headCount,
+      gender: genderInfo,
+      level: level
+    };
+
+    axios.post('/reservation/create', reservationData)
+      .then((response) => {
+        console.log('성공적으로 예약되었습니다:', response.data);
+        window.location.href = `/soccer_field/${props.fieldInfo.id}`;
+      })
+      .catch((error) => {
+        console.error('예약 중 에러 발생:', error);
+      });
+      console.log(reservationData)
+  };
+
 
   const style = {
       position: "absolute",
@@ -23,7 +48,7 @@ const ReservationModal = ( props ) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: 400,
-      height: 600,
+      height: 650,
       bgcolor: "background.paper",
       border: "2px solid #444",
       boxShadow: 24,
@@ -95,11 +120,26 @@ const ReservationModal = ( props ) => {
               value={headCount}
               onChange={(e) => e.target.value > -1 ? setHeadCount(e.target.value) : setHeadCount(0)}
             />
+
+            <div className={styles.modalInfoText}>
+              레벨
+            </div>
+
+            <TextField
+              color="success"
+              id="standard-number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+            />
             <hr className={styles.separator}/>
             <Payment
                   fieldId={props.fieldInfo.id}
                   fieldName={props.fieldInfo.fieldName}
                   reservationFee={props.fieldInfo.reservationFee}
+                  handleReservation={handleReservation}
                 />
           </Box>
         </Modal>

@@ -24,6 +24,12 @@ const SoccerFieldMain = () => {
 
   const off = { color : "#aaaaaa", marginBottom : "-3px"};
 
+  const timeFormat = (time) => {
+    if(time){
+      return time.substring(0, 5);
+    }
+  }
+
   return (
     <div style={{backgroundColor:"#F5F5F5"}}>
       <div className={styles.container}>
@@ -42,6 +48,10 @@ const SoccerFieldMain = () => {
                 </div>
                 <div className={styles.info}>
                   <h3>시설 이용 정보</h3>
+                  <div>
+                   <span className={styles.on}> 영업시간 : {timeFormat(fieldInfo.operatingHours)} ~ {timeFormat(fieldInfo.closingTime)}</span>
+                  </div>
+                  <br/>
                   <div>
                     {fieldInfo.parkingStatus ?
                   <>
@@ -74,7 +84,7 @@ const SoccerFieldMain = () => {
                   </div>
                   <hr className={styles.separator}/>
                   <h3>시설 특이사항</h3>
-                  <div>엘렐레</div>
+                  <div>{fieldInfo.content && fieldInfo.content}</div>
                 </div>                            
               </div>
               <div className={styles.reservationContainer}>
