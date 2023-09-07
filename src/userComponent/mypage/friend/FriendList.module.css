@@ -1,0 +1,75 @@
+.friendListContainer *{
+    vertical-align: middle;
+}
+
+.friendListContainer {
+    width: 100%;
+}
+
+.contentDiv {
+    width: 100%;
+}
+
+.noFriendList{
+    color: gray;
+    margin-left: 20px;
+}
+
+.profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nickAndLevelDiv {
+    display: inline-block;
+}
+
+.nickname {
+    font-size: 17px;
+    /* font-weight: 600; */
+}
+
+.chatBtn {
+    font-size: 22px;
+    margin-left:70%;
+    /* float: right; */
+    color:gray;
+    margin-top: 3px;
+} 
+
+.chatBtn:hover {
+    color: rgb(13, 121, 4);
+}
+
+.deleteBtn {
+    margin-left: 10px;
+    font-size: 22px;
+    color:gray;
+}
+
+.deleteBtn:hover {
+    color: black;
+}
+
+.blockBtn{
+    /* float: right; */
+    margin-left: 10px;
+    font-size: 22px;
+    color:gray;
+}
+
+.blockBtn:hover {
+    color: red;
+}
+
+.blockOkBtn, .blockNoBtn {
+    background: none;
+    color: black;
+    font-size: 15px;
+}
+
+.blockOkBtn:hover, .blockNoBtn:hover {
+    color: lightgray;
+}
