@@ -74,7 +74,6 @@ const MyTeamDetail = () => {
             >
               팀 정보
             </button>
-
             <button
               className={`${styles.myTeamRecentMatchFilter} ${selectedTab === 'recentMatch' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('recentMatch')}
@@ -88,7 +87,6 @@ const MyTeamDetail = () => {
             >
               예약 매치
             </button>
-
             <button
               className={`${styles.myTeamMemberFilter} ${selectedTab === 'members' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('members')}

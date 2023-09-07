@@ -15,9 +15,17 @@ const BoardDetailPage = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.id !== null) {
+<<<<<<< HEAD
       // 글 상세정보를 가져오는 요청
       axios.get(`/board/detail/${id}`).then((response) => {
         setBoardDetail(response.data);
+=======
+      console.log(userInfo);
+      // 글 상세정보를 가져오는 요청
+      axios.get(`/board/detail/${id}`).then((response) => {
+        setBoardDetail(response.data);
+        console.log(response.data)
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
       });
     }
   }, [id, userInfo]);

@@ -27,8 +27,13 @@ const LoginInfo = () => {
   },[]);
   
   return (
+<<<<<<< HEAD
     <div className={styles.container}>
       {userInfo === null ? (
+=======
+    <>
+      {userInfo === "" ? (
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
         <div className={styles.btnContainer}>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <button className={buttonStyles.button}>로그인</button>
@@ -38,7 +43,11 @@ const LoginInfo = () => {
           </Link>
         </div>
       ) : (
+<<<<<<< HEAD
           <div className={styles.userInfoContainer}>
+=======
+          <div>
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
             <img src={userInfo.profileImgUrl} className={styles.profileImg} />
             <HtmlTooltip
               title={
@@ -53,7 +62,11 @@ const LoginInfo = () => {
             </HtmlTooltip>
           </div>
         )}
+<<<<<<< HEAD
       </div>
+=======
+      </>
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
   );
 };
 

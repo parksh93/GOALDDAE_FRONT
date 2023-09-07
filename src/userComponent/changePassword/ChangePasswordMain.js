@@ -20,15 +20,23 @@ function ChangeLostPasswordMain() {
   const onClick = () => {
     if(passwordOk) {
       fetch("/user/changePassword",{
+<<<<<<< HEAD
         method: "PATCH",
+=======
+        method: "POST",
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           password: password
         })
+<<<<<<< HEAD
       })
       .then((res) => res.json())
+=======
+      }).then((res) => res.json())
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
       .then(data => {
         if(data[0] === false){
           window.scrollTo({
@@ -44,7 +52,11 @@ function ChangeLostPasswordMain() {
             navigate("/find/2")
           }, 2000);
         }else{
+<<<<<<< HEAD
           navigate("/");
+=======
+          navigate("/login");
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
         }
       });
     }else{

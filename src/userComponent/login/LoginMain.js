@@ -36,6 +36,7 @@ const UserLogin = () => {
         loginId: loginId,
         password: password,
       }),
+<<<<<<< HEAD
     }).then(res => res.json())
     .then(data => {
       if (data === true) {
@@ -43,6 +44,14 @@ const UserLogin = () => {
         navigate(-1);
       }
     }).catch(() => {     
+=======
+    });
+
+    const data = await response.json();
+    if (data === true) {
+      navigate(-1);
+    } else {
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
       window.scrollTo({
         top: 0,
         behavior: "smooth",

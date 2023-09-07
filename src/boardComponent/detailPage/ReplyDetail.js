@@ -11,14 +11,20 @@ import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReportIcon from '@mui/icons-material/Report';
+<<<<<<< HEAD
 import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 
 const ReplyDetail = ({ boardDetail, userInfo }) => {
 
     const [newReplyContent, setNewReplyContent] = useState("");
     const [newReplyParentId, setNewReplyParentId] = useState(0);
     const [replyList, setReplyList] = useState([]);
+<<<<<<< HEAD
     const [replyCount, setReplyCount] = useState(0);
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedCommentContent, setEditedCommentContent] = useState("");
     const [reportReason] = React.useState("");
@@ -26,7 +32,10 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
     useEffect(() => {   
         axios.get(`/reply/list/${boardDetail.id}`).then((response) => {
             setReplyList(response.data.replies);
+<<<<<<< HEAD
             setReplyCount(response.data.count);
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
         })
         .catch(() => {
         });
@@ -47,7 +56,10 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
           // 댓글 작성 완료 후 댓글 목록을 다시 불러옴
           axios.get(`/reply/list/${boardDetail.id}`).then((response) => {
             setReplyList(response.data.replies);
+<<<<<<< HEAD
             setReplyCount(response.data.count);
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
           });
     
           // 댓글 작성 내용 초기화
@@ -62,7 +74,10 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
           // 댓글 수정 후 댓글 목록을 다시 불러옴
           axios.get(`/reply/list/${boardDetail.id}`).then((response) => {
             setReplyList(response.data.replies);
+<<<<<<< HEAD
             setReplyCount(response.data.count);
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
           });
           setEditingCommentId(null);
           setEditedCommentContent("");
@@ -77,7 +92,10 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
           // 댓글 삭제 후 댓글 목록을 다시 불러옴
           axios.get(`/reply/list/${boardDetail.id}`).then((response) => {
             setReplyList(response.data.replies);
+<<<<<<< HEAD
             setReplyCount(response.data.count);
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
           });
         });
         }
@@ -115,7 +133,11 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
       return (
         <div>
           <br/>
+<<<<<<< HEAD
           <h3><TextsmsOutlinedIcon sx={{color : grey[800], marginBottom : "-4px", marginRight : "8px"}} />댓글 {replyCount}개</h3>                 
+=======
+          <h3>댓글 목록</h3>                 
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
           {replyList.map((reply) => (
             <div key={reply.id}>              
               {reply.status === 1
@@ -229,7 +251,10 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                       <td colSpan="3" className={styles.replyContent}>{child.content}</td>
                     </tr>        
                     </table>
+<<<<<<< HEAD
                     {/* 답글 수정 폼 */}
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
                     {editingCommentId === child.id && (
                         <div>
                           <tr>

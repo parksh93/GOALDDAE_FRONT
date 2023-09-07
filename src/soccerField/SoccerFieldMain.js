@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+<<<<<<< HEAD
 import Payment from "../payment/Payment";
+=======
+import Payment from "../paument/Payment";
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 import styles from "./SoccerField.module.css";
 
 const SoccerFieldMain = () => {

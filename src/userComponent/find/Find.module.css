@@ -1,8 +1,13 @@
 .logo {
+<<<<<<< HEAD
     width: auto;
     height: 80px;
     margin-top: 20px;
     margin-bottom: 30px;
+=======
+    width: 200px;
+    height: 200px;
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }
 
 .logoSection{
@@ -16,12 +21,19 @@
 
 .findIdBtn, .findPwBtn {
     font-size: 15px;
+<<<<<<< HEAD
     margin-right: 20px;
+=======
+    margin-left: 20px;
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
     font-weight: 100;
 }
 .mainSession{
     margin-left: 35%;
+<<<<<<< HEAD
     margin-bottom: 50px;
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }
 
 .inputFindLoginId {

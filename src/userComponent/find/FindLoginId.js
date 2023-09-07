@@ -161,7 +161,11 @@ const FindLoginId = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCont
               variant="outlined"
               type="text"
               color="success"
+<<<<<<< HEAD
               className={styles.inputFindLoginId}
+=======
+              className={styles.input}
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
               value={certificationcodeCheck}
               onChange={onChangCertificationCodeCheck}
               style={{marginTop: '20px'}}

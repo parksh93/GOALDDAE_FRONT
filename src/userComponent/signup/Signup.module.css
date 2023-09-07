@@ -134,6 +134,7 @@ ul {
 .essential {
     color:red;
     font-size: 15px;
+<<<<<<< HEAD
 }
 
 .modalLabel {
@@ -147,4 +148,6 @@ ul {
 
 .acivityRang {
     color: green;
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }

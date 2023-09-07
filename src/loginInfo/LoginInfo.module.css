@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container{
   display: inline-block;
   float: right;
@@ -16,16 +17,40 @@
     transition-duration: 0.4s;
     border-radius: 10px;
     font-weight: 600;
+=======
+.button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
   }
   
   .btnContainer {
     display: flex;
+<<<<<<< HEAD
     /* gap: 5px; */
     margin-right: 25px;
   }
   
   .button:hover {
     color: black;
+=======
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .button:hover {
+    background-color: #367b3f;
+    color: white;
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
   }
   
 .profileImg {
@@ -33,14 +58,21 @@
   width: 35px;
   height: 35px;
   margin-right: 5px;
+<<<<<<< HEAD
   /* border: 1px solid lightgray; */
+=======
+  border: 1px solid black;
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }
 
 .userNickname {
     display: inline;
+<<<<<<< HEAD
     margin-right: 50px;
     font-size: 18px;
     font-weight: 600;
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }
 
 /* 768px 이하 화면 크기에 대한 반응형 스타일 */
@@ -49,11 +81,16 @@
       font-size: 14px;
       padding: 4px 4px;
       margin: 4px 4px;
+<<<<<<< HEAD
       width: 100%; 
+=======
+      width: 100%; /* 화면에 꽉 차도록 버튼 너비를 100%로 설정합니다. */
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
     }
   
     .btnContainer {
       flex-wrap: wrap;
+<<<<<<< HEAD
       gap: 0.5rem; 
       justify-content: space-around; 
     }
@@ -72,3 +109,12 @@
      text-decoration: none;
       color: lightgray;
    }
+=======
+      gap: 0.5rem; /* 버튼 사이의 수직 간격을 좀 더 줄입니다. */
+      justify-content: space-around; /* 버튼 사이의 수평 간격이 상하좌우에서 동일하게 설정되도록 변경합니다. */
+    }
+  }
+  
+  
+  
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9

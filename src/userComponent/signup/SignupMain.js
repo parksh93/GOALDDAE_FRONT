@@ -130,7 +130,7 @@ const SignupMain = () => {
         }),
       }).then(() => {
         setModalOpen(false);
-        navigate("/")
+        navigate("/login")
       });
     }
   },[signOk])

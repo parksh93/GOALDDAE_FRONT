@@ -5,6 +5,10 @@
   height: 1200px;
   flex-direction: column;
   background: #f8f6f6;
+<<<<<<< HEAD
+=======
+  
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 }
 
 .user-cards-wrapper {
@@ -28,6 +32,7 @@
     position: relative;
   }
   .user-card-1 img{border-radius: 50%; width: 210px; height: 210px; position: absolute; top: 17%; left:7%;}
+<<<<<<< HEAD
 
   .profileImg-edit {
     display:block;
@@ -57,6 +62,8 @@
   background: #b6b6b6;
  }
 
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
   .userInfo span{
     font-weight: bold;
   }
@@ -130,6 +137,7 @@
     margin: auto;
     margin-top: 50px;
   }
+<<<<<<< HEAD
   .buttons-modify{
     display: flex;
     margin-bottom: 100px;
@@ -137,6 +145,8 @@
     margin-top: 50px;
     margin-left: 8px;
   }
+=======
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
 
   .button-cancle {
     width: 120px;
@@ -189,6 +199,7 @@
     flex-direction: column;
     justify-content: center;
     width: 700px;
+<<<<<<< HEAD
     height: 700px;
     padding: 6em;
     background-color: #fff;
@@ -246,3 +257,15 @@
   }
 
  
+=======
+    height: 600px;
+    padding: 2em;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+    margin-bottom: 30px;
+    position: relative;
+    margin: auto;
+    padding-left: 400px;
+    margin-top: 80px;
+  }
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9

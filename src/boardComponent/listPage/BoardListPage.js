@@ -31,6 +31,10 @@ function BoardListPage() {
     axios.get(`/board/list?type=${type}&name=${name}&page=${page}`).then((response) => {
       setPageData(response.data);
       setTotalPageNum(response.data.pageInfo.totalPages)
+<<<<<<< HEAD
+=======
+      console.log(response.data)
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
     });
   }, [searchParams]);
 

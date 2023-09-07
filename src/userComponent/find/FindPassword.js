@@ -47,7 +47,11 @@ const FindPassword = ({ styles, setSeverity, setOpen, setAlertTitle, setAlertCon
           })
         }).then(res => res.json())
         .then(data => {
+<<<<<<< HEAD
           if(data[0]){
+=======
+          if(data[0] !== ""){
+>>>>>>> d9c6addfee5f1a2cefad91dd019f1d30449d61a9
               axios.post(`/sendEmailChangePassword`,{
                   loginId: loginId,
                   email: email,
