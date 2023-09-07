@@ -30,7 +30,7 @@ const MyTeam = () => {
   };
 
   const wrapTeamSave = () => {
-    navigate(`/team/save`)  
+    navigate(`/admin/team/save`)  
   }
 
   const handleMyTeamClick = (id, tabName) => {
@@ -51,7 +51,7 @@ const MyTeam = () => {
                     <div className={styles.teamCircularImageContainer}>
                         <div className={styles.teamCircularImage}>
                           <img className={styles.teamProfileImgUrl} 
-                          src="/img/kirby-game-wallpaper-2880x1800_8.jpg" 
+                          src="/img/Yorkshire-Terrier-glasses-fluffy-wind-5120x3414.jpg" 
                           alt={teamInfo.teamName} />
                         </div>
                     </div>

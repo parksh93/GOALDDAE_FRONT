@@ -162,8 +162,8 @@ return (
                                 dropDownItemIndex === dropDownIndex ? 'selected' : ''
                             }
                         >
-                        {dropDownItem.teamName}
-                    </li>
+                            {dropDownItem.teamName}
+                        </li>
                     )
                 })}
             </ul>

@@ -130,8 +130,7 @@ const TeamList = ({}) => {
     };
 
     return (
-        <div>
-            <MyTeam /> 
+        <div className={styles.teamListBody}>
             <div className={styles.filtes}>
                 <select className={styles.areaFilter} value={selectedArea} onChange={handleAreaChange}>
                     {areaOptions.map(option => (
@@ -143,7 +142,6 @@ const TeamList = ({}) => {
                     <option value="recruiting">모집중 팀</option>
                 </select>
                     <TeamSearch /> 
-                   
             </div>
             {teamList.map((team) => (
                 <div className={styles.teamCard} key={team.id} onClick={() => handleTeamClick(team.id)}>
@@ -166,8 +164,11 @@ const TeamList = ({}) => {
             </div>
             ))}
             <div className={styles.loading}>
-                {isLoading && <h3>불러오는 중...</h3>}
-                {noNewData && <h3>해당하는 팀이 없습니다.</h3>}
+                {isLoading ? ( 
+                    <h3>불러오는 중...</h3>
+                ) : (
+                    noNewData && <h3>팀 데이터가 없습니다.</h3>
+                )}
             </div>
         </div>
     );

@@ -1,3 +1,7 @@
+.teamDetailBody{
+    background-color: #f8f6f6;
+}
+
 /* detail */
 .applyButton{
     background-color: green;
@@ -46,11 +50,17 @@
     flex-direction: column;
     gap: 10px;
     border-radius: 5px;
-    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+    box-shadow: 0 3px 3px rgba(234, 234, 234, 0.3);
+    background-color: white;
+
 }
   
 .teamInfo1{
     padding-left: 15px;
+}
+
+.teamInfoText{
+    
 }
 
 .teamIntroduce {
@@ -60,15 +70,21 @@
     flex-grow: 1;
     font-size: 20px;
     border-radius: 5px;
-    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
     max-height: 1000px;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out;
+    background-color: white;
+
 }
 
 .teamIntroduceContent.expanded {
     max-height: none;
     overflow: auto;
+}
+
+.noTeamIntroduce{
+    color: slategray;
 }
 
 .recruitingBtn{
@@ -81,8 +97,8 @@
     color: #fff;
     border: 1px solid green;
     transition: background-color 0.3s;
-    width: 320px;
-    height: 50px;
+    width: 95%;
+    height: 150%;
     border-radius: 3px;
     cursor: pointer;
 }
@@ -96,8 +112,10 @@
     width: 320px;
     height: 50px;
     border-radius: 3px;
+
+    background-color: #cccccc;
+
 }
-  
 /* 가입신청 모달 */
 .teamName{
     font-Weight: bold;
@@ -184,7 +202,9 @@
     display: flex;
     gap: 10px;
     margin: 0 auto;
+    margin-bottom: 60px;
     padding: 30px;
+    
 }
 
 .myTeamLeftContainer {
@@ -233,7 +253,7 @@
     margin: 30px;
 }
 
-.myTeamInfoFilter, .myTeamRecentMatchFilter, .myTeamReservMatchFilter, .myTeamMemberFilter{
+.myTeamInfoFilter, .myTeamRecentMatchFilter, .myTeamReservMatchFilter, .myTeamMemberFilter, .myTeamApplyListFilter{
     background-color: #ffffff;
     color: #000000;
     margin-right: 2px;
@@ -246,20 +266,23 @@
     font-weight: bold;
 }
 
-.myTeamInfoBox, .myTeamRecentMatch, .myTeamReservMatch, .myTeamMembers{
+.myTeamInfoBox, .myTeamRecentMatch, .myTeamReservMatch, .myTeamMembers, .myTeamApplyListFilter{
     padding-bottom: 20px;
 }
 
 .teamDetailUpdateBtn{
     background-color: green;
     color: #fff;
+
     margin-top: 20px;
+
     cursor: pointer;
     border-radius: 5px;
     border: 2px green;
     width: 455px;
     height: 50px;
-    font-size: 15px;
+    font-size: 16px;
+    
 }
 
 .teamDetailUpdateBtn:hover{

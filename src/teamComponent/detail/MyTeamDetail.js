@@ -13,7 +13,7 @@ const MyTeamDetail = () => {
     const { tabName } = useParams();
 
     useEffect(() => {
-      if (['info', 'recentMatch', 'reservMatch', 'members'].includes(tabName)) {
+      if (['info', 'recentMatch', 'reservMatch', 'members', 'applyList'].includes(tabName)) {
         setSelectedTab(tabName);
       }
     }, [tabName]);
@@ -39,7 +39,7 @@ const MyTeamDetail = () => {
   return (
     <div>
         {error ? (
-        <p>존재하지 않는 팀입니다.</p>
+        <p>가입한 팀을 확인할 수 없습니다.</p>
         ) : teamInfo ? (
       <div className={styles.myTeamContainer}>
         <div className={styles.myTeamLeftContainer}>
@@ -53,10 +53,10 @@ const MyTeamDetail = () => {
                 {teamInfo.teamName}
               </h2>
               <div className={styles.myTeamInfo}>
-                <p>지역: {teamInfo.area}</p>
-                <p>평균나이: {teamInfo.averageAge}</p>
-                <p>입단비: {teamInfo.entryfee}</p>
-                <p>입단성별: {teamInfo.entryGender}</p>
+                <p>지역 | {teamInfo.area}</p>
+                <p>평균나이 | {teamInfo.averageAge} 세</p>
+                <p>입단비 | {teamInfo.entryfee} 원</p>
+                <p>입단성별 | {teamInfo.entryGender}</p>
               </div>               
           </div>
             <div>
@@ -74,35 +74,46 @@ const MyTeamDetail = () => {
             >
               팀 정보
             </button>
+
             <button
               className={`${styles.myTeamRecentMatchFilter} ${selectedTab === 'recentMatch' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('recentMatch')}
             >
               매치 내역
             </button>
+            
             <button
               className={`${styles.myTeamReservMatchFilter} ${selectedTab === 'reservMatch' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('reservMatch')}
             >
               예약 매치
             </button>
+
             <button
               className={`${styles.myTeamMemberFilter} ${selectedTab === 'members' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('members')}
             >
               팀원
             </button>
+           
+            <button
+              className={`${styles.myTeamApplyListFilter} ${selectedTab === 'applyList' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('applyList')}
+            >
+              가입신청
+            </button>
+
           </div>
           <div className={styles.myTeamBox}>
             {selectedTab === 'info' && (
               <div className={styles.myTeamInfoBox}>
-                <p>지역: {teamInfo.area}</p>
-                <p>평균나이: {teamInfo.averageAge}</p>
-                <p>입단비: {teamInfo.entryfee}</p>
-                <p>입단성별: {teamInfo.entryGender}</p>
-                <p>선호시간: {teamInfo.preferredTime}</p>
-                <p>선호요일: {teamInfo.preferredDay}</p>
-                <p>모집여부: {teamInfo.recruiting ? ' 모집중' : ' 모집종료'}</p>
+                <p>지역 | {teamInfo.area}</p>
+                <p>평균나이 | {teamInfo.averageAge} 세</p>
+                <p>입단비 | {teamInfo.entryfee} 원</p>
+                <p>입단성별 | {teamInfo.entryGender}</p>
+                <p>선호시간 | {teamInfo.preferredTime} 시</p>
+                <p>선호요일 | {teamInfo.preferredDay}</p>
+                <p>모집여부 | {teamInfo.recruiting ? ' 모집중' : ' 모집종료'}</p>
                 <pre className={styles.myTeamIntroduce}>
                   {teamInfo.teamIntroduce}
                 </pre>
@@ -121,6 +132,11 @@ const MyTeamDetail = () => {
             {selectedTab === 'members' && (
               <div className={styles.myTeamMembers}>
                 등록된 팀원이 없습니다.
+              </div>
+            )}
+            {selectedTab === 'applyList' && (
+              <div className={styles.myTeamApplyList}>
+                대기중인 가입신청이 없습니다.
               </div>
             )}
           </div>

@@ -23,6 +23,7 @@ import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
+import TeamMatchResult from './auth/page/admin/tableTeam/TeamMatchResultTable';
 
 const App = () => {
   return (
@@ -48,11 +49,15 @@ const App = () => {
               <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
               <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
-
-              <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+              
               <Route path='/team/list' element={<TeamMain/>}/>
               <Route path='/team/detail/:id' element={<TeamDetail />} />
               <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
+
+              <Route path='/admin/team/save' element={<TeamSaveTable/>} />
+              <Route path='/admin/teamMatchResult/save' element={<TeamMatchResult />} />
+              <></>
+              
             </Routes>
         <Footer/> 
       </>

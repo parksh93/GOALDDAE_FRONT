@@ -43,7 +43,7 @@ const TeamDetail = () => {
   };
 
   return (
-    <div>
+    <div className={styles.teamDetailBody}>
       {error ? (
         <p>존재하지 않는 팀입니다.</p>
       ) : teamInfo ? (
@@ -58,12 +58,12 @@ const TeamDetail = () => {
               </div>
                 {teamInfo.teamName}
               </h2>
-                <p>지역: {teamInfo.area}</p>
-                <p>평균나이: {teamInfo.averageAge}</p>
-                <p>입단비: {teamInfo.entryfee}</p>
-                <p>입단성별: {teamInfo.entryGender}</p>
-                <p>선호시간 : {teamInfo.preferredTime}</p>
-                <p>선호요일: {teamInfo.preferredDay}</p>
+                <p className={styles.teamInfoText}>지역 | {teamInfo.area}</p>
+                <p className={styles.teamInfoText}>평균나이 | {teamInfo.averageAge} 세</p>
+                <p className={styles.teamInfoText}>입단비 | {teamInfo.entryfee} 원</p>
+                <p className={styles.teamInfoText}>입단성별 | {teamInfo.entryGender}</p>
+                <p className={styles.teamInfoText}>선호시간 | {teamInfo.preferredTime} 시</p>
+                <p className={styles.teamInfoText}>선호요일 | {teamInfo.preferredDay}</p>
               </div>
                 <div className={styles.recruitingBtn}>
                   {teamInfo.recruiting ? (
@@ -79,13 +79,17 @@ const TeamDetail = () => {
           </div>
 
           <div className={styles.teamIntroduce}>
-            <pre
-              className={`${styles.teamIntroduceContent} ${
-                isModalOpen || successModalOpen ? styles.expanded : ''
-              }`}
-              >
-              {teamInfo.teamIntroduce}
-            </pre>
+            {teamInfo.teamIntroduce !== null ? (
+              <pre
+                className={`${styles.teamIntroduceContent} ${
+                  isModalOpen || successModalOpen ? styles.expanded : ''
+                }`}
+                >
+                {teamInfo.teamIntroduce}
+              </pre>
+            ) : (
+              <p className={styles.noTeamIntroduce}> 팀 소개글이 없습니다. </p>
+            )}
           </div>
 
           {/* Modal */}
