@@ -12,11 +12,23 @@ const ReservationModal = ( props ) => {
 
   const [headCount, setHeadCount] = useState(6);
   const [genderInfo, setGenderInfo] = useState("mixed");
+  const [teamInfo, setTeamInfo] = useState("individual");
   const [level, setLevel] = useState("유망주");
 
+  const [teamId, setTeamId] = useState(-1);
+
   const handleChange = (event, newGenderInfo) => {
-    setGenderInfo(newGenderInfo);
+    if(newGenderInfo){
+      setGenderInfo(newGenderInfo);
+    }
   };
+
+  const handleTeamInfoChange = (event, newTeamInfo) => {
+    if(newTeamInfo !== null){
+      setTeamInfo(newTeamInfo);
+      setTeamId(newTeamInfo === "individual" ? -1 : props.userInfo.teamId);
+    }
+  }
 
   const handleReservation = () => {
     const reservationData = {
@@ -27,7 +39,8 @@ const ReservationModal = ( props ) => {
       userId: props.userInfo.id,
       playerNumber: headCount,
       gender: genderInfo,
-      level: level
+      level: level,
+      teamId: teamId,
     };
 
     axios.post('/reservation/create', reservationData)
@@ -48,7 +61,7 @@ const ReservationModal = ( props ) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: 400,
-      height: 650,
+      height: 640,
       bgcolor: "background.paper",
       border: "2px solid #444",
       boxShadow: 24,
@@ -90,21 +103,49 @@ const ReservationModal = ( props ) => {
               <div>
               </div>
             }
-            <div className={styles.modalInfoText}>
-              성별 제한
-            </div>
+            <div className={styles.flexContainer}>
+              <div>
+                <div className={styles.modalInfoText}>
+                  매치 선택
+                </div>
+                <ToggleButtonGroup
+                  color="success"
+                  value={teamInfo}
+                  exclusive
+                  onChange={handleTeamInfoChange}
+                  aria-label="Match Type"
+                >
+                  <ToggleButton value="individual">
+                    개인매치
+                  </ToggleButton>
+                  {props.userInfo && props.userInfo.teamId === -1 ?
+                  <ToggleButton value="team" disabled>
+                    팀매치
+                  </ToggleButton> :
+                  <ToggleButton value="team">
+                    팀매치
+                  </ToggleButton> }
+                </ToggleButtonGroup>    
+              </div>
+              <div className={styles.buttonContainer}></div>
+              <div>
+                <div className={styles.modalInfoText}>
+                  성별 제한
+                </div>
 
-            <ToggleButtonGroup
-              color="success"
-              value={genderInfo}
-              exclusive
-              onChange={handleChange}
-              aria-label="Gender"
-            >
-              <ToggleButton value="mixed">혼성</ToggleButton>
-              <ToggleButton value="man">남성</ToggleButton>
-              <ToggleButton value="woman">여성</ToggleButton>
-            </ToggleButtonGroup>          
+                <ToggleButtonGroup
+                  color="success"
+                  value={genderInfo}
+                  exclusive
+                  onChange={handleChange}
+                  aria-label="Gender"
+                >
+                  <ToggleButton value="mixed">혼성</ToggleButton>
+                  <ToggleButton value="man">남성</ToggleButton>
+                  <ToggleButton value="woman">여성</ToggleButton>
+                </ToggleButtonGroup>                  
+              </div>           
+            </div> 
 
             <div className={styles.modalInfoText}>
               인원 제한

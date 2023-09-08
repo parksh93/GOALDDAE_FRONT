@@ -16,7 +16,6 @@ const SoccerFieldMain = () => {
       .then((res) => res.json())
       .then((data) => {
         setFieldInfo(data)
-        console.log(data)
       });
   }, [fieldId]);
 
