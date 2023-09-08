@@ -6,6 +6,8 @@ import moment from "moment/moment";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
 import Loading from "../loading/Loading";
 import {useLocation} from 'react-router-dom'
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 const UserChatMain = () => {
   const [messageList, setMessageList] = useState([]);
@@ -15,6 +17,25 @@ const UserChatMain = () => {
   const location = useLocation();
 
   const {userInfo} = location.state;
+
+  // const Stomp = require('stompjs');
+  const sock = new SockJS("http://localhost:8080/chat")
+  let client = Stomp.over(sock) ;
+  
+  useEffect(() => {
+    client.connect({}, () => {
+      console.log("connected : " + userInfo.id)
+      client.send("/app/join", {}, JSON.stringify(userInfo.id))
+
+      // client.send(`/app/chat/${1}`, {}, JSON.stringify())
+
+      // client.subscibe("/queue/addChatToClient/" + userInfo.id, function(messageDTO) {
+      //   const message = JSON.parse(messageDTO.body);
+      //   console.log(message);
+      // })
+    })
+    return () => client.disconnect();
+  },[client, userInfo.id]);
 
   // 문자 보낸 시간 초기화
   const formatDate = (message) => {

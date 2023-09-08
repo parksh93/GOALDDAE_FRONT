@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
-import useWebSocket from '../../../webSocket/UseWebSocket';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -26,7 +26,8 @@ const FriendList = ({
     setAlertSeverity, 
     setAlertText,
     socketData,
-    sendWebSocket
+    sendWebSocket,
+    client
 }) => {
     const [friendList, setFriendList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -58,9 +59,9 @@ const FriendList = ({
                 body: JSON.stringify({
                     userId: userInfo.id,
                 friendId: friendId
-               })
-            }).then(() => {
-                sendWebSocket();
+            })
+        }).then(() => {
+                sendWebSocket(friendId);
             });
             setAlertSeverity("error");
             setAlertText(<span><b>{nickname}</b> 님이 친구 목록에서 삭제되었습니다.</span>);
@@ -83,7 +84,7 @@ const FriendList = ({
                     friendId: friendId
                })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(friendId);
             });
             setModalOpen(false);
             setAlertSeverity("error");

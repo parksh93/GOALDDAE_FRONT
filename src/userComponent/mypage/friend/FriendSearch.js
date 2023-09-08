@@ -50,7 +50,7 @@ const FriendSearch = ({
                     fromUser: userInfo.id
                 })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(toUserId);
             });
             setSearchValue("");
             setAlertSeverity("success");

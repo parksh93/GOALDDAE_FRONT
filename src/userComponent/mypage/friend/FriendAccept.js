@@ -45,7 +45,7 @@ const FriendAccept = ({
                     fromUser: fromUserId
                 })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(fromUserId);
             });
 
             setAlertSeverity("error");
@@ -70,7 +70,7 @@ const FriendAccept = ({
                     fromUser: fromUserId
                 })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(fromUserId);
             });
             setAlertSeverity("success");
             setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 수락되었습니다.</span>);

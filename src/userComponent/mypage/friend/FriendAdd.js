@@ -83,7 +83,7 @@ const FriendAdd = ({
                     toUser: toUser
                 })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(toUser);
                 setBtnClick(false);
             });
         }

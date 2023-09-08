@@ -38,7 +38,7 @@ const FriendBlock = ({
                     friendId: friendId
                 })
             }).then(() => {
-                sendWebSocket();
+                sendWebSocket(friendId);
             });
             setAlertSeverity("success");
             setAlertText(<span><b>{nickname}</b> 님의 차단이 해제되었습니다.</span>);
