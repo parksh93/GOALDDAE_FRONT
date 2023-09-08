@@ -11,10 +11,11 @@ const Main = () => {
         <UserProvider> 
             <div>
                 <NaviBar />
+                <Article />
                 <ImageSlide />
                 <TimeLine />
                 <MatchListMoreDetails />
-                <Article />
+                
             </div>
         </UserProvider>
     );
