@@ -374,7 +374,7 @@ function Mypage() {
 
                 {/* 사이드메뉴 상세보기 */}
                 {viewMode === "MATCH_LIST" ? (
-                  <MatchList />
+                  <MatchList userId={userInfo.id}/>
                 ) : viewMode === "BOARD_LIST" ? (
                   <BoardList userId={userInfo.id} /> 
                 ) : viewMode === "FRIEND_LIST" ? (

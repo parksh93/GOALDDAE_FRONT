@@ -15,12 +15,12 @@ function FriendList({ userId }) {
   }, [userId]);
 
   return (
-    <div>
+    
       <div className='user-card-friends'>
         <p><b>친구리스트</b></p>
         {/* <text>{userId.friends}</text> */}
     </div>
-    </div>
+  
   );
 }
 

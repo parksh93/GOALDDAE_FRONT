@@ -49,7 +49,7 @@ function BoardList({ userId }) {
    };
 
    return (
-     <div>
+    
        <div className='user-card-board'>
         
          {board.slice(0,5).map(post =>
@@ -79,7 +79,7 @@ function BoardList({ userId }) {
         </div>
          )}
        </div>
-     </div>    
+       
    );
 }
 

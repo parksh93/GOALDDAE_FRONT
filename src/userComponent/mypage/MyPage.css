@@ -206,7 +206,7 @@
 }
 
 .user-card-match {
-  transform: translateY(-34px);
+  transform: translateY(10px);
   text-align: left;
   justify-content: center;
   align-items: left;
@@ -214,9 +214,45 @@
   height: 500px;
   padding: 2em;
   background-color: #fff;
-  margin-top : 0%;
+  margin-top : -1.5%;
+  margin-bottom: 100px;
   box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
 }
+
+.start-time {
+  margin-right: 10px;
+}
+
+.end-time {
+  margin-left: 30px;
+}
+
+.start-time,
+.end-time {
+  color:  #a4a4a4;
+  size: 10px;
+}
+
+.player-number {
+  background-color: #f5f5f5;
+  padding: 10px 10px;
+  border-radius: 20px; 
+}
+
+.match-gender {
+  margin-left: 20px;
+  background-color: #f5f5f5;
+  padding: 10px 10px;
+  border-radius: 20px; 
+}
+
+.match-level {
+  margin-left: 20px;
+  margin-top: 30px;
+  padding: 10px;
+}
+
+
 
   .user-card-board {
     transform: translateY(10px);
