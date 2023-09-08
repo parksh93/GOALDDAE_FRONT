@@ -5,9 +5,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './SoccerFieldImageSlide.module.css';
 
 // 임시 이미지 불러오기, 사진 저장 기능 완성시 db의 img1~3을 불러올 예정
-import TestImg1 from "../auth/imageSlide/image/testImg1.jpg"
-import TestImg2 from "../auth/imageSlide/image/testImg2.jpg"
-import TestImg3 from "../auth/imageSlide/image/testImg3.jpg"
+import TestImg1 from "../auth/page/main/imageSlide/image/testImg1.jpg"
+import TestImg2 from "../auth/page/main/imageSlide/image/testImg2.jpg"
+import TestImg3 from "../auth/page/main/imageSlide/image/testImg3.jpg"
 
 const SoccerFieldImageSlide = () => {
   const [settings] = useState({
