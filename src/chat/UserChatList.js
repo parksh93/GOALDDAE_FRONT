@@ -3,8 +3,8 @@ import styles from "./UserChatList.module.css";
 import { CiChat1 } from "react-icons/ci";
 import { BiUser, BiGroup } from "react-icons/bi";
 
-const UserChat = ({setOpenLoading}) => {
-  const [myChannelList, setMyChannelList] = useState([]);
+const UserChatList = ({channelList, setOpenLoading}) => {
+  // const [myChannelList, setMyChannelList] = useState([]);
   const [chatType, setChatType] = useState(0);
 
   const selectChat = () => {
@@ -28,13 +28,13 @@ const UserChat = ({setOpenLoading}) => {
         </div>
       </div>
       <div className={styles.chatListMain}>
-        {myChannelList.length === 0 ? (
+        {channelList.length === 0 ? (
           <div>
             <span>채팅 목록이 없습니다.</span>
             <br />
           </div>
         ) : (
-          myChannelList.map(() => (
+          channelList.map((channel) => (
             <div
               onClick={async () => {
                 setOpenLoading(true);
@@ -44,13 +44,13 @@ const UserChat = ({setOpenLoading}) => {
             >
               <div className={styles.profileImgDiv}>
                 <img
-                  src="./img/userProfileImg/goalddae_default_profile.Webp"
+                  src={channel.channelImgUrl}
                   className={styles.profileImg}
                 />
               </div>
               <div>
                 <span className={styles.channelName}>
-                  
+                  {channel.channelName}
                 </span>
                 <br />
                 <span className={styles.lastContent}>
@@ -79,4 +79,4 @@ const UserChat = ({setOpenLoading}) => {
   );
 };
 
-export default React.memo(UserChat);
+export default React.memo(UserChatList);

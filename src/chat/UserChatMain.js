@@ -10,22 +10,41 @@ import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
 const UserChatMain = () => {
-  const [messageList, setMessageList] = useState([]);
-  const [messagesLen, setMessagesLen] = useState(0);
+  const [channelList, setChannelList] = useState([]);
+  const [channelInfo, setChannelInfo] = useState(0);
   const [openRoomState, setOpenRoomState] = useState(false);
-  const [openLoading, setOpenLoading] = useState(true);
+  const [openLoading, setOpenLoading] = useState(false);
   const location = useLocation();
 
-  const {userInfo} = location.state;
+  const {userInfo, friend} = location.state;
 
   // const Stomp = require('stompjs');
   const sock = new SockJS("http://localhost:8080/chat")
   let client = Stomp.over(sock) ;
   
   useEffect(() => {
+    fetch(`/chat/getChannelList/${userInfo.id}`,{method: "GET"})
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.length !== 0){
+        setChannelList(data);
+        
+        data.map(channel => {
+          if(channel.friendId === friend.id){
+            setChannelInfo(channel);
+          }
+        });
+
+        setOpenRoomState(true);
+      }
+    })
+  },[])
+
+  useEffect(() => {
     client.connect({}, () => {
-      console.log("connected : " + userInfo.id)
-      client.send("/app/join", {}, JSON.stringify(userInfo.id))
+      // console.log("connected : " + userInfo.id)
+      // client.send("/app/join", {}, JSON.stringify(userInfo.id))
 
       // client.send(`/app/chat/${1}`, {}, JSON.stringify())
 
@@ -38,32 +57,33 @@ const UserChatMain = () => {
   },[client, userInfo.id]);
 
   // 문자 보낸 시간 초기화
-  const formatDate = (message) => {
+  const formatDate = (sendDate) => {
     const date = new Date();
-    const today =
-      date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-    let sendDate;
+    const today = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+
+    let formatSendDate;
 
     if (
-      moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "YYYY/M/D"
       ) === today
     ) {
-      sendDate = moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      formatSendDate = moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "오늘 HH시 mm분"
       );
     } else {
-      sendDate = moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      formatSendDate = moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "YY/MM/DD HH시 mm분"
       );
     }
 
-    return sendDate;
+    return formatSendDate;
   };
   return (
     <div className={styles.chatMainContainer}>
       <div className={styles.chaList}>
         <UserChatList
+          channelList={channelList}
           setOpenLoading={setOpenLoading}
         />
       </div>
@@ -72,6 +92,10 @@ const UserChatMain = () => {
           openLoading ? <Loading/> :
           <UserChatRoom
             formatDate={formatDate}
+            setOpenRoomState={setOpenRoomState}
+            friend={friend}
+            userInfo={userInfo}
+            channelInfo={channelInfo}
           />
         ) : (
           <div className={styles.outChatRoomDiv}>

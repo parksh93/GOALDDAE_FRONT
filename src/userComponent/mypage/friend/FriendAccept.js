@@ -46,6 +46,7 @@ const FriendAccept = ({
                 })
             }).then(() => {
                 sendWebSocket(fromUserId);
+                setBtnClick(false);
             });
 
             setAlertSeverity("error");
@@ -53,7 +54,6 @@ const FriendAccept = ({
             setOpenAlert(true);
             setTimeout(()=> {
                 setOpenAlert(false);
-                setBtnClick(false);
             }, 1500);
         }
 
@@ -71,12 +71,12 @@ const FriendAccept = ({
                 })
             }).then(() => {
                 sendWebSocket(fromUserId);
+                setBtnClick(false);
             });
             setAlertSeverity("success");
             setAlertText(<span><b>{nickname}</b> 님의 친구 요청이 수락되었습니다.</span>);
             setOpenAlert(true);
             setTimeout(()=> {
-                setBtnClick(false);
                 setOpenAlert(false);
             }, 1500);
         }

@@ -27,7 +27,6 @@ const FriendList = ({
     setAlertText,
     socketData,
     sendWebSocket,
-    client
 }) => {
     const [friendList, setFriendList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
@@ -58,16 +57,16 @@ const FriendList = ({
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     userId: userInfo.id,
-                friendId: friendId
-            })
-        }).then(() => {
+                    friendId: friendId
+                })
+            }).then(() => {
                 sendWebSocket(friendId);
+                setBtnClick(false);
             });
             setAlertSeverity("error");
             setAlertText(<span><b>{nickname}</b> 님이 친구 목록에서 삭제되었습니다.</span>);
             setOpenAlert(true);
             setTimeout(() => {
-                setBtnClick(false);
                 setOpenAlert(false);
             }, 1500);
         }
@@ -85,13 +84,13 @@ const FriendList = ({
                })
             }).then(() => {
                 sendWebSocket(friendId);
+                setBtnClick(false);
             });
             setModalOpen(false);
             setAlertSeverity("error");
             setAlertText(<span><b>{nickname}</b> 님이 차단되었습니다.</span>);
             setOpenAlert(true);
             setTimeout(() => {
-                setBtnClick(false);
                 setOpenAlert(false);
             }, 1500);
         }
@@ -109,7 +108,8 @@ const FriendList = ({
                                 onClick={() => 
                                     navigate("/userChat", 
                                         {state: {
-                                                userInfo: userInfo 
+                                                userInfo: userInfo,
+                                                friend: friend,
                                             }
                                         }
                                     )

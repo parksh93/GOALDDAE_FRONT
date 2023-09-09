@@ -15,22 +15,70 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 const UserChatRoom = ({
-  channelName,
-  messageList,
-  messagesLen,
   setOpenRoomState,
+  friend,
+  userInfo,
+  formatDate,
+  channelInfo
 }) => {
   const messageRef = useRef();
   const userMessageRef = useRef();
 
-  const [message, setMessage] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+  const [messageList, setMessgeList] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sendMessageOk, setSendMessageOk] = useState(false);
+
+  useEffect(() => {
+    fetch(`/chat/getMessageList/${channelInfo.channelId}`, {method: "GET"})
+    .then(res => res.json())
+    .then(data => {
+      setMessgeList(data);
+    })
+  }, []);
+
+  const sock = new SockJS("http://localhost:8080/chat");
+  let client = Stomp.over(sock) ;
+  useEffect(() => {
+    const sendMessageInfo = {
+      userId: userInfo.id,
+      content: newMessage,
+      sendDate: new Date(),
+      channelId: channelInfo.channelId,
+      senderName: userInfo.nickname
+    }
+      client.connect({}, () => {
+          client.send("/app/chat/join", {}, JSON.stringify(userInfo.id));
+          if(sendMessageOk){
+            client.send(`/app/chat/${friend.id}`, {}, JSON.stringify(sendMessageInfo));
+            // client.send(`/app/chat/${userInfo.id}`, {}, JSON.stringify(sendMessageInfo));
+            setMessgeList([...messageList, sendMessageInfo]);
+
+            setSendMessageOk(false);
+            setNewMessage("");
+          }
+          
+          client.subscribe("/queue/addChatToClient/" + userInfo.id, function(message) {
+            console.log(JSON.parse(message.body));
+            const newMessageInfo = JSON.parse(message.body);
+            setMessgeList([...messageList, newMessageInfo]);
+          })
+      });
+      return () => client.disconnect();
+  },[client]);
+
 
   const onChangeMessage = useCallback((e) => {
-    setMessage(e.target.value);
+    setNewMessage(e.target.value);
   });
+
+  const sendMessage = useCallback(() => {
+    setSendMessageOk(true);
+  })
 
   const list = () => (
     <Box
@@ -73,14 +121,14 @@ const UserChatRoom = ({
 
   // 처음 실행시 스크롤바 맨아래에 오도록 설정
   const scrollToBottom = useCallback(() => {
-    if (messagesLen > 0) {
+    if (messageList.length > 0) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
   });
 
   // 텍스트 입력창 글자에 맞게 변하도록 설정
   useEffect(() => {
-    if (message !== "") {
+    if (newMessage !== "") {
       userMessageRef.current.style.height = "auto";
       userMessageRef.current.style.overflow = "auto";
       userMessageRef.current.style.height =
@@ -89,7 +137,7 @@ const UserChatRoom = ({
       userMessageRef.current.style.overflow = "hidden";
       userMessageRef.current.style.height = "15px";
     }
-  }, [message]);
+  }, [newMessage]);
 
 
   const onkeyPress = (e) => {
@@ -102,6 +150,7 @@ const UserChatRoom = ({
       return;
     } else if (e.key === "Enter") {
       //메세지 전송 메서드 자리
+      sendMessage();
     }
   };
 
@@ -113,47 +162,50 @@ const UserChatRoom = ({
           setOpenRoomState(false);
         }}
       />
-      <h2 className={styles.chatRoomName}>{channelName}</h2>
+      <h2 className={styles.chatRoomName}>{channelInfo.channelName}</h2>
       <AiOutlineMenu
         onClick={toggleDrawer(true)}
         className={styles.openDrawerToggle}
       />
       <div ref={messageRef} className={styles.messagesMainDiv}>
-        {messageList.map((message) => (
+        {messageList.map((messageInfo) => (
           <div
-            // style={
-            //   message.node.sender.id === "asdas"
-            //     ? { textAlign: "right", marginRight: "50px" }
-            //     : { marginLeft: "50px" }
-            // }
+            style={
+              messageInfo.userId === userInfo.id
+                ? { textAlign: "right", marginRight: "50px" }
+                : { marginLeft: "50px" }
+            }
           >
+            {messageInfo.userId !== userInfo.id ?
             <span className={styles.senderName}>
-
+              {messageInfo.senderName}
             </span>
+            : ""
+            }
             <br />
-            {/* {message.node.sender.id === "asdas" ? (
-              <span className={styles.sendDate}>{message.sendDate}</span>
+            {messageInfo.userId === userInfo.id ? (
+              <span className={styles.sendDate}>{formatDate(messageInfo.sendDate)}</span>
             ) : (
               ""
-            )} */}
+            )}
             <div
               className={styles.messageContentDiv}
-              // style={
-              //   message.node.sender.id === "asdas"
-              //     ? { background: "#4CC150", color: "white" }
-              //     : { background: "#E0E0E0" }
-              // }
+              style={
+                messageInfo.userId === userInfo.id
+                  ? { background: "#4CC150", color: "white" }
+                  : { background: "#E0E0E0" }
+              }
             >
               <span className={styles.messageContent}>
-                
+                {messageInfo.content}
               </span>
             </div>
 
-            {/* {message.node.sender.id !== "asdas" ? (
-              <span className={styles.sendDate}>{message.sendDate}</span>
+            {messageInfo.userId !== userInfo.id ? (
+              <span className={styles.sendDate}>{formatDate(messageInfo.sendDate)}</span>
             ) : (
               ""
-            )} */}
+            )}
             <br />
             <br />
           </div>
@@ -164,14 +216,14 @@ const UserChatRoom = ({
           <textarea
             id="outlined-required"
             onChange={onChangeMessage}
-            value={message}
+            value={newMessage}
             color="success"
             className={styles.messageText}
             rows={1}
             ref={userMessageRef}
             onKeyDown={onkeyPress}
           ></textarea>
-          <button className={styles.sendBtn}>
+          <button className={styles.sendBtn} onClick={sendMessage}>
             <AiOutlineArrowUp />
           </button>
         </div>

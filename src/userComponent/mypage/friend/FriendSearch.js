@@ -51,13 +51,13 @@ const FriendSearch = ({
                 })
             }).then(() => {
                 sendWebSocket(toUserId);
+                setBtnClick(false);
             });
             setSearchValue("");
             setAlertSeverity("success");
             setAlertText(<span><b>{nickname}</b> 님에게 친구 요청을 보냈습니다.</span>);
             setOpenAlert(true);
             setTimeout(() => {
-                setBtnClick(false);
                 setOpenAlert(false);
             }, 1500);
         }

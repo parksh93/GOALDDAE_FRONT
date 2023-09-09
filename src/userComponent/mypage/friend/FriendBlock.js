@@ -39,12 +39,12 @@ const FriendBlock = ({
                 })
             }).then(() => {
                 sendWebSocket(friendId);
+                setBtnClick(false);
             });
             setAlertSeverity("success");
             setAlertText(<span><b>{nickname}</b> 님의 차단이 해제되었습니다.</span>);
             setOpenAlert(true);
             setTimeout(() => {
-                setBtnClick(false);
                 setOpenAlert(false);
             }, 1500);
         }

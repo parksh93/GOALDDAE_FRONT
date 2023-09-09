@@ -24,21 +24,21 @@ const FriendMain = () => {
     //const ws = useRef(null);    //webSocket을 담는 변수, 
                                 //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
-    const sock = new SockJS("http://localhost:8080/friend")
+                                
+                                // const webSocketLogin = useCallback(() => {
+                                    // ws.current = new WebSocket("ws://localhost:8080/socket/friend");
+                                    
+                                    // ws.current.onmessage = (message) => {
+                                        //     const dataSet = JSON.parse(message.data);
+                                        //     setSocketData(dataSet);
+                                        // }
+                                        // client.connect({}, () => {
+                                            //     client.send("/app/friend/join", {}, JSON.stringify(userInfo.id))
+                                            // })
+                                            // }); 
+                                            
+    const sock = new SockJS("http://localhost:8080/friend");
     let client = Stomp.over(sock) ;
-
-    // const webSocketLogin = useCallback(() => {
-        // ws.current = new WebSocket("ws://localhost:8080/socket/friend");
-
-        // ws.current.onmessage = (message) => {
-        //     const dataSet = JSON.parse(message.data);
-        //     setSocketData(dataSet);
-        // }
-        // client.connect({}, () => {
-        //     client.send("/app/friend/join", {}, JSON.stringify(userInfo.id))
-        // })
-    // }); 
-
     useEffect(() => {
         const temp = JSON.stringify(new Date().toLocaleString());
         client.connect({}, () => {
@@ -53,7 +53,7 @@ const FriendMain = () => {
         })  
         return () => client.disconnect();
 
-    },[client, friendId]);
+    },[client]);
         
     const sendWebSocket = useCallback((friendId) => {
         setFriendId(friendId)
