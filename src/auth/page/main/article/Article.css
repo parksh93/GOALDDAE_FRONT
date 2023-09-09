@@ -1,0 +1,32 @@
+.headline {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.newsButton {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.newsButton:hover {
+    background-color: #45a049;
+}
+
+.newsLink {
+    color:#333; 
+}
+
+.newsLink:hover {
+   color:#4caf50; 
+}
+
+@media (max-width: 575.98px) {  
+    .headline {
+        font-size: 14px;
+        font-weight: bold;
+    }
+  
+     .newsLink{
+         font-size :10px; 
+     }
+  }
