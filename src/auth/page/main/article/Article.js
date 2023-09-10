@@ -35,7 +35,7 @@ const Article = () => {
    
   return (
     <div style={{ display: 'flex', justifyContent: 'start' }}>
-      <Box sx={{ margin: "1%", maxWidth: '100%', padding:'1%', boxShadow:'2px 2px 3px 3px #ccc', borderRadius:'15px'}}>
+      <Box sx={{ height: "200px", margin: "1%", maxWidth: '100%', padding:'1%', boxShadow:'2px 2px 3px 3px #ccc', borderRadius:'15px'}}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <div className='title'><CampaignIcon color="success" /> <span className="headline">오늘의 핫이슈</span></div>
           <Button 
@@ -53,7 +53,7 @@ const Article = () => {
           <Box 
             sx={{
               margin:"1%",
-              width: { xs: "100%", sm: "650px"},
+              width: { xs: "100%", sm: "700px"},
               borderRadius:'10px'}} 
               key={article.id}>
               <div className='title'>
