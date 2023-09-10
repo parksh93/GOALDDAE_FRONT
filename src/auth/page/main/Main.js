@@ -6,22 +6,20 @@ import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
 import Article from './article/Article';
 import BestBoard from './bestBoard/BestBoard';
+import './Main.css';
 
 const Main = () => {
     return (
         <UserProvider> 
             <div>
                 <NaviBar />
-                <div style={{ 
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: "1%",
-                    marginBottom: "1%"
-                }}>
-                    <div style={{ marginRight: '3%' }}>
+                <div className="article-board-container">
+                    <div className="Article">
                         <Article />
                     </div>
-                    <BestBoard />
+                    <div className="BestBoard">
+                        <BestBoard />
+                    </div>
                 </div>
                 <ImageSlide />
                 <TimeLine />
