@@ -3,7 +3,7 @@ import styles from "./UserChatList.module.css";
 import { CiChat1 } from "react-icons/ci";
 import { BiUser, BiGroup } from "react-icons/bi";
 
-const UserChatList = ({channelList, setOpenLoading}) => {
+const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomState, channelInfo, lastMessageList}) => {
   // const [myChannelList, setMyChannelList] = useState([]);
   const [chatType, setChatType] = useState(0);
 
@@ -37,25 +37,35 @@ const UserChatList = ({channelList, setOpenLoading}) => {
           channelList.map((channel) => (
             <div
               onClick={async () => {
+                setOpenRoomState(true);
                 setOpenLoading(true);
+                setChannelInfo(channel);
               }
             }
               className={styles.channelDiv}
+              style={channel.channelId === channelInfo.channelId ? {background: "#CAEECC"} : {}}
             >
-              <div className={styles.profileImgDiv}>
+              {/* <div className={styles.profileImgDiv}>
+              </div> */}
+              <div>
                 <img
                   src={channel.channelImgUrl}
                   className={styles.profileImg}
                 />
-              </div>
-              <div>
                 <span className={styles.channelName}>
                   {channel.channelName}
                 </span>
-                <br />
-                <span className={styles.lastContent}>
-                  
-                </span>
+                {/* <br /> */}
+                {/* <span className={styles.lastContent}> */}
+                  {/* {lastMessageList.length !== 0 ?
+                    lastMessageList.map(lastMessage => {
+                      if(lastMessage.id === channel.channelId){
+                        <span>{lastMessage.content}</span>
+                      }
+                    })
+                  :""  
+                } */}
+                {/* </span> */}
                 {/* <span
                   className={styles.unReadCnt}
                   style={

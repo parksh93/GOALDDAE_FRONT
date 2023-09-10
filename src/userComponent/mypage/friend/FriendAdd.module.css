@@ -8,6 +8,7 @@
 
 .contentDiv {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .noFriendList{
@@ -31,7 +32,7 @@
 }
 
 .date{
-    margin-left:60%;
+    /* margin-left:60%; */
     font-size: 13px;
     color: gray;
 }
@@ -62,4 +63,10 @@
 .waitBtn:active {
     border: 1px solid lightgray;
     color: lightgray;
+}
+
+.btnDiv {
+    display: inline;
+    float: right;
+    margin-right: 5%;
 }

@@ -8,6 +8,7 @@
 
 .contentDiv {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .noFriendList{
@@ -31,7 +32,6 @@
 }
 
 .date{
-    margin-left:61%;
     font-size: 13px;
     color: gray;
 }
@@ -49,4 +49,10 @@
 .unBlockBtn:hover {
     border: 1px solid lightgray;
     color: lightgray;
+}
+
+.btnDiv {
+    display: inline;
+    float: right;
+    margin-right: 5%;
 }

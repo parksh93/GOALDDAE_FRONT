@@ -8,41 +8,54 @@ import Loading from "../loading/Loading";
 import {useLocation} from 'react-router-dom'
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import { useUser } from "../userComponent/userContext/UserContext";
 
 const UserChatMain = () => {
   const [channelList, setChannelList] = useState([]);
   const [channelInfo, setChannelInfo] = useState(0);
   const [openRoomState, setOpenRoomState] = useState(false);
-  const [openLoading, setOpenLoading] = useState(false);
+  const [openLoading, setOpenLoading] = useState(true);
+  const [lastMessageList, setLastMessageList] = useState([]);
   const location = useLocation();
-
-  const {userInfo, friend} = location.state;
-
-  // const Stomp = require('stompjs');
-  const sock = new SockJS("http://localhost:8080/chat")
-  let client = Stomp.over(sock) ;
+  const {getUserInfo, userInfo} = useUser();
+  
+  let friend = undefined;
+  if(location.state !== null) {
+    friend = location.state.friend;
+  }
   
   useEffect(() => {
-    fetch(`/chat/getChannelList/${userInfo.id}`,{method: "GET"})
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      if(data.length !== 0){
-        setChannelList(data);
-        
-        data.map(channel => {
-          if(channel.friendId === friend.id){
-            setChannelInfo(channel);
-          }
-        });
-
-        setOpenRoomState(true);
-      }
-    })
+    getUserInfo();
   },[])
 
+  // const sock = new SockJS("http://localhost:8080/chat")
+  // let client = Stomp.over(sock) ;
+  
   useEffect(() => {
-    client.connect({}, () => {
+    if(userInfo !== null){
+        fetch(`/chat/getChannelList/${userInfo.id}`,{method: "GET"})
+        .then(res => res.json())
+        .then(data => {
+        console.log(data);
+        if(data.length !== 0){
+          setChannelList(data);
+          
+          if(friend !== undefined){
+            data.map(channel => {
+              if(channel.friendId === friend.id){
+                setChannelInfo(channel);
+              }
+            });
+            
+            setOpenRoomState(true);
+          }
+        }
+      })
+    }
+  },[userInfo])
+
+  // useEffect(() => {
+  //   client.connect({}, () => {
       // console.log("connected : " + userInfo.id)
       // client.send("/app/join", {}, JSON.stringify(userInfo.id))
 
@@ -52,9 +65,9 @@ const UserChatMain = () => {
       //   const message = JSON.parse(messageDTO.body);
       //   console.log(message);
       // })
-    })
-    return () => client.disconnect();
-  },[client, userInfo.id]);
+    // })
+  //   return () => client.disconnect();
+  // },[client, userInfo.id]);
 
   // 문자 보낸 시간 초기화
   const formatDate = (sendDate) => {
@@ -85,17 +98,25 @@ const UserChatMain = () => {
         <UserChatList
           channelList={channelList}
           setOpenLoading={setOpenLoading}
+          setChannelInfo={setChannelInfo}
+          setOpenRoomState={setOpenRoomState}
+          channelInfo={channelInfo}
+          lastMessageList={lastMessageList}
         />
       </div>
       <div className={styles.chatRoom}>
         {openRoomState === true ? (
-          openLoading ? <Loading/> :
           <UserChatRoom
             formatDate={formatDate}
             setOpenRoomState={setOpenRoomState}
             friend={friend}
             userInfo={userInfo}
             channelInfo={channelInfo}
+            setOpenLoading={setOpenLoading}
+            openLoading={openLoading}
+            lastMessageList={lastMessageList}
+            setLastMessageList={setLastMessageList}
+            setChannelInfo={setChannelInfo}
           />
         ) : (
           <div className={styles.outChatRoomDiv}>

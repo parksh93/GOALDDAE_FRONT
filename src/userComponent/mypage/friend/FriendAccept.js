@@ -91,9 +91,11 @@ const FriendAccept = ({
                 <div className={styles.contentDiv}>
                     <img src={friend.profileImgUrl} className={styles.profile}/>
                     <span className={styles.nickname}>{friend.nickname}</span>
-                    <span className={styles.requestDate}>{formatDate(friend.requestDate)} 신청</span>
-                    <BsCheck2 className={styles.check} onClick={() => onClickAcceptFriend(friend.id, friend.nickname)}/>
-                    <BsXLg className={styles.no} onClick={() => onClickFriendRejection(friend.id, friend.nickname)}/>
+                    <div className={styles.infoDiv}>
+                        <span className={styles.requestDate}>{formatDate(friend.requestDate)} 신청</span>
+                        <BsCheck2 className={styles.check} onClick={() => onClickAcceptFriend(friend.id, friend.nickname)}/>
+                        <BsXLg className={styles.no} onClick={() => onClickFriendRejection(friend.id, friend.nickname)}/>
+                    </div>
                 </div>
             ))
             }

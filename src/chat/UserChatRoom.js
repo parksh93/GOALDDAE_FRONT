@@ -17,13 +17,19 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import Loading from "../loading/Loading";
 
 const UserChatRoom = ({
   setOpenRoomState,
   friend,
   userInfo,
   formatDate,
-  channelInfo
+  channelInfo,
+  setOpenLoading,
+  openLoading,
+  lastMessageList,
+  setLastMessageList,
+  setChannelInfo
 }) => {
   const messageRef = useRef();
   const userMessageRef = useRef();
@@ -38,8 +44,9 @@ const UserChatRoom = ({
     .then(res => res.json())
     .then(data => {
       setMessgeList(data);
+      setOpenLoading(false);
     })
-  }, []);
+  }, [channelInfo, openLoading]);
 
   const sock = new SockJS("http://localhost:8080/chat");
   let client = Stomp.over(sock) ;
@@ -49,7 +56,8 @@ const UserChatRoom = ({
       content: newMessage,
       sendDate: new Date(),
       channelId: channelInfo.channelId,
-      senderName: userInfo.nickname
+      senderName: userInfo.nickname,
+      senderProfileImgUrl: userInfo.profileImgUrl
     }
       client.connect({}, () => {
           client.send("/app/chat/join", {}, JSON.stringify(userInfo.id));
@@ -57,15 +65,23 @@ const UserChatRoom = ({
             client.send(`/app/chat/${friend.id}`, {}, JSON.stringify(sendMessageInfo));
             // client.send(`/app/chat/${userInfo.id}`, {}, JSON.stringify(sendMessageInfo));
             setMessgeList([...messageList, sendMessageInfo]);
-
+            // setLastMessageList([...lastMessageList, {
+            //   id: channelInfo.channelId, 
+            //   content: newMessage
+            // }]);
             setSendMessageOk(false);
             setNewMessage("");
           }
           
           client.subscribe("/queue/addChatToClient/" + userInfo.id, function(message) {
-            console.log(JSON.parse(message.body));
             const newMessageInfo = JSON.parse(message.body);
-            setMessgeList([...messageList, newMessageInfo]);
+            if(newMessageInfo.userId === channelInfo.friendId){
+              setMessgeList([...messageList, newMessageInfo]);
+            }
+            // setLastMessageList([...lastMessageList, {
+            //   id: channelInfo.channelId, 
+            //   content: newMessageInfo.content
+            // }]);
           })
       });
       return () => client.disconnect();
@@ -88,18 +104,18 @@ const UserChatRoom = ({
       onKeyDown={toggleDrawer(false)}
       className={styles.drawerMain}
     >
-      <List>
+      <div>
         <p className={styles.peopleTitle}>대화상대</p>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon></ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      </div>
       <Divider />
+      <div className={styles.sideBarMyInfoDiv}>
+        <img src={userInfo.profileImgUrl} className={styles.sideBarProfile}/>
+        <span className={styles.sideBarNickname}>{userInfo.nickname}</span>
+      </div>
+      <div className={styles.sideBarFriendInfoDiv}>
+        <img src={channelInfo.channelImgUrl} className={styles.sideBarProfile}/>
+        <span className={styles.sideBarNickname}>{channelInfo.channelName}</span>
+      </div>
       <div className={styles.chatOutBtnDiv}>
         <AiOutlineExport className={styles.chatOutBtn} />
       </div>
@@ -132,7 +148,7 @@ const UserChatRoom = ({
       userMessageRef.current.style.height = "auto";
       userMessageRef.current.style.overflow = "auto";
       userMessageRef.current.style.height =
-        userMessageRef.current.scrollHeight + "px";
+      userMessageRef.current.scrollHeight + "px";
     } else {
       userMessageRef.current.style.overflow = "hidden";
       userMessageRef.current.style.height = "15px";
@@ -159,6 +175,7 @@ const UserChatRoom = ({
       <AiOutlineArrowLeft
         className={styles.return}
         onClick={() => {
+          setChannelInfo("");
           setOpenRoomState(false);
         }}
       />
@@ -167,6 +184,7 @@ const UserChatRoom = ({
         onClick={toggleDrawer(true)}
         className={styles.openDrawerToggle}
       />
+      {openLoading ? <Loading/> :
       <div ref={messageRef} className={styles.messagesMainDiv}>
         {messageList.map((messageInfo) => (
           <div
@@ -177,16 +195,16 @@ const UserChatRoom = ({
             }
           >
             {messageInfo.userId !== userInfo.id ?
-            <span className={styles.senderName}>
-              {messageInfo.senderName}
-            </span>
+              <span className={styles.senderName}>
+                {messageInfo.senderName}
+              </span> 
             : ""
             }
             <br />
             {messageInfo.userId === userInfo.id ? (
               <span className={styles.sendDate}>{formatDate(messageInfo.sendDate)}</span>
-            ) : (
-              ""
+              ) : (
+                ""
             )}
             <div
               className={styles.messageContentDiv}
@@ -203,14 +221,15 @@ const UserChatRoom = ({
 
             {messageInfo.userId !== userInfo.id ? (
               <span className={styles.sendDate}>{formatDate(messageInfo.sendDate)}</span>
-            ) : (
-              ""
-            )}
+              ) : (
+                ""
+                )}
             <br />
             <br />
           </div>
         ))}
       </div>
+        }
       <div className={styles.sendDiv}>
         <div className={styles.inputDiv}>
           <textarea
