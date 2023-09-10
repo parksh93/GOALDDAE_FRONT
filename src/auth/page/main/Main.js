@@ -11,7 +11,7 @@ const Main = () => {
         <UserProvider> 
             <div>
                 <NaviBar />
-                <Article />
+                {/* <Article /> */}
                 <ImageSlide />
                 <TimeLine />
                 <MatchListMoreDetails />

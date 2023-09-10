@@ -96,31 +96,49 @@ const TeamSaveTable = () => {
           const teamIdResponse = await axios.get('/team/getAutoIncrementTeamId')
             
             if(teamIdResponse.status === 200) {
-              const teamId = teamIdResponse.data;
-              console.log("teamId : ", teamId);
+              const newTeamId = teamIdResponse.data;
+              console.log("newTeamId : ", newTeamId);
 
-              userInfo.teamId = teamId;
-              console.log("=================",userInfo)
-              const updateIdResponse = await axios.patch('/user/update/teamId', { id: userInfo.id, 
-                                                                                teamId: teamId })       
-              if (updateIdResponse.status === 200 ){
-                const updatedUserId = updateIdResponse.data.teamId;
-                console.log(updatedUserId);
+              userInfo.teamId = newTeamId;
+              console.log("userInfo : ", userInfo); // 여기에서 teamId 바뀌었는지 확인
+                                       
+              const updateIdResponse = await axios.patch('/user/update/teamId', { id: userInfo.id,
+                                                                                  teamId: newTeamId})
+                if(updateIdResponse.status === 200){
+                  const updatedUserTeamId = updateIdResponse.data;
+                  console.log("updatedUserTeamId: ",updatedUserTeamId)
 
-                navigate(`/team/myTeamDetail/${updatedUserId}/info`);  
-              } else {
-              console.log('teamId 업데이트 실패');
-              alert('사용자 정보 업데이트 중 오류가 발생했습니다.')
+                  navigate(`/team/myTeamDetail/${updatedUserTeamId}/info`); 
+
+                }else{
+                  console.log("유저의 teamId 업데이트 실패");
+                }
+
+              const newMemberResponse = await axios.post('/teamMember/add', { userId: userInfo.id,
+                                                                              teamId: newTeamId});
+              console.log("newMemberResponse : ", newMemberResponse);
+
+                if(newMemberResponse.status === 200){
+                  const newMemberId = newMemberResponse.data.userId;
+                  console.log("새로운 멤버(ID:", newMemberId, "가 추가되었습니다.");
+              
+                } else {
+                    console.log("팀 멤버 추가 실패.");
+                    alert('멤버 추가에 실패했습니다.')
+                } 
+         
+            } else {
+                console.log('teamId 업데이트 실패');
+                alert('사용자 정보 업데이트 중 오류가 발생했습니다.')
             }
-          } else {
-            console.log('팀 Id를 가져오지 못했습니다.');
-          }
-        }    
-       } catch (error) {
+        } else {
+          console.log('세부 기능 오류');
+        }
+      }catch(error) {
         console.error('팀 생성 에러:', error);
         alert('팀 생성 도중 오류가 발생했습니다. 다시 시도해주세요.');
       }
-    };
+  }
   
   const theme = createTheme({
     palette: {

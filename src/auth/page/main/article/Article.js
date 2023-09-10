@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+/* import React, { useEffect, useState, useRef } from 'react';
 import './Article.css'; 
 import { Box, Button } from '@mui/material';
 import CampaignIcon from '@mui/icons-material/Campaign';
@@ -67,3 +67,5 @@ const Article = () => {
 }
 
 export default Article;
+
+*/
