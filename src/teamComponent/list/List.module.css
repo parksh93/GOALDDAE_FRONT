@@ -1,0 +1,296 @@
+
+.Paper {
+    background-color: #f8f8f8; /* 회색 배경색 */
+    border: 1px solid #e0e0e0; /* 회색 테두리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    border-radius: 4px; /* 둥근 테두리 */
+}
+
+/* 필터 (TeamList) */
+.filtes{
+    width: 70%;
+
+    display: flex; /* flex 컨테이너로 설정 */
+
+    justify-content: flex-start; /* 요소들을 왼쪽으로 정렬 */
+    align-items: center; /* 요소들을 수직 가운데로 정렬 */
+    position: relative;
+    margin-top: 10px;
+    margin: 0 auto;
+}
+
+.areaFilter{
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+
+    padding: 5px ;
+
+    cursor: pointer;
+}
+
+.recruitingFilter {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+
+    padding: 5px 10px;
+    margin-left: 1%;
+
+    cursor: pointer;
+}
+
+/* 검색창(TeamSearch) */
+.WholeBox{
+    padding: 10px;
+    margin-left: 33%;
+}
+
+.InputBox{
+    width: 300px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    z-index: 3;
+    border-radius: 3px;
+}
+
+.InputBox:focus-within {
+    border: 1px solid #a6a6a6;
+    padding: 10px;
+}
+
+.InputBox input[value="팀 이름 검색"] {
+    color: rgb(114, 114, 114);
+    align-items: center; 
+    margin: 0 auto;
+}
+
+.Input {
+    color: #000000;
+    height: 20px;
+    flex: 1 0 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.DeleteButton{
+    cursor: pointer;
+}
+
+.DropDownBox{
+    position: absolute;
+    list-style-type: none;
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 10px;
+    background-color: white;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    z-index: 2;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.DropDownItem{
+    list-style-type: none;
+    color: #000000;
+    padding: 0 16px;
+}
+
+.DropDownItem:hover{
+    background-color: rgb(240, 240, 240);
+    padding: 10px;
+}
+
+.NoResult{
+    color: rgb(114, 114, 114);
+
+}
+
+
+/* 팀 리스트 (TeamList) */
+
+.teamCard {
+    background-color: white;
+    border-bottom: 1px solid #d5d5d5;
+    padding: 1px;
+    padding-left: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 70%;
+    cursor: pointer;
+}
+
+.teamCard:hover{
+    background-color: rgb(247, 247, 247)
+}
+
+span::after {
+    content: "·";
+    margin: 0 4px;
+    color: #b0b0b0;
+}
+  
+span:last-child::after {
+    content: "";
+    margin: 0;
+}
+
+.teamInfoContainer {
+    display: flex; /* flexbox 사용 */
+    align-items: center; /* 요소들을 세로 중앙 정렬 */
+    gap: 10px; /* 이미지와 팀 정보 간격 설정 */
+  }
+
+.circularImageContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+.circularImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+}
+  
+.circularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teamProfileImg {
+    width: 10px;
+    height: auto;
+    margin-right: 10px;
+}
+ 
+.teamRecruiting {
+    color: red;
+}
+  
+
+
+/* 내 팀 (MyTeam) */
+
+.myTeamContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+
+    margin: 0 auto;
+    margin-top: 10px;
+    
+    width: 70%;
+
+    border-radius: 5px;
+    border: 1px solid #b7b7b7;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    
+}
+
+.myTeamProfileContainer{
+    width: 23%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    text-align: center;
+
+    border-right: 1px solid rgb(224, 224, 224);
+
+}
+
+.recentMatchContainer, .reservMatchContainer{
+    width: 35%;
+    margin-bottom: 20px;
+
+    cursor: pointer;
+    text-align: center;
+}
+
+.recentMatchList, .reservMatchList{
+    color: #767676;
+}
+
+.viewDetails{
+
+    font-size: 13px;
+    color: #767676;
+    cursor: pointer;
+}
+
+.viewDetails:hover{
+}
+
+
+.teamCircularImageContainer {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+.teamCircularImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-bottom: -10px;
+}
+  
+.teamCircularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.noticeCheckTeam{
+    margin: 10px;
+    color: #6d6d6d;
+    cursor: pointer;
+    
+}
+
+
+.noticeLogin, .noticeNoTeam{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh; /* 뷰포트 높이에 맞춰 가운데 정렬 */
+    width: 70%;
+
+    margin: 0 auto;
+   
+    border-radius: 5px;
+    border: 1px solid #b7b7b7;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+
+}
+
+.noticeLoginText, .noticeNoTeam{
+    color: #6d6d6d;
+    cursor: pointer;
+    background-color: white;
+
+}
+
+
+.loading{
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    color:#8d8d8d
+}
