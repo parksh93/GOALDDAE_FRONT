@@ -43,7 +43,7 @@ const BestBoard = () => {
                     sx={{
                         margin:{ xs: "2%", sm: "0%"},
                         fontSize:  { xs: "10px", sm: "12px"},
-                        width: { xs: "360px", sm: "460px"},
+                        width: { xs: "353px", sm: "460px"},
                         borderRadius:'10px',
                     }} 
                 >

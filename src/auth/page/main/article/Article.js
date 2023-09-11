@@ -60,7 +60,7 @@ const Article = () => {
           <Box 
             sx={{
               margin:{ xs: "2%", sm: "2%"},
-              width: { xs: "360px", sm: "460px"},
+              width: { xs: "353px", sm: "460px"},
               borderRadius:'10px',
               fontSize: {xs: "", sm: "12px"}
               }} 
