@@ -252,15 +252,13 @@
   padding: 10px;
 }
 
-
-
   .user-card-board {
     transform: translateY(10px);
     text-align: left;
     justify-content: center;
     align-items: left;
     width: 700px;
-    height: 850px;
+    height: 100%;
     padding: 2em;
     background-color: #fff;
     margin-top : -1.5%;

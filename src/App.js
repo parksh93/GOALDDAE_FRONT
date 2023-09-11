@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
+import UserPage from './userComponent/mypage/UserPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider, useUser } from './userComponent/userContext/UserContext';
 import Navigation from './navigation/Navigation';
@@ -31,6 +32,7 @@ const App = () => {
               <Route path='/login' element={<UserLogin />}/>
               <Route path='/logOut' element={<LogOut />}/>
               <Route path='/myPage' element={<MyPage />}/>
+              <Route path="/myPage/:userId" element={<UserPage />} />
               <Route path='/signup' element={<SignupMain/>}/>
               <Route path='/socialSignup' element={<SocialSignupMain/>}/>
               <Route path='/find' element={<FindMain />} />

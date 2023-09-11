@@ -27,7 +27,7 @@ import FriendList from './FriendList';
 import editIcon from '../mypage/img/write.png';
 
 
-function Mypage() {
+function UserPage() {
   const [userInfo, setUserInfo] = useState("");
   const [chosenFile, setChosenFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
@@ -398,7 +398,7 @@ function Mypage() {
                     {/* 이미지 수정 폼 */}
                     <>
                       <Image src={imageUrl || profileImageUrl || userInfo.profileImgUrl} roundedCircle />
-                    <form onSubmit={handleSubmit}>
+                    {/* <form onSubmit={handleSubmit}>
                     <input type="file" style={{ display: "none" }} id="fileInput" onChange={handleFileChange} />
                     <label htmlFor="fileInput" className="profileImg-edit">
                     <img src={editIcon} alt="edit icon" style={{ width: "20px", height: "20px", borderRadius: "0" }} />
@@ -409,7 +409,7 @@ function Mypage() {
                         <button type="button" onClick={() => window.location.reload()} className="profileImg-cancel">취소</button>
                       </>
                     )}
-                    </form>
+                    </form> */}
                     </>
                     </Col>
 
@@ -441,9 +441,9 @@ function Mypage() {
                     <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
                     </div>
 
-                  <div className="buttons">
+                  {/* <div className="buttons">
                       <div className='button-modify' button onClick={handleEditClick}>수정</div>
-                  </div>
+                  </div> */}
                   </>
                   )}
 
@@ -461,4 +461,4 @@ function Mypage() {
   );
 }
 
-export default Mypage;
+export default UserPage;
