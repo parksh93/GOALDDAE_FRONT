@@ -1,43 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./MyPage.css";
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import line from '../mypage/img/Untitled_line.png';
-
-
+import { formatDate } from '../../boardComponent/dateUtils';
+import Chip from '@mui/material/Chip';
 
 function MatchList({ userId }) {
   const [matches, setMatches] = useState([]);
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const matchesPerPage = 3;
 
   useEffect(() => {
     axios.get(`/match/my-individual/${userId}`)
-      .then(response => {
-        console.log('Server response:', response);
-
-        try {
-          // const data = JSON.parse(jsonString);
-          const data = response.data;
-          console.log('Parsed data:', data);
-
-          if (Array.isArray(data)) {
-            setMatches(data);
-          } else {
-            console.error('변환된 데이터가 배열이 아닙니다:', data);
-          }
-        } catch (error) {
-          console.error(`JSON.parse() 호출 중 오류 발생. 유효하지 않은 JSON 문자열일 가능성이 있습니다: ${error}\n원본 문자열: `);
+      .then((response) => {
+        if (!Array.isArray(response.data)) {
+          console.error('Invalid match data:', response.data);
+          return;
         }
+
+        // 최신 게시물부터 정렬
+        const sortedMatches = response.data.sort((a, b) => {
+          const dateA = new Date(a.startTime);
+          const dateB = new Date(b.startTime);
+          return dateB - dateA;
+        });
+
+        setMatches(sortedMatches);
       })
-      .catch(error => {
-        console.error('에러가 발생했습니다!', error);
+      .catch((error) => {
+        console.error('매치 목록을 가져오는 중 오류 발생:', error);
       });
   }, [userId]);
+
+  const startIndex = (currentPageNumber - 1) * matchesPerPage;
+  const endIndex = startIndex + matchesPerPage;
+  const matchesToDisplay = matches.slice(startIndex, endIndex);
+
+
+    // 현재 선택된 페이지 번호 상태
+    const [selectedPage, setSelectedPage] = useState(1);
+
+    // 페이지 번호 클릭 핸들러
+    const handlePageClick = (pageNumber) => {
+      setSelectedPage(pageNumber);
+    };
+
+// 페이징 버튼을 생성
+const renderPaginationButtons = () => {
+  const totalPages = Math.ceil(matches.length / matchesPerPage);
+  const buttons = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    buttons.push(
+      <button
+        key={i}
+        onClick={() => setCurrentPageNumber(i)}
+        className={i === currentPageNumber ? 'active' : ''}
+        style={{
+          backgroundColor: 'transparent',
+          color: '#000',
+          fontWeight: i === currentPageNumber ? 'bold' : 'normal',
+          padding: '5px 10px',
+        }}
+      >
+        {i}
+      </button>
+    );
+  }
+
+  return buttons;
+};
 
 
   return (
     <div className='user-card-match'>
-      {matches.map((match, index) => (
+      {matchesToDisplay.map((match, index) => (
         <div key={index}>
 
           <div className='time' style={{ flex: 1, marginLeft: '20px'  }}>
@@ -57,6 +94,11 @@ function MatchList({ userId }) {
 
         </div>
       ))}
+
+        {/* 페이징 버튼 */}
+        <div className="pagination" style={{ display: 'flex', justifyContent: 'center'}}>
+        {renderPaginationButtons()}
+      </div>
     </div>
   );
 }
