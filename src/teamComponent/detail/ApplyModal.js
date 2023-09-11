@@ -1,19 +1,20 @@
+import React from 'react';
 import styles from './Detail.module.css';
 
-function ApplyModal({setModalOpen, id, title, content, writer}) {
-    const closeModal = () => {
-        setModalOpen(false);
-    };
 
-    return(
-        <div className={styles.container}>
-            <button className={styles.close} onClick={closeModal}>
-                X
-            </button>
-            <p>모달창입니다.</p>
-        </div>
-    );
+const ApplyModal = ({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
 
+  return (
+    <div className={styles.modalContainer}>
+      <div className={styles.modalContent}>
+        {children}
+        <button className={styles.closeBtn} onClick={onClose}>
+          취소
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ApplyModal;

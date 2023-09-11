@@ -119,8 +119,7 @@ const TeamSaveTable = () => {
               console.log("newMemberResponse : ", newMemberResponse);
 
                 if(newMemberResponse.status === 200){
-                  const newMemberId = newMemberResponse.data.userId;
-                  console.log("새로운 멤버(ID:", newMemberId, "가 추가되었습니다.");
+                  console.log("새로운 멤버(ID:", userInfo.id, "가 추가되었습니다.");
               
                 } else {
                     console.log("팀 멤버 추가 실패.");

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
 
 const TeamDetail = () => {
@@ -10,6 +11,8 @@ const TeamDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  
+  const { userInfo } = useUser();
 
   useEffect(() => {
     axios.get(`/team/detail/${id}`)
@@ -34,8 +37,8 @@ const TeamDetail = () => {
   const handleApplication = () => {
     // 가입신청 로직 구현
     setApplicationSubmitted(true);
-    setIsModalOpen(false); // Close the application modal
-    setSuccessModalOpen(true); // Open the success modal    
+    setIsModalOpen(false); // 모달닫기
+    setSuccessModalOpen(true); // 모달열기   
   };
 
   const closeSuccessModal = () => {
@@ -66,14 +69,20 @@ const TeamDetail = () => {
                 <p className={styles.teamInfoText}>선호요일 | {teamInfo.preferredDay}</p>
               </div>
                 <div className={styles.recruitingBtn}>
-                  {teamInfo.recruiting ? (
-                    <button className={styles.recruitingTrueBtn} onClick={openModal}>
+                {userInfo && userInfo.teamId ? ( 
+                    <button className={styles.recruitingFalseBtn} disabled>
                       모집중
                     </button>
                   ) : (
-                    <button className={styles.recruitingFalseBtn} disabled>
-                      모집종료
-                    </button>
+                    teamInfo.recruiting ? (
+                      <button className={styles.recruitingTrueBtn} onClick={openModal}>
+                        모집중
+                      </button>
+                    ) : (
+                      <button className={styles.recruitingFalseBtn} disabled>
+                        모집종료
+                      </button>
+                    )
                   )}
             </div>
           </div>

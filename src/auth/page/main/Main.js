@@ -14,9 +14,9 @@ const Main = () => {
             <div>
                 <NaviBar />
                 <div className="article-board-container">
-                    <div className="Article">
+                    {/* <div className="Article">
                         <Article />
-                    </div>
+                        </div> */}
                     <div className="BestBoard">
                         <BestBoard />
                     </div>
