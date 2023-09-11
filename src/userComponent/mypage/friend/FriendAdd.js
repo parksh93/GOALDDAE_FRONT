@@ -8,11 +8,14 @@ const FriendAdd = ({
     formatDate,
     setOpenAlert,
     setAlertSeverity,
-    setAlertText
+    setAlertText,
+    socketData,
+    sendWebSocket
 }) => {
     const [friendList, setFriendList] = useState(null);
     const [waitBtnText, setWaitBtnText] = useState("대기");
     const [noBtnText, setNoBtnText] = useState("거절");
+    const [btnClick, setBtnClick] = useState(false);
 
     useEffect(() => {
         if(userInfo !== null){
@@ -31,22 +34,22 @@ const FriendAdd = ({
                 setFriendList(null);
             });
         }
-    },[userInfo]);
+    },[userInfo, socketData]);
 
-    const onMouseOverWaitBtn = useCallback(() => {
-        setWaitBtnText("취소");
+    const onMouseOverWaitBtn = useCallback((friendId) => {
+        document.getElementById(`wait${friendId}`).innerText = "취소";
     });
 
-    const onMouseOutWaitBtn = useCallback(() => {
-        setWaitBtnText("대기");
+    const onMouseOutWaitBtn = useCallback((friendId) => {
+        document.getElementById(`wait${friendId}`).innerText = "대기";
     });
 
-    const onMouseOverNoBtn = useCallback(() => {
-        setNoBtnText("삭제");
+    const onMouseOverNoBtn = useCallback((friendId) => {
+        document.getElementById(`no${friendId}`).innerText = "삭제";
     });
 
-    const onMouseOutNoBtn = useCallback(() => {
-        setNoBtnText("거절");
+    const onMouseOutNoBtn = useCallback((friendId) => {
+        document.getElementById(`no${friendId}`).innerText = "거절";
     });
 
     const onClickDeleteFriendRequest = useCallback((toUser, nickname) => {
@@ -56,7 +59,6 @@ const FriendAdd = ({
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
-            window.location.reload();
         }, 1500);
     });
 
@@ -67,19 +69,24 @@ const FriendAdd = ({
         setOpenAlert(true);
         setTimeout(() => {
             setOpenAlert(false);
-            window.location.reload();
-        }, 1500);
+        }, 1500);   
     });
 
     const deleteFatch = useCallback(async (toUser) => {
-        await fetch("/friend/deleteFriendRequest",{
-            method: "DELETE",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                fromUser: userInfo.id,
-                toUser: toUser
-            })
-        });
+        setBtnClick(true);
+        if(!btnClick){ 
+            await fetch("/friend/deleteFriendRequest",{
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fromUser: userInfo.id,
+                    toUser: toUser
+                })
+            }).then(() => {
+                sendWebSocket(toUser);
+                setBtnClick(false);
+            });
+        }
     })
     return (
         <div className={styles.friendAcceptContainer}>
@@ -89,13 +96,15 @@ const FriendAdd = ({
                 <div className={styles.contentDiv}>
                     <img src={friend.profileImgUrl} className={styles.profile}/>
                     <span className={styles.nickname}>{friend.nickname}</span>
-                    {friend.accept === 3 ? <span className={styles.date}>{formatDate(friend.requestDate)} 신청</span> :
-                    friend.accept === 2 ? <span className={styles.date}>{formatDate(friend.acceptDate)} 거절</span> : ""
-                    }
-                    {friend.accept === 3 ? 
-                        <button className={styles.waitBtn} onMouseOver={onMouseOverWaitBtn} onMouseOut={onMouseOutWaitBtn} onClick={() => onClickCancleFriendRequest(friend.id, friend.nickname)}>{waitBtnText}</button> : friend.accept === 2 ? 
-                        <button className={styles.noBtn} onMouseOver={onMouseOverNoBtn} onMouseOut={onMouseOutNoBtn} onClick={() => onClickDeleteFriendRequest(friend.id, friend.nickname)}>{noBtnText}</button> 
-                    : ""}
+                    <div className={styles.btnDiv}>
+                        {friend.accept === 3 ? <span className={styles.date}>{formatDate(friend.requestDate)} 신청</span> :
+                        friend.accept === 2 ? <span className={styles.date}>{formatDate(friend.acceptDate)} 거절</span> : ""
+                        }
+                        {friend.accept === 3 ? 
+                            <button className={styles.waitBtn} id={`wait${friend.id}`} onMouseOver={() => onMouseOverWaitBtn(friend.id)} onMouseOut={() => onMouseOutWaitBtn(friend.id)} onClick={() => onClickCancleFriendRequest(friend.id, friend.nickname)}>대기</button> : friend.accept === 2 ? 
+                            <button className={styles.noBtn} id={`no${friend.id}`} onMouseOver={() => onMouseOverNoBtn(friend.id)} onMouseOut={() => onMouseOutNoBtn(friend.id)} onClick={() => onClickDeleteFriendRequest(friend.id, friend.nickname)}>거절</button> 
+                        : ""}
+                    </div>
                 </div>
             ))
             }

@@ -1,0 +1,16 @@
+.article-board-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.Article {
+    margin-right: 3%;
+}
+
+@media (max-width: 768px) {
+    .article-board-container {
+        flex-direction: column;
+    }
+}

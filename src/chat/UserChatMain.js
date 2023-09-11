@@ -5,130 +5,118 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment/moment";
 import { BsFillChatLeftDotsFill } from "react-icons/bs";
 import Loading from "../loading/Loading";
+import {useLocation} from 'react-router-dom'
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
+import { useUser } from "../userComponent/userContext/UserContext";
 
 const UserChatMain = () => {
-  const [projectId, setProjectId] = useState("");
-  const [messageList, setMessageList] = useState([]);
-  const [messagesLen, setMessagesLen] = useState(0);
-  const [channelId, setChannelId] = useState("");
-  const [channelName, setChannelName] = useState("");
+  const [channelList, setChannelList] = useState([]);
+  const [channelInfo, setChannelInfo] = useState(0);
   const [openRoomState, setOpenRoomState] = useState(false);
   const [openLoading, setOpenLoading] = useState(true);
-
-  const ncloudchat = require("ncloudchat");
-  const nc = new ncloudchat.Chat();
+  const [lastMessageList, setLastMessageList] = useState([]);
+  const location = useLocation();
+  const {getUserInfo, userInfo} = useUser();
+  
+  let friend = undefined;
+  if(location.state !== null) {
+    friend = location.state.friend;
+  }
+  
   useEffect(() => {
-    connect();
-  }, []);
+    getUserInfo();
+  },[])
 
-  const connect = async () => {
-    await nc.initialize(projectId);
-  };
-
-  const openChannelRoom = useCallback(async (channelId, channelName) => {
-    setChannelId(channelId);
-    setChannelName(channelName);
-
-    console.log("channelId : ", channelId);
-
-    // 처음 메시지 수신
-    setMessageList([]);
-    let offset = 0;
-    let per_page = 100;
-    const filter = { channel_id: channelId };
-    const sort = { created_at: 1 };
-    let option = { offset: offset, per_page: per_page };
-    
-    getMessages(filter, sort, option, channelId);
-
-    // const promise = nc.countUnread(channelId);
-    
-    // promise.then((appData) => {
-    //   if(appData.unread > 0){
-    //     offset += per_page;
-    //     per_page = appData.unread;
-    //     option = { offset: offset, per_page: per_page };
-
-    //     getMessages(filter, sort, option, channelId);
-    //   }
-    // });
-    
-    setOpenRoomState(true);
-  }, []);
-
-  const getMessages = async (filter, sort, option, channelId) => {
-    const messages = await nc.getMessages(filter, sort, option);
-
-    setMessagesLen(messages.totalCount);
-
-    for (const message of messages.edges) {
-      let sendDate = formatDate(message);
-
-      await nc.markRead(channelId, {
-        user_id: message.node.sender.id,
-        message_id: message.node.message_id,
-        sort_id: message.node.sort_id,
-      });
-
-      setMessageList((messageList) => [
-        ...messageList,
-        {
-          node: message.node,
-          sendDate: sendDate,
-        },
-      ]);
+  // const sock = new SockJS("http://localhost:8080/chat")
+  // let client = Stomp.over(sock) ;
+  
+  useEffect(() => {
+    if(userInfo !== null){
+        fetch(`/chat/getChannelList/${userInfo.id}`,{method: "GET"})
+        .then(res => res.json())
+        .then(data => {
+        console.log(data);
+        if(data.length !== 0){
+          setChannelList(data);
+          
+          if(friend !== undefined){
+            data.map(channel => {
+              if(channel.friendId === friend.id){
+                setChannelInfo(channel);
+              }
+            });
+            
+            setOpenRoomState(true);
+          }
+        }
+      })
     }
-    setOpenLoading(false);
-  };
+  },[userInfo])
+
+  // useEffect(() => {
+  //   client.connect({}, () => {
+      // console.log("connected : " + userInfo.id)
+      // client.send("/app/join", {}, JSON.stringify(userInfo.id))
+
+      // client.send(`/app/chat/${1}`, {}, JSON.stringify())
+
+      // client.subscibe("/queue/addChatToClient/" + userInfo.id, function(messageDTO) {
+      //   const message = JSON.parse(messageDTO.body);
+      //   console.log(message);
+      // })
+    // })
+  //   return () => client.disconnect();
+  // },[client, userInfo.id]);
 
   // 문자 보낸 시간 초기화
-  const formatDate = (message) => {
+  const formatDate = (sendDate) => {
     const date = new Date();
-    const today =
-      date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
-    let sendDate;
+    const today = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+
+    let formatSendDate;
 
     if (
-      moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "YYYY/M/D"
       ) === today
     ) {
-      sendDate = moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      formatSendDate = moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "오늘 HH시 mm분"
       );
     } else {
-      sendDate = moment(message.node.created_at, "YYYY-MM-DDTHH:mm:ss").format(
+      formatSendDate = moment(sendDate, "YYYY-MM-DDTHH:mm:ss").format(
         "YY/MM/DD HH시 mm분"
       );
     }
 
-    return sendDate;
+    return formatSendDate;
   };
   return (
     <div className={styles.chatMainContainer}>
       <div className={styles.chaList}>
         <UserChatList
-          projectId={projectId}
-          openChannelRoom={openChannelRoom}
-          setProjectId={setProjectId}
+          channelList={channelList}
           setOpenLoading={setOpenLoading}
+          setChannelInfo={setChannelInfo}
+          setOpenRoomState={setOpenRoomState}
+          channelInfo={channelInfo}
+          lastMessageList={lastMessageList}
         />
       </div>
       <div className={styles.chatRoom}>
         {openRoomState === true ? (
-          openLoading ? <Loading/> :
           <UserChatRoom
-            messageList={messageList}
-            messagesLen={messagesLen}
-            channelId={channelId}
-            channelName={channelName}
-            setMessagesLen={setMessagesLen}
-            setMessageList={setMessageList}
-            projectId={projectId}
-            getMessages={getMessages}
-            openRoomState={openRoomState}
-            setOpenRoomState={setOpenRoomState}
             formatDate={formatDate}
+            setOpenRoomState={setOpenRoomState}
+            friend={friend}
+            userInfo={userInfo}
+            channelInfo={channelInfo}
+            setOpenLoading={setOpenLoading}
+            openLoading={openLoading}
+            lastMessageList={lastMessageList}
+            setLastMessageList={setLastMessageList}
+            setChannelInfo={setChannelInfo}
           />
         ) : (
           <div className={styles.outChatRoomDiv}>

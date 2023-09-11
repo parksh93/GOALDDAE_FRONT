@@ -8,6 +8,7 @@
 
 .contentDiv {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .noFriendList{
@@ -33,7 +34,6 @@
 
 .check {
     font-size: 24px;
-    /* float: right; */
     color:gray;
     margin-top: 3px;
     margin-left: 20px;
@@ -44,7 +44,6 @@
 }
 
 .no{
-    /* float: right; */
     margin-left: 15px;
     font-size: 19px;
     color:gray;
@@ -55,7 +54,13 @@
 }
 
 .requestDate{
-    margin-left:57%;
+    /* margin-left:57%; */
     font-size: 13px;
     color: gray;
+}
+
+.infoDiv {
+    display: inline;
+    float: right;
+    margin-right: 5%;
 }
