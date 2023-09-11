@@ -18,8 +18,8 @@
     border-radius: 10px;
     margin-bottom: 20px;
     display: inline-block;
-    padding: 7px;
-    max-width: 80%;
+    padding: 10px;
+    /* max-width: 80%; */
     word-break:break-all;
 }
 
@@ -138,4 +138,44 @@
 
 .chatOutBtn:hover {
     color: black;
+}
+
+
+/* ======sideBar===== */
+.sideBarMyInfoDiv, .sideBarFriendInfoDiv {
+    margin-top: 10px;
+    padding: 7px;
+    border-radius: 10px;
+    margin: 10px;
+}
+.sideBarMyInfoDiv {
+    /* background-color: #d5f1d5; */
+    border: 1px solid #608960;
+}
+
+.sideBarMyInfoDiv *, .sideBarFriendInfoDiv * {
+    vertical-align: middle;
+}
+
+.sideBarProfile {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    /* margin-bottom: 20px; */
+}
+
+.sideBarNickname{
+    font-weight: 600;
+}
+
+.senderInfoDiv * {
+    vertical-align: middle;
+}
+
+.senderProfileImgUrl{
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }

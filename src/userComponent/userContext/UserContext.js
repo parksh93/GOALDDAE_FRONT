@@ -19,6 +19,10 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <UserContext.Provider value={{ getUserInfo, userInfo, setUserInfo }}>
       {children}
