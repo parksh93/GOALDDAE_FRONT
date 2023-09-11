@@ -19,10 +19,11 @@ const BestBoard = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
     <Box sx={{ 
-            height: { xs: '140px', sm:"200px" },
+            height: { xs: '180px', sm:"200px" },
             margin: "1%",
+            marginRight: "39px",
             maxWidth: '100%',
-            padding:'1%',
+            padding:'3%',
             boxShadow:'2px 2px 3px 3px #ccc',
             borderRadius:'15px'}}
         >                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center'}}>
@@ -34,19 +35,20 @@ const BestBoard = () => {
                         color="success"
                         sx={{
                             padding: { xs: '6px 10px', sm: '6px 12px' },
-                            fontSize: { xs: '8px', sm: '12px' }
+                            fontSize: { xs: '8px', sm: '6px' }
                         }}
                     >전체글보기</Button>
                 </div>
                 <Box 
                     sx={{
-                        margin:"2%",
-                        fontSize:  { xs: "10px", sm: "15px"},
-                        width: { xs: "360px", sm: "700px"},
-                        borderRadius:'10px'}} 
+                        margin:{ xs: "2%", sm: "0%"},
+                        fontSize:  { xs: "10px", sm: "12px"},
+                        width: { xs: "360px", sm: "460px"},
+                        borderRadius:'10px',
+                    }} 
                 >
                     {boardTop5.map((communicationBoard) => (
-                      <ul key={communicationBoard.id} style={{ margin: '1%' }}>
+                      <ul key={communicationBoard.id} style={{ margin: '3%' }}>
                           <a href={`/board/detail/${communicationBoard.id}`} className="top5Boards">
                               {communicationBoard.title} [{communicationBoard.replyCount}]
                           </a>

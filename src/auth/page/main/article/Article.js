@@ -39,7 +39,7 @@ const Article = () => {
         height: { xs: '180px', sm:"200px" },
         margin: "1%",
         maxWidth: '100%',
-        padding:'1%',
+        padding:'3%',
         boxShadow:'2px 2px 3px 3px #ccc',
         borderRadius:'15px'}}
       >
@@ -52,16 +52,18 @@ const Article = () => {
             color="success"
             sx={{
               padding: { xs: '6px 10px', sm: '6px 12px' },
-              fontSize: { xs: '8px', sm: '12px' },
+              fontSize: { xs: '8px', sm: '6px' },
             }}
             >전체뉴스보기</Button>
         </div>
         {articles.slice(idxRef.current.start,idxRef.current.end).map((article) =>
           <Box 
             sx={{
-              margin:{ xs: "2%", sm: "1%"},
-              width: { xs: "100%", sm: "700px"},
-              borderRadius:'10px'}} 
+              margin:{ xs: "2%", sm: "2%"},
+              width: { xs: "360px", sm: "460px"},
+              borderRadius:'10px',
+              fontSize: {xs: "", sm: "12px"}
+              }} 
               key={article.id}>
               <div className='title'>
                   <ul><a href={article.url} className="newsLink">{article.title}</a></ul>
