@@ -1,5 +1,4 @@
 .teamDetailBody{
-    background-color: #f8f6f6;
 }
 
 /* detail */
@@ -44,7 +43,6 @@
   
 .leftContainer {
     width: 30%;
-    padding-bottom: 10px;
     border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;

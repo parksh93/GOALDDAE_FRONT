@@ -98,7 +98,7 @@ const TeamList = ({}) => {
         );
         const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight - 400 && !isLoading) {
+        if (scrollTop + clientHeight >= scrollHeight - 600 && !isLoading) {
             setPage((prevPage) => prevPage + 1);
         }
     }, 300);
