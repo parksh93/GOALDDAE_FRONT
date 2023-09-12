@@ -5,10 +5,12 @@ import BoardWritePage from "./writePage/BoardWritePage";
 import BoardEditPage from "./writePage/BoardEditPage";
 import BoardDetailPage from "./detailPage/BoardDetailPage";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import NaviBar from "../auth/page/main/naviBar/NaviBar";
 
 const BoardMainPage = () => {
   return (
     <div>
+      <NaviBar />
       <Link to={`/board`}>
         <h2 style={{margin : '50px', color : '#333333'}}><ChevronRightIcon /> 자유게시판</h2>
       </Link>

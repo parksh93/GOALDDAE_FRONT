@@ -20,6 +20,8 @@ import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDel
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 import Main from './auth/page/main/Main';
+import TeamMatch from './auth/page/teamMatch/TeamMatch';
+import ReservationList from './auth/page/reservationList/ReservationList';
 
 const App = () => {
   return (
@@ -46,6 +48,9 @@ const App = () => {
               <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+
+              <Route path="/match/team/list" element={<TeamMatch />} />
+              <Route path="/reservation/list" element={<ReservationList />} />
             </Routes>
         <Footer/> 
       </>

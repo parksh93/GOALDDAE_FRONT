@@ -36,13 +36,14 @@ const Article = () => {
   return (
     <div style={{ display: 'flex', justifyContent: 'start' }}>
       <Box sx={{ 
-        height: { xs: '180px', sm:"200px" },
+        height: { xs: '180px', sm:"204px" },
+        width: { xs: '350px', sm:"470px" },
         margin: "1%",
         maxWidth: '100%',
         padding:'3%',
         boxShadow:'2px 2px 3px 3px #ccc',
-        borderRadius:'15px'}}
-      >
+        borderRadius:'15px'
+      }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <div className='title'><CampaignIcon color="success" /> <span className="headline">오늘의 핫이슈</span></div>
           <Button 
@@ -52,7 +53,7 @@ const Article = () => {
             color="success"
             sx={{
               padding: { xs: '6px 10px', sm: '6px 12px' },
-              fontSize: { xs: '8px', sm: '6px' },
+              fontSize: { xs: '8px', sm: '8px' },
             }}
             >전체뉴스보기</Button>
         </div>
@@ -62,7 +63,8 @@ const Article = () => {
               margin:{ xs: "2%", sm: "2%"},
               width: { xs: "353px", sm: "460px"},
               borderRadius:'10px',
-              fontSize: {xs: "", sm: "12px"}
+              fontSize: {xs: "", sm: "12px"},
+              fontWeight: "bold"
               }} 
               key={article.id}>
               <div className='title'>

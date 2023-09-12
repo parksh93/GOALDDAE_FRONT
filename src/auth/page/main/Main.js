@@ -10,7 +10,6 @@ import './Main.css';
 
 const Main = () => {
     return (
-        <UserProvider> 
             <div>
                 <NaviBar />
                 <div className="article-board-container">
@@ -25,7 +24,6 @@ const Main = () => {
                 <TimeLine />
                 <MatchListMoreDetails />
             </div>
-        </UserProvider>
     );
 }
 
