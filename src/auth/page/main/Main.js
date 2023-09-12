@@ -10,22 +10,20 @@ import './Main.css';
 
 const Main = () => {
     return (
-        <UserProvider> 
-            <div>
-                <NaviBar />
-                <div className="article-board-container">
-                    <div className="Article">
-                        <Article />
-                    </div>
-                    <div className="BestBoard">
-                        <BestBoard />
-                    </div>
+        <div>
+            <NaviBar />
+            <ImageSlide />
+            <TimeLine />
+            <MatchListMoreDetails />
+            <div className="article-board-container">
+                <div className="Article">
+                    <Article />
                 </div>
-                <ImageSlide />
-                <TimeLine />
-                <MatchListMoreDetails />
+                <div className="BestBoard">
+                    <BestBoard />
+                </div>
             </div>
-        </UserProvider>
+        </div>
     );
 }
 

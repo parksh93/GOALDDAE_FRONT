@@ -3,6 +3,7 @@ import logo from "./image/goalddaeLogo.png"
 import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
 import LoginInfo from "../../loginInfo/LoginInfo";
+import Weather from "./weather/Weather";
 
 const Header = () => {
   return (
@@ -14,6 +15,7 @@ const Header = () => {
               <img src="/img/goalddaeLogo.png" alt="로고" />
             </Link>
           </div>
+          <Weather />
           <div className="search-results">
             <div className="search">
               <FieldSearch />

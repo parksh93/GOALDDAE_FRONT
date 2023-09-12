@@ -1,8 +1,8 @@
 /* 전체 검색 영역의 스타일 */
 .WholeBox {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
-  left: 50%;
+  left: 70%;
   transform: translateX(-50%);
   display: inline-block;
   max-width: 400px;

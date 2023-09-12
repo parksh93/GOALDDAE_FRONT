@@ -1,8 +1,8 @@
 .article-board-container {
     display: flex;
     justify-content: center;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    margin-top: 10%;
+    /* margin-bottom: 1%; */
 }
 
 .Article {

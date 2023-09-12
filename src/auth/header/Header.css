@@ -9,7 +9,6 @@
   width: 100%;
   z-index: 999;
   height: 70px;
-  /* position: fixed; */
 }
 
 .logoAndSearchDiv {
@@ -32,8 +31,6 @@
    }
 }
 
-
-
 .WholeBox {
   position: absolute;
   top: 0;
@@ -48,3 +45,7 @@
     margin-left: 15px;
   }
   
+  .logo {
+    display: inline;
+    position: relative;
+  }

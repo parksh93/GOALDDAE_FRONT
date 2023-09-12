@@ -1,0 +1,41 @@
+
+.weatherMainDiv {
+    display: inline;
+    margin-left: 2%;
+    position: absolute;
+    width: 30%;
+}
+
+.weatherTitle {
+    font-weight: 600;
+}
+.temperature {
+    font-size: 50px;
+}
+
+.otherDiv {
+    display: inline;
+}
+
+.skyDiv {
+    display: inline;
+}
+
+.temperatureDiv {
+    display: inline;
+    margin-left: 5%;
+
+}
+
+.dc {
+    font-size: 12px;
+    margin-left: 3px;
+    margin-top: 25px;
+    position: absolute;
+    font-weight: 800;
+}
+
+.c{
+    margin-left: 5px;
+    font-size: 40px;
+}
