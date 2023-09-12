@@ -4,8 +4,8 @@ import ImageSlide from './imageSlide/ImageSlide'
 import TimeLine from './timeLine/TimeLine';
 import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
-import Article from './article/Article';
 import BestBoard from './bestBoard/BestBoard';
+import Article from './article/Article';
 import './Main.css';
 
 const Main = () => {
@@ -16,7 +16,7 @@ const Main = () => {
                 <div className="article-board-container">
                     <div className="Article">
                         <Article />
-                    </div>
+                    </div> 
                     <div className="BestBoard">
                         <BestBoard />
                     </div>
