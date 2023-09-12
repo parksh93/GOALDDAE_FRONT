@@ -6,6 +6,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ShowerIcon from '@mui/icons-material/Shower';
 import WcIcon from '@mui/icons-material/Wc';
 import SoccerFieldTimeLine from "./SoccerFieldTimeLine";
+import MapComponent from "./MapComponent";
 
 const SoccerFieldMain = () => {
   let { fieldId } = useParams();
@@ -30,14 +31,14 @@ const SoccerFieldMain = () => {
   }
 
   return (
-    <div style={{backgroundColor:"#F5F5F5"}}>
+    <div style={{backgroundColor:"#F5F5F5"}}>      
       <div className={styles.container}>
         <SoccerFieldImageSlide />
         {fieldInfo && 
             <div className={styles.flexContainer}>
               <div className={styles.infoContainer}>
                 <div className={styles.info}>
-                  <div className={styles.infoText}>{fieldInfo.region}</div>
+                  <div className={styles.infoText}>{fieldInfo.region} / {fieldInfo.province}</div>
                   <div className={styles.infoTitle}>{fieldInfo.fieldName}</div>
                   <div className={styles.infoText}>
                     <span>{fieldInfo.fieldSize} / </span>                
@@ -83,7 +84,18 @@ const SoccerFieldMain = () => {
                   </div>
                   <hr className={styles.separator}/>
                   <h3>시설 특이사항</h3>
-                  <div>{fieldInfo.content && fieldInfo.content}</div>
+                  <div>{fieldInfo.content && fieldInfo.content}</div>                  
+                </div>
+                <div className={styles.info}>
+                  <h3>위치 정보</h3>
+                  {fieldInfo.address &&
+                  <>
+                    <MapComponent fieldInfo={fieldInfo} />
+                    <br></br>
+                    <br></br>
+                    <div className={styles.infoText}>상세주소 - {fieldInfo.address}</div>
+                  </> 
+                  }
                 </div>                            
               </div>
               <div className={styles.reservationContainer}>
