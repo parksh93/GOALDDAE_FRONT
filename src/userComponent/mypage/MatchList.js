@@ -99,6 +99,7 @@ const renderPaginationButtons = () => {
         <div className="pagination" style={{ display: 'flex', justifyContent: 'center'}}>
         {renderPaginationButtons()}
       </div>
+
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Payment.module.css";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../userComponent/userContext/UserContext";
 
-const Payment = ({ fieldId, fieldName, reservationFree }) => {
-  const navigete = useNavigate();
+const Payment = ({ fieldId, fieldName, reservationFee, handleReservation }) => {
+  const navigate = useNavigate();
   const { userInfo } = useUser();
   const [franchiseKey, setFranchiseKey] = useState("");
 
@@ -35,7 +35,7 @@ const Payment = ({ fieldId, fieldName, reservationFree }) => {
           pay_method: "card",
           merchant_uid: "GOALDDAEIMP" + makeMerchantUid,
           name: fieldName,
-          amount: reservationFree,
+          amount: reservationFee,
           buyer_email: userInfo.email,
           buyer_name: userInfo.name,
           buyer_tel: userInfo.phoneNumber,
@@ -57,8 +57,8 @@ const Payment = ({ fieldId, fieldName, reservationFree }) => {
                 if (res.status !== 200) {
                   throw new Error();
                 }
-
                 alert("결제 성공");
+                handleReservation()
               })
               .catch(() => {
                 fetch("/payment/cancelPayment", {
@@ -79,17 +79,14 @@ const Payment = ({ fieldId, fieldName, reservationFree }) => {
         }
       );
     } else {
-      alert("로그인이 후 이용 가능합니다.");
-      navigete("/login");
+      alert("로그인 이후 이용 가능합니다.");
+      navigate("/login");
     }
   }
   return (
     <div>
-
-      <div className={styles.kakaopayBtnDiv}>
-        <button onClick={requestPayKakao} className={styles.kakopayBtn}>
-          <img src="../img/kakaopay.Webp" />
-        </button>
+      <div onClick={requestPayKakao} className={styles.reservationFee}>
+        대관비 {reservationFee}원 결제 및 예약하기
       </div>
     </div>
   );

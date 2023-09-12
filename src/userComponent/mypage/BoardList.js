@@ -66,7 +66,7 @@ function BoardList({ userId }) {
         style={{
           backgroundColor: 'transparent',
           color: '#000',
-          fontWeight: currentPageNumber === i + 1 ? 'bold' : 'normal',
+          fontWeight: currentPageNumber === i + 1 ? 'bold' : 'normal', // 선택된 페이지 볼드 처리
           padding: '5px 10px',
         }}
       >

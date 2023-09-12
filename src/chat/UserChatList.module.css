@@ -29,6 +29,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    margin-right: 10px;
 }
 
 .profileImgDiv {
@@ -66,11 +67,15 @@
 .channelDiv{
     margin-bottom: 10px;
     margin-left: 30px;
-    width: 90%;
+    width: 85%;
     padding-left: 20px;
     word-break:break-all;
     padding: 10px;
+    border-radius: 10px;
+}
 
+.channelDiv * {
+    vertical-align: middle;
 }
 
 .channelDiv:hover{

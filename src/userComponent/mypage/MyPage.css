@@ -283,4 +283,12 @@
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
   }
 
+.delete-account-link {
+  margin-top: 140px;
+  margin-left: 110px; 
+  display: block;
+  color: gray;
+  position: absolute;
+}
+
  

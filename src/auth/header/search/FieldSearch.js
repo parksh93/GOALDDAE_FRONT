@@ -52,7 +52,7 @@ const FieldSearch = () => {
               [inputValue]: response.data,
             }));
           } catch (error) {
-            console.error('서버 응답에 실패했습니다:', error);
+            // console.error('서버 응답에 실패했습니다:', error);
           }
         }
       }

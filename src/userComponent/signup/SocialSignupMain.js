@@ -96,7 +96,7 @@ const SocialSignupMain = () => {
   useEffect(() => {
     if (signOk) {
       fetch("/user/socialSignup", {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-type": "application/json",
         },

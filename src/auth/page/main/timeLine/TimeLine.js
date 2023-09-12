@@ -100,34 +100,35 @@ const TimeLine = () => {
   };
 
   useEffect(() => {
-  generateDates();
-
-  // 24시간 마다 시간 동기화
-  const timer = setInterval(() => {
     generateDates();
-  }, 24 * 60 * 60 * 1000);
 
-  // 유저가 페이지 첫 접속 했을 때 금일 매치리스트 조회
-  const fetchTodayMatchList = async () => {
-    const today = new Date();
-    const date = String(today.getDate()).padStart(2,'0');
-    const month = String(today.getMonth() + 1).padStart(2,'0'); 
-    const year = today.getFullYear();
+    // 24시간 마다 시간 동기화
+    const timer = setInterval(() => {
+      generateDates();
+    }, 24 * 60 * 60 * 1000);
 
-    const selectedDateStr = `${year}-${month}-${date}`;
+    // 유저가 페이지 첫 접속 했을 때 금일 매치리스트 조회
+    const fetchTodayMatchList = async () => {
+      const today = new Date();
+      const date = String(today.getDate()).padStart(2,'0');
+      const month = String(today.getMonth() + 1).padStart(2,'0'); 
+      const year = today.getFullYear();
 
-    setSelectedDate(selectedDateStr); 
-    
-    const fetchedMatches = await fetchMatchList(selectedProvince, selectedDateStr);
-    
-    setMatchList(fetchedMatches);
-  };
+      // selectedDate가 null인 경우에만 오늘 날짜로 설정
+      if (!selectedDate) {
+        const selectedDateStr = `${year}-${month}-${date}`;
+        setSelectedDate(selectedDateStr);
+      }
 
-  // 함수 호출 - 금일 매치리스트 
-  fetchTodayMatchList();
+     // 함수 호출 - 금일 매치리스트 
+     fetchMatchList();
 
-  return () => { clearInterval(timer); };
-  }, [selectedProvince]);
+   };
+
+   fetchTodayMatchList();
+
+   return () => { clearInterval(timer); };
+}, [selectedProvince]);
 
   const handleNextDate = () => {
     if (currentIndex < dates.length - 8) {
