@@ -38,7 +38,21 @@ const TeamDetail = () => {
     // 가입신청 로직 구현
     setApplicationSubmitted(true);
     setIsModalOpen(false); // 모달닫기
-    setSuccessModalOpen(true); // 모달열기   
+
+    const applicationData = {
+      teamAcceptStatus: 0,
+      teamId: teamInfo.id,
+      userId: userInfo.id
+    }
+
+    axios.post('/team/addApply', applicationData)
+    .then(response => {
+      setSuccessModalOpen(true);
+    })
+    .catch(error=> {
+      console.error('가입 신청 실패')
+      alert('가입 신청에 실패했습니다.')
+    })
   };
 
   const closeSuccessModal = () => {
