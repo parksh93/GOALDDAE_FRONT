@@ -133,13 +133,13 @@
     background-color: rgb(247, 247, 247)
 }
 
-span::after {
+.teamInfo span::after {
     content: "·";
     margin: 0 4px;
     color: #b0b0b0;
 }
   
-span:last-child::after {
+.teamInfo span:last-child::after {
     content: "";
     margin: 0;
 }
