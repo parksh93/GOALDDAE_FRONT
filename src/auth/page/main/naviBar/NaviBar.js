@@ -23,7 +23,7 @@ const NaviBar = () => {
                 paddingX: isSmallScreen ? "10px" : "50px",
                 backgroundColor: location.pathname === '/' ? '#64CD3C' : 'transparent', 
                 '&:hover': {
-                backgroundColor: '#64CD3C',
+                backgroundColor: '#64CD3C'
                 },
             }}
             onClick={() => navigate('/')}
@@ -38,7 +38,7 @@ const NaviBar = () => {
                 paddingX: isSmallScreen ? "10px" : "50px",
                 backgroundColor: location.pathname === '/match/team/list' ? '#64CD3C' : 'transparent', 
                 '&:hover': {
-                backgroundColor: '#64CD3C',
+                backgroundColor: '#64CD3C'
                 },
             }}
             onClick={() => navigate('/match/team/list')}
