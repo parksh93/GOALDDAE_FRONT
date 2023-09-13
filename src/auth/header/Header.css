@@ -9,6 +9,7 @@
   width: 100%;
   z-index: 999;
   height: 70px;
+  font-family: 'Orbit', sans-serif;
 }
 
 .logoAndSearchDiv {
@@ -37,15 +38,16 @@
   transform: translateX(-50%);
   display: inline-block;
   max-width: 400px;
-  }
+}
 
-  .logo img {
-    height: 55px;
-    width: auto;
-    margin-left: 15px;
-  }
-  
-  .logo {
-    display: inline;
-    position: relative;
-  }
+.logo img {
+  height: 55px;
+  width: auto;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+.logo {
+  display: inline;
+  position: relative;
+}

@@ -1,18 +1,21 @@
 import { useUser } from "../../../userComponent/userContext/UserContext";
 import moment from 'moment';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import styles from "./Weather.module.css";
 import {BsBrightnessHigh, BsCloudRain, BsCloudSun, BsCloudHaze} from 'react-icons/bs';
+import {AiOutlineReload} from 'react-icons/ai';
+import WeatherLoading from "./WeatherLoading";
 
 const Weather = () => {
     // const [nowMinute, setNowMinute] = useState(moment().format("m"));
     const [sky, setSky] = useState("");
     const [temperature, setTemperature] = useState("");
-    const [windDirection, setWindDirection] = useState("");
-    const [windSpeed, setWindSpeed] = useState("");
-    const [precipitation, setPrecipitation] = useState("");
+    // const [windDirection, setWindDirection] = useState("");
+    // const [windSpeed, setWindSpeed] = useState("");
+    // const [precipitation, setPrecipitation] = useState("");
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const {getUserInfo, userInfo} = useUser();
 
@@ -31,7 +34,12 @@ const Weather = () => {
         }else{
             city = "서울";
         }
+    
+        setCity(city);
+        getNowWeather(city);
+    },[userInfo])
 
+    const getNowWeather = useCallback((city) => {
         fetch("/weather/getNowWeather", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -41,38 +49,47 @@ const Weather = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-            if(data[0].precipitation === "강수없음"){
-                if(data[0].sky <= 5){
-                    setSky("맑음");
-                }else if(data[0].sky <= 8)
-                setSky("구름 많음");
-                else{
-                    setSky("흐림");
-                }
+            if(data.precipitation === "강수없음"){
+                setSky(data.sky);
             }else {
-                setSky(`비/강수량 : ${data[0].precipitation}%`);
+                setSky(0);
             }
-            
-            setCity(data[0].city);
-            setTime(data[0].fcstTime);
-            setTemperature(data[0].temperature);
-            setWindDirection(data[0].windDirection);
-            setWindSpeed(data[0].windSpeed);
+            let minute = new Date().getMinutes();
+            if(minute < 10){
+                minute = "0" + minute ;
+            }
+
+            const time = data.fcstTime.substr(0,2) -1 + ":" + minute;
+            setTime(time);
+            setTemperature(data.temperature);
+            setLoading(true);
+        }).catch(() => {
+            console.log("날씨를 가져오는데 실패했습니다.");
         });
     },[])
 
     return (
         <div className={styles.weatherMainDiv}>
+            {loading ? 
+            <>
+            { sky === 0 ? <BsCloudRain className={styles.skyImg}/>
+            : sky <= 5 ? <BsBrightnessHigh className={styles.skyImg}/>
+            : sky <= 8 ? <BsCloudSun className={styles.skyImg}/>
+            : <BsCloudHaze className={styles.skyImg} />
+            }
             <div className={styles.otherDiv}>
-                <span className={styles.weatherTitle}>현재 날씨</span><br/>
-            </div>
-            <div className={styles.skyDiv}>
-                <span>{sky}</span>
+                <span className={styles.weatherTitle}>현재 {city} 날씨</span>
+                <AiOutlineReload className={styles.reload} onClick={() => {setLoading(false); getNowWeather();}}/>
+                <span className={styles.time}>{time}</span>
             </div>
             <div className={styles.temperatureDiv}>
-                <span className={styles.temperature}>{temperature}</span> <span className={styles.dc}>º</span><span className={styles.c}>c</span>
+                <span className={styles.temperature}>{temperature}</span><span className={styles.dc}>°</span><span className={styles.c}>c</span><br/>
             </div>
+            <div className={styles.skyDiv}>
+            </div>
+            </>
+            : <WeatherLoading/>
+            }
         </div>
     );
 }

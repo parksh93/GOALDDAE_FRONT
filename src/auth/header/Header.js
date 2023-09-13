@@ -2,10 +2,14 @@ import "./Header.css";
 import logo from "./image/goalddaeLogo.png"
 import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
-import LoginInfo from "../../loginInfo/LoginInfo";
+import LoginInfo from "./loginInfo/LoginInfo";
 import Weather from "./weather/Weather";
+import WeatherLoading from "./weather/WeatherLoading";
+import {useState} from 'react';
 
 const Header = () => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
       <div className="navbar">

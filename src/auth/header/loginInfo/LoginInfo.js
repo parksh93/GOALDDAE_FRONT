@@ -5,7 +5,7 @@ import buttonStyles from "./LoginInfo.module.css";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import { useUser } from "../userComponent/userContext/UserContext";
+import { useUser } from "../../../userComponent/userContext/UserContext";
 
 const LoginInfo = () => {
   const HtmlTooltip = styled(({ className, ...props }) => (
@@ -17,6 +17,7 @@ const LoginInfo = () => {
       maxWidth: 220,
       fontSize: theme.typography.pxToRem(12),
       border: "1px solid #dadde9",
+      fontFamily: 'Orbit, sans-serif'
     },
   }));
 
