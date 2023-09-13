@@ -115,7 +115,8 @@ const TeamSaveTable = () => {
                 }
 
               const newMemberResponse = await axios.post('/teamMember/add', { userId: userInfo.id,
-                                                                              teamId: newTeamId});
+                                                                              teamId: newTeamId,
+                                                                              teamManager: 0});
               console.log("newMemberResponse : ", newMemberResponse);
 
                 if(newMemberResponse.status === 200){

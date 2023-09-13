@@ -9,6 +9,7 @@ const MyTeamDetail = () => {
     const [teamInfo, setTeamInfo] = useState(null);
     const [error, setError] = useState(false);
     const [selectedTab, setSelectedTab] = useState('info');
+    const [isTeamManager, setIsTeamManager] = useState(false);
 
     const { tabName } = useParams();
 
@@ -31,6 +32,22 @@ const MyTeamDetail = () => {
           });
       }
     },[userInfo]);
+
+    useEffect(() => {
+      if (userInfo) {
+          axios.get(`/teamMember/checkManager?userId=${userInfo.id}&teamId=${userInfo.teamId}`)
+              .then(response => {
+                console.log('팀 매니저 여부:', response.data);
+
+                const isManager = response.data === 0;
+                setIsTeamManager(isManager);
+              })
+              .catch(error => {
+                  console.error('팀 매니저 정보를 가져올 수 없습니다.', error);
+              });
+      }
+    }, [userInfo]);
+
 
     const handleTabChange = (tabName) => {
       setSelectedTab(tabName);
@@ -60,9 +77,11 @@ const MyTeamDetail = () => {
               </div>               
           </div>
             <div>
+            {isTeamManager && (
               <button className={styles.teamDetailUpdateBtn}>
                 프로필 설정
               </button>
+              )}
             </div>
         </div>
 
