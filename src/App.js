@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
 import UserPage from './userComponent/mypage/UserPage';
 import SignupMain from './userComponent/signup/SignupMain';
-import { UserProvider, useUser } from './userComponent/userContext/UserContext';
 import Header from './auth/header/Header';
 import FindMain from './userComponent/find/FindMain';
 import ChangeLostPasswordMain from './userComponent/changePassword/ChangePasswordMain';
@@ -15,7 +14,6 @@ import UserChatMain from './chat/UserChatMain';
 import Footer from './auth/footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import SocialSignupMain from './userComponent/signup/SocialSignupMain';
-import Loading from './loading/Loading';
 import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
@@ -24,6 +22,7 @@ import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 import Main from './auth/page/main/Main';
+import { AdminProvier } from './auth/page/admin/AdminContext';
 
 
 const App = () => {
@@ -46,17 +45,20 @@ const App = () => {
               <Route path='/userChat' element={<UserChatMain />} />
               <Route path='/friend-list' element={<friend-list />} />
               <Route path='/changeLostPassword' element={<ChangeLostPasswordMain />} />
-
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
-              <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
-              <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
              
               <Route path='/team/list' element={<TeamMain/>}/>
               <Route path='/team/detail/:id' element={<TeamDetail />} />
               <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             </Routes>
+            <AdminProvier>
+              <Routes>
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
+                  <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
+                  <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
+              </Routes>
+            </AdminProvier>
         <Footer/> 
       </>
   );
