@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
+import UserPage from './userComponent/mypage/UserPage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider, useUser } from './userComponent/userContext/UserContext';
 import Header from './auth/header/Header';
@@ -19,7 +20,11 @@ import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTabl
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import TeamMain from './teamComponent/TeamMain';
+import TeamDetail from './teamComponent/detail/TeamDetail';
+import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 import Main from './auth/page/main/Main';
+
 
 const App = () => {
   return (
@@ -30,6 +35,7 @@ const App = () => {
               <Route path='/login' element={<UserLogin />}/>
               <Route path='/logOut' element={<LogOut />}/>
               <Route path='/myPage' element={<MyPage />}/>
+              <Route path="/myPage/:userId" element={<UserPage />} />
               <Route path='/signup' element={<SignupMain/>}/>
               <Route path='/socialSignup' element={<SocialSignupMain/>}/>
               <Route path='/find' element={<FindMain />} />
@@ -45,6 +51,10 @@ const App = () => {
               <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
               <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
               <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
+             
+              <Route path='/team/list' element={<TeamMain/>}/>
+              <Route path='/team/detail/:id' element={<TeamDetail />} />
+              <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
               <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             </Routes>
         <Footer/> 
