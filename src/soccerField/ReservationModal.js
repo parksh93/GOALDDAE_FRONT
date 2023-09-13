@@ -31,6 +31,23 @@ const ReservationModal = ( props ) => {
     }
   }
 
+  const doubleCheck = () => {
+
+    const dateFormat = props.selectedDate.year*10000+props.selectedDate.month*100+props.selectedDate.date;
+    const fieldId = props.fieldInfo.id;
+
+    return axios
+      .get(`/reservation/times?fieldId=${fieldId}&date=${dateFormat}`)
+      .then((response) => {
+        const isTimeIncluded = response.data.includes(props.selectedTime);
+        return isTimeIncluded;
+      })
+      .catch((error) => {
+        console.error('Error fetching reservation times:', error);
+      });
+
+  };
+
   const handleReservation = () => {
     const reservationData = {
       reservedDate: props.selectedDate.year*10000+props.selectedDate.month*100+props.selectedDate.date,
@@ -185,6 +202,7 @@ const ReservationModal = ( props ) => {
                   fieldName={props.fieldInfo.fieldName}
                   reservationFee={props.fieldInfo.reservationFee}
                   handleReservation={handleReservation}
+                  doubleCheck={doubleCheck}
                 />
           </Box>
         </Modal>

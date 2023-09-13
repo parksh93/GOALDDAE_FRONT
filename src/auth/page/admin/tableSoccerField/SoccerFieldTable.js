@@ -317,7 +317,7 @@ const numberToTimeString = (number) => {
                     }}
                     value={closingTime}
                     onChange={(e) => e.target.value < operatingHours ?
-                      setClosingTime(operatingHours+1) : e.target.value > 24 ? setClosingTime(24) : setClosingTime(e.target.value)}
+                      setClosingTime(operatingHours+1) : e.target.value > 23 ? setClosingTime(23) : setClosingTime(e.target.value)}
                   />
                 </Box>
             </Paper>
