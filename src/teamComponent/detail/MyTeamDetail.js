@@ -5,53 +5,81 @@ import styles from './Detail.module.css';
 import { useParams } from 'react-router-dom';
 
 const MyTeamDetail = () => {
-    const { userInfo } = useUser();
-    const [teamInfo, setTeamInfo] = useState(null);
-    const [error, setError] = useState(false);
-    const [selectedTab, setSelectedTab] = useState('info');
-    const [isTeamManager, setIsTeamManager] = useState(false);
+  const { userInfo } = useUser();
+  const [teamInfo, setTeamInfo] = useState(null);
+  const [error, setError] = useState(false);
+  const [selectedTab, setSelectedTab] = useState('info');
+  const [isTeamManager, setIsTeamManager] = useState(false);
+  const [applyList, setApplyList] = useState([]);
 
-    const { tabName } = useParams();
+  const { tabName } = useParams();
 
-    useEffect(() => {
-      if (['info', 'recentMatch', 'reservMatch', 'members', 'applyList'].includes(tabName)) {
-        setSelectedTab(tabName);
-      }
-    }, [tabName]);
-
-    useEffect(() => {
-        if (userInfo) {
-        axios.get(`/team/myTeam/${userInfo.teamId}`)
-          .then(response => {
-            setTeamInfo(response.data);
-            setError(false);
-          })
-          .catch(error => {
-            console.error('팀 정보를 가져올 수 없습니다.', error);
-            setError(true);
-          });
-      }
-    },[userInfo]);
-
-    useEffect(() => {
-      if (userInfo) {
-          axios.get(`/teamMember/checkManager?userId=${userInfo.id}&teamId=${userInfo.teamId}`)
-              .then(response => {
-                console.log('팀 매니저 여부:', response.data);
-
-                const isManager = response.data === 0;
-                setIsTeamManager(isManager);
-              })
-              .catch(error => {
-                  console.error('팀 매니저 정보를 가져올 수 없습니다.', error);
-              });
-      }
-    }, [userInfo]);
-
-
-    const handleTabChange = (tabName) => {
+  useEffect(() => {
+    if (['info', 'recentMatch', 'reservMatch', 'members', 'applyList'].includes(tabName)) {
       setSelectedTab(tabName);
-    };
+    }
+  }, [tabName]);
+
+  const fetchApplyList = (teamId) => {
+    axios.get(`/team/checkApply?teamId=${teamId}`)
+      .then(response => {
+        // 서버에서 받은 가입 신청 정보를 상태에 저장
+        setApplyList(response.data);
+        setError(false);
+      })
+      .catch(error => {
+        console.error('가입 신청 정보를 가져오는 중 오류 발생:', error);
+        setError(true);
+      });
+  };
+
+  useEffect(() => {
+      if (userInfo) {
+      axios.get(`/team/myTeam/${userInfo.teamId}`)
+        .then(response => {
+          setTeamInfo(response.data);
+          setError(false);
+        })
+        .catch(error => {
+          console.error('팀 정보를 가져올 수 없습니다.', error);
+          setError(true);
+        });
+    }
+  },[userInfo]);
+
+  useEffect(() => {
+    if (userInfo) {
+      axios.get(`/teamMember/checkManager?userId=${userInfo.id}&teamId=${userInfo.teamId}`)
+        .then(response => {
+          console.log('팀 매니저 여부:', response.data);
+
+          const isManager = response.data === 0;
+          setIsTeamManager(isManager);
+          
+          // 팀 매니저 여부 확인 후, 팀 아이디를 사용하여 가입 신청 정보를 가져옴
+          if (isManager) {
+            fetchApplyList(userInfo.teamId);
+          }
+        })
+        .catch(error => {
+          console.error('팀 매니저 정보를 가져올 수 없습니다.', error);
+        });
+    }
+  }, [userInfo]);
+  
+  const handleAccept = (apply) => {
+    console.log(`가입 수락: ${apply.name}`);
+  };
+  
+  const handleReject = (apply) => {
+    console.log(`가입 거절: ${apply.name}`);
+  };
+    
+
+
+  const handleTabChange = (tabName) => {
+    setSelectedTab(tabName);
+  };
 
   return (
     <div>
@@ -115,13 +143,15 @@ const MyTeamDetail = () => {
               팀원
             </button>
            
+            {isTeamManager && (
             <button
               className={`${styles.myTeamApplyListFilter} ${selectedTab === 'applyList' ? styles.activeTab : ''}`}
               onClick={() => handleTabChange('applyList')}
             >
               가입신청
             </button>
-
+            )}
+            
           </div>
           <div className={styles.myTeamBox}>
             {selectedTab === 'info' && (
@@ -153,11 +183,41 @@ const MyTeamDetail = () => {
                 등록된 팀원이 없습니다.
               </div>
             )}
-            {selectedTab === 'applyList' && (
+           {selectedTab === 'applyList' && (
               <div className={styles.myTeamApplyList}>
-                대기중인 가입신청이 없습니다.
+                {applyList.length === 0 ? (
+                  <p>대기중인 가입신청이 없습니다.</p>
+                ) : (
+                  <div>
+                    {applyList.map((apply, index) => (
+                      <div key={index}>
+
+                        <div className={styles.applyUserInfoContainer}>
+                          <div className={styles.applyUserCircularImageContainer}>
+                            <div className={styles.applyUserCircularImage}>
+                              <img className={styles.applyUserProfileImgUrl} src={apply.ProfileImgUrl} alt={apply.name} />
+                            </div>
+                          </div> 
+                          <div className={styles.applyUserInfo}>
+                            <h3>{apply.name}</h3>
+                              <p>
+                                <span>{apply.preferredCity}</span><span>{apply.preferredArea}</span>
+                              </p>
+                              <div className={styles.acceptRejectButtons}>
+                                <button onClick={() => handleAccept(apply)}>수락</button>
+                                <button onClick={() => handleReject(apply)}>거절</button>
+                              </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
+          
           </div>
         </div>
 

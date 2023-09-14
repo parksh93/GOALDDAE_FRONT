@@ -32,7 +32,7 @@
 }
 
 
-/* 팀 디테일 TeamDetail */
+/* ===================팀 디테일 TeamDetail================= */
 .container {
     width: 80%;
     display: flex;
@@ -114,7 +114,8 @@
     background-color: #cccccc;
 
 }
-/* 가입신청 모달 */
+
+/* =========================가입신청 모달============================ */
 .teamName{
     font-Weight: bold;
 }
@@ -169,7 +170,7 @@
 }
 
 
-/* 실패 모달(failModal) */
+/* =========================실패 모달(failModal) ========================*/
 .failModalContainer {
     position: fixed;
     top: 0;
@@ -192,7 +193,7 @@
 
 
 
-/* 내 팀 디테일(myTeamDetail) */
+/* ====================내 팀 디테일(myTeamDetail)======================= */
 .myTeamContainer{
     width: 100%;
     display: flex;
@@ -302,6 +303,43 @@
     margin-top: 30px;
     font-size: 20px;
 }
+
+/* ======= 가입신청 =======*/
+
+.applyUserInfoContainer {
+    position: relative;
+    display: inline-block;
+    border-bottom: 2px solid gainsboro;
+}
+  
+.applyUserCircularImageContainer {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+    
+    border: 1px solid #000000;
+}
+  
+.applyUserCircularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.applyUserInfo span::after {
+    content: "·";
+    margin: 0 4px;
+    color: #b0b0b0;
+}
+  
+.applyUserInfo span:last-child::after {
+    content: "";
+    margin: 0;
+}
+
 
 /* 모달 전체 적용 
 .closeBtn {

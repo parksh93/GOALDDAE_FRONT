@@ -108,7 +108,7 @@ const TeamSaveTable = () => {
                   const updatedUserTeamId = updateIdResponse.data;
                   console.log("updatedUserTeamId: ",updatedUserTeamId)
 
-                  navigate(`/team/myTeamDetail/${updatedUserTeamId}/info`); 
+                  navigate(`/team/myTeamDetail/${userInfo.teamId}/info`); 
 
                 }else{
                   console.log("유저의 teamId 업데이트 실패");
