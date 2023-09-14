@@ -126,7 +126,6 @@ const SignupMain = () => {
           preferredCity: city,
           preferredArea: area,
           activityClass: activityClass,
-          authority: "user",
         }),
       }).then(() => {
         setModalOpen(false);
