@@ -26,11 +26,8 @@ const UserChatMain = () => {
   
   useEffect(() => {
     getUserInfo();
-  },[])
+  },[]);
 
-  // const sock = new SockJS("http://localhost:8080/chat")
-  // let client = Stomp.over(sock) ;
-  
   useEffect(() => {
     if(userInfo !== null){
         fetch(`/chat/getChannelList/${userInfo.id}`,{method: "GET"})
@@ -39,7 +36,7 @@ const UserChatMain = () => {
         console.log(data);
         if(data.length !== 0){
           setChannelList(data);
-          
+          console.log(data)
           if(friend !== undefined){
             data.map(channel => {
               if(channel.friendId === friend.id){

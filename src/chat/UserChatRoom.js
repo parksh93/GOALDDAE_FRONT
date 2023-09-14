@@ -50,6 +50,7 @@ const UserChatRoom = ({
 
   const sock = new SockJS("http://localhost:8080/chat");
   let client = Stomp.over(sock) ;
+
   useEffect(() => {
     const sendMessageInfo = {
       userId: userInfo.id,
@@ -62,7 +63,7 @@ const UserChatRoom = ({
       client.connect({}, () => {
           client.send("/app/chat/join", {}, JSON.stringify(userInfo.id));
           if(sendMessageOk){
-            client.send(`/app/chat/${friend.id}`, {}, JSON.stringify(sendMessageInfo));
+            client.send(`/app/chat/${channelInfo.friendId}`, {}, JSON.stringify(sendMessageInfo));
             // client.send(`/app/chat/${userInfo.id}`, {}, JSON.stringify(sendMessageInfo));
             setMessgeList([...messageList, sendMessageInfo]);
             // setLastMessageList([...lastMessageList, {
