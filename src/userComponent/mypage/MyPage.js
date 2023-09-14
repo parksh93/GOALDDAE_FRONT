@@ -110,7 +110,7 @@ function Mypage() {
   };
 
 
-  // 프로필사진 조회
+  // 프로필사진 저장전 조회
   useEffect(() => {
     async function fetchProfileImageUrl() {
       try {
