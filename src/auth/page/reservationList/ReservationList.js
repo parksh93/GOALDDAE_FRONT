@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from '../../../userComponent/userContext/UserContext';
 import NaviBar from '../main/naviBar/NaviBar';
+import { Box, Chip } from '@mui/material';
+import FieldImg1 from './FieldImg1.jpeg';
+import { grey } from '@mui/material/colors';
 
 const provinces = [
   "서울", "경기", "인천", "강원", "대전",
@@ -47,65 +50,77 @@ const ReservationList = () => {
 return (
     <div> 
       <NaviBar />
-        <select value={selectedProvince} onChange={e => setSelectedProvince(e.target.value)}> 
+        <select value={selectedProvince} onChange={e => setSelectedProvince(e.target.value)} style={{marginTop:'2%', marginLeft:'15%'}}> 
         <option value="">지역 선택</option> {provinces.map(province => <option key={province} value={province}>{province}</option> )} </select>
-        
+
+        {/* 일자 선택 */}
         <label>
-          예약일:
-          <input type="date" value={reservationDate} onChange={(e) => setReservationDate(e.target.value)} />
+          <input type="date" value={reservationDate} onChange={(e) => setReservationDate(e.target.value)} style={{marginLeft:'1%'}}/>
         </label>
 
-        <select value={reservationPeriod} onChange={(e) => setReservationPeriod(e.target.value)}>
+        <select value={reservationPeriod} onChange={(e) => setReservationPeriod(e.target.value)} style={{marginLeft:'1%'}}>
           <option value="">시간대 선택</option>
           <option value="오전">오전(06:00 ~ 12:00)</option>
           <option value="오후">오후(12:00 ~ 18:00)</option>
           <option value="저녁">저녁(18:00 ~ 24:00)</option>
         </select>
 
-        <select value={inOutWhether} onChange={(e) => setInOutWhether(e.target.value)}>
+        <select value={inOutWhether} onChange={(e) => setInOutWhether(e.target.value)} style={{marginLeft:'1%'}}>
           <option value="">실내외 선택</option>
           <option value="실내">실내</option>
           <option value="실외">실외</option>
         </select>
 
-      <select value={grassWhether} onChange={(e) => setGrassWhether(e.target.value)}>
+      <select value={grassWhether} onChange={(e) => setGrassWhether(e.target.value)} style={{marginLeft:'1%'}}>
         <option value="">잔디 유형 선택</option>
         <option value="천연">천연 잔디</option>
         <option value="인조">인조 잔디</option>
       </select>
-
+    
       {fields.map(field =>
-      <li key={field.id}>
+      <Box key={field.id} sx={{marginLeft:'15%', borderBottom: `1px solid ${grey[500]}`}}>
+        <Box sx={{marginTop:'2%', fontSize:'20px', fontWeight:'bold'}}>{field.fieldName}</Box>
+        <Box sx={{fontSize:'13px', color: grey[600]}}>
+          운영 시간: {field.operatingHours.split(':').slice(0, 2).join(':')} ~ {field.closingTime.split(':').slice(0, 2).join(':')}</Box>
+        <Box sx={{fontSize:'13px', display: 'flex', justifyContent:'flex-start', color: grey[600]}}>
+          {field.toiletStatus && <Box>화장실&middot;</Box>}
+          {field.showerStatus && <Box>샤워실&middot;</Box>}
+          {field.parkingStatus && <Box>주차장</Box>}
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'start' }}>
+          <Box sx={{fontSize:'13px', color: grey[600]}}>
+            <Box>장소: {field.inOutWhether}</Box>
+            <Box>잔디 종류: {field.grassWhether}</Box>
+            <Box>구장 크기: {field.fieldSize}</Box>
+            <Box>대관비: {field.reservationFee}</Box>
+          </Box>
+          <img src={FieldImg1} alt="구장 이미지" style={{width:'10%', marginLeft:'57%'}}/>
+        </Box>  
 
-        <h2>{field.fieldName}</h2>
-        <p>운영 시간: {field.operatingHours} ~ {field.closingTime}</p>
-        <p>장소: {field.province}</p>
-        <p>실내외: {field.inOutWhether}</p>
-        <p>잔디 종류: {field.grassWhether}</p>
-        <p>구장 크기: {field.fieldSize}</p>
-        <p>대관비: {field.reservationFee}</p>
-        <p>화장실 여부: {field.toiletStatus ? '있음' : '없음'}</p>
-        <p>샤워실 여부: {field.showerStatus ? '있음' : '없음'}</p>
-        <p>주차장 여부: {field.parkingStatus ? '있음' : '없음'}</p>
-        <p>구장 이미지1: {field.fieldImg1}</p>
-        
         {field.reservationInfo && (
           <>
-            <h3>예약 가능</h3>
-              { field.reservationInfo.availableTimes.map(time => 
-                <li key={time}>{time}</li>)
-              }
-            { field.reservationInfo.reservedTimes.length > 0 && (
+            <Box sx={{marginTop:'2%', fontSize:'14px', fontWeight:'bold'}}>예약 가능</Box>
+            <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
+              {field.reservationInfo.availableTimes.map(time => 
+                <Box key={time} sx={{margin: '5px'}}>
+                  <Chip label={time.split(':').slice(0, 2).join(':')} sx={{backgroundColor: '#2196f3', color: '#fff'}}/>
+                </Box>)}
+            </Box>
+
+            {field.reservationInfo.reservedTimes.length > 0 && (
               <>
-                <h3>예약 불가능</h3>
-                  { field.reservationInfo.reservedTimes.map(time => 
-                    <li key={time}>{time}</li>)
-                  }
+                <Box sx={{marginTop:'1%', fontSize:'14px', fontWeight:'bold'}}>예약 현황</Box>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', marginBottom: '20px'}}>
+                  {field.reservationInfo.reservedTimes.map(time => 
+                    <Box key={time} sx={{margin: '5px'}}>
+                      <Chip label={time.split(':').slice(0, 2).join(':')} sx={{backgroundColor: '#f44336', color:'#fff'}} />
+                    </Box>)}
+                </Box>
               </>
             )}
           </>
         )}
-      </li>)}
+      </Box>)}
     </div> 
   )}
 export default ReservationList;
