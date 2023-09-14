@@ -1,5 +1,5 @@
 import { useUser } from "../../userContext/UserContext";
-import FriendList from "../FriendList";
+import Userpage_FriendList from "./Userpage_FriendList";
 import FriendSearch from "./FriendSearch";
 import {useState, useEffect, useRef, useCallback} from 'react'
 import styles from './FriendMain.module.css';
@@ -11,6 +11,9 @@ import FriendAdd from "./FriendAdd";
 import FriendBlock from "./FriendBlock";
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const FriendMain = () => {
     const [state, setState] = useState(1);
@@ -19,6 +22,8 @@ const FriendMain = () => {
     const [alertSeverity, setAlertSeverity] = useState("success");
     const {getUserInfo, userInfo} = useUser();    
     const [friendId, setFriendId] = useState(0);
+    const [friendInfo, setFriendInfo] = useState(null);
+    const { userId } = useParams();
 
     const [socketData, setSocketData] = useState();
     //const ws = useRef(null);    //webSocket을 담는 변수, 
@@ -76,6 +81,20 @@ const FriendMain = () => {
         getUserInfo();
     },[]);
 
+    useEffect(() => {
+        // userId를 사용하여 친구 정보를 가져옴
+        const fetchFriendInfo = async () => {
+          try {
+            const response = await axios.post(`/user/getFriendInfo/${userId}`);
+            setFriendInfo(response.data); // 친구 정보 설정
+          } catch (error) {
+            console.error("친구 정보를 가져오는데 실패했습니다.", error);
+          }
+        };
+    
+        fetchFriendInfo(); // 함수 호출
+      }, [userId]);
+
     const onclickSelectBar = (state) => {
         setState(state);
     }
@@ -89,42 +108,66 @@ const FriendMain = () => {
 
     return(
         <div className={styles.friendMain}>
-        <Collapse in={openAlert} sx={{ width: '100%', marginBottom: "20px", position: "relative", zIndex: "2" }}>
-          <Alert severity={alertSeverity} sx={{ position: "relative", zIndex: "2", borderRadius: "20px" }}>
-            {alertText}
-          </Alert>
-        </Collapse>
-        <div className={styles.selectBar}>
-          <SelectBar
-            onclickSelectBar={onclickSelectBar}
-            state={state}
-          />
+            <Collapse in={openAlert} sx={{ width: '100%', marginBottom: "20px",position:"relative", zIndex: "2"}}>
+                    <Alert severity={alertSeverity} sx={{position:"relative", zIndex: "2", borderRadius: "20px"}}>
+                        {alertText}
+                    </Alert>
+            </Collapse>
+            {/* <div className={styles.selectBar}>
+                <SelectBar 
+                    onclickSelectBar={onclickSelectBar} 
+                    state={state}
+                />
+            </div> */}
+            {/* <FriendSearch 
+                userInfo={userInfo}
+                setOpenAlert={setOpenAlert}
+                setAlertSeverity={setAlertSeverity}
+                setAlertText={setAlertText}
+                socketData={socketData}
+                sendWebSocket={sendWebSocket}
+                client={client}
+            /> */}
+            <h2 style={{ fontWeight: 'bold', color: 'green', marginLeft: '20px' }}>목록</h2>
+
+            <div className={styles.contentBox}>
+                {state === 1 ? <Userpage_FriendList 
+                                    userInfo={friendInfo}
+                                    setOpenAlert={setOpenAlert}
+                                    setAlertSeverity={setAlertSeverity}
+                                    setAlertText={setAlertText}
+                                    socketData={socketData}
+                                    sendWebSocket={sendWebSocket}
+                                /> 
+                : state === 2 ? <FriendAdd  
+                                    userInfo={friendInfo} 
+                                    formatDate={formatDate}
+                                    setOpenAlert={setOpenAlert}
+                                    setAlertSeverity={setAlertSeverity}
+                                    setAlertText={setAlertText}
+                                    socketData={socketData}
+                                    sendWebSocket={sendWebSocket}
+                                /> 
+                : state === 3 ? <FriendAccept 
+                                    userInfo={friendInfo} 
+                                    formatDate={formatDate}
+                                    setOpenAlert={setOpenAlert}
+                                    setAlertSeverity={setAlertSeverity}
+                                    setAlertText={setAlertText}
+                                    socketData={socketData}
+                                    sendWebSocket={sendWebSocket}
+                                /> 
+                : <FriendBlock 
+                    userInfo={friendInfo} 
+                    formatDate={formatDate}
+                    setOpenAlert={setOpenAlert}
+                    setAlertSeverity={setAlertSeverity}
+                    setAlertText={setAlertText}
+                    socketData={socketData}
+                    sendWebSocket={sendWebSocket}
+                />}
+            </div>
         </div>
-        {state === 1 && (
-          <FriendSearch
-            userInfo={userInfo}
-            setOpenAlert={setOpenAlert}
-            setAlertSeverity={setAlertSeverity}
-            setAlertText={setAlertText}
-            socketData={socketData}
-            sendWebSocket={sendWebSocket}
-            client={client}
-          />
-        )}
-        <div className={styles.contentBox}>
-          {state === 1 && (
-            <FriendList
-              userInfo={userInfo}
-              setOpenAlert={setOpenAlert}
-              setAlertSeverity={setAlertSeverity}
-              setAlertText={setAlertText}
-              socketData={socketData}
-              sendWebSocket={sendWebSocket}
-            />
-          )}
-        </div>
-      </div>
-      
     );
 }
 

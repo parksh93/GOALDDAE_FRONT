@@ -87,6 +87,8 @@ const FriendList = ({
             }).then(() => {
                 sendWebSocket(friendId);
                 setBtnClick(false);
+                window.location.reload();
+
             });
             setModalOpen(false);
             setAlertSeverity("error");
@@ -104,12 +106,16 @@ const FriendList = ({
         setModalOpen(true);
     });
 
+    const handleNavigate = (userId) => {
+        navigate(`/myPage/${userId}`);
+    };
+
     return (
         <div className={styles.friendListContainer}>
             {friendList.length === 0 ? <span className={styles.noFriendList}>친구 목록이 없습니다</span>
             :
                 friendList.map(friend => (
-                    <div className={styles.contentDiv}>
+                    <div className={styles.contentDiv} style={{ marginTop: '10px' }}>
                         <img src={friend.profileImgUrl} className={styles.profile}/>
                         <span 
                             className={styles.nickname}
@@ -122,7 +128,7 @@ const FriendList = ({
                         >
                             {friend.nickname}
                         </span>
-                        <div className={styles.btnDiv}>
+                        {/* <div className={styles.btnDiv}>
                             <BsSend className={styles.chatBtn} 
                                     onClick={() => 
                                         navigate("/userChat", 
@@ -135,7 +141,7 @@ const FriendList = ({
                             }/>
                             <BsPersonDash className={styles.deleteBtn} onClick={() => onClickDeleteFriend(friend.id, friend.nickname)}/>
                             <BsPersonSlash className={styles.blockBtn} onClick={() => blockModal(friend.id, friend.nickname)}/>
-                        </div>
+                        </div> */}
                     </div>
                 ))
             }

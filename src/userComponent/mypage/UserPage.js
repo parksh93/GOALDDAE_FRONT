@@ -41,7 +41,6 @@ function UserPage() {
         if (response.status === 200) {
           setUserInfo(response.data);
           setImageUrl(response.data.profile_img_url);
-          console.log(userInfo.profileImgUrl)
         } else {
           console.error('에러 : ', response.statusText);
         }
