@@ -25,10 +25,6 @@ const SoccerFieldTable = () => {
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); 
 
-  const [fieldImg1Preview, setFieldImg1Preview] = useState(null);
-  const [fieldImg2Preview, setFieldImg2Preview] = useState(null);
-  const [fieldImg3Preview, setFieldImg3Preview] = useState(null);
-
   const [inputAddressValue, setInputAddressValue] = useState("");
   const [modalState, setModalState] = useState(false);
 
@@ -105,20 +101,38 @@ const SoccerFieldTable = () => {
     setArea(e.target.value);
   });
 
-  const handleFileChange = (e, setter, previewSetter) => {
-    const file = e.target.files[0];
-    setter(file);
+  const handleFileChange = async (e, setter) => {
+    try {
+      const file = e.target.files[0];
   
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      previewSetter(reader.result);
-    };
-    
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      previewSetter(null);
+      if (!file) {
+        // 파일이 선택되지 않은 경우 처리
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      // 파일 업로드 API 호출
+      const response = await axios.post('/field/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      // 업로드된 파일의 URL을 반환받음
+      const imageUrl = response.data;
+  
+      // URL을 setter에 저장
+      setter(imageUrl);
+    } catch (error) {
+      console.error('파일 업로드 중 에러 발생:', error);
+      // 에러 처리 로직 추가
     }
+  };
+
+  const handleRemoveImage = (setter) => {
+    setter(null);
   };
 
   const handleSubmit = async (e) => {
@@ -416,28 +430,40 @@ const numberToTimeString = (number) => {
                       <label htmlFor="fieldImg1">구장 이미지1 </label>
                         <input
                           type="file"
-                          onChange={(e) => handleFileChange(e, setFieldImg1, setFieldImg1Preview)}
+                          onChange={(e) => handleFileChange(e, setFieldImg1)}
                           className="input-field"
                         />
-                        {fieldImg1 && <img src={fieldImg1Preview} alt="" className="preview-image" />}
+                        {fieldImg1 &&
+                        <>
+                        <img src={fieldImg1} alt="" className="preview-image" />
+                        <button onClick={() => handleRemoveImage(setFieldImg1)}>&times;</button>
+                        </>}
                     </Box>
                     <Box mb={2}>
                       <label htmlFor="fieldImg1">구장 이미지2 </label>
                         <input
                           type="file"
-                          onChange={(e) => handleFileChange(e, setFieldImg2, setFieldImg2Preview)}
+                          onChange={(e) => handleFileChange(e, setFieldImg2)}
                           className="input-field"
                         />
-                          {fieldImg2 && <img src={fieldImg2Preview} alt="" className="preview-image" />}
+                        {fieldImg2 &&
+                        <>
+                        <img src={fieldImg2} alt="" className="preview-image" />
+                        <button onClick={() => handleRemoveImage(setFieldImg2)}>&times;</button>
+                        </>}
                     </Box>
                     <Box mb={2}>
                       <label htmlFor="fieldImg1">구장 이미지3 </label>
                         <input
                           type="file"
-                          onChange={(e) => handleFileChange(e, setFieldImg3, setFieldImg3Preview)}
+                          onChange={(e) => handleFileChange(e, setFieldImg3)}
                           className="input-field"
                         />
-                          {fieldImg3 && <img src={fieldImg3Preview} alt="" className="preview-image" />}
+                        {fieldImg3 &&
+                        <>
+                        <img src={fieldImg3} alt="" className="preview-image" />
+                        <button onClick={() => handleRemoveImage(setFieldImg3)}>&times;</button>
+                        </>}
                     </Box>
               </Paper>
               <Box>
