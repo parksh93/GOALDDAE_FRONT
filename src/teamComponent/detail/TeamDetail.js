@@ -84,22 +84,29 @@ const TeamDetail = () => {
                 <p className={styles.teamInfoText}>선호요일 | {teamInfo.preferredDay}</p>
               </div>
                 <div className={styles.recruitingBtn}>
-                {userInfo && userInfo.teamId ? ( 
+                  {userInfo && userInfo.teamId ? ( 
                     <button className={styles.recruitingFalseBtn} disabled>
                       모집중
                     </button>
                   ) : (
-                    teamInfo.recruiting ? (
-                      <button className={styles.recruitingTrueBtn} onClick={openModal}>
-                        모집중
-                      </button>
-                    ) : (
+                    !teamInfo.recruiting ? (
                       <button className={styles.recruitingFalseBtn} disabled>
                         모집종료
                       </button>
+                    ) : (
+                      (userInfo.gender === '남성' && teamInfo.entryGender === '여성') ||
+                      (userInfo.gender === '여성' && teamInfo.entryGender === '남성') ? (
+                        <button className={styles.recruitingFalseBtn} disabled>
+                          가입신청 불가
+                        </button>
+                      ) : (
+                        <button className={styles.recruitingTrueBtn} onClick={openModal}>
+                          모집중
+                        </button>
+                      )
                     )
                   )}
-            </div>
+                </div>
           </div>
 
           <div className={styles.teamIntroduce}>
