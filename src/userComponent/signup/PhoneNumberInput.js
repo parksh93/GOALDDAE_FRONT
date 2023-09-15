@@ -12,10 +12,10 @@ function PhoneNumberInput({
 }) {
   const [isError, setIsError] = useState(false);
   const [helperText, setHelperText] = useState("");
-  const numberRegEx = /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/;
+  const numberRegEx = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 
   const onChange = (e) => {
-    setValue(e.target.value.trim());
+    setValue(e.target.value.trim().replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
     setHelperText('');
     setIsError(false);
     setPhoneNumberOk(false);
@@ -47,7 +47,7 @@ function PhoneNumberInput({
           className={inputStyle}
           onBlur={onBlue}
           />
-          <p style={{fontSize:'10px'}}>* 핸드폰 번호는 "-" 이나 문자 없이 입력해주세요.</p>
+          <p style={{fontSize:'10px'}}>* 핸드폰 번호는 "-" 이 자동으로 생기니 "-"없이 숫자만 입력해주세요.</p>
     </div>
   );
 }
