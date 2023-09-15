@@ -21,3 +21,32 @@
     cursor: pointer;
     border-radius: 3px;
   }
+
+  .imagePreviewContainer {
+    display: flex;
+  }
+
+  .imageContainer {
+    width: 100px;
+    height: 100px;
+    margin: 8px;
+    position: relative;
+  }
+  
+  .image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .deleteButton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: transparent;
+    border: none;
+    color: #333333;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 1;
+  }

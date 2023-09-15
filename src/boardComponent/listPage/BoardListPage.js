@@ -5,8 +5,11 @@ import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import ImageIcon from '@mui/icons-material/Image';
 import styles from './BoardList.module.css'; // CSS 모듈 가져오기
 import { formatDate } from '../dateUtils';
+import { useUser } from "../../userComponent/userContext/UserContext";
 
 function BoardListPage() {
+
+  const { userInfo } = useUser();
     
   const [pageData, setPageData] = useState({});
   const [totalPageNum, setTotalPageNum] = useState("");
@@ -98,9 +101,15 @@ function BoardListPage() {
         </tbody>
       </table>
 
-      <Link to={`/board/write`} className={styles.writeButton}>
-          <button>글 작성</button>
-        </Link>
+      {userInfo ? 
+          <Link to={`/board/write`} className={styles.writeButton}>
+            <button>글 작성</button>
+          </Link>  
+          :
+          <Link to={`/login`} className={styles.writeButton}>
+            <button>글 작성</button>
+          </Link>     
+      }
       
       
       <div className={styles.pageButtons}>
