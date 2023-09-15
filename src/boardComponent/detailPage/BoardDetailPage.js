@@ -10,31 +10,42 @@ import styles from "./detailPage.module.css";
 
 const BoardDetailPage = () => {
   const { id } = useParams();
-  const { userInfo } = useUser() || { id: 0, nickname: "Guest" };
+  const { userInfo} = useUser();
   const [boardDetail, setBoardDetail] = useState({});
+  const [user, setUser] = useState([])
 
   useEffect(() => {
-    if (userInfo && userInfo.id !== null) {
-      // 글 상세정보를 가져오는 요청
-      axios.get(`/board/detail/${id}`).then((response) => {
-        setBoardDetail(response.data);
-      });
+    if (userInfo) {
+      setUser({
+        id : userInfo.id,
+        nickname : userInfo.nickname
+      })
+    } else {
+      setUser({
+        id : 0,
+        nickname : "guest"
+      })
     }
+
+    // 글 상세정보를 가져오는 요청
+    axios.get(`/board/detail/${id}`).then((response) => {
+      setBoardDetail(response.data);
+    });
   }, [id, userInfo]);
 
   return (
     <div className={styles.container}>
-      {userInfo && (
+      {user && (
         <>
           <div className={styles.postSection}>
-            <PostDetail boardDetail={boardDetail} userInfo={userInfo} />
+            <PostDetail boardDetail={boardDetail}/>
             <br />
-            <HeartDetail boardDetail={boardDetail} userInfo={userInfo} />            
+            <HeartDetail boardDetail={boardDetail} userInfo={user}/>            
           </div>
           <hr className={styles.separator} />
-          <PostButton boardDetail={boardDetail} userInfo={userInfo} />
+          <PostButton boardDetail={boardDetail} userInfo={user}/>
           <br />
-          <ReplyDetail boardDetail={boardDetail} userInfo={userInfo} />
+          <ReplyDetail boardDetail={boardDetail} userInfo={user}/>
         </>
       )}
     </div>

@@ -1,5 +1,4 @@
 import { useUser } from "../../../userComponent/userContext/UserContext";
-import moment from 'moment';
 import {useState, useEffect, useCallback} from 'react';
 import styles from "./Weather.module.css";
 import {BsBrightnessHigh, BsCloudRain, BsCloudSun, BsCloudHaze} from 'react-icons/bs';
@@ -7,12 +6,8 @@ import {AiOutlineReload} from 'react-icons/ai';
 import WeatherLoading from "./WeatherLoading";
 
 const Weather = () => {
-    // const [nowMinute, setNowMinute] = useState(moment().format("m"));
     const [sky, setSky] = useState("");
     const [temperature, setTemperature] = useState("");
-    // const [windDirection, setWindDirection] = useState("");
-    // const [windSpeed, setWindSpeed] = useState("");
-    // const [precipitation, setPrecipitation] = useState("");
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
     const [loading, setLoading] = useState(false);

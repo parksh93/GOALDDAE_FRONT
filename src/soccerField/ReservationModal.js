@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import { Box } from "@material-ui/core";
+import { Box, InputLabel, Select } from "@material-ui/core";
 import Payment from "../payment/Payment";
 import { useState } from "react";
 import styles from "./SoccerField.module.css";
@@ -7,6 +7,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
+import { FormControl, MenuItem } from "@mui/material";
 
 const ReservationModal = ( props ) => {
 
@@ -29,6 +30,23 @@ const ReservationModal = ( props ) => {
       setTeamId(newTeamInfo === "individual" ? -1 : props.userInfo.teamId);
     }
   }
+
+  const doubleCheck = () => {
+
+    const dateFormat = props.selectedDate.year*10000+props.selectedDate.month*100+props.selectedDate.date;
+    const fieldId = props.fieldInfo.id;
+
+    return axios
+      .get(`/reservation/times?fieldId=${fieldId}&date=${dateFormat}`)
+      .then((response) => {
+        const isTimeIncluded = response.data.includes(props.selectedTime);
+        return isTimeIncluded;
+      })
+      .catch((error) => {
+        console.error('Error fetching reservation times:', error);
+      });
+
+  };
 
   const handleReservation = () => {
     const reservationData = {
@@ -169,18 +187,22 @@ const ReservationModal = ( props ) => {
             <TextField
               color="success"
               id="standard-number"
-              InputLabelProps={{
-                shrink: true,
-              }}
+              select
               value={level}
               onChange={(e) => setLevel(e.target.value)}
-            />
+            >
+              <MenuItem value="유망주">유망주</MenuItem>
+              <MenuItem value="세미프로">세미프로</MenuItem>
+              <MenuItem value="프로">프로</MenuItem>
+              <MenuItem value="월드클래스">월드클래스</MenuItem>
+            </TextField>
             <hr className={styles.separator}/>
             <Payment
                   fieldId={props.fieldInfo.id}
                   fieldName={props.fieldInfo.fieldName}
                   reservationFee={props.fieldInfo.reservationFee}
                   handleReservation={handleReservation}
+                  doubleCheck={doubleCheck}
                 />
           </Box>
         </Modal>

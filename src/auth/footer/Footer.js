@@ -8,7 +8,8 @@ import Goalddae from './goallddae/goallddae';
 const Footer = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+    // 관리자 페이지에서는 안보이게 설정
+    if(window.location.pathname.startsWith('/admin')) return null;
     return (
         <Box sx={{
             bgcolor: "#3a3a3a", 
