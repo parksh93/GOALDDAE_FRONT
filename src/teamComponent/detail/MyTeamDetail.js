@@ -66,16 +66,53 @@ const MyTeamDetail = () => {
         });
     }
   }, [userInfo]);
-  
+
   const handleAccept = (apply) => {
-    console.log(`가입 수락: ${apply.name}`);
+
+    const requestData = {
+      teamApplyDTO: {
+        userId: apply.userId,
+        teamId: apply.teamId,
+        teamAcceptStatus: 1,
+      },
+      teamMemberDTO: {
+        teamManager: 1,
+        userId: apply.userId,
+        teamId: apply.teamId,
+      },
+      getUserInfoDTO: {
+        id: apply.userId,
+        teamId: apply.teamId,
+      },
+    };
+  
+      axios.post('/team/acceptApply', requestData)
+      .then(response => {
+      console.log("response : ", response)
+      console.log(`가입 수락: ${apply.name}`);
+      
+      fetchApplyList(userInfo.teamId);
+      })
+      .catch(error=> {
+        console.error('가입신청 수락 실패', error)
+      })
+      
   };
   
   const handleReject = (apply) => {
-    console.log(`가입 거절: ${apply.name}`);
+    axios.patch('/team/rejectApply', { userId: apply.userId,
+                                       teamId: apply.teamId}
+    )
+      .then(response => {
+        console.log("Response: ",response)
+        console.log(`가입 거절: ${apply.name}`);
+        
+        fetchApplyList(userInfo.teamId);
+      })
+      .catch(error=> {
+        console.error('가입신청 거절 실패', error)
+      })
   };
-    
-
 
   const handleTabChange = (tabName) => {
     setSelectedTab(tabName);
@@ -203,9 +240,9 @@ const MyTeamDetail = () => {
                               <p>
                                 <span>{apply.preferredCity}</span><span>{apply.preferredArea}</span>
                               </p>
-                              <div className={styles.acceptRejectButtons}>
-                                <button onClick={() => handleAccept(apply)}>수락</button>
-                                <button onClick={() => handleReject(apply)}>거절</button>
+                              <div className={styles.applyButtons}>
+                                <button className={styles.acceptButtons} onClick={() => handleAccept(apply)}>수락</button>
+                                <button className={styles.rejectButtons} onClick={() => handleReject(apply)}>거절</button>
                               </div>
                           </div>
 

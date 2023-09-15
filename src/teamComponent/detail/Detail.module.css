@@ -328,7 +328,6 @@
     object-fit: cover;
 }
 
-
 .applyUserInfo span::after {
     content: "·";
     margin: 0 4px;
@@ -338,6 +337,20 @@
 .applyUserInfo span:last-child::after {
     content: "";
     margin: 0;
+}
+
+.acceptButtons{
+    margin-right: 5px; 
+}
+
+.acceptButtons, .rejectButtons{
+}
+
+.acceptButtons:hover, .rejectButtons:hover{
+    border: 1px solid green;
+    background-color: #fff;
+    color: green;
+
 }
 
 
