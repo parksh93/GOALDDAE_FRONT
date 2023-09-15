@@ -8,6 +8,7 @@ function Sidebar({menuState, setMenuState}) {
   const menus = [
     { name: "팀관리"},
     { name: "구장관리"},
+    { name: "게시글관리"},
     { name: "사용자관리"},
     { name: "관리자관리"}
 

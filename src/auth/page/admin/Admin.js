@@ -17,7 +17,7 @@ const Admin = () => {
       menuState={menuState}
       setMenuState={setMenuState}
     />
-    {menuState === 3 ? 
+    {menuState === 4 ? 
       <AdminManageMent />
     : ""
     }
