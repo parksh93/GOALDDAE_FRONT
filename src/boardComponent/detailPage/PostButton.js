@@ -23,6 +23,11 @@ const PostButton = ({ boardDetail, userInfo }) => {
   };
 
   const handleReport = () => {
+
+    if(userInfo.id === 0){
+      return;
+    }
+
     const reason = window.prompt("신고 사유를 입력하세요:", reportReason);
     if (reason !== null) {
       const requestData = {
