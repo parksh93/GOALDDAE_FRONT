@@ -3,26 +3,27 @@ import ImageSlide from './imageSlide/ImageSlide'
 import TimeLine from './timeLine/TimeLine';
 import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
-import Article from './article/Article';
 import BestBoard from './bestBoard/BestBoard';
+import Article from './article/Article';
 import './Main.css';
 
 const Main = () => {
     return (
-            <div>
-                <NaviBar />
-                <div className="article-board-container">
-                    <div className="Article">
-                        <Article />
-                    </div>
-                    <div className="BestBoard">
-                        <BestBoard />
-                    </div>
+        <div>
+            <NaviBar />
+            <ImageSlide />
+            <div className="article-board-container">
+                <div className="Article">
+                    <Article />
                 </div>
-                <ImageSlide />
-                <TimeLine />
-                <MatchListMoreDetails />
+                <div className="BestBoard">
+                    <BestBoard />
+                </div>
             </div>
+            <TimeLine />
+            <MatchListMoreDetails />
+            
+        </div>
     );
 }
 

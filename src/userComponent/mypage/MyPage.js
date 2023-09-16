@@ -20,7 +20,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import FriendMain from './friend/FriendMain';
@@ -38,7 +38,9 @@ function Mypage() {
   const [nicknameChanged, setNicknameChanged] = useState(false);
   const [availableAreas, setAvailableAreas] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [viewMode, setViewMode] = useState('USER_INFO');
+  const navigate = useNavigate();
 
 
   const seoulAreas = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
@@ -57,7 +59,24 @@ function Mypage() {
   const jeonnamAreas = ["목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"];
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
-  const [selectedFile, setSelectedFile] = useState(null);
+
+  //  회원탈퇴
+  const handleDeleteAccount = async (event) => {
+    event.preventDefault();
+  
+    const confirmed = window.confirm("정말로 탈퇴하시겠습니까?");
+    if (confirmed) {
+      try {
+        await axios.post('/user/logout');
+        await axios.post(`/user/deleteAccount/${userInfo.id}`);
+        window.location.href = '/'; 
+        
+      } catch (error) {
+        console.error("회원 탈퇴 중 오류가 발생했습니다. :", error);
+      }
+    }
+  };
+
 
 
   // 프로필사진 수정
@@ -176,9 +195,17 @@ function Mypage() {
 
   const handleEditClick = () => {
     setIsEditing(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
   const handleCancelClick = () => {
     setIsEditing(false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
 
@@ -213,6 +240,10 @@ function Mypage() {
       if (response.status === 200) {
         setUserInfo(userInfo);
         setIsEditing(false);
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       } else {
         console.error('수정된 정보가 전달이 안됐어요! : ', response.statusText);
       }
@@ -368,13 +399,18 @@ function Mypage() {
                 </ListItem>
                 </List>
                 </Box>
+                
+                <Link to="#" onClick={handleDeleteAccount} className="delete-account-link">
+                  회원 탈퇴
+                </Link>
                 </div>
+               
 
                 <div className="user-cards-wrapper">
 
                 {/* 사이드메뉴 상세보기 */}
                 {viewMode === "MATCH_LIST" ? (
-                  <MatchList />
+                  <MatchList userId={userInfo.id}/>
                 ) : viewMode === "BOARD_LIST" ? (
                   <BoardList userId={userInfo.id} /> 
                 ) : viewMode === "FRIEND_LIST" ? (
@@ -429,7 +465,7 @@ function Mypage() {
                     <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
                     </div>
 
-                    <div className="buttons">
+                  <div className="buttons">
                       <div className='button-modify' button onClick={handleEditClick}>수정</div>
                   </div>
                   </>

@@ -34,6 +34,10 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
 
     const handleLike = () => {
 
+        if(userInfo.id === 0){
+            return;
+        }
+
         const requestData = { boardId: boardDetail.id, userId: userInfo.id }
         
         

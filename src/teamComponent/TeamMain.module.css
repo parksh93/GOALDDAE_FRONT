@@ -1,0 +1,6 @@
+.body{
+    /* background: linear-gradient(to top, rgb(250, 250, 250), transparent 90%); */
+
+    background-color: f8f6f6;
+    z-index: -3;
+}

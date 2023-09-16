@@ -1,0 +1,38 @@
+.container {
+    display: inline-block;
+    position: absolute;
+    margin-left: 5%;
+    font-family: 'Orbit', sans-serif;
+    width: 75%
+}
+
+.gridDiv {
+    width: 100%;
+}
+
+.gridDiv *::-webkit-scrollbar {
+    background: rgb(241, 241, 241);
+    border: none;
+    height: 10px;
+}
+
+.gridDiv *::-webkit-scrollbar-thumb {
+    background: rgb(190, 190, 190);
+    border-radius: 20px;
+}
+
+div ul{
+    display: block;
+}
+
+.modalDeleteBtn {
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: black;
+    font-size: 15px;
+}   
+
+.modalDeleteBtn:hover {
+    color: lightgray;
+}

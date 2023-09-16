@@ -1,29 +1,31 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import SidebarItem from "./SideBarItem.js";
 import './SideBar.css'; 
 
-function Sidebar() {
+function Sidebar({menuState, setMenuState}) {
 
   const menus = [
-    { name: "구장 등록", path: "/admin/soccerField/save"},
-    { name: "구장 수정", path: "/admin/soccerField/update"},
-    { name: "구장 삭제", path: "/admin/soccerField/delete"},
-    { name: "팀 생성", path: "/admin/team/save"}
+    { name: "팀관리"},
+    { name: "구장관리"},
+    { name: "게시글관리"},
+    { name: "사용자관리"},
+    { name: "관리자관리"}
 
   ];
 
   return (
     <>
         <div className="sidebar">
-        <h3>관리자 페이지</h3>
+        <h2>MENU</h2>
         {menus.map((menu, index) => {
             return (
-            <Link to={menu.path} key={index}>
-                <SidebarItem
+              <SidebarItem
                 menu={menu}
-                />
-            </Link>
+                index={index}
+                menuState={menuState}
+                setMenuState={setMenuState}
+              />
             );
         })}
         </div>

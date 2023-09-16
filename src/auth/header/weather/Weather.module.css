@@ -1,0 +1,81 @@
+
+.weatherMainDiv {
+    display: inline;
+    margin-left: 2%;
+    position: absolute;
+    width: 50%;
+    /* 드래그 방지 */
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+}
+
+.skyImg {
+    position: inherit;
+    font-size: 50px;
+    margin-left: 7.5%;
+    margin-top: 8px;
+    color: rgba(226, 226, 226, 0.904);
+}
+
+.otherDiv *{
+    vertical-align: middle;
+}
+
+.weatherTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: gray;
+    position: relative;
+}
+
+.reload{
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    padding: 1px;
+    font-size: 8px;
+    margin-left: 8px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.reload:hover {
+    color: lightgray;
+}
+
+.temperature {
+    font-size: 30px;
+    margin-right: 2px;
+    position: relative;
+}
+
+.temperatureDiv {
+    display: inline;
+}
+
+.skyDiv {
+    display: inline;
+    position: absolute;
+}
+
+.sky {
+    font-size: 13px;
+    color: gray;
+}
+
+.time {
+    font-size: 10px;
+}
+
+.dc {
+    font-size: 12px;
+    margin-top: 9px;
+    position: absolute;
+    font-weight: 800;
+}
+
+.c{
+    margin-left: 1px;
+    font-size: 30px;
+}

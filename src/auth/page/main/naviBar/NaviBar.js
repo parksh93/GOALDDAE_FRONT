@@ -14,7 +14,7 @@ const NaviBar = () => {
 
   return (
     <>
-        <Box sx={{ bgcolor:"#4BAF4B", color:"white", display: "flex",justifyContent:"center" }}>
+        <Box sx={{ bgcolor:"#4BAF4B", color:"white", display: "flex", justifyContent:"center" }}>
           <Button 
             sx={{ 
                 color:"white",
