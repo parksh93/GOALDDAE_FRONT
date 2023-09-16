@@ -42,9 +42,9 @@ const ReservationList = () => {
       })
       .then(response => {
         if (pageNumber === 1) {
-            setFields(response.data.content); // 첫 페이지일 경우에는 새로운 데이터만 설정
+            setFields(response.data.content); 
         } else {
-            setFields(prevFields => [...prevFields, ...response.data.content]); // 그 외의 경우에는 이전 데이터와 합침
+            setFields(prevFields => [...prevFields, ...response.data.content]);
         }
       })
       .catch(error => console.error(`Error: ${error}`));
@@ -52,7 +52,7 @@ const ReservationList = () => {
   }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod, pageNumber]);
   
   useEffect(() => {
-    if (selectedProvince !== defaultProvince) { // defaultProvince와 다르면 fields와 pageNumber 초기화
+    if (selectedProvince !== defaultProvince) { 
       setFields([]);
       setPageNumber(1);
     }
@@ -87,6 +87,7 @@ return (
           style={{
             marginTop: '2%',
             marginLeft: '15%',
+            marginBottom: '2%',
             padding: '8px',
             borderRadius: '4px',
             borderColor: '#ccc',
@@ -177,6 +178,9 @@ return (
               <Box sx={{fontSize:'13px', color: grey[600]}}>
                 운영 시간: {field.operatingHours.split(':').slice(0, 2).join(':')} ~ {field.closingTime.split(':').slice(0, 2).join(':')}
               </Box>
+              <Box sx={{fontSize:'13px', color: grey[600]}}>
+                주소: {field.address}
+              </Box>
               <Box sx={{fontSize:'13px', display: 'flex', justifyContent:'flex-start', color: grey[600]}}>
                 {field.toiletStatus && <Box>화장실&middot;</Box>}
                 {field.showerStatus && <Box>샤워실&middot;</Box>}
@@ -194,7 +198,7 @@ return (
 
               {field.reservationInfo && (
                 <>
-                  <Box sx={{marginTop:'0%', fontSize:'14px', fontWeight:'bold'}}>예약 가능</Box>
+                  <Box sx={{fontSize:'14px', fontWeight:'bold'}}>예약 가능</Box>
                   <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
                     <Link to={`/soccer_field/${field.id}`} style={{ textDecoration: 'none', color: 'inherit',display: 'flex', alignItems: 'start' }}>
                       {field.reservationInfo.availableTimes.map(time => 
