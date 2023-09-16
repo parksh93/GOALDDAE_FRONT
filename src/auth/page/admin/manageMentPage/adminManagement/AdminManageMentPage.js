@@ -2,7 +2,7 @@ import commonStyle from "../ManageMentPage.module.css"
 import AdminTable from "./AdminTable";
 
 
-const AdminManageMent = () => {
+const AdminManagement = () => {
 
     return (
         <div className={commonStyle.container}>
@@ -14,4 +14,4 @@ const AdminManageMent = () => {
     )
 }
 
-export default AdminManageMent;
+export default AdminManagement;

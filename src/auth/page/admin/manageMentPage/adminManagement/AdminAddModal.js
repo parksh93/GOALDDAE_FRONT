@@ -54,7 +54,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
                 console.log(phoneNumber)
                 if(numberRegEx.test(phoneNumber)){
                     fetch("/admin/saveAdmin", {
-                        method: "POST",
+                        method: "PUT",
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify({
                             loginId: loginId,
