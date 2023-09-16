@@ -21,6 +21,8 @@ import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 import Main from './auth/page/main/Main';
+import TeamMatch from './auth/page/teamMatch/TeamMatch';
+import ReservationList from './auth/page/reservationList/ReservationList';
 import { AdminProvier } from './auth/page/admin/AdminContext';
 import AdminLogin from './auth/page/admin/login/AdminLogin';
 import AdminHeader from './auth/page/admin/header/AdminHeader';
@@ -50,15 +52,17 @@ const App = () => {
             <Route path='/team/list' element={<TeamMain/>}/>
             <Route path='/team/detail/:id' element={<TeamDetail />} />
             <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
-            
+            <Route path="/match/team/list" element={<TeamMatch />} />
+
             <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
             <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
             <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
             <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
+            <Route path="/reservation/list" element={<ReservationList />} />
           </Routes>
-          </AdminProvier>
+        </AdminProvier>
         <Footer/> 
       </>
   );

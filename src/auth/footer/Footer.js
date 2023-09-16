@@ -13,7 +13,7 @@ const Footer = () => {
     return (
         <Box sx={{
             bgcolor: "#3a3a3a", 
-            height : isSmallScreen? "120%" : "50vh", 
+            height : isSmallScreen? "120%" : "35vh", 
             paddingBottom:"7%", color:"white",
             paddingLeft: '5%' 
             }}>
@@ -44,7 +44,7 @@ const Footer = () => {
             </Box>
         ) : (
             <Box sx={{
-                marginTop: "20%",
+                marginTop: "10%",
                 display:"flex", 
                 flexDirection: "row", 
                 justifyContent:"flex-start",
