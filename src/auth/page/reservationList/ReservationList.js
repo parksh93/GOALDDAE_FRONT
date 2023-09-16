@@ -23,7 +23,6 @@ const ReservationList = () => {
   const [fields, setFields] = useState([]);
   const [reservationDate,setReservationDate] = useState(new Date().toISOString().slice(0,10));
   const [reservationPeriod, setReservationPeriod] = useState('');
-  const [page, setPage] = useState(1);
   const loadingRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const ReservationList = () => {
           province : selectedProvince,
           reservationDate,
           reservationPeriod
-              }
+        }
       })
         .then(response => setFields(response.data))
         .catch(error => console.error(`Error: ${error}`));
@@ -50,7 +49,6 @@ const ReservationList = () => {
     setSelectedProvince(preferredCity);
   }, [userInfo]);
 
-
 return (
   <div> 
     <NaviBar />
@@ -63,7 +61,7 @@ return (
           padding: '8px',
           borderRadius: '4px',
           borderColor: '#ccc',
-          fontSize: '16px',
+          fontSize: '14px',
         }}
       >
         <option value="">지역 선택</option>
@@ -84,7 +82,7 @@ return (
             padding: '8px',
             borderRadius: '4px',
             border: '1px solid #ccc', 
-            fontSize: '16px',
+            fontSize: '14px',
             outline: 'none'
           }}
         />
@@ -98,7 +96,7 @@ return (
           padding: '8px',
           borderRadius: '4px',
           borderColor: '#ccc',
-          fontSize: '16px',
+          fontSize: '14px',
         }}
       >
         <option value="">시간대 선택</option>
@@ -115,7 +113,7 @@ return (
           padding: '8px',
           borderRadius: '4px',
           borderColor: '#ccc',
-          fontSize: '16px',
+          fontSize: '14px',
         }}
       >
         <option value="">실내외 선택</option>
@@ -131,7 +129,7 @@ return (
         padding: '8px',
         borderRadius: '4px',
         borderColor: '#ccc',
-        fontSize: '16px',
+        fontSize: '14px',
       }}
     >
       <option value="">잔디 유형 선택</option>
@@ -142,7 +140,7 @@ return (
     {fields.map((field, index) =>
       <div key={field.id} ref={index === fields.length - 1 ? loadingRef : null}>     
         <Link to={`/soccer_field/${field.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Box key={field.id} sx={{marginLeft:'15%', borderBottom: `1px solid ${grey[500]}`, width: '50%'}}>
+          <Box key={field.id} sx={{marginLeft:'15%', borderBottom: `1px solid ${grey[500]}`, width: '1100px'}}>
             <Box sx={{marginTop:'2%', fontSize:'20px', fontWeight:'bold'}}>
               {field.fieldName}
             </Box>
@@ -160,7 +158,7 @@ return (
                   <Box>구장 크기: {field.fieldSize}</Box>
                   <Box>대관비: {field.reservationFee}</Box>
                 </Box>
-                <img src={FieldImg1} alt="구장 이미지" style={{width:'10%', marginLeft:'57%'}}/>
+                <img src={FieldImg1} alt="구장 이미지" style={{width:'120px', marginLeft:'80%'}}/>
               </Box>  
 
               {field.reservationInfo && (
