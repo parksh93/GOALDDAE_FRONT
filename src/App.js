@@ -4,6 +4,7 @@ import UserLogin from './userComponent/login/LoginMain';
 import LogOut from './userComponent/LogOut';
 import MyPage from './userComponent/mypage/MyPage';
 import UserPage from './userComponent/mypage/UserPage';
+import ChangePasswordInMypage from './userComponent/changePassword/ChangePasswordInMypage';
 import SignupMain from './userComponent/signup/SignupMain';
 import { UserProvider, useUser } from './userComponent/userContext/UserContext';
 import Header from './auth/header/Header';
@@ -36,6 +37,7 @@ const App = () => {
               <Route path='/logOut' element={<LogOut />}/>
               <Route path='/myPage' element={<MyPage />}/>
               <Route path="/myPage/:userId" element={<UserPage />} />
+              <Route path="/myPage/changePassword/:userId" element={<ChangePasswordInMypage />} />
               <Route path='/signup' element={<SignupMain/>}/>
               <Route path='/socialSignup' element={<SocialSignupMain/>}/>
               <Route path='/find' element={<FindMain />} />

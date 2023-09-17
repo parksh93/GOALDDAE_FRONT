@@ -11,7 +11,7 @@
   display: inline-block;
   margin-left: 500px;
   margin-right: 10px;
-  margin-top: -80px;
+  margin-top: 125px;
 }
 
   .user-card-1 {
@@ -284,11 +284,19 @@
   }
 
 .delete-account-link {
-  margin-top: 140px;
-  margin-left: 110px; 
-  display: block;
   color: gray;
-  position: absolute;
+
 }
 
- 
+.user-card-setting {
+  transform: translateY(10px);
+  text-align: left;
+  justify-content: center;
+  align-items: left;
+  width: 700px;
+  height: 20%;
+  padding: 2em;
+  background-color: #fff;
+  margin-top : -1.5%;
+  box-shadow :0px 4px 8px rgba(128,128,128,0.2);
+}

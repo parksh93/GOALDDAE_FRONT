@@ -24,6 +24,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import FriendMain from './friend/FriendMain';
+import Setting from './Setting';
 import editIcon from '../mypage/img/write.png';
 
 
@@ -59,24 +60,6 @@ function Mypage() {
   const jeonnamAreas = ["목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"];
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
-
-  //  회원탈퇴
-  const handleDeleteAccount = async (event) => {
-    event.preventDefault();
-  
-    const confirmed = window.confirm("정말로 탈퇴하시겠습니까?");
-    if (confirmed) {
-      try {
-        await axios.post('/user/logout');
-        await axios.post(`/user/deleteAccount/${userInfo.id}`);
-        window.location.href = '/'; 
-        
-      } catch (error) {
-        console.error("회원 탈퇴 중 오류가 발생했습니다. :", error);
-      }
-    }
-  };
-
 
 
   // 프로필사진 수정
@@ -376,7 +359,7 @@ function Mypage() {
                 <React.Fragment>
 
                 {/* 사이드메뉴 */}
-                <div style={{position: 'relative'}}> 
+                <div style={{position: 'absolute'}}> 
                 <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
                 <List component="nav" aria-label="side-nav" className="side-nav">
                 <ListItem button onClick={() => setViewMode('USER_INFO')}
@@ -397,14 +380,14 @@ function Mypage() {
                 sx={{ backgroundColor: viewMode === "FRIEND_LIST" ? "green" : "inherit", color:viewMode === "FRIEND_LIST" ? "white" : "inherit"}}>
                   <ListItemText primary="친구" />
                 </ListItem>
+                <Divider />
+                <ListItem button onClick={() => setViewMode('SETTING')}
+                sx={{ backgroundColor: viewMode === "SETTING" ? "green" : "inherit", color:viewMode === "SETTING" ? "white" : "inherit"}}>
+                  <ListItemText primary="설정" />
+                </ListItem>
                 </List>
                 </Box>
-                
-                <Link to="#" onClick={handleDeleteAccount} className="delete-account-link">
-                  회원 탈퇴
-                </Link>
                 </div>
-               
 
                 <div className="user-cards-wrapper">
 
@@ -415,6 +398,8 @@ function Mypage() {
                   <BoardList userId={userInfo.id} /> 
                 ) : viewMode === "FRIEND_LIST" ? (
                   <FriendMain />
+                ): viewMode === "SETTING" ? (
+                  <Setting userId={userInfo.id}/>
                   ) : (
                     <>
                     <div className='user-card-1'>

@@ -60,7 +60,7 @@ function UserPage() {
                 <React.Fragment>
 
                 {/* 사이드메뉴 */}
-                <div style={{position: 'relative'}}> 
+                <div style={{position: 'absolute'}}> 
                 <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
                 <List component="nav" aria-label="side-nav" className="side-nav">
                 <ListItem button onClick={() => setViewMode('USER_INFO')}
