@@ -127,12 +127,27 @@ const SignupMain = () => {
           preferredArea: area,
           activityClass: activityClass,
         }),
-      }).then(() => {
-        setModalOpen(false);
-        navigate("/")
+      }).then((res) => {
+        if(res.status === 200){
+          setModalOpen(false);
+          navigate("/")
+        }else{
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+          setOpen(true);
+          setAlertSeverity("error");
+          setAlertTitle("회원가입 실패");
+          setAlertMsg(
+            "유효하지 않은 아이디입니다."
+          );
+          setTimeout(()=>setOpen(false), 3000);
+        }
       });
     }
-  },[signOk])
+  },[signOk]);
+
   return (
     <div className={styles.container}>
       <Collapse in={open}>

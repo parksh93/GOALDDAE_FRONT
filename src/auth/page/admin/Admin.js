@@ -4,6 +4,8 @@ import SideBar from './sideBar/SideBar';
 import { useAdmin } from './AdminContext';
 import AdminManagement from './manageMentPage/adminManagement/AdminManagementPage';
 import BoardManagement from './manageMentPage/boardManagement/BoardManagementPage';
+import SoccerFieldManagement from './manageMentPage/soccerFieldManagement/SoccerFieldManagementPage';
+import ManagerManagement from './manageMentPage/managerManagement/ManagerManagementPage';
 
 const Admin = () => {
   const {getAdminInfo} = useAdmin();
@@ -18,10 +20,16 @@ const Admin = () => {
       menuState={menuState}
       setMenuState={setMenuState}
     />
-    {menuState === 2 ?
+    {menuState === 1?
+    <SoccerFieldManagement />
+    :
+    menuState === 2 ?
     <BoardManagement />
     :
-    menuState === 4 ? 
+    menuState === 4?
+    <ManagerManagement />
+    :
+    menuState === 5 ? 
       <AdminManagement />
     : ""
     }

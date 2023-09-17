@@ -6,9 +6,8 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import AdminDeleteModal from "./boardModal";
 import {AiOutlineCheck, AiOutlineClose} from 'react-icons/ai'
-import BoardModal from './boardModal';
+import BoardModal from './BoardModal';
 
 function BoardTableToolbar(props) {
     const { numSelected, getBoardList, approvalReport, notApprovalReport } = props;

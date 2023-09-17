@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import { Alert ,Snackbar ,Paper ,Button, FormControl, FormControlLabel, Radio, RadioGroup, FormLabel, MenuItem, Select, InputLabel } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import './SoccerFieldTable.css';
+import './SoccerFieldAdd.css';
 import DaumPostcode from 'react-daum-postcode';
 
-const SoccerFieldTable = () => {
+const SoccerFieldAdd = ({setPageState}) => {
   const [fieldName, setFieldName] = useState('');
   const [toiletStatus, setToiletStatus] = useState(0);
   const [showerStatus, setShowerStatus] = useState(0);
@@ -159,7 +159,7 @@ const SoccerFieldTable = () => {
         content : content
       };
   
-      const response = await axios.post('/field/save', soccerField);
+      const response = await axios.put('/field/save', soccerField);
   
         if (response.status === 200) {
         console.log(`생성 완료: ${fieldName}`);
@@ -167,6 +167,7 @@ const SoccerFieldTable = () => {
         setTimeout(() => {
           setOpenSuccessSnackbar(false);  
         }, 3000);
+        setPageState(0);
       } else {
         console.error(`생성 실패, 상태 코드: ${response.status}`);
         setErrorMessage(`구장 생성에 실패했습니다. ${fieldName} 생성에 실패했습니다.`);
@@ -200,8 +201,6 @@ const numberToTimeString = (number) => {
       },
     },
   });
-
-  const navigate = useNavigate();
 
   const onCompletePost = data => {
     setInputAddressValue(data.address);
@@ -467,10 +466,10 @@ const numberToTimeString = (number) => {
                     </Box>
               </Paper>
               <Box>
-                <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff' }}>
+                <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff', background: "black"}}>
                 등록
                 </Button>
-                <Button variant="outlined" color="secondary" onClick={() => navigate('/admin')} style={{ borderColor: 'green', color: 'green', margin: '20px' }}>
+                <Button variant="outlined" color="secondary" onClick={() => setPageState(0)} style={{ borderColor: 'black', color: 'black', margin: '20px' }}>
                 취소
                 </Button>
                   <Snackbar open={openSuccessSnackbar} autoHideDuration={3000} onClose={() => setOpenSuccessSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
@@ -487,4 +486,4 @@ const numberToTimeString = (number) => {
   );  
 };
 
-export default SoccerFieldTable;
+export default SoccerFieldAdd;

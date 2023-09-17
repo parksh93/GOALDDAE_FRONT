@@ -13,9 +13,6 @@ import UserChatMain from './chat/UserChatMain';
 import Footer from './auth/footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import SocialSignupMain from './userComponent/signup/SocialSignupMain';
-import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
-import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
-import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
 import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
 import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
@@ -54,9 +51,6 @@ const App = () => {
             <Route path="/admin/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
-            <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />
-            <Route path="/admin/soccerField/delete" element={<SoccerFieldDelete/>} />
-            <Route path="/admin/soccerField/update" element={<SoccerFieldUpdate/>} />
           </Routes>
           </AdminProvier>
         <Footer/> 

@@ -10,10 +10,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import commonStyle from "../ManageMentPage.module.css"
-import {AiOutlineClose} from 'react-icons/ai'
-import ReplyTableToolbar from './ReplyTableToolbar';
-import ReplyTableHead from './ReplyTableHead';
-import {Link} from 'react-router-dom'
+import ManagerTableHead from './ManagerTableHead';
+import ManagerTableToolbar from "./ManagerTableToolbar";
+import { useAdmin } from '../../AdminContext';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -43,67 +42,38 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function ReplyTable() {
+export default function ManagerTable() {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
-  const [replyList, setReplyList] = useState([]);
-
+  const [managerList, setManagerList] = useState([]);
 
   useEffect(() => {
-    getReplyList();
+    getManagerList();
   },[]);
   
-  const getReplyList = () => {
-    fetch("/admin/getReportReply", {method: "GET"})
+  const getManagerList = () => {
+    fetch("/admin/getManagerList", {method: "GET"})
       .then(res => res.json())
       .then(data => {
-        setReplyList(data);
+          setManagerList(data);
       });
   }
 
-  const approvalReplyReport = () => {
-    fetch("/admin/approvalReplyReport",{
+  const onClickDeleteManager = () => {
+    fetch("/admin/deleteAdmin", {
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        replyList: selected
+        deleteAdminList: selected
       })
     }).then(() => {
-      getReplyList();
-    });
-  };
-  
-  const notApprovalReplyReport = () => {
-    fetch("/admin/notApprovalReplyReport",{
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        replyList: selected
-      })
-    }).then(() => {
-      getReplyList();
-    });
-  };
-
-
-  function formatDate(datetime) {
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-    const formattedDate = new Date(datetime).toLocaleString('ko-KR', options);
-
-    return formattedDate;
+      getManagerList();
+    })
   }
-
-  const onClickOpenDetail = useCallback((id) => {
-    document.getElementById(`replyDetail${id}`).style.display = "contents";
-  },[]);
-  
-  const onClickCloseDetail = useCallback(id => {
-    document.getElementById(`replyDetail${id}`).style.display = "none";
-  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -113,7 +83,7 @@ export default function ReplyTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = replyList.map((n) => n.id);
+      const newSelected = managerList.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -152,24 +122,24 @@ export default function ReplyTable() {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - replyList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - managerList.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(replyList, getComparator(order, orderBy)).slice(
+      stableSort(managerList, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, replyList],
+    [order, orderBy, page, rowsPerPage, managerList],
   );
 
   return (
     <Box sx={{ width: '100%'}}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <ReplyTableToolbar 
+        <ManagerTableToolbar 
           numSelected={selected.length}
-          approvalReplyReport={approvalReplyReport}
-          notApprovalReplyReport={notApprovalReplyReport}
+          onClickDeleteManager={onClickDeleteManager}
+          getManagerList={getManagerList}
         />
         <TableContainer>
           <Table
@@ -177,13 +147,13 @@ export default function ReplyTable() {
             aria-labelledby="tableTitle"
             size={'medium'}
           >
-            <ReplyTableHead
+            <ManagerTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={replyList.length}
+              rowCount={managerList.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -191,7 +161,6 @@ export default function ReplyTable() {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <>
                   <TableRow
                     hover
                     onClick={(event) => handleClick(event, row.id)}
@@ -220,22 +189,11 @@ export default function ReplyTable() {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right" sx={{maxWidth: "150px"}}><b className={commonStyle.title} onClick={() => onClickOpenDetail(row.id)}>{row.content}</b></TableCell>
-                    <TableCell align="right">{row.writer}</TableCell>
-                    <TableCell align="right">{formatDate(row.replyWriteDate)}</TableCell>
-                    <TableCell align="right">{row.reporter}</TableCell>
-                    <TableCell align="right">{formatDate(row.reportDate)}</TableCell>
+                    <TableCell align="right">{row.name}</TableCell>
+                    <TableCell align="right">{row.email}</TableCell>
+                    <TableCell align="right">{row.phoneNumber}</TableCell>
+                    <TableCell align="right">{row.signUpDate}</TableCell>
                   </TableRow>
-                  <TableRow className={commonStyle.dropDownTr} sx={{display: "none"}} id={`replyDetail${row.id}`} onClick={() => onClickCloseDetail(row.id)}>
-                    <TableCell colSpan={10} className={commonStyle.dropDownTd}>
-                      <AiOutlineClose className={commonStyle.closeBtn}/>
-                      <p className={commonStyle.dropDownText}>신고사유</p>
-                      <textarea className={commonStyle.reason}>{row.reason}</textarea>
-                      <p className={commonStyle.dropDownText}>게시글 제목</p>
-                          <div className={commonStyle.content}><Link to={`/board/detail/${row.boardId}`}>{row.title}</Link></div>
-                    </TableCell>
-                  </TableRow>
-                  </>
                 );
               })}
               {emptyRows > 0 && (
@@ -244,7 +202,7 @@ export default function ReplyTable() {
                     height: (50) * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={5} />
                 </TableRow>
               )}
             </TableBody>
@@ -254,7 +212,7 @@ export default function ReplyTable() {
           labelRowsPerPage="페이지 목록 수"
           rowsPerPageOptions={[5, 10]}
           component="div"
-          count={replyList.length}
+          count={managerList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -266,7 +224,7 @@ export default function ReplyTable() {
   );
 }
 
-ReplyTableHead.propTypes = {
+ManagerTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -275,6 +233,6 @@ ReplyTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-ReplyTableToolbar.propTypes = {
+ManagerTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };

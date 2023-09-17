@@ -23,7 +23,7 @@ const style = {
   p: 5,
 };
 
-function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
+function ManagerAddModal({ modalOpen, setModalOpen, getManagerList}) {
     const [loginId, setLoginId] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -52,7 +52,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
         if(loginId !== "" && password !== "" && phoneNumber !== "" && email !== "" && name !== ""){
             if(emailRegEx.test(email)){
                 if(numberRegEx.test(phoneNumber)){
-                    fetch("/admin/saveAdmin", {
+                    fetch("/admin/saveManager", {
                         method: "PUT",
                         headers: {"Content-Type": "application/json"},
                         body: JSON.stringify({
@@ -63,15 +63,16 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
                             phoneNumber: phoneNumber
                         })
                     }).then((res) => {
-                      if(res.status === 200){
-                        getAdminList()
-                        setModalOpen(false)
-                      }else{
-                        setOpenAlert(true);
-                        setAlertText("계정 생성에 실패했습니다.\n유효하지 않은 아이디입니다.");
-                        setTimeout(() => setOpenAlert(false), 2000);
-                      }
-                    });
+                      console.log(res)
+                        if(res.status === 200){
+                          getManagerList()
+                          setModalOpen(false)
+                        }else{
+                          setOpenAlert(true);
+                          setAlertText("계정 생성에 실패했습니다.\n유효하지 않은 아이디입니다.");
+                          setTimeout(() => setOpenAlert(false), 2000);
+                        }
+                      });
                 }else{
                     setOpenAlert(true);
                     setAlertText("전화번호의 형식이 올바르지 않습니다.");
@@ -102,7 +103,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
                     {alertText}
                 </Alert>
             </Collapse >
-          <h3>관리자 추가</h3><br/>
+          <h3>매니저 추가</h3><br/>
           <FormControl fullWidth>
             <TextField
             label={"아이디"}
@@ -176,4 +177,4 @@ const CheckBnt = styled(Button)`
   margin-top: 20px;
 `;
 
-export default React.memo(AdminAddModal);
+export default React.memo(ManagerAddModal);
