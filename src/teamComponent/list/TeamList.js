@@ -28,13 +28,15 @@ const areaOptions = [
     { value: "제주", label: "제주" },
 ];
 
+let cachedTeamList = [];
+
 const TeamList = ({}) => {
-    const [teamList, setTeamList] = useState([]);
+    const [teamList, setTeamList] = useState(cachedTeamList);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [noNewData, setNoNewData] = useState(false);
     const [selectedArea, setSelectedArea] = useState('');
-    const [recruiting, setRecruiting] = useState(false); // Default is recruiting
+    const [recruiting, setRecruiting] = useState(false);
 
     const navigate = useNavigate();
 
@@ -74,7 +76,8 @@ const TeamList = ({}) => {
                 if (newTeamList.length === 0) {
                     setNoNewData(true);
                 }
-                setTeamList((prevTeamList) => [...prevTeamList, ...newTeamList]);
+                cachedTeamList.push(...newTeamList);
+                setTeamList(cachedTeamList);
             }
             setIsLoading(false);
         } catch (error) {

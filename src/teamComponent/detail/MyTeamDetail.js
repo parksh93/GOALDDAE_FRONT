@@ -11,27 +11,16 @@ const MyTeamDetail = () => {
   const [selectedTab, setSelectedTab] = useState('info');
   const [isTeamManager, setIsTeamManager] = useState(false);
   const [applyList, setApplyList] = useState([]);
+  const [memberList, setMemberList] = useState([]);
 
   const { tabName } = useParams();
+  const cachedMemberLists = {}; 
 
   useEffect(() => {
-    if (['info', 'recentMatch', 'reservMatch', 'members', 'applyList'].includes(tabName)) {
+    if (['info', 'recentMatch', 'reservMatch', 'memberList', 'applyList'].includes(tabName)) {
       setSelectedTab(tabName);
     }
   }, [tabName]);
-
-  const fetchApplyList = (teamId) => {
-    axios.get(`/team/checkApply?teamId=${teamId}`)
-      .then(response => {
-        // 서버에서 받은 가입 신청 정보를 상태에 저장
-        setApplyList(response.data);
-        setError(false);
-      })
-      .catch(error => {
-        console.error('가입 신청 정보를 가져오는 중 오류 발생:', error);
-        setError(true);
-      });
-  };
 
   useEffect(() => {
       if (userInfo) {
@@ -46,6 +35,44 @@ const MyTeamDetail = () => {
         });
     }
   },[userInfo]);
+
+  const fetchMemberList = (teamId) => {
+    if(cachedMemberLists[teamId]) {
+      setMemberList(cachedMemberLists[teamId]);
+    } else {
+      axios.get(`/teamMember/list?teamId=${teamId}`)
+        .then(response => {
+          setMemberList(response.data);
+          cachedMemberLists[teamId] = response.data; // 데이터를 캐시에 저장
+          console.log("팀원 정보 : ", response)
+          
+          setError(false);
+        })
+        .catch(error => {
+          console.error('멤버 정보 가져오는 중 오류 발생: ', error);
+          setError(true);
+        })
+    }
+  }
+
+  useEffect(()=> {
+    if (userInfo){
+      fetchMemberList(userInfo.teamId)
+    }
+  }, [userInfo]);
+
+  const fetchApplyList = (teamId) => {
+    axios.get(`/team/checkApply?teamId=${teamId}`)
+      .then(response => {
+        // 서버에서 받은 가입 신청 정보를 상태에 저장
+        setApplyList(response.data);
+        setError(false);
+      })
+      .catch(error => {
+        console.error('가입 신청 정보를 가져오는 중 오류 발생:', error);
+        setError(true);
+      });
+  };
 
   useEffect(() => {
     if (userInfo) {
@@ -68,7 +95,6 @@ const MyTeamDetail = () => {
   }, [userInfo]);
 
   const handleAccept = (apply) => {
-
     const requestData = {
       teamApplyDTO: {
         userId: apply.userId,
@@ -116,6 +142,15 @@ const MyTeamDetail = () => {
 
   const handleTabChange = (tabName) => {
     setSelectedTab(tabName);
+
+    if (tabName === 'memberList' && userInfo) {
+      fetchMemberList(userInfo.teamId);
+    }
+
+    if (tabName === 'applyList' && userInfo) {
+      fetchApplyList(userInfo.teamId); // 새로운 데이터 불러오기
+    }
+
   };
 
   return (
@@ -133,21 +168,20 @@ const MyTeamDetail = () => {
                 </div>
               </div>
                 {teamInfo.teamName}
-              </h2>
-              <div className={styles.myTeamInfo}>
-                <p>지역 | {teamInfo.area}</p>
-                <p>평균나이 | {teamInfo.averageAge} 세</p>
-                <p>입단비 | {teamInfo.entryfee} 원</p>
-                <p>입단성별 | {teamInfo.entryGender}</p>
-              </div>               
-          </div>
-            <div>
-            {isTeamManager && (
+              </h2>          
+              {isTeamManager && (
               <button className={styles.teamDetailUpdateBtn}>
-                프로필 설정
+                팀 설정
               </button>
               )}
-            </div>
+          </div>
+          <div className={styles.myTeamInfo}>
+            <p>지역 | {teamInfo.area}</p>
+            <p>평균나이 | {teamInfo.averageAge} 세</p>
+            <p>입단비 | {teamInfo.entryfee} 원</p>
+            <p>입단성별 | {teamInfo.entryGender}</p>
+          </div> 
+
         </div>
 
         <div className={styles.myTeamRightContainer}>
@@ -174,8 +208,8 @@ const MyTeamDetail = () => {
             </button>
 
             <button
-              className={`${styles.myTeamMemberFilter} ${selectedTab === 'members' ? styles.activeTab : ''}`}
-              onClick={() => handleTabChange('members')}
+              className={`${styles.myTeamMemberFilter} ${selectedTab === 'memberList' ? styles.activeTab : ''}`}
+              onClick={() => handleTabChange('memberList')}
             >
               팀원
             </button>
@@ -215,9 +249,32 @@ const MyTeamDetail = () => {
                 예약된 경기가 없습니다.
               </div>
             )}
-            {selectedTab === 'members' && (
+
+            {selectedTab === 'memberList' && (
               <div className={styles.myTeamMembers}>
-                등록된 팀원이 없습니다.
+                {memberList.map((member, memberIndex) => (
+                  <div key={memberIndex}>
+
+                    <div className={styles.teamMemberInfoContainer}>
+                      <div className={styles.teamMemberCirclarImageContainer}>
+                        <div className={styles.teamMemberCirclarImage}>
+                          <img className={styles.teamMemberProfileImgUrl} src={member.ProfileImgUrl} alt={member.name}  />
+                        </div>
+                      </div>
+                      <div className={styles.teamMemberInfo}>
+                        <h3>{member.name} </h3>
+                          <div className={styles.memberInfoRow}>
+                            <span>{member.preferredCity}</span><span>{member.preferredArea}</span>
+                          </div>
+                      </div>
+                      {userInfo.id !== member.userId && (
+                        <div className={styles.removeMember}>
+                          <button className={styles.removeButtons}>강퇴</button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
            {selectedTab === 'applyList' && (
@@ -226,28 +283,23 @@ const MyTeamDetail = () => {
                   <p>대기중인 가입신청이 없습니다.</p>
                 ) : (
                   <div>
-                    {applyList.map((apply, index) => (
-                      <div key={index}>
-
-                        <div className={styles.applyUserInfoContainer}>
-                          <div className={styles.applyUserCircularImageContainer}>
-                            <div className={styles.applyUserCircularImage}>
-                              <img className={styles.applyUserProfileImgUrl} src={apply.ProfileImgUrl} alt={apply.name} />
-                            </div>
-                          </div> 
-                          <div className={styles.applyUserInfo}>
-                            <h3>{apply.name}</h3>
-                              <p>
-                                <span>{apply.preferredCity}</span><span>{apply.preferredArea}</span>
-                              </p>
-                              <div className={styles.applyButtons}>
-                                <button className={styles.acceptButtons} onClick={() => handleAccept(apply)}>수락</button>
-                                <button className={styles.rejectButtons} onClick={() => handleReject(apply)}>거절</button>
-                              </div>
+                    {applyList.map((apply, applyIndex) => (
+                      <div key={applyIndex} className={styles.applyUserInfoContainer}>
+                        <div className={styles.applyUserCircularImageContainer}>
+                          <div className={styles.applyUserCircularImage}>
+                            <img className={styles.applyUserProfileImgUrl} src={apply.ProfileImgUrl} alt={apply.name} />
                           </div>
-
+                        </div> 
+                        <div className={styles.applyUserInfo}>
+                          <h3>{apply.name}</h3>
+                          <div className={styles.applyUserInfoRow}>
+                            <span>{apply.preferredCity}</span><span>{apply.preferredArea}</span>
+                          </div>
                         </div>
-
+                        <div className={styles.applyButtons}>
+                              <button className={styles.acceptButtons} onClick={() => handleAccept(apply)}>수락</button>
+                              <button className={styles.rejectButtons} onClick={() => handleReject(apply)}>거절</button>
+                        </div>
                       </div>
                     ))}
                   </div>
