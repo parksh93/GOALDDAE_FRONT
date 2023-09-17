@@ -41,7 +41,7 @@ function ChangePasswordInMypage() {
         .then(data => {
           if (data === "비밀번호가 변경되었습니다.") {
             // 변경에 성공하면 메인 페이지를 새로 고침
-            window.location.reload();
+            window.location.href = '/'; 
           } else {
             // 변경 실패 시 처리
             handlePasswordChangeFailure();
