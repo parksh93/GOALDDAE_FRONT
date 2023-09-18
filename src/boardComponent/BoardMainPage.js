@@ -11,9 +11,6 @@ const BoardMainPage = () => {
   return (
     <div>
       <NaviBar />
-      <Link to={`/board`}>
-        <h2 style={{margin : '50px', color : '#333333'}}><ChevronRightIcon /> 자유게시판</h2>
-      </Link>
       <Routes>
         <Route path="/" element={<BoardListPage />} />
         <Route path="/detail/:id" element={<BoardDetailPage />} />

@@ -6,6 +6,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import styles from './BoardList.module.css'; // CSS 모듈 가져오기
 import { formatDate } from '../dateUtils';
 import { useUser } from "../../userComponent/userContext/UserContext";
+import BestBoard from '../../auth/page/main/bestBoard/BestBoard';
+import Article from '../../auth/page/main/article/Article';
 
 function BoardListPage() {
 
@@ -71,7 +73,15 @@ function BoardListPage() {
 
   return (
     <div className={styles.container}>
-      <table>
+      <div className="article-board-container">
+        <div className="Article">
+            <Article />
+        </div>
+        <div className="BestBoard">
+            <BestBoard />
+        </div>
+      </div>
+      <table className={styles.listContainer}>
         <thead>
           <tr>
             <th className={styles.tableHeader}>글번호</th>

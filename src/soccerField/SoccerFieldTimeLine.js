@@ -147,11 +147,7 @@ const SoccerFieldTimeLine = (props) => {
 
               return (
                 <div key={index}>
-                  {reservedTime && isReserved ? (
-                    <div className={styles.reservedTime}>
-                      {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
-                    </div>
-                  ) : (
+                  {reservedTime && !isReserved ? (
                     <div className={styles.reservationLink}>
                       <Link                        
                         onClick={() => openModal(startTime)}
@@ -159,7 +155,11 @@ const SoccerFieldTimeLine = (props) => {
                         {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
                       </Link>     
                     </div>
-                  )}
+                  ) : (
+                    <div className={styles.reservedTime}>
+                      {`${startTime}:00 ~ ${endTime}:00 (2시간) ${reservationFee}원`}
+                    </div>
+                  ) }
                 </div>
               );
             })}
