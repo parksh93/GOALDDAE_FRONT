@@ -16,7 +16,31 @@ const PostDetail = ({boardDetail}) => {
       </div>     
       <hr className={styles.separator} />
       <div className={styles.postDetailContainer}>
-        <img src={boardDetail.img1} alt="" className={styles.postImage} />
+        {boardDetail.img1 && 
+        <div>
+          <img src={boardDetail.img1} alt="" className={styles.postImage} />
+        </div>
+        }
+        {boardDetail.img2 && 
+        <div>
+          <img src={boardDetail.img2} alt="" className={styles.postImage} />
+        </div>
+        }
+        {boardDetail.img3 && 
+        <div>
+          <img src={boardDetail.img3} alt="" className={styles.postImage} />
+        </div>
+        }
+        {boardDetail.img4 && 
+        <div>
+          <img src={boardDetail.img4} alt="" className={styles.postImage} />
+        </div>
+        }
+        {boardDetail.img5 && 
+        <div>
+          <img src={boardDetail.img5} alt="" className={styles.postImage} />
+        </div>
+        }
         <div className={styles.content}>{boardDetail.content}</div>
       </div>
     </div>

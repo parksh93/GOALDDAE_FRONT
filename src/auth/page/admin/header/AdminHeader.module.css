@@ -1,0 +1,40 @@
+.header {
+    margin-bottom: 40px;
+}
+
+.logo {
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 55px;
+    width: auto;
+}
+
+.title {
+    position: absolute;
+    margin-top: 23px;
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 5px;
+    font-family: 'Orbit', sans-serif;
+}
+
+.loginInfo {
+    float: right;
+    margin-top: 10px;
+}
+
+.loginInfoBtn {
+    font-size: 17px;
+    font-family: 'Orbit', sans-serif;
+    margin-right: 20px;
+}
+.adminName{
+    font-size: 17px;
+    font-family: 'Orbit', sans-serif;
+    margin-right: 20px;
+}
+
+.loginInfoBtn:hover {
+    text-decoration: none;
+    color: lightgray;
+}
