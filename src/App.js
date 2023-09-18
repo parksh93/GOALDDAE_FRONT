@@ -16,7 +16,7 @@ import SocialSignupMain from './userComponent/signup/SocialSignupMain';
 import SoccerFieldTable from './auth/page/admin/tableSoccerField/SoccerFieldTable';
 import SoccerFieldDelete from './auth/page/admin/tableSoccerField/SoccerFieldDelete';
 import SoccerFieldUpdate from './auth/page/admin/tableSoccerField/SoccerFieldUpdate';
-import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+import TeamSaveTable from './teamComponent/save/TeamSaveTable';
 import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
@@ -54,7 +54,7 @@ const App = () => {
             <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
             <Route path="/match/team/list" element={<TeamMatch />} />
 
-            <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+            <Route path="/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
             <Route path="/admin/soccerField/save" element={<SoccerFieldTable />} />

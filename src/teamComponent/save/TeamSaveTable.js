@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Paper ,Button, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Slider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../../../userComponent/userContext/UserContext';
+import { useUser } from '../../userComponent/userContext/UserContext';
 
 const TeamSaveTable = () => {
   const [teamName, setTeamName] = useState('');
