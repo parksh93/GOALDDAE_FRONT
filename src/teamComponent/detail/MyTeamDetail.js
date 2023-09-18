@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 const MyTeamDetail = () => {
   const { userInfo } = useUser();
@@ -12,16 +13,19 @@ const MyTeamDetail = () => {
   const [isTeamManager, setIsTeamManager] = useState(false);
   const [applyList, setApplyList] = useState([]);
   const [memberList, setMemberList] = useState([]);
-
   const { tabName } = useParams();
+
+  const navigate = useNavigate();
+
   const cachedMemberLists = {}; 
 
   useEffect(() => {
-    if (['info', 'recentMatch', 'reservMatch', 'memberList', 'applyList'].includes(tabName)) {
+    if (['info', 'recentMatch', 'reservMatch', 'memberList', 'applyList','leaveTeam'].includes(tabName)) {
       setSelectedTab(tabName);
     }
   }, [tabName]);
 
+  // 내 팀 페이지
   useEffect(() => {
       if (userInfo) {
       axios.get(`/team/myTeam/${userInfo.teamId}`)
@@ -36,6 +40,8 @@ const MyTeamDetail = () => {
     }
   },[userInfo]);
 
+
+  // 멤버 리스트
   const fetchMemberList = (teamId) => {
     if(cachedMemberLists[teamId]) {
       setMemberList(cachedMemberLists[teamId]);
@@ -94,8 +100,49 @@ const MyTeamDetail = () => {
     }
   }, [userInfo]);
 
-  const handleAccept = (apply) => {
+  const handleRemoveMember = (userId) => {
+    console.log('handleRemoveMember 함수 호출됨'); 
+
     const requestData = {
+      userId: userId,
+      teamId: userInfo.teamId,
+    }
+
+    axios.delete(`/teamMember/remove`, {data: requestData,})
+      .then(response => {
+        console.log("remove response: ", response);
+
+        fetchMemberList(userInfo.teamId);
+      })
+      .catch(error => {
+        console.error(`팀원 삭제 실패`, error);
+      });
+  } 
+
+  const handleLeaveTeam = (userId) => {
+    const confirmation = window.confirm("정말로 팀을 탈퇴하시겠습니까?");
+    if (confirmation) {
+      
+      axios.delete(`/teamMember/remove`, { data: { userId: userInfo.id, teamId: userInfo.teamId } })
+        .then(response => {
+          console.log("remove response: ", response);
+          alert('정상적으로 탈퇴되었습니다.');
+
+          navigate('/team/list');
+
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error(`팀원 삭제 실패`, error);
+        });
+
+    } else {
+      console.log('탈퇴 취소');
+    }
+  };
+
+  const handleAccept = (apply) => {
+    const requestData1 = {
       teamApplyDTO: {
         userId: apply.userId,
         teamId: apply.teamId,
@@ -112,7 +159,7 @@ const MyTeamDetail = () => {
       },
     };
   
-      axios.post('/team/acceptApply', requestData)
+      axios.post('/team/acceptApply', requestData1)
       .then(response => {
       console.log("response : ", response)
       console.log(`가입 수락: ${apply.name}`);
@@ -140,18 +187,6 @@ const MyTeamDetail = () => {
       })
   };
 
-  const handleRemoveMember = (member) => {
-    axios.delete(`/teamMember/remove`, { userId: member.userId,
-                                         teamId: member.teamId}
-    )
-      .then(response => {
-        console.log("remove response: ", response)
-        console.log(`팀원 삭제 : ${member.name}`);
-      })
-      .catch(error=> {
-        console.error(`팀원 삭제 실패`, error)
-      })
-  }
 
   const handleTabChange = (tabName) => {
     setSelectedTab(tabName);
@@ -235,8 +270,15 @@ const MyTeamDetail = () => {
               가입신청
             </button>
             )}
-            
-          </div>
+
+            <button 
+              className={`${styles.leaveTeamFilter} ${selectedTab === 'leaveTeam' ? styles.activeTab : ''}`}
+              onClick={() => handleLeaveTeam(userInfo.userId)}>
+              팀 탈퇴하기 >
+            </button>
+          
+            </div>
+              
           <div className={styles.myTeamBox}>
             {selectedTab === 'info' && (
               <div className={styles.myTeamInfoBox}>
@@ -280,9 +322,9 @@ const MyTeamDetail = () => {
                             <span>{member.preferredCity}</span><span>{member.preferredArea}</span>
                           </div>
                       </div>
-                      {userInfo.id !== member.userId && (
+                      {userInfo.id !== member.userId && member.teamManager === 1 && (
                         <div className={styles.removeMember}>
-                          <button className={styles.removeButton} onClick={() => handleRemoveMember(member)}>강퇴</button>
+                          <button className={styles.removeButton} onClick={() => handleRemoveMember(member.userId)}>강퇴</button>
                         </div>
                       )}
                     </div>
@@ -327,7 +369,9 @@ const MyTeamDetail = () => {
         ) : (
         <p>팀 정보를 불러오는 중...</p>
       )}
+
     </div>
+    
   );
 };
 
