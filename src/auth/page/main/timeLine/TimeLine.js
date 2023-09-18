@@ -4,9 +4,8 @@ import "./TimeLine.css";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import IndividualMatch from "./IndividualMatch";
 import UseWebSocket from "../../../../webSocket/UseWebSocket";
-import { Box } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 
   const provinces = [
     "서울", "경기", "인천", "강원", "대전",
@@ -25,6 +24,11 @@ const TimeLine = () => {
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
+  
+  const getPlayerFormat = (playerNumber) => {
+    const teamSize = playerNumber / 2;
+    return teamSize + "대" + teamSize;
+  };
 
   // 필터를 재 선택할때마다 데이터 조회 갱신 
   useEffect(() => {
@@ -232,17 +236,42 @@ const TimeLine = () => {
           </select>
         </div>
 
-        {matchList.length > 0 && (
-            <>
-              {matchList.map((match) => (
-                <Box key={match.id}>
-                  <IndividualMatch match={match} />
-                </Box>
-              ))}
-            </>
-          )}
-        </Box>
-      </div>
+        {matchList.length > 0 && matchList.map((match) => {
+
+        let buttonStyle, isDisabled;
+        switch(match.status) {
+          case '신청가능':
+            buttonStyle = {backgroundColor:'green', color:'white', fontSize:'10px', width:'100px'};
+            isDisabled = false;
+            break;
+
+          case '마감임박': 
+            buttonStyle = {backgroundColor:'red', color:'white', fontSize:'10px', width:'100px'};
+            isDisabled = false;
+            break;
+
+          default:
+            buttonStyle ={backgroundColor:'grey', color:'black', fontSize:'10px', width:'100px'};
+            isDisabled = true; 
+        }
+
+        return (
+          <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
+            <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
+              {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
+            </Box>
+            <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
+              <div>{match.fieldName}</div>
+              <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
+            </Box>
+            <Button style={buttonStyle} disabled={isDisabled}>
+              {match.status}
+            </Button>
+          </Box> 
+        );
+        })}
+      </Box>
+    </div>
     );
   }
 

@@ -18,6 +18,8 @@ import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 import Main from './auth/page/main/Main';
+import TeamMatch from './auth/page/teamMatch/TeamMatch';
+import ReservationList from './auth/page/reservationList/ReservationList';
 import { AdminProvier } from './auth/page/admin/AdminContext';
 import AdminLogin from './auth/page/admin/login/AdminLogin';
 import AdminHeader from './auth/page/admin/header/AdminHeader';
@@ -51,8 +53,10 @@ const App = () => {
             <Route path="/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
+            <Route path="/match/team/list" element={<TeamMatch />} />
+            <Route path="/reservation/list" element={<ReservationList />} />
           </Routes>
-          </AdminProvier>
+        </AdminProvier>
         <Footer/> 
       </>
   );

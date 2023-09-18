@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserProvider } from "../../../userComponent/userContext/UserContext";
 import ImageSlide from './imageSlide/ImageSlide'
 import TimeLine from './timeLine/TimeLine';
 import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
@@ -13,8 +12,6 @@ const Main = () => {
         <div>
             <NaviBar />
             <ImageSlide />
-            <TimeLine />
-            <MatchListMoreDetails />
             <div className="article-board-container">
                 <div className="Article">
                     <Article />
@@ -23,6 +20,9 @@ const Main = () => {
                     <BestBoard />
                 </div>
             </div>
+            <TimeLine />
+            <MatchListMoreDetails />
+            
         </div>
     );
 }
