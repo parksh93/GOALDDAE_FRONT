@@ -10,9 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import commonStyle from "../ManageMentPage.module.css"
-import AdminTableHead from './AdminTableHead';
-import AdminTableToolbar from "./AdminTableToolbar";
-import { useAdmin } from '../../AdminContext';
+import SoccerFieldTableHead from './SoccerFieldTableHead';
+import SoccerFieldTableToolbar from "./SoccerFieldTableToolbar";
+import {AiOutlineClose} from 'react-icons/ai'
+import SoccerFieldDetail from './SoccerFieldDetail';
+import SoccerFieldModal from './SoccerFieldModal';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -42,38 +44,47 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function AdminTable() {
+export default function SoccerFieldTable({setPageState, setSelectSoccerField}) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
-  const [adminList, setAdminList] = useState([]);
+  const [soccerFieldList, setSoccerFieldList] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   useEffect(() => {
-    getAdminList();
+    getSoccerFieldList();
   },[]);
   
-  const getAdminList = () => {
-    fetch("/admin/getAdminList", {method: "GET"})
+  const getSoccerFieldList = () => {
+    fetch("/admin/getSoccerFieldList", {method: "GET"})
       .then(res => res.json())
       .then(data => {
-          setAdminList(data);
+        setSoccerFieldList(data);
       });
   }
 
-  const onClickDeleteAdmin = () => {
-    fetch("/admin/deleteAdmin", {
+  const deleteSoccerField = () => {
+    fetch(`/field/delete`, {
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        deleteAdminList: selected
+        soccerFieldList: selected
       })
     }).then(() => {
-      getAdminList();
+      getSoccerFieldList();
     })
   }
+
+  const onClickOpenDetail = useCallback((id) => {
+    document.getElementById(`detail${id}`).style.display = "contents";
+  },[]);
+  
+  const onClickCloseDetail = useCallback(id => {
+    document.getElementById(`detail${id}`).style.display = "none";
+  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -83,7 +94,7 @@ export default function AdminTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = adminList.map((n) => n.id);
+      const newSelected = soccerFieldList.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -110,6 +121,12 @@ export default function AdminTable() {
     setSelected(newSelected);
   };
 
+  const timeFormat = (time) => {
+    if(time){
+      return time.substring(0, 5);
+    }
+  }
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -122,24 +139,25 @@ export default function AdminTable() {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - adminList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - soccerFieldList.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(adminList, getComparator(order, orderBy)).slice(
+      stableSort(soccerFieldList, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, adminList],
+    [order, orderBy, page, rowsPerPage, soccerFieldList],
   );
 
   return (
     <Box sx={{ width: '100%'}}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <AdminTableToolbar 
+        <SoccerFieldTableToolbar 
           numSelected={selected.length}
-          onClickDeleteAdmin={onClickDeleteAdmin}
-          getAdminList={getAdminList}
+          setPageState={setPageState}
+          openDeleteModal={openDeleteModal}
+          setOpenDeleteModal={setOpenDeleteModal}
         />
         <TableContainer>
           <Table
@@ -147,13 +165,13 @@ export default function AdminTable() {
             aria-labelledby="tableTitle"
             size={'medium'}
           >
-            <AdminTableHead
+            <SoccerFieldTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={adminList.length}
+              rowCount={soccerFieldList.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -161,6 +179,7 @@ export default function AdminTable() {
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
+                  <>
                   <TableRow
                     hover
                     onClick={(event) => handleClick(event, row.id)}
@@ -189,11 +208,24 @@ export default function AdminTable() {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.name}</TableCell>
-                    <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.phoneNumber}</TableCell>
-                    <TableCell align="right">{row.signUpDate}</TableCell>
+                    <TableCell align="right" sx={{maxWidth: "150px"}}><b className={commonStyle.title} onClick={() => onClickOpenDetail(row.id)}>{row.fieldName}</b></TableCell>
+                    <TableCell align="right">{timeFormat(row.operatingHours)}</TableCell>
+                    <TableCell align="right">{timeFormat(row.closingTime)}</TableCell>
+                    <TableCell align="right">{row.region}</TableCell>
+                    <TableCell align="right">{row.reservationFee}</TableCell>
                   </TableRow>
+                  <TableRow className={commonStyle.dropDownTr} sx={{display: "none"}}id={`detail${row.id}`} onClick={() => onClickCloseDetail(row.id)}>
+                    <TableCell colSpan={10} className={commonStyle.dropDownTd}>
+                      <AiOutlineClose className={commonStyle.closeBtn}/>
+                      <SoccerFieldDetail 
+                        row={row} 
+                        timeFormat={timeFormat} 
+                        setPageState={setPageState} 
+                        setSelectSoccerField={setSelectSoccerField}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  </>
                 );
               })}
               {emptyRows > 0 && (
@@ -202,7 +234,7 @@ export default function AdminTable() {
                     height: (50) * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={5} />
+                  <TableCell colSpan={6} />
                 </TableRow>
               )}
             </TableBody>
@@ -212,7 +244,7 @@ export default function AdminTable() {
           labelRowsPerPage="페이지 목록 수"
           rowsPerPageOptions={[5, 10]}
           component="div"
-          count={adminList.length}
+          count={soccerFieldList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -220,11 +252,16 @@ export default function AdminTable() {
           className={commonStyle.tableFooter}
         />
       </Paper>
+      <SoccerFieldModal 
+        modalOpen={openDeleteModal} 
+        setModalOpen={setOpenDeleteModal}
+        deleteSoccerField={deleteSoccerField}
+      />
     </Box>
   );
 }
 
-AdminTableHead.propTypes = {
+SoccerFieldTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -233,6 +270,6 @@ AdminTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-AdminTableToolbar.propTypes = {
+SoccerFieldTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };

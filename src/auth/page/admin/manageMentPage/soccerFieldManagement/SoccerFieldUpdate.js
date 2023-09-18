@@ -6,10 +6,7 @@ import { Alert, Snackbar, Paper, Box, Button, Radio, RadioGroup, FormControlLabe
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 
-const SoccerFieldUpdate = () => {
-    const [soccerField, setSoccerField] = useState([]);
-    const [selectFieldId, setSelectFieldId] = useState('');
-    const [previewImages, setPreviewImages] = useState({ fieldImg1: '', fieldImg2: '', fieldImg3: '' });
+const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageState}) => {
     const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
@@ -36,6 +33,10 @@ const SoccerFieldUpdate = () => {
     const jeonnamAreas = ["목포시","여수시","순천시","나주시","광양시","담양군","곡성군","구례군","고흥군","보성군","화순군","장흥군","강진군","해남군","영암군","무안군","함평군","영광군","장성군","완도군","진도군","신안군",];
     const jeonbukAreas = ["전주시","군산시","익산시","정읍시","남원시","김제시","완주군","진안군","무주군","장수군","임실군","순창군","고창군","부안군",];
     const jejuAreas = ["제주시", "서귀포시"];
+
+    useEffect(() => {
+      setAvailable(selectSoccerField.region);
+    },[]);
 
     const onchangeCity = useCallback((e) => {
       setSelectSoccerField({ ...selectSoccerField, province: "" });
@@ -87,53 +88,6 @@ const SoccerFieldUpdate = () => {
     const onChangeArea = useCallback((e) => {
       setSelectSoccerField({ ...selectSoccerField, province : e.target.value });
     });
-    
-    const [selectSoccerField, setSelectSoccerField] = useState({
-        fieldName: '',
-        toiletStatus: '',
-        showerStatus: '',
-        parkingStatus: '',
-        fieldSize: '',
-        fieldImg1: '',
-        fieldImg2: '',
-        fieldImg3: '',
-        inOutWhether: '',
-        grassWhether: '',
-        region: '',
-        reservationFee: '',
-        province : '',
-        address : '',
-        operatingHours : '',
-        closingTime : '',
-        content : ''
-    });
-
-    useEffect(() => {
-      fetchSoccerField();
-    }, []);
-
-    const fetchSoccerField = async () => {
-      try {
-          const response = await axios.get('/field/search');
-          setSoccerField(response.data);
-      } catch (error) {
-          console.error(`Error: ${error}`);
-      }
-    };
-
-    useEffect(() => {
-      if (selectFieldId) {
-          const selectData = soccerField.find(field => field.id === Number(selectFieldId));
-          setSelectSoccerField({
-              ...selectSoccerField,
-              ...selectData
-          });
-          setAvailable(selectData.region);
-          setOperatingHours(timeStringToNumber(selectData.operatingHours));
-          setClosingTime(timeStringToNumber(selectData.closingTime));          
-      }
-    }, [selectFieldId]);
-    
 
    const handleChange = (event) => {
       setSelectSoccerField({ ...selectSoccerField, [event.target.name]: event.target.value });
@@ -178,10 +132,10 @@ const SoccerFieldUpdate = () => {
     setSelectSoccerField({ ...selectSoccerField, operatingHours: numberToTimeString(operatingHours), closingTime : numberToTimeString(closingTime) });
 
     try {
-      await axios.put(`/field/update`, selectSoccerField);
+      await axios.patch(`/field/update`, selectSoccerField);
       setSuccessMessage(`${selectSoccerField.fieldName} 수정되었습니다.`);
       setOpenSuccessSnackbar(true);
-      fetchSoccerField();
+      setTimeout(() => setPageState(0), 1000);
     } catch (error) {
       console.error(`Error: ${error}`);
       setErrorMessage(`${selectSoccerField.fieldName} 수정에 실패하였습니다.`);
@@ -192,12 +146,10 @@ const SoccerFieldUpdate = () => {
    const theme = createTheme({
     palette: {
       primary: {
-        main: '#4caf50', 
+        main: '#black', 
       },
     },
   });
-
-  const navigate = useNavigate();
 
   const onCompletePost = data => {
     setSelectSoccerField({ ...selectSoccerField, address : data.address });
@@ -207,22 +159,6 @@ const SoccerFieldUpdate = () => {
   const clickAdress = () => {
     setModalState(!modalState)
   }
-
-  const timeStringToNumber = (timeString) => {
-    if (timeString) {
-      // ':' 문자로 문자열을 분할합니다.
-      const timeParts = timeString.split(':');
-  
-      // 첫 번째 부분(시간)을 정수로 변환하여 반환합니다.
-      const hours = parseInt(timeParts[0], 10);
-  
-      // 유효한 시간인 경우 시간을 반환하고, 그렇지 않으면 null을 반환합니다.
-      if (!isNaN(hours)) {
-        return hours;
-      }
-    }
-    return null; // 유효하지 않은 입력 또는 오류 시 null 반환
-  };
 
   const numberToTimeString = (number) => {
     if(number){
@@ -240,16 +176,6 @@ const SoccerFieldUpdate = () => {
   return (
     <ThemeProvider theme={theme}>
       <h1 style={{ textAlign: 'center' }}>구장 수정</h1>
-      <div style={{ textAlign: 'center', margin: '20px'}}>수정할 구장을 선택해주세요.</div>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, justifyContent: 'center', alignItems: 'center' }}>
-            <select value={selectFieldId} onChange={(e) => setSelectFieldId(e.target.value)}>
-                <option value="">-- 구장 선택 --</option>
-                {soccerField.map(field => (
-                  <option key={field.id} value={field.id}>{field.fieldName}</option>
-                ))}
-              </select>
-          </Box>
-          {selectFieldId && (
                 <>
                   <form onSubmit={handleSubmit}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
@@ -437,7 +363,7 @@ const SoccerFieldUpdate = () => {
                             {selectSoccerField.fieldImg1 &&
                             <>
                             <img src={selectSoccerField.fieldImg1} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg1')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg1')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         <Box mb={2}>
@@ -450,7 +376,7 @@ const SoccerFieldUpdate = () => {
                             {selectSoccerField.fieldImg2 &&
                             <>
                             <img src={selectSoccerField.fieldImg2} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg2')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg2')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         <Box mb={2}>
@@ -463,15 +389,15 @@ const SoccerFieldUpdate = () => {
                             {selectSoccerField.fieldImg3 &&
                             <>
                             <img src={selectSoccerField.fieldImg3} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg3')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg3')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         </Paper>
                         <Box>
-                          <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff', margin: '25px' }}>
+                          <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff', margin: '25px', background: "black"}}>
                             수정
                           </Button>
-                          <Button variant="outlined" color="secondary" onClick={() => navigate('/admin')} style={{ borderColor: 'green', color: 'green', margin: '25px' }}>
+                          <Button variant="outlined" color="secondary" onClick={() => setPageState(0)} style={{ borderColor: 'black', color: 'black', margin: '25px' }}>
                             취소
                           </Button>    
                           <Snackbar open={openSuccessSnackbar} autoHideDuration={3000} onClose={() => setOpenSuccessSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
@@ -484,7 +410,6 @@ const SoccerFieldUpdate = () => {
                       </Box>          
                 </form> 
              </>
-         )}
       </ThemeProvider>
   )
 }

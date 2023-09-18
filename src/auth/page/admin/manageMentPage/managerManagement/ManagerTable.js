@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import commonStyle from "../ManageMentPage.module.css"
-import AdminTableHead from './AdminTableHead';
-import AdminTableToolbar from "./AdminTableToolbar";
+import ManagerTableHead from './ManagerTableHead';
+import ManagerTableToolbar from "./ManagerTableToolbar";
 import { useAdmin } from '../../AdminContext';
 
 function descendingComparator(a, b, orderBy) {
@@ -42,28 +42,28 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function AdminTable() {
+export default function ManagerTable() {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
-  const [adminList, setAdminList] = useState([]);
+  const [managerList, setManagerList] = useState([]);
 
   useEffect(() => {
-    getAdminList();
+    getManagerList();
   },[]);
   
-  const getAdminList = () => {
-    fetch("/admin/getAdminList", {method: "GET"})
+  const getManagerList = () => {
+    fetch("/admin/getManagerList", {method: "GET"})
       .then(res => res.json())
       .then(data => {
-          setAdminList(data);
+          setManagerList(data);
       });
   }
 
-  const onClickDeleteAdmin = () => {
+  const onClickDeleteManager = () => {
     fetch("/admin/deleteAdmin", {
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
@@ -71,7 +71,7 @@ export default function AdminTable() {
         deleteAdminList: selected
       })
     }).then(() => {
-      getAdminList();
+      getManagerList();
     })
   }
 
@@ -83,7 +83,7 @@ export default function AdminTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = adminList.map((n) => n.id);
+      const newSelected = managerList.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -122,24 +122,24 @@ export default function AdminTable() {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - adminList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - managerList.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(adminList, getComparator(order, orderBy)).slice(
+      stableSort(managerList, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, adminList],
+    [order, orderBy, page, rowsPerPage, managerList],
   );
 
   return (
     <Box sx={{ width: '100%'}}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <AdminTableToolbar 
+        <ManagerTableToolbar 
           numSelected={selected.length}
-          onClickDeleteAdmin={onClickDeleteAdmin}
-          getAdminList={getAdminList}
+          onClickDeleteManager={onClickDeleteManager}
+          getManagerList={getManagerList}
         />
         <TableContainer>
           <Table
@@ -147,13 +147,13 @@ export default function AdminTable() {
             aria-labelledby="tableTitle"
             size={'medium'}
           >
-            <AdminTableHead
+            <ManagerTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={adminList.length}
+              rowCount={managerList.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -212,7 +212,7 @@ export default function AdminTable() {
           labelRowsPerPage="페이지 목록 수"
           rowsPerPageOptions={[5, 10]}
           component="div"
-          count={adminList.length}
+          count={managerList.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -224,7 +224,7 @@ export default function AdminTable() {
   );
 }
 
-AdminTableHead.propTypes = {
+ManagerTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -233,6 +233,6 @@ AdminTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-AdminTableToolbar.propTypes = {
+ManagerTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };

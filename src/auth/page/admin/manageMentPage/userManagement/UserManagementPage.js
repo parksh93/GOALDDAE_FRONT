@@ -1,17 +1,17 @@
 import commonStyle from "../ManageMentPage.module.css"
-import AdminTable from "./AdminTable";
+import UserTable from "./UserTable";
 
 
-const AdminManagement = () => {
+const UserManagement = () => {
 
     return (
         <div className={commonStyle.container}>
-            <h1>관리자관리</h1>
+            <h1>사용자관리</h1>
             <div className={commonStyle.gridDiv}>
-                <AdminTable /> 
+                <UserTable /> 
             </div>
         </div>
     )
 }
 
-export default AdminManagement;
+export default UserManagement;
