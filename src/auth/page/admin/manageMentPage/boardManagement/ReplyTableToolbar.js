@@ -56,7 +56,7 @@ function ReplyTableToolbar(props) {
             <IconButton>
               <AiOutlineCheck onClick={() => {
                   setModalTitle("승인");
-                  setModalContent("승인시 해당 댓글이 삭제됩니다.");
+                  setModalContent("승인시 해당 댓글이 표시되지 않습니다.");
                   setOpenModal(true)
                 }
               } />
