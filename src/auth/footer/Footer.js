@@ -12,9 +12,9 @@ const Footer = () => {
     return (
         <Box sx={{
             bgcolor: "#3a3a3a", 
-            height : isSmallScreen? "120%" : "28vh", 
+            height : isSmallScreen? "120%" : "360px", 
             paddingBottom:"7%", color:"white",
-            paddingLeft: '5%'
+            paddingLeft : isSmallScreen? '10%' : '3%'
             }}>
         {isSmallScreen ? (
             <Box sx={{
