@@ -388,6 +388,14 @@
     margin: 0;
 }
 
+.removeButton:hover{
+    border: 1px solid green;
+    background-color: #fff;
+    color: green;
+
+}
+
+
 
 /* ======= 가입신청 =======*/
 

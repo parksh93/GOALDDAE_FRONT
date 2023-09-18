@@ -140,6 +140,19 @@ const MyTeamDetail = () => {
       })
   };
 
+  const handleRemoveMember = (member) => {
+    axios.delete(`/teamMember/remove`, { userId: member.userId,
+                                         teamId: member.teamId}
+    )
+      .then(response => {
+        console.log("remove response: ", response)
+        console.log(`팀원 삭제 : ${member.name}`);
+      })
+      .catch(error=> {
+        console.error(`팀원 삭제 실패`, error)
+      })
+  }
+
   const handleTabChange = (tabName) => {
     setSelectedTab(tabName);
 
@@ -148,7 +161,7 @@ const MyTeamDetail = () => {
     }
 
     if (tabName === 'applyList' && userInfo) {
-      fetchApplyList(userInfo.teamId); // 새로운 데이터 불러오기
+      fetchApplyList(userInfo.teamId);
     }
 
   };
@@ -269,7 +282,7 @@ const MyTeamDetail = () => {
                       </div>
                       {userInfo.id !== member.userId && (
                         <div className={styles.removeMember}>
-                          <button className={styles.removeButtons}>강퇴</button>
+                          <button className={styles.removeButton} onClick={() => handleRemoveMember(member)}>강퇴</button>
                         </div>
                       )}
                     </div>
