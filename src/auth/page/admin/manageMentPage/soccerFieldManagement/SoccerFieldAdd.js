@@ -197,7 +197,7 @@ const numberToTimeString = (number) => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#4caf50', 
+        main: '#black', 
       },
     },
   });
@@ -224,6 +224,7 @@ const numberToTimeString = (number) => {
                     onChange={(e) =>setFieldName(e.target.value)}
                     label="구장 이름"
                     variant="outlined"
+                    color=''
                     sx={{width:700}}
                   />
                 </Box>
@@ -250,7 +251,6 @@ const numberToTimeString = (number) => {
                     <InputLabel>도시</InputLabel>
                     <Select
                       value={city}
-                      color="success"
                       onChange={onchangeCity}
                       label="도시"
                     >
@@ -278,9 +278,8 @@ const numberToTimeString = (number) => {
                     <InputLabel>지역</InputLabel>
                     <Select
                       value={area}
-                      color="success"
                       onChange={onChangeArea}
-                      style={{ outline: "1px solid #f4f4f4", outlineOffset: "-2px" }}
+                      style={{ outline: "1px solid #black", outlineOffset: "-2px" }}
                       label="지역"
                     >
                       {availableAreas.map((area) => (
@@ -311,7 +310,6 @@ const numberToTimeString = (number) => {
                 </Box>
                 <Box mb={2} sx={{display : 'flex'}}>
                   <TextField
-                    color="success"
                     type="number"
                     label="영업시작"
                     InputLabelProps={{
@@ -322,7 +320,6 @@ const numberToTimeString = (number) => {
                   />
                   <div style={{width : '50px'}}></div>
                   <TextField
-                    color="success"
                     type="number"
                     label="영업종료"
                     InputLabelProps={{
@@ -435,7 +432,7 @@ const numberToTimeString = (number) => {
                         {fieldImg1 &&
                         <>
                         <img src={fieldImg1} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg1)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg1)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
                     <Box mb={2}>
@@ -448,7 +445,7 @@ const numberToTimeString = (number) => {
                         {fieldImg2 &&
                         <>
                         <img src={fieldImg2} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg2)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg2)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
                     <Box mb={2}>
@@ -461,15 +458,15 @@ const numberToTimeString = (number) => {
                         {fieldImg3 &&
                         <>
                         <img src={fieldImg3} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg3)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg3)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
               </Paper>
               <Box>
-                <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff', background: "black"}}>
+                <Button variant="contained" type="submit" className="submit-button" style={{ color: '#fff', background: "black"}}>
                 등록
                 </Button>
-                <Button variant="outlined" color="secondary" onClick={() => setPageState(0)} style={{ borderColor: 'black', color: 'black', margin: '20px' }}>
+                <Button variant="outlined" onClick={() => setPageState(0)} style={{ borderColor: 'black', color: 'black', margin: '20px' }}>
                 취소
                 </Button>
                   <Snackbar open={openSuccessSnackbar} autoHideDuration={3000} onClose={() => setOpenSuccessSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>

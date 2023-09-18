@@ -6,7 +6,6 @@ import './SideBar.css';
 function Sidebar({menuState, setMenuState}) {
 
   const menus = [
-    { name: "팀관리"},
     { name: "구장관리"},
     { name: "게시판관리"},
     { name: "사용자관리"},

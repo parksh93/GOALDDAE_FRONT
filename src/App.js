@@ -48,7 +48,7 @@ const App = () => {
             <Route path='/team/detail/:id' element={<TeamDetail />} />
             <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
             
-            <Route path="/admin/team/save" element={<TeamSaveTable/>} />
+            <Route path="/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
           </Routes>

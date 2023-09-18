@@ -76,6 +76,10 @@ const SoccerFieldDetail = ({row, timeFormat, setPageState, setSelectSoccerField}
       }
     <div className={styles.btnDiv}>
       <button className={styles.btn} onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
           setSelectSoccerField(row)
           setPageState(3)
         }}>수정</button>

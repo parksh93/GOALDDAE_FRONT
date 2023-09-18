@@ -146,7 +146,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
    const theme = createTheme({
     palette: {
       primary: {
-        main: '#4caf50', 
+        main: '#black', 
       },
     },
   });
@@ -363,7 +363,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
                             {selectSoccerField.fieldImg1 &&
                             <>
                             <img src={selectSoccerField.fieldImg1} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg1')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg1')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         <Box mb={2}>
@@ -376,7 +376,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
                             {selectSoccerField.fieldImg2 &&
                             <>
                             <img src={selectSoccerField.fieldImg2} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg2')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg2')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         <Box mb={2}>
@@ -389,7 +389,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
                             {selectSoccerField.fieldImg3 &&
                             <>
                             <img src={selectSoccerField.fieldImg3} alt="" className="preview-image" />
-                            <button onClick={() => handleRemoveImage('fieldImg3')}>&times;</button>
+                            <button onClick={() => handleRemoveImage('fieldImg3')} className='deleteImgBtn'>&times;</button>
                             </>}
                         </Box>
                         </Paper>

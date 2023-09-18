@@ -9,6 +9,7 @@ import commonStyle from "../ManageMentPage.module.css"
 import { TextField } from "@mui/material";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const style = {
   position: "absolute",
@@ -33,6 +34,14 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
     const [alertText, setAlertText] = useState("");
     const numberRegEx = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
     const emailRegEx =  /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i;
+
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: '#black', 
+        },
+      },
+    });
 
     const onChangeValue = (e) => {
         if(e.target.name === "loginId"){
@@ -91,6 +100,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
 
   return (
     <div>
+       <ThemeProvider theme={theme}>
       <Modal
         open={modalOpen}
         aria-labelledby="modal-modal-title"
@@ -160,6 +170,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
           </div>
         </Box>
       </Modal>
+      </ThemeProvider>
     </div>
   );
 }

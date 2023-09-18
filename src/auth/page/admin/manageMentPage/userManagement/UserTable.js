@@ -10,10 +10,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import commonStyle from "../ManageMentPage.module.css"
+import UserTableHead from './UserTableHead';
+import UserTableToolbar from "./UserTableToolbar";
+import { useAdmin } from '../../AdminContext';
 import {AiOutlineClose} from 'react-icons/ai'
-import ReplyTableToolbar from './ReplyTableToolbar';
-import ReplyTableHead from './ReplyTableHead';
-import {Link} from 'react-router-dom'
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+import { colors } from '@mui/material';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -43,67 +48,27 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function ReplyTable() {
+export default function UserTable() {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
-  const [replyList, setReplyList] = useState([]);
-
+  const [userLIst, setUserList] = useState([]);
 
   useEffect(() => {
-    getReplyList();
+    getUserList();
   },[]);
   
-  const getReplyList = () => {
-    fetch("/admin/getReportReply", {method: "GET"})
+  const getUserList = () => {
+    fetch("/admin/getUserList", {method: "GET"})
       .then(res => res.json())
       .then(data => {
-        setReplyList(data);
+        setUserList(data);
+        console.log(data)
       });
   }
-
-  const approvalReplyReport = () => {
-    fetch("/admin/approvalReplyReport",{
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        replyList: selected
-      })
-    }).then(() => {
-      getReplyList();
-    });
-  };
-  
-  const notApprovalReplyReport = () => {
-    fetch("/admin/notApprovalReplyReport",{
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        replyList: selected
-      })
-    }).then(() => {
-      getReplyList();
-    });
-  };
-
-
-  function formatDate(datetime) {
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-    const formattedDate = new Date(datetime).toLocaleString('ko-KR', options);
-
-    return formattedDate;
-  }
-
-  const onClickOpenDetail = useCallback((id) => {
-    document.getElementById(`replyDetail${id}`).style.display = "contents";
-  },[]);
-  
-  const onClickCloseDetail = useCallback(id => {
-    document.getElementById(`replyDetail${id}`).style.display = "none";
-  },[]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -113,7 +78,7 @@ export default function ReplyTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = replyList.map((n) => n.id);
+      const newSelected = userLIst.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -152,24 +117,22 @@ export default function ReplyTable() {
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - replyList.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userLIst.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(replyList, getComparator(order, orderBy)).slice(
+      stableSort(userLIst, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, replyList],
+    [order, orderBy, page, rowsPerPage, userLIst],
   );
 
   return (
     <Box sx={{ width: '100%'}}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <ReplyTableToolbar 
+        <UserTableToolbar 
           numSelected={selected.length}
-          approvalReplyReport={approvalReplyReport}
-          notApprovalReplyReport={notApprovalReplyReport}
         />
         <TableContainer>
           <Table
@@ -177,13 +140,13 @@ export default function ReplyTable() {
             aria-labelledby="tableTitle"
             size={'medium'}
           >
-            <ReplyTableHead
+            <UserTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={replyList.length}
+              rowCount={userLIst.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -200,9 +163,9 @@ export default function ReplyTable() {
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <TableCell padding="checkbox">
+                    sx={{ cursor: 'pointer'}}
+                    >
+                    <TableCell padding="checkbox" className={commonStyle.tableCell}>
                       <Checkbox
                       color="primary"
                       checked={isItemSelected}
@@ -217,23 +180,20 @@ export default function ReplyTable() {
                       id={labelId}
                       scope="row"
                       padding="none"
-                    >
+                      >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right" sx={{maxWidth: "150px"}}><b className={commonStyle.title} onClick={() => onClickOpenDetail(row.id)}>{row.content}</b></TableCell>
-                    <TableCell align="right">{row.writer}</TableCell>
-                    <TableCell align="right">{formatDate(row.replyWriteDate)}</TableCell>
-                    <TableCell align="right">{row.reporter}</TableCell>
-                    <TableCell align="right">{formatDate(row.reportDate)}</TableCell>
-                  </TableRow>
-                  <TableRow className={commonStyle.dropDownTr} sx={{display: "none"}} id={`replyDetail${row.id}`} onClick={() => onClickCloseDetail(row.id)}>
-                    <TableCell colSpan={10} className={commonStyle.dropDownTd}>
-                      <AiOutlineClose className={commonStyle.closeBtn}/>
-                      <p className={commonStyle.dropDownText}>신고사유</p>
-                      <textarea className={commonStyle.reason}>{row.reason}</textarea>
-                      <p className={commonStyle.dropDownText}>게시글 제목</p>
-                      <div className={commonStyle.content}><Link to={`/board/detail/${row.boardId}`}>{row.title}</Link></div>
-                    </TableCell>
+                    <TableCell align="right">{row.nickname}</TableCell>
+                    <TableCell align="right">{row.name}</TableCell>
+                    <TableCell align="right">{row.email}</TableCell>
+                    <TableCell align="right">{row.phoneNumber}</TableCell>
+                    <TableCell align="right">{row.gender}</TableCell>
+                    <TableCell align="right">{row.birth}</TableCell>
+                    <TableCell align="right">{row.noShowCnt}</TableCell>
+                    <TableCell align="right">{!row.teamId === null ? "가입" : "미가입"}</TableCell>
+                    <TableCell align="right">{!row.accountSuspersion ? "정상" : "정지"}</TableCell>
+                    <TableCell align="right">{row.loginId === null ? "소셜계정" : "자체가입"}</TableCell>
+                    <TableCell align="right">{row.signupDate}</TableCell>
                   </TableRow>
                   </>
                 );
@@ -244,7 +204,7 @@ export default function ReplyTable() {
                     height: (50) * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={10} />
                 </TableRow>
               )}
             </TableBody>
@@ -254,7 +214,7 @@ export default function ReplyTable() {
           labelRowsPerPage="페이지 목록 수"
           rowsPerPageOptions={[5, 10]}
           component="div"
-          count={replyList.length}
+          count={userLIst.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -266,7 +226,7 @@ export default function ReplyTable() {
   );
 }
 
-ReplyTableHead.propTypes = {
+UserTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -275,6 +235,6 @@ ReplyTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-ReplyTableToolbar.propTypes = {
+UserTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };

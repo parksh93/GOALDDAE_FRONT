@@ -59,6 +59,15 @@ div ul{
     font-size: 15px;
 }
 
+.content > a {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.content > a:hover{
+    color: lightgray;
+}
+
 .dropDownTr {
     text-align: center;
 }
@@ -87,4 +96,12 @@ div ul{
 
 .closeBtn:hover {
     color: lightgray;
+}
+
+.tableRow{
+    overflow-x: auto;
+}
+
+.tableCell {
+    width: 100;
 }
