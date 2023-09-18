@@ -85,7 +85,6 @@ const Payment = ({ fieldId, fieldName, reservationFee, handleReservation, double
                 if (res.status !== 200) {
                   throw new Error();
                 }
-                alert("결제 성공");
                 handleReservation()
               })
               .catch(() => {
