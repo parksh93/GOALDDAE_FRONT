@@ -35,12 +35,12 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
     const jejuAreas = ["제주시", "서귀포시"];
 
     useEffect(() => {
-      setAvailable(selectSoccerField.region);
+      setAvailable(selectSoccerField.province);
     },[]);
 
     const onchangeCity = useCallback((e) => {
-      setSelectSoccerField({ ...selectSoccerField, province: "" });
-      setSelectSoccerField({ ...selectSoccerField, region: e.target.value });
+      setSelectSoccerField({ ...selectSoccerField, region: "" });
+      setSelectSoccerField({ ...selectSoccerField, province: e.target.value });
       const preferredCity = e.target.value;
       setAvailable(preferredCity);
     });
@@ -86,7 +86,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
     }
 
     const onChangeArea = useCallback((e) => {
-      setSelectSoccerField({ ...selectSoccerField, province : e.target.value });
+      setSelectSoccerField({ ...selectSoccerField, region : e.target.value });
     });
 
    const handleChange = (event) => {
@@ -211,7 +211,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
                       <FormControl fullWidth>
                         <InputLabel>도시</InputLabel>
                         <Select
-                          value={selectSoccerField.region}
+                          value={selectSoccerField.province}
                           color="success"
                           onChange={onchangeCity}
                           label="도시"
@@ -239,7 +239,7 @@ const SoccerFieldUpdate = ({selectSoccerField, setSelectSoccerField, setPageStat
                       <FormControl fullWidth>
                         <InputLabel>지역</InputLabel>
                         <Select
-                          value={selectSoccerField.province}
+                          value={selectSoccerField.region}
                           color="success"
                           onChange={onChangeArea}
                           style={{ outline: "1px solid #f4f4f4", outlineOffset: "-2px" }}

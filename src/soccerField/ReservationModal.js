@@ -12,7 +12,7 @@ import { Alert, AlertTitle, Collapse, FormControl, MenuItem } from "@mui/materia
 const ReservationModal = ( props ) => {
 
   const [headCount, setHeadCount] = useState(6);
-  const [genderInfo, setGenderInfo] = useState("mixed");
+  const [genderInfo, setGenderInfo] = useState("남녀모두");
   const [teamInfo, setTeamInfo] = useState("individual");
   const [level, setLevel] = useState("유망주");
 
@@ -172,9 +172,9 @@ const ReservationModal = ( props ) => {
                   onChange={handleChange}
                   aria-label="Gender"
                 >
-                  <ToggleButton value="mixed">혼성</ToggleButton>
-                  <ToggleButton value="man">남성</ToggleButton>
-                  <ToggleButton value="woman">여성</ToggleButton>
+                  <ToggleButton value="남녀모두">혼성</ToggleButton>
+                  <ToggleButton value="남자">남성</ToggleButton>
+                  <ToggleButton value="여자">여성</ToggleButton>
                 </ToggleButtonGroup>                  
               </div>           
             </div> 

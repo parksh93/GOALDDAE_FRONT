@@ -48,7 +48,7 @@ const SoccerFieldMain = () => {
             <div className={styles.flexContainer}>
               <div className={styles.infoContainer}>
                 <div className={styles.info}>
-                  <div className={styles.infoText}>{fieldInfo.region} / {fieldInfo.province}</div>
+                  <div className={styles.infoText}>{fieldInfo.province} / {fieldInfo.region}</div>
                   <div className={styles.infoTitle}>{fieldInfo.fieldName}</div>
                   <div className={styles.infoText}>
                     <span>{fieldInfo.fieldSize} / </span>                
