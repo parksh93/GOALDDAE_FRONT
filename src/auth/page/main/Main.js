@@ -21,7 +21,7 @@ const Main = () => {
                 </div>
             </div>
             <TimeLine />
-            <MatchListMoreDetails />
+            {/* <MatchListMoreDetails /> */}
             
         </div>
     );

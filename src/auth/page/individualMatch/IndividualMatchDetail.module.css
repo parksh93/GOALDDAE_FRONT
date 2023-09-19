@@ -1,0 +1,187 @@
+.imageSlideContainer {
+    max-width: 900px; /* 가로 */
+    margin-bottom: 40px;
+    z-index: 1;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+  }
+  
+  .img {
+    width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
+    max-height: 450px; /* 높이 */
+  }
+  
+  .container {
+    max-width: 900px; /* 가로 */
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 25px 0px;
+    z-index: 1;
+    color: #222222;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+.infoContainer {
+    width: 800px;
+    z-index: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 600px;
+    margin-right: 10px;
+}
+
+.info {
+    background-color: #FFFFFF;
+    padding: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+}
+
+.playerContainer{
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 500px;
+    max-height: 600px;
+    margin-left: 10px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+    position: relative;
+}
+
+.off {
+    text-decoration: line-through;
+    color: #aaaaaa;
+}
+
+.separator {
+    border: 0.4px solid #cccccc;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.infoText {
+    font-size: 15px;
+    color: #333333;
+    margin: 6px 2px;
+}
+
+.infoTitle {
+    font-size: 22px;
+    color: #333333;
+    margin: 6px 2px;
+}
+
+.buttonContainer {
+    margin: 25px;
+
+}
+
+.roomManagerInfo *{
+    vertical-align: middle;
+}
+
+.profileImgDiv {
+    display: inline-block;
+}
+
+.userProfile {
+    width: auto;
+    height: 40px;
+    margin-top: 20px;
+}
+
+.userInfoDiv {
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.nickname {
+    font-weight: 600;
+}
+
+.level {
+    color: gray;
+    font-size: 12px;
+}
+
+.roomManagerStar {
+    color: rgb(243, 243, 152);
+    margin-left: 5px;
+}
+
+.matchInfoDiv * {
+    vertical-align: middle;
+    color: #3d3c3c;
+}
+
+.matchInfoIcon {
+    font-size: 19px;
+    margin-right: 5px;
+    margin-left: 2px;
+}
+
+.matchInfoDiv > div {
+    margin-bottom: 5px;
+}
+
+.matchInBtn, .matchRequestBtn, .matchEndBtn {
+    width: 90%;
+    font-size: 15px;
+    padding: 8px;
+    margin-bottom: 30px;
+    bottom: 0;
+    position: absolute; 
+}
+
+.matchInBtn {
+    background-color: lightgray;
+}
+
+.matchEndBtn {
+    background-color: gray;
+}
+
+.matchRequestBtn {
+    background-color: rgb(32, 146, 32);
+}
+
+.matchRequestBtn:hover {
+    background-color: rgb(206, 206, 206);
+}
+
+.playerInfoDiv {
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.playerInfoDiv::-webkit-scrollbar {
+    width: 10px;
+    background: none;
+}
+
+.playerInfoDiv::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: rgb(211, 211, 211);
+}
+
+.matchTitle {
+    margin-bottom: 10px;
+}
+
+.modalDeleteBtn {
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: black;
+    font-size: 15px;
+}   
+
+.modalDeleteBtn:hover {
+    color: lightgray;
+}
