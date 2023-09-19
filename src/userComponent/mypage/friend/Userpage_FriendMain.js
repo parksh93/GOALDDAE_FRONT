@@ -15,17 +15,17 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 
-const FriendMain = () => {
+const FriendMain = ({userId}) => {
     const [state, setState] = useState(1);
     const [openAlert, setOpenAlert] = useState(false);
     const [alertText, setAlertText] = useState("")
     const [alertSeverity, setAlertSeverity] = useState("success");
-    const {getUserInfo, userInfo} = useUser();    
+    // const {getUserInfo, userInfo} = useUser();    
     const [friendId, setFriendId] = useState(0);
     const [friendInfo, setFriendInfo] = useState(null);
-    const { userId } = useParams();
+    // const { userId } = useParams();
 
-    const [socketData, setSocketData] = useState();
+    // const [socketData, setSocketData] = useState();
     //const ws = useRef(null);    //webSocket을 담는 변수, 
                                 //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
 
@@ -42,23 +42,23 @@ const FriendMain = () => {
                                             // })
                                             // }); 
                                             
-    const sock = new SockJS("http://localhost:8080/friend");
-    let client = Stomp.over(sock) ;
-    useEffect(() => {
-        const temp = JSON.stringify(new Date().toLocaleString());
-        client.connect({}, () => {
-            client.send("/app/friend/join", {}, JSON.stringify(userInfo.id))
+    // const sock = new SockJS("http://localhost:8080/friend");
+    // let client = Stomp.over(sock) ;
+    // useEffect(() => {
+    //     const temp = JSON.stringify(new Date().toLocaleString());
+    //     client.connect({}, () => {
+    //         client.send("/app/friend/join", {}, JSON.stringify(userInfo.id))
             
-            client.send(`/app/friend/${friendId}`, {}, JSON.stringify(temp))
-            client.send(`/app/friend/${userInfo.id}`, {}, JSON.stringify(temp))
+    //         client.send(`/app/friend/${friendId}`, {}, JSON.stringify(temp))
+    //         client.send(`/app/friend/${userInfo.id}`, {}, JSON.stringify(temp))
             
-            client.subscribe("/queue/FriendRequestToClient/" + userInfo.id, function(message) {
-                setSocketData(message);
-            })
-        })  
-        return () => client.disconnect();
+    //         client.subscribe("/queue/FriendRequestToClient/" + userInfo.id, function(message) {
+    //             setSocketData(message);
+    //         })
+    //     })  
+    //     return () => client.disconnect();
 
-    },[client]);
+    // },[client]);
         
     const sendWebSocket = useCallback((friendId) => {
         setFriendId(friendId)
@@ -77,9 +77,6 @@ const FriendMain = () => {
             // )
     });
     
-    useEffect(() => {
-        getUserInfo();
-    },[]);
 
     useEffect(() => {
         // userId를 사용하여 친구 정보를 가져옴
@@ -132,40 +129,14 @@ const FriendMain = () => {
 
             <div className={styles.contentBox}>
                 {state === 1 ? <Userpage_FriendList 
-                                    userInfo={friendInfo}
-                                    setOpenAlert={setOpenAlert}
-                                    setAlertSeverity={setAlertSeverity}
-                                    setAlertText={setAlertText}
-                                    socketData={socketData}
-                                    sendWebSocket={sendWebSocket}
+                                    userId={userId}
+                                    // setOpenAlert={setOpenAlert}
+                                    // setAlertSeverity={setAlertSeverity}
+                                    // setAlertText={setAlertText}
+                                    // socketData={socketData}
+                                    // sendWebSocket={sendWebSocket}
                                 /> 
-                : state === 2 ? <FriendAdd  
-                                    userInfo={friendInfo} 
-                                    formatDate={formatDate}
-                                    setOpenAlert={setOpenAlert}
-                                    setAlertSeverity={setAlertSeverity}
-                                    setAlertText={setAlertText}
-                                    socketData={socketData}
-                                    sendWebSocket={sendWebSocket}
-                                /> 
-                : state === 3 ? <FriendAccept 
-                                    userInfo={friendInfo} 
-                                    formatDate={formatDate}
-                                    setOpenAlert={setOpenAlert}
-                                    setAlertSeverity={setAlertSeverity}
-                                    setAlertText={setAlertText}
-                                    socketData={socketData}
-                                    sendWebSocket={sendWebSocket}
-                                /> 
-                : <FriendBlock 
-                    userInfo={friendInfo} 
-                    formatDate={formatDate}
-                    setOpenAlert={setOpenAlert}
-                    setAlertSeverity={setAlertSeverity}
-                    setAlertText={setAlertText}
-                    socketData={socketData}
-                    sendWebSocket={sendWebSocket}
-                />}
+                : ""}
             </div>
         </div>
     );

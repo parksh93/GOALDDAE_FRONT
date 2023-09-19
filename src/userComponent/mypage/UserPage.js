@@ -19,7 +19,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Link, useParams  } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import Userpage_FriendMain from '../mypage/friend/Userpage_FriendMain';
@@ -28,26 +28,37 @@ import editIcon from '../mypage/img/write.png';
 
 function UserPage() {
   const { userId } = useParams();
-  const [userInfo, setUserInfo] = useState("");
+  const [pageInfo, setPageInfo] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [viewMode, setViewMode] = useState('USER_INFO');
-  
-
+  const navigate = useNavigate();
+  // const loggedInUserId = useUser().id;
+  const {userInfo, getUserInfo} = useUser();
   
   // 유저정보 조회
   useEffect(() => {
-    const fetchUserData = async () => {
-        const response = await axios.post(`/user/getFriendInfo/${userId}`);
-        if (response.status === 200) {
-          setUserInfo(response.data);
-          setImageUrl(response.data.profile_img_url);
-        } else {
-          console.error('에러 : ', response.statusText);
-        }
-    };
+    getUserInfo();
     fetchUserData();
-  }, [setUserInfo]);
+  }, []);
+  
+  const fetchUserData = async () => {
+      const response = await axios.post(`/user/getFriendInfo/${userId}`);
+      if (response.status === 200) {
+        setPageInfo(response.data);
+        setImageUrl(response.data.profile_img_url);
+      } else {
+        console.error('에러 : ', response.statusText);
+      }
+  };
 
+  // 만약 URL의 userId가 현재 로그인한 사용자의 ID와 일치하면, 사용자 정보를 보여주기 위해 뷰 모드를 변경합니다.
+  useEffect(() => {
+    if(userInfo !== null){
+      if (userId == userInfo.id) {
+        navigate('/myPage');
+      }
+    }
+  }, [userInfo]);
 
 
   return (
@@ -55,7 +66,7 @@ function UserPage() {
     <div className="my-page">
 
         <div className="user-card">
-          {userInfo ? (
+          {pageInfo ? (
             <React.Fragment>
                 <React.Fragment>
 
@@ -65,17 +76,17 @@ function UserPage() {
                 <List component="nav" aria-label="side-nav" className="side-nav">
                 <ListItem button onClick={() => setViewMode('USER_INFO')}
                 sx={{ backgroundColor: viewMode === "USER_INFO" ? " #f2f2f2" : "inherit", color:viewMode === "USER_INFO" ? "black" : "inherit"}}>
-                  <ListItemText primary="내 정보" />
+                  <ListItemText primary="친구 정보" />
                 </ListItem>
                 <Divider />
                 <ListItem button onClick={() => setViewMode('MATCH_LIST')}
                 sx={{ backgroundColor: viewMode === "MATCH_LIST" ? "green" : "inherit", color:viewMode === "MATCH_LIST" ? "white" : "inherit"}}>
-                  <ListItemText primary="신청 매치" />
+                  <ListItemText primary="친구가 신청한 매치" />
                 </ListItem>
                 <Divider />
                 <ListItem button divider onClick={() => setViewMode('BOARD_LIST')}
                 sx={{ backgroundColor: viewMode === "BOARD_LIST" ? "green" : "inherit", color:viewMode === "BOARD_LIST" ? "white" : "inherit"}}>
-                  <ListItemText primary="내가 쓴 글" />
+                  <ListItemText primary="친구가 쓴 글" />
                 </ListItem>
                 <ListItem button onClick={() => setViewMode('FRIEND_LIST')}
                 sx={{ backgroundColor: viewMode === "FRIEND_LIST" ? "green" : "inherit", color:viewMode === "FRIEND_LIST" ? "white" : "inherit"}}>
@@ -89,46 +100,46 @@ function UserPage() {
 
                 {/* 사이드메뉴 상세보기 */}
                 {viewMode === "MATCH_LIST" ? (
-                  <MatchList userId={userInfo.id}/>
+                  <MatchList userId={pageInfo.id}/>
                 ) : viewMode === "BOARD_LIST" ? (
-                  <BoardList userId={userInfo.id} /> 
+                  <BoardList userId={pageInfo.id} /> 
                 ) : viewMode === "FRIEND_LIST" ? (
-                  <Userpage_FriendMain />
+                  <Userpage_FriendMain userId={userId}/>
                   ) : (
                     <>
                     <div className='user-card-1'>
                     <Col xs={6} md={4}>
                     <>
-                    <img src={userInfo.profileImgUrl} roundedCircle />
+                    <img src={pageInfo.profileImgUrl} roundedCircle />
                     </>
                     </Col>
 
                       <div className='userInfo'>
                         <div className='level'>
                           <Stack spacing={1} alignItems="center">
-                            <Chip label={userInfo.level} color="success" />
+                            <Chip label={pageInfo.level} color="success" />
                           </Stack>
                         </div>
-                        <span>{userInfo.nickname}</span>
-                        <p>{userInfo.gender}</p>
-                        <p>노쇼 
-                          <span style={{ color: userInfo.noShowCnt > 0 ? 'red' : 'gray' }}>
-                            {userInfo.noShowCnt}
-                          </span>
+                        <span>{pageInfo.nickname}</span>
+                        <p>{pageInfo.gender}</p>
+                        <p>노쇼 횟수 : 
+                          <span style={{ color: pageInfo.noShowCnt > 0 ? 'green' : 'gray' }}>
+                            {' ' + pageInfo.noShowCnt }
+                          </span>회
                         </p>
                       </div>
                     </div> 
 
                     <div className='user-card-2'>
-                      <p><b>이메일</b><text>{userInfo.email}</text></p>
-                      <p><b>생년월일</b><span>{userInfo.birth}</span></p>
-                      <p><b>전화번호</b><span>{userInfo.phoneNumber}</span></p>
+                      <p><b>이메일</b><text>{pageInfo.email}</text></p>
+                      <p><b>생년월일</b><span>{pageInfo.birth}</span></p>
+                      <p><b>전화번호</b><span>{pageInfo.phoneNumber}</span></p>
                     </div>
 
                     <div className='user-card-3'>
-                    <p><b>선호도시</b>  <span>{userInfo.preferredCity}</span> </p>
-                    <p><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
-                    <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
+                    <p><b>선호도시</b>  <span>{pageInfo.preferredCity}</span> </p>
+                    <p><b>선호지역</b>  <span>{pageInfo.preferredArea}</span> </p>
+                    <p><b>활동반경</b>  <span>{pageInfo.activityClass}</span> km </p>
                     </div>
                   </>
                   )}

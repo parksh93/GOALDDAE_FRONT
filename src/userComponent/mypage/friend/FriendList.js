@@ -133,6 +133,7 @@ const FriendList = ({
                                             }
                                         )
                             }/>
+                    
                             <BsPersonDash className={styles.deleteBtn} onClick={() => onClickDeleteFriend(friend.id, friend.nickname)}/>
                             <BsPersonSlash className={styles.blockBtn} onClick={() => blockModal(friend.id, friend.nickname)}/>
                         </div>

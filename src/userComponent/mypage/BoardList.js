@@ -97,7 +97,7 @@ function BoardList({ userId }) {
 
       {/* 게시물이 없는 경우 텍스트를 표시 */}
         {board.length === 0 && (
-        <h2 className="no-boards-message" style={{ color: 'grey' }}>내가 쓴 글이 없네요 .. 😞</h2>
+        <h2 className="no-boards-message" style={{ color: 'grey' }}>아직 쓴 글이 없네요 .. 😞</h2>
       )}
 
       {/* 페이지 번호 버튼 */}
