@@ -8,6 +8,9 @@ import useWebSocket from "../../../webSocket/UseWebSocket";
 import { Box, Button } from "@material-ui/core";
 import TeamMatchImage from "./image/TeamMatchImage";
 import NaviBar from "../main/naviBar/NaviBar";
+import Footer from '../../footer/Footer';
+import { useLocation } from 'react-router-dom'; 
+import Loading from '../../../loading/Loading';
 
   const provinces = [
     "서울", "경기", "인천", "강원", "대전",
@@ -26,7 +29,15 @@ const TeamMatch = () => {
   const [selectedGender, setSelectedGender] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 10; 
-  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+    React.useEffect(() => {
+      setIsLoading(true);
+      setTimeout(() => {
+          setIsLoading(false);
+      }, 1000); 
+  }, [location]);
 
   const getPlayerFormat = (playerNumber) => {
     const teamSize = playerNumber / 2;
@@ -161,113 +172,122 @@ const TeamMatch = () => {
   return (
     <>
       <NaviBar />
-      <TeamMatchImage />
-      <div className="timeline">
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton onClick={handlePrevDate} className="prev-date-btn">
-              <ArrowBackIosIcon />
-            </IconButton>
-            <ul>
-            {visibleDates.map((item) => (
-            <li
-              key={item.date}
-              className={`timeline-date-item 
-                ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
-                ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
-              `}
-              onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
-            >
-            <div style={{ width: '30px', textAlign: 'center' }}> 
-              <div>{item.date}</div>
-              <div>{item.day}</div>
-            </div>  
-          </li>
-          ))}
-            </ul>
-            <IconButton onClick={handleNextDate} className="next-date-btn">
-              <ArrowForwardIosIcon />
-            </IconButton>
-        </div>
-        <div className="filter">
-          <select 
-            value={selectedProvince} 
-            onChange={(e) => setSelectedProvince(e.target.value)}
-            style={{
-              padding: '10px',
-              fontSize: window.innerWidth <= 768 ? '12px' : '14px',
-              border: 'none',
-              borderRadius: '4px',
-              boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-            }}
-          >
-            {provinces.map((province) =>
-              <option 
-                key={province} 
-                value={province}
+
+      {isLoading ? (
+      <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+        <Loading />
+      </div>
+      ) : (
+      <>
+        <TeamMatchImage />
+        <div className="timeline">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <IconButton onClick={handlePrevDate} className="prev-date-btn">
+                    <ArrowBackIosIcon />
+                  </IconButton>
+                  <ul>
+                    {visibleDates.map((item) => (
+                      <li
+                        key={item.date}
+                        className={`timeline-date-item 
+                          ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
+                          ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
+                        `}
+                        onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
+                      >
+                        <div style={{ width: '30px', textAlign: 'center' }}> 
+                          <div>{item.date}</div>
+                          <div>{item.day}</div>
+                        </div>  
+                      </li>
+                    ))}
+                  </ul>
+                  <IconButton onClick={handleNextDate} className="next-date-btn">
+                    <ArrowForwardIosIcon />
+                  </IconButton>
+              </div>
+            <div className="filter">
+              <select 
+                value={selectedProvince} 
+                onChange={(e) => setSelectedProvince(e.target.value)}
                 style={{
-                  fontSize: window.innerWidth <= 768 ? '12px' : '13px', 
+                  padding: '10px',
+                  fontSize: window.innerWidth <= 768 ? '12px' : '14px',
+                  border: 'none',
+                  borderRadius: '4px',
+                  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
                 }}
               >
-                {province}
-              </option>
-            )}
-          </select>
-          <select
-            value={selectedGender}
-            onChange={(e) => setSelectedGender(e.target.value)}
-            style={{
-              padding: "10px",
-              fontSize: window.innerWidth <= 768 ? "12px" : "14px",
-              border: "none",
-              borderRadius: "4px",
-              boxShadow: "0 2px 5px rgba(0, 0, 0, .15)",
-            }}
-          >
-            <option value="">남녀모두</option>
-            <option value="남자">남자</option>
-            <option value="여자">여자</option>
-          </select>
+                {provinces.map((province) =>
+                  <option 
+                    key={province} 
+                    value={province}
+                    style={{
+                      fontSize: window.innerWidth <= 768 ? '12px' : '13px', 
+                    }}
+                  >
+                    {province}
+                  </option>
+                )}
+              </select>
+              <select
+                value={selectedGender}
+                onChange={(e) => setSelectedGender(e.target.value)}
+                style={{
+                  padding: "10px",
+                  fontSize: window.innerWidth <= 768 ? "12px" : "14px",
+                  border: "none",
+                  borderRadius: "4px",
+                  boxShadow: "0 2px 5px rgba(0, 0, 0, .15)",
+                }}
+              >
+                <option value="">남녀모두</option>
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
+              </select>
+            </div>
+
+            {matchList.length > 0 && matchList.map((match) => {
+
+            let buttonStyle, isDisabled;
+            switch(match.status) {
+              case '신청가능':
+                buttonStyle = {backgroundColor:'green', color:'white', fontSize:'10px', width:'100px'};
+                isDisabled = false;
+                break;
+
+              case '마감임박': 
+                buttonStyle = {backgroundColor:'red', color:'white', fontSize:'10px', width:'100px'};
+                isDisabled = false;
+                break;
+
+              default:
+                buttonStyle ={backgroundColor:'grey', color:'black', fontSize:'10px', width:'100px'};
+                isDisabled = true; 
+            }
+
+            return (
+              <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
+                <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
+                  {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
+                </Box>
+                <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
+                  <div>{match.fieldName}</div>
+                  <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
+                </Box>
+                <Button style={buttonStyle} disabled={isDisabled}>
+                  {match.status}
+                </Button>
+              </Box> 
+            );
+            })}
+          </Box>
         </div>
-
-        {matchList.length > 0 && matchList.map((match) => {
-
-        let buttonStyle, isDisabled;
-        switch(match.status) {
-          case '신청가능':
-            buttonStyle = {backgroundColor:'green', color:'white', fontSize:'10px', width:'100px'};
-            isDisabled = false;
-            break;
-
-          case '마감임박': 
-            buttonStyle = {backgroundColor:'red', color:'white', fontSize:'10px', width:'100px'};
-            isDisabled = false;
-            break;
-
-          default:
-            buttonStyle ={backgroundColor:'grey', color:'black', fontSize:'10px', width:'100px'};
-            isDisabled = true; 
-        }
-
-        return (
-          <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
-            <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
-              {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
-            </Box>
-            <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
-              <div>{match.fieldName}</div>
-              <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
-            </Box>
-            <Button style={buttonStyle} disabled={isDisabled}>
-              {match.status}
-            </Button>
-          </Box> 
-        );
-        })}
-      </Box>
-    </div>
-    </>
-    );
-  }
+        <Footer />
+      </>
+    )}
+  </>
+)}
 
 export default TeamMatch;

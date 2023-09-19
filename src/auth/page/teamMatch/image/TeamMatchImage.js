@@ -11,8 +11,8 @@ const TeamMatchImage = () => {
       <img 
         src={TestImg1} alt="이미지" className="img" 
         style={{
-          marginTop: '2%', 
-          width: '700px',
+          marginTop: '3%', 
+          width: '1000px',
           height: '900px' 
         }}
       />

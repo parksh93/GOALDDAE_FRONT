@@ -3,8 +3,7 @@ import { Box } from '@material-ui/core';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const NaviBar = () => {
   const theme = useTheme();
@@ -13,7 +12,7 @@ const NaviBar = () => {
   const location = useLocation();
 
   return (
-    <>
+      <>
         <Box sx={{ height: '50px',bgcolor:"#4BAF4B", color:"white", display: "flex", justifyContent:"center" }}>
             <Button 
                 sx={{ 
@@ -67,9 +66,9 @@ const NaviBar = () => {
                     backgroundColor: location.pathname === '/board' ? '#64CD3C' : 'transparent', 
                     '&:hover': {backgroundColor: '#64CD3C'}
                 }} onClick={() => navigate('/board')}>게시판
-            </Button>
-        </Box>
-    </>
+            </Button>   
+          </Box>
+      </>
     )
 }
 

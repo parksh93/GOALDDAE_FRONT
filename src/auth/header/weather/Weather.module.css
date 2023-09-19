@@ -1,7 +1,7 @@
 
 .weatherMainDiv {
     display: inline;
-    margin-left: 16%;
+    margin-left: 20.3%;
     position: absolute;
     width: 50%;
     /* 드래그 방지 */
@@ -13,9 +13,9 @@
 
 .skyImg {
     position: inherit;
-    font-size: 50px;
-    margin-left: 7.5%;
-    margin-top: 8px;
+    font-size: 40px;
+    margin-left: 7%;
+    margin-top: 22px;
     color: rgba(226, 226, 226, 0.904);
 }
 

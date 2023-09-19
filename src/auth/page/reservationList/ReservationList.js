@@ -7,6 +7,8 @@ import FieldImg1 from './FieldImg1.jpeg';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import Loading from '../../../loading/Loading';
+import { useLocation } from 'react-router-dom'; 
+import Footer from '../../footer/Footer';
 
 const provinces = [
   "서울", "경기", "인천", "강원", "대전",
@@ -26,7 +28,15 @@ const ReservationList = () => {
   const [reservationPeriod, setReservationPeriod] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 10; 
-  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+        setIsLoading(false);
+    }, 1000); 
+  }, [location]);
 
   useEffect(() => {
     if (selectedProvince) {
@@ -86,11 +96,18 @@ const ReservationList = () => {
 return (
     <div> 
       <NaviBar />
+      {isLoading ? (
+      <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+        <Loading />
+      </div>
+      ) : (
+      <>
+      <div style={{marginLeft:'10%'}}>
       <select
           value={selectedProvince}
           onChange={e => setSelectedProvince(e.target.value)}
           style={{
-            marginTop: '2%',
+            marginTop: '3%',
             marginLeft: '15%',
             padding: '8px',
             borderRadius: '4px',
@@ -173,7 +190,7 @@ return (
     
       {fields.map((field, index) =>
         <div key={field.id} ref={index === fields.length - 1 ? lastFieldElementRef : null}>
-            <Box key={field.id} sx={{marginLeft:'15%', borderBottom: `1px solid ${grey[500]}`, width: '1100px', marginTop:'40px'}}>
+            <Box key={field.id} sx={{marginLeft:'14%', borderBottom: `1px solid ${grey[500]}`, width: '1100px', marginTop:'40px'}}>
             <Box sx={{marginTop:'2%', fontSize:'20px', fontWeight:'bold'}}>
               <Link to={`/soccer_field/${field.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 {field.fieldName}
@@ -224,8 +241,10 @@ return (
               )}
             </Box>
        </div>)}
-         {isLoading ? <Loading /> : fields.map((field,index)=> {})}
     </div> 
+    <Footer />
+    </>)}
+    </div>
   )}
 
 export default ReservationList;

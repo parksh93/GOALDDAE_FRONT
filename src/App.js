@@ -63,7 +63,7 @@ const App = () => {
             <Route path="/reservation/list" element={<ReservationList />} />
           </Routes>
         </AdminProvier>
-        <Footer/> 
+        {/* <Footer/>  */}
       </>
   );
 }
