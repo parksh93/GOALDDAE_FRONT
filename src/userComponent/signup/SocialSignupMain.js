@@ -153,7 +153,6 @@ const SocialSignupMain = () => {
           divStyle={styles.div}
           setPhoneNumberOk={setPhoneNumberOk}
         />
-        <p style={{fontSize:'10px'}}>* 핸드폰 번호는 "-" 이 자동으로 생기니 "-"없이 숫자만 입력해주세요.</p>
         <BirthInput styles={styles} birth={birth} setBirth={setBirth} />
         <GenderRaido styles={styles} setGender={setGender} />
       </section>

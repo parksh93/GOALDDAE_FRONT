@@ -1,6 +1,6 @@
 import "./WeatherLoading.css"
 
-const weatherLoading = () => {
+const WeatherLoading = () => {
     return (
         <div class="loadingio-spinner-spinner-oj9ms3ro1ym">
             <div class="ldio-8hsef36ocyv">
@@ -38,4 +38,4 @@ const weatherLoading = () => {
     )
 }
 
-export default weatherLoading;
+export default WeatherLoading;

@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import { Alert ,Snackbar ,Paper ,Button, FormControl, FormControlLabel, Radio, RadioGroup, FormLabel, MenuItem, Select, InputLabel } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import './SoccerFieldTable.css';
+import './SoccerFieldAdd.css';
 import DaumPostcode from 'react-daum-postcode';
 
-const SoccerFieldTable = () => {
+const SoccerFieldAdd = ({setPageState}) => {
   const [fieldName, setFieldName] = useState('');
   const [toiletStatus, setToiletStatus] = useState(0);
   const [showerStatus, setShowerStatus] = useState(0);
@@ -151,15 +151,15 @@ const SoccerFieldTable = () => {
         reservationFee: reservationFee,
         inOutWhether: inOutWhether,
         grassWhether: grassWhether, 
-        region: city,
-        province : area,
+        province: city,
+        region : area,
         address : inputAddressValue,
         operatingHours : numberToTimeString(operatingHours),
         closingTime : numberToTimeString(closingTime),
         content : content
       };
   
-      const response = await axios.post('/field/save', soccerField);
+      const response = await axios.put('/field/save', soccerField);
   
         if (response.status === 200) {
         console.log(`생성 완료: ${fieldName}`);
@@ -167,6 +167,7 @@ const SoccerFieldTable = () => {
         setTimeout(() => {
           setOpenSuccessSnackbar(false);  
         }, 3000);
+        setPageState(0);
       } else {
         console.error(`생성 실패, 상태 코드: ${response.status}`);
         setErrorMessage(`구장 생성에 실패했습니다. ${fieldName} 생성에 실패했습니다.`);
@@ -196,12 +197,10 @@ const numberToTimeString = (number) => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#4caf50', 
+        main: '#black', 
       },
     },
   });
-
-  const navigate = useNavigate();
 
   const onCompletePost = data => {
     setInputAddressValue(data.address);
@@ -225,6 +224,7 @@ const numberToTimeString = (number) => {
                     onChange={(e) =>setFieldName(e.target.value)}
                     label="구장 이름"
                     variant="outlined"
+                    color=''
                     sx={{width:700}}
                   />
                 </Box>
@@ -251,7 +251,6 @@ const numberToTimeString = (number) => {
                     <InputLabel>도시</InputLabel>
                     <Select
                       value={city}
-                      color="success"
                       onChange={onchangeCity}
                       label="도시"
                     >
@@ -279,9 +278,8 @@ const numberToTimeString = (number) => {
                     <InputLabel>지역</InputLabel>
                     <Select
                       value={area}
-                      color="success"
                       onChange={onChangeArea}
-                      style={{ outline: "1px solid #f4f4f4", outlineOffset: "-2px" }}
+                      style={{ outline: "1px solid #black", outlineOffset: "-2px" }}
                       label="지역"
                     >
                       {availableAreas.map((area) => (
@@ -312,7 +310,6 @@ const numberToTimeString = (number) => {
                 </Box>
                 <Box mb={2} sx={{display : 'flex'}}>
                   <TextField
-                    color="success"
                     type="number"
                     label="영업시작"
                     InputLabelProps={{
@@ -323,7 +320,6 @@ const numberToTimeString = (number) => {
                   />
                   <div style={{width : '50px'}}></div>
                   <TextField
-                    color="success"
                     type="number"
                     label="영업종료"
                     InputLabelProps={{
@@ -436,7 +432,7 @@ const numberToTimeString = (number) => {
                         {fieldImg1 &&
                         <>
                         <img src={fieldImg1} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg1)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg1)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
                     <Box mb={2}>
@@ -449,7 +445,7 @@ const numberToTimeString = (number) => {
                         {fieldImg2 &&
                         <>
                         <img src={fieldImg2} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg2)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg2)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
                     <Box mb={2}>
@@ -462,15 +458,15 @@ const numberToTimeString = (number) => {
                         {fieldImg3 &&
                         <>
                         <img src={fieldImg3} alt="" className="preview-image" />
-                        <button onClick={() => handleRemoveImage(setFieldImg3)}>&times;</button>
+                        <button onClick={() => handleRemoveImage(setFieldImg3)} className='deleteImgBtn'>&times;</button>
                         </>}
                     </Box>
               </Paper>
               <Box>
-                <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff' }}>
+                <Button variant="contained" type="submit" className="submit-button" style={{ color: '#fff', background: "black"}}>
                 등록
                 </Button>
-                <Button variant="outlined" color="secondary" onClick={() => navigate('/admin')} style={{ borderColor: 'green', color: 'green', margin: '20px' }}>
+                <Button variant="outlined" onClick={() => setPageState(0)} style={{ borderColor: 'black', color: 'black', margin: '20px' }}>
                 취소
                 </Button>
                   <Snackbar open={openSuccessSnackbar} autoHideDuration={3000} onClose={() => setOpenSuccessSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
@@ -487,4 +483,4 @@ const numberToTimeString = (number) => {
   );  
 };
 
-export default SoccerFieldTable;
+export default SoccerFieldAdd;

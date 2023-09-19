@@ -36,3 +36,72 @@ div ul{
 .modalDeleteBtn:hover {
     color: lightgray;
 }
+
+.postImage {
+    max-width: 100%;
+    width: 500px;
+    height: auto;
+    margin: 10px 0;
+}
+
+.postDetailContainer {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid black
+}
+
+/* board */
+.title:hover {
+    color: lightgray;
+}
+
+.content {
+    font-size: 15px;
+}
+
+.content > a {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.content > a:hover{
+    color: lightgray;
+}
+
+.dropDownTr {
+    text-align: center;
+}
+
+.dropDownTd {
+    padding: 50px;
+}
+
+.reason {
+    width: 98%;
+    resize: none;
+    padding: 10px;
+    font-size: 15px;
+    outline: 1px solid black;
+}
+
+.dropDownText {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.closeBtn {
+    float: right;
+    font-size: 20px;
+}
+
+.closeBtn:hover {
+    color: lightgray;
+}
+
+.tableRow{
+    overflow-x: auto;
+}
+
+.tableCell {
+    width: 100;
+}
