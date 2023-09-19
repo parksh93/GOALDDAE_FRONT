@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import TeamEditModal from '../save/TeamEditModal';
 
 
 const MyTeamDetail = () => {
@@ -14,6 +15,8 @@ const MyTeamDetail = () => {
   const [applyList, setApplyList] = useState([]);
   const [memberList, setMemberList] = useState([]);
   const { tabName } = useParams();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editedTeamInfo, setEditedTeamInfo] = useState(null);
 
   const navigate = useNavigate();
 
@@ -198,8 +201,21 @@ const MyTeamDetail = () => {
     if (tabName === 'applyList' && userInfo) {
       fetchApplyList(userInfo.teamId);
     }
-
   };
+
+    // 수정 모달 열기
+    const openEditModal = (teamInfo) => {
+      setEditedTeamInfo(teamInfo);
+      setIsEditModalOpen(true);
+    };
+  
+    // 수정 모달 닫기
+    const closeEditModal = () => {
+      setIsEditModalOpen(false);
+      setEditedTeamInfo(null);
+    };
+
+
 
   return (
     <div>
@@ -218,7 +234,7 @@ const MyTeamDetail = () => {
                 {teamInfo.teamName}
               </h2>          
               {isTeamManager && (
-              <button className={styles.teamDetailUpdateBtn}>
+              <button className={styles.teamDetailUpdateBtn} onClick={() => openEditModal(teamInfo)}>
                 팀 설정
               </button>
               )}
@@ -369,7 +385,20 @@ const MyTeamDetail = () => {
         ) : (
         <p>팀 정보를 불러오는 중...</p>
       )}
-
+      
+      {/* 수정 모달 */}
+      {isEditModalOpen && (
+        <TeamEditModal
+          open={isEditModalOpen}
+          onClose={closeEditModal}
+          teamInfo={editedTeamInfo}
+          onSubmit={(updatedTeamInfo) => {
+            console.log('업데이트된 팀 정보:', updatedTeamInfo);
+            
+            closeEditModal();
+          }}
+        />
+      )}
     </div>
     
   );
