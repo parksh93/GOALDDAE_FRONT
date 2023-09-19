@@ -50,7 +50,6 @@ export default function AdminTable() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   
   const [adminList, setAdminList] = useState([]);
-  const {getAdminInfo, adminInfo} = useAdmin();
 
   useEffect(() => {
     getAdminList();

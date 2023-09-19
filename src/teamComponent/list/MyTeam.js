@@ -30,7 +30,7 @@ const MyTeam = () => {
   };
 
   const wrapTeamSave = () => {
-    navigate(`/admin/team/save`)  
+    navigate(`/team/save`)  
   }
 
   const handleMyTeamClick = (id, tabName) => {
@@ -72,7 +72,7 @@ const MyTeam = () => {
                     </div>
                 </div>  
                 <div className={styles.viewDetails} onClick={() => handleMyTeamClick(teamInfo.id)}> 
-                      상세보기 >
+                      상세보기 {'>'}
                 </div>  
               </div>
           ) : (

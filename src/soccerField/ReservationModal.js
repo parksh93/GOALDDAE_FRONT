@@ -7,14 +7,19 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-import { FormControl, MenuItem } from "@mui/material";
+import { Alert, AlertTitle, Collapse, FormControl, MenuItem } from "@mui/material";
 
 const ReservationModal = ( props ) => {
 
   const [headCount, setHeadCount] = useState(6);
-  const [genderInfo, setGenderInfo] = useState("mixed");
+  const [genderInfo, setGenderInfo] = useState("남녀모두");
   const [teamInfo, setTeamInfo] = useState("individual");
   const [level, setLevel] = useState("유망주");
+
+  const [open, setOpen] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
 
   const [teamId, setTeamId] = useState(-1);
 
@@ -64,12 +69,15 @@ const ReservationModal = ( props ) => {
     axios.post('/reservation/create', reservationData)
       .then((response) => {
         console.log('성공적으로 예약되었습니다:', response.data);
+        setOpen(true);
+        setAlertSeverity("success");
+        setAlertTitle("예약 성공");
+        setAlertMsg("성공적으로 예약되었습니다.");
         window.location.href = `/soccer_field/${props.fieldInfo.id}`;
       })
       .catch((error) => {
         console.error('예약 중 에러 발생:', error);
       });
-      console.log(reservationData)
   };
 
 
@@ -79,7 +87,7 @@ const ReservationModal = ( props ) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: 400,
-      height: 640,
+      height: 650,
       bgcolor: "background.paper",
       border: "2px solid #444",
       boxShadow: 24,
@@ -92,7 +100,13 @@ const ReservationModal = ( props ) => {
           open={props.isModalOpen}
           onClose={props.closeModal}
         >
+          <div>
           <Box sx={style}>
+          <Collapse in={open}>
+            <Alert severity={alertSeverity}>
+              {alertMsg}
+            </Alert>
+          </Collapse>
             <div className={styles.infoText}>{props.fieldInfo.region}</div>
               <div className={styles.infoTitle}>{props.fieldInfo.fieldName}</div>
               <div className={styles.infoText}>
@@ -136,11 +150,11 @@ const ReservationModal = ( props ) => {
                   <ToggleButton value="individual">
                     개인매치
                   </ToggleButton>
-                  {props.userInfo && props.userInfo.teamId === -1 ?
-                  <ToggleButton value="team" disabled>
+                  {props.userInfo && props.userInfo.teamId ?
+                  <ToggleButton value="team">
                     팀매치
                   </ToggleButton> :
-                  <ToggleButton value="team">
+                  <ToggleButton value="team" disabled>
                     팀매치
                   </ToggleButton> }
                 </ToggleButtonGroup>    
@@ -158,9 +172,9 @@ const ReservationModal = ( props ) => {
                   onChange={handleChange}
                   aria-label="Gender"
                 >
-                  <ToggleButton value="mixed">혼성</ToggleButton>
-                  <ToggleButton value="man">남성</ToggleButton>
-                  <ToggleButton value="woman">여성</ToggleButton>
+                  <ToggleButton value="남녀모두">혼성</ToggleButton>
+                  <ToggleButton value="남자">남성</ToggleButton>
+                  <ToggleButton value="여자">여성</ToggleButton>
                 </ToggleButtonGroup>                  
               </div>           
             </div> 
@@ -205,6 +219,7 @@ const ReservationModal = ( props ) => {
                   doubleCheck={doubleCheck}
                 />
           </Box>
+          </div>
         </Modal>
 
     );

@@ -108,7 +108,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
             reason: reason
           };
           // 댓글 신고 요청 처리
-          axios.post(`/board/report`, requestData).then(() => {
+          axios.post(`/reply/report`, requestData).then(() => {
             // 처리 후 작업 수행
           });
         }

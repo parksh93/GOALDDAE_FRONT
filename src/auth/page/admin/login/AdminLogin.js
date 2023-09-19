@@ -9,7 +9,7 @@ import Collapse from "@mui/material/Collapse";
 import { useAdmin } from "../AdminContext";
 import AdminIdInput from "./AdminIdInput";
 import AdminPasswordInput from "./AdminPasswordInput";
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -19,6 +19,14 @@ const AdminLogin = () => {
   const [loginCheckMsg, setLoginCheckMsg] = useState("");
   const [open, setOpen] = useState(false);
   const {getAdminInfo} = useAdmin();
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#black', 
+      },
+    },
+  });
 
   const onKeyPress = useCallback((e) => {
     if (e.key === "Enter") {
@@ -67,6 +75,8 @@ const AdminLogin = () => {
 
   return (
     <div className={styles.LoginMainDiv}>
+      <ThemeProvider theme={theme}>
+
       <Collapse in={open}>
         <Alert severity={"error"}>
           <AlertTitle>
@@ -90,7 +100,7 @@ const AdminLogin = () => {
           inputStyle={styles.input}
           onKeyPress={onKeyPress}
           type="text"
-        />
+          />
       </section>
       <section className={styles.loginSection}>
         <AdminPasswordInput
@@ -100,7 +110,7 @@ const AdminLogin = () => {
           inputStyle={styles.input}
           onKeyPress={onKeyPress}
           type="password"
-        />
+          />
       </section>
       <p className={styles.msg}>{loginCheckMsg}</p>
       <section className={styles.loginBtnSection}>
@@ -108,6 +118,7 @@ const AdminLogin = () => {
           로그인
         </CheckBnt>
       </section>
+      </ThemeProvider>
     </div>
   );
 };

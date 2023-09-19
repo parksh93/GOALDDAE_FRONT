@@ -9,7 +9,7 @@
   /* 가로 위치 조정 */
   .timelineDateItem {
     display: inline-block;
-    margin: 12px 2px;
+    margin: 12px 0px;
     padding: 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease;

@@ -4,6 +4,10 @@
   margin-top: 10px;
 }
 
+.userInfoContainer{
+  margin-right: auto;
+}
+
 .button {
     background-color: #ffffff;
     border: none;
