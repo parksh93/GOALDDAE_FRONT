@@ -6,6 +6,7 @@ import { Box, Chip } from '@mui/material';
 import FieldImg1 from './FieldImg1.jpeg';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import Loading from '../../../loading/Loading';
 
 const provinces = [
   "서울", "경기", "인천", "강원", "대전",
@@ -25,9 +26,11 @@ const ReservationList = () => {
   const [reservationPeriod, setReservationPeriod] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const pageSize = 10; 
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (selectedProvince) {
+      setIsLoading(true); // API 요청 시작 전에 isLoading을 true로 설정
       axios.get('/field/reservation/list', { 
         params: {
           userId: null,
@@ -47,16 +50,18 @@ const ReservationList = () => {
             setFields(prevFields => [...prevFields, ...response.data.content]);
         }
       })
-      .catch(error => console.error(`Error: ${error}`));
+      .catch(error => console.error(`Error: ${error}`))
+      .finally(() => setIsLoading(false)); // API 요청 종료 후에 isLoading을 false로 설정
     }
-  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod, pageNumber]);
+  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod]);
+
   
   useEffect(() => {
     if (selectedProvince !== defaultProvince) { 
       setFields([]);
       setPageNumber(1);
     }
-  }, [selectedProvince]);
+  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod]);
   
   const observer = useRef();
   const lastFieldElementRef = useCallback(
@@ -87,7 +92,6 @@ return (
           style={{
             marginTop: '2%',
             marginLeft: '15%',
-            marginBottom: '2%',
             padding: '8px',
             borderRadius: '4px',
             borderColor: '#ccc',
@@ -178,9 +182,6 @@ return (
               <Box sx={{fontSize:'13px', color: grey[600]}}>
                 운영 시간: {field.operatingHours.split(':').slice(0, 2).join(':')} ~ {field.closingTime.split(':').slice(0, 2).join(':')}
               </Box>
-              <Box sx={{fontSize:'13px', color: grey[600]}}>
-                주소: {field.address}
-              </Box>
               <Box sx={{fontSize:'13px', display: 'flex', justifyContent:'flex-start', color: grey[600]}}>
                 {field.toiletStatus && <Box>화장실&middot;</Box>}
                 {field.showerStatus && <Box>샤워실&middot;</Box>}
@@ -198,7 +199,7 @@ return (
 
               {field.reservationInfo && (
                 <>
-                  <Box sx={{fontSize:'14px', fontWeight:'bold'}}>예약 가능</Box>
+                  <Box sx={{marginTop:'0%', fontSize:'14px', fontWeight:'bold'}}>예약 가능</Box>
                   <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
                     <Link to={`/soccer_field/${field.id}`} style={{ textDecoration: 'none', color: 'inherit',display: 'flex', alignItems: 'start' }}>
                       {field.reservationInfo.availableTimes.map(time => 
@@ -223,6 +224,7 @@ return (
               )}
             </Box>
        </div>)}
+         {isLoading ? <Loading /> : fields.map((field,index)=> {})}
     </div> 
   )}
 

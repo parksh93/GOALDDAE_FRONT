@@ -53,13 +53,15 @@ const TeamMatch = () => {
   const fetchMatchList = async () => {
     try {
       // 타임라인 선택된 시간 00:00:00 ~ 24:00:00
-      const startTime = `${selectedDate}T00:00:00`;
+      const startTime = selectedDate ? `${selectedDate}T00:00:00` : null;
+      const endTime = selectedDate ? `${selectedDate}T23:59:59` : null;
   
       const response = await axios.get("/team/match/list", {
         // 서버에 전달할 쿼리
         params: { 
           province: selectedProvince,
           startTime,
+          endTime,
           gender: selectedGender ? selectedGender : '' 
         },
       });
