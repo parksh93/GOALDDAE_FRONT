@@ -110,8 +110,9 @@ return (
             marginTop: '3%',
             marginLeft: '15%',
             padding: '8px',
-            borderRadius: '4px',
-            borderColor: '#ccc',
+            border: "none",
+            borderRadius: "120px",
+            boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
             fontSize: '14px',
           }}
         >
@@ -131,10 +132,14 @@ return (
             style={{
               marginLeft: '1%',
               padding: '8px',
-              borderRadius: '4px',
-              border: '1px solid #ccc', 
+              width : '10%',
+              border: "none",
+              borderRadius: "120px",
+              boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
               fontSize: '14px',
-              outline: 'none'
+              fontFamily: 'bold',
+              outline: 'none',
+              textAlign: 'center'
             }}
           />
         </label>
@@ -145,8 +150,9 @@ return (
           style={{
             marginLeft: '1%',
             padding: '8px',
-            borderRadius: '4px',
-            borderColor: '#ccc',
+            border: "none",
+            borderRadius: "120px",
+            boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
             fontSize: '14px',
           }}
         >
@@ -162,8 +168,9 @@ return (
           style={{
             marginLeft: '1%',
             padding: '8px',
-            borderRadius: '4px',
-            borderColor: '#ccc',
+            border: "none",
+            borderRadius: "120px",
+            boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
             fontSize: '14px',
           }}
         >
@@ -178,8 +185,9 @@ return (
           style={{
             marginLeft: '1%',
             padding: '8px',
-            borderRadius: '4px',
-            borderColor: '#ccc',
+            border: "none",
+            borderRadius: "120px",
+            boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
             fontSize: '14px',
           }}
         >
@@ -243,7 +251,8 @@ return (
        </div>)}
     </div> 
     <Footer />
-    </>)}
+    </>
+      )}
     </div>
   )}
 
