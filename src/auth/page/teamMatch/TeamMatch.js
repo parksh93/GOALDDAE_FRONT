@@ -24,7 +24,10 @@ const TeamMatch = () => {
   const matchStatusMessage = useWebSocket('http://localhost:8080/webSocket');
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedGender, setSelectedGender] = useState('');
-  
+  const [pageNumber, setPageNumber] = useState(1);
+  const pageSize = 10; 
+  const [isLoading, setIsLoading] = useState(false);
+
   const getPlayerFormat = (playerNumber) => {
     const teamSize = playerNumber / 2;
     return teamSize + "대" + teamSize;
@@ -32,8 +35,14 @@ const TeamMatch = () => {
 
   // 필터를 재 선택할때마다 데이터 조회 갱신 
   useEffect(() => {
-    fetchMatchList().then(setMatchList);
-  }, [selectedProvince, selectedGender, selectedDate]);
+    const fetchAndSetMatchList = async () => {
+      const matchData = await fetchMatchList();
+      setMatchList(matchData.content || []);
+    };
+    
+    fetchAndSetMatchList();
+  }, [selectedDate, selectedProvince, selectedGender]);
+  
 
   // 웹소켓으로 매치 목록을 실시간으로 업데이트
   useEffect(() => {
@@ -52,17 +61,15 @@ const TeamMatch = () => {
 
   const fetchMatchList = async () => {
     try {
-      // 타임라인 선택된 시간 00:00:00 ~ 24:00:00
-      const startTime = selectedDate ? `${selectedDate}T00:00:00` : null;
-      const endTime = selectedDate ? `${selectedDate}T23:59:59` : null;
-  
+      const startTime = `${selectedDate}T00:00:00`;
+    
       const response = await axios.get("/team/match/list", {
-        // 서버에 전달할 쿼리
         params: { 
           province: selectedProvince,
           startTime,
-          endTime,
-          gender: selectedGender ? selectedGender : '' 
+          gender: selectedGender ? selectedGender : '',    
+          page: pageNumber - 1, 
+          size: pageSize  
         },
       });
       return response.data;
@@ -72,6 +79,7 @@ const TeamMatch = () => {
       return [];
     }
   };
+  
 
   const generateDates = () => {
     const now = new Date();

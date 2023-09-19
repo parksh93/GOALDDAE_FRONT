@@ -12,6 +12,7 @@ const Main = () => {
         <div>
             <NaviBar />
             <ImageSlide />
+
             <div className="article-board-container">
                 <div className="Article">
                     <Article />
@@ -20,9 +21,9 @@ const Main = () => {
                     <BestBoard />
                 </div>
             </div>
+
             <TimeLine />
             <MatchListMoreDetails />
-            
         </div>
     );
 }

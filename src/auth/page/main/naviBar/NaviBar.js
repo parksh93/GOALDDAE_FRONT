@@ -20,7 +20,7 @@ const NaviBar = () => {
                     color:"white",
                     fontSize: isSmallScreen ? "12px" : "16px",
                     marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "50px",
+                    paddingX: isSmallScreen ? "10px" : "65px",
                     backgroundColor: location.pathname === '/' ? '#64CD3C' : 'transparent', 
                     '&:hover': {backgroundColor: '#64CD3C'}
                 }}onClick={() => navigate('/')}>개인매치
@@ -31,7 +31,7 @@ const NaviBar = () => {
                     color:"white",
                     fontSize: isSmallScreen ? "12px" : "16px",
                     marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "58px",
+                    paddingX: isSmallScreen ? "10px" : "75px",
                     backgroundColor: location.pathname === '/match/team/list' ? '#64CD3C' : 'transparent', 
                     '&:hover': {backgroundColor: '#64CD3C'}
                 }} onClick={() => navigate('/match/team/list')}>팀매치
@@ -42,7 +42,7 @@ const NaviBar = () => {
                     color:"white",
                     fontSize: isSmallScreen ? "12px" : "16px",
                     marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "68px",
+                    paddingX: isSmallScreen ? "10px" : "85px",
                     backgroundColor: location.pathname === '/team/list' ? '#64CD3C' : 'transparent', 
                     '&:hover': {backgroundColor: '#64CD3C'}
                 }} onClick={() => navigate('/team/list')}>팀
@@ -53,7 +53,7 @@ const NaviBar = () => {
                 color:"white",
                 fontSize: isSmallScreen ? "12px" : "16px",
                 marginRight: isSmallScreen ? "8px" : "1px",
-                paddingX: isSmallScreen ? "10px" : "50px",
+                paddingX: isSmallScreen ? "10px" : "67px",
                 backgroundColor: location.pathname === '/reservation/list' ? '#64CD3C' : 'transparent', 
                 '&:hover': {backgroundColor: '#64CD3C'}
                 }} onClick={() => navigate('/reservation/list')}>구장예약
@@ -63,7 +63,7 @@ const NaviBar = () => {
                 sx={{ 
                     color:"white",
                     fontSize: isSmallScreen ? "12px" : "16px",
-                    paddingX: isSmallScreen ? "10px" : "58px",
+                    paddingX: isSmallScreen ? "10px" : "75px",
                     backgroundColor: location.pathname === '/board' ? '#64CD3C' : 'transparent', 
                     '&:hover': {backgroundColor: '#64CD3C'}
                 }} onClick={() => navigate('/board')}>게시판
