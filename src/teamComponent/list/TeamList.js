@@ -28,13 +28,15 @@ const areaOptions = [
     { value: "제주", label: "제주" },
 ];
 
+let cachedTeamList = [];
+
 const TeamList = ({}) => {
-    const [teamList, setTeamList] = useState([]);
+    const [teamList, setTeamList] = useState(cachedTeamList);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [noNewData, setNoNewData] = useState(false);
     const [selectedArea, setSelectedArea] = useState('');
-    const [recruiting, setRecruiting] = useState(false); // Default is recruiting
+    const [recruiting, setRecruiting] = useState(false);
 
     const navigate = useNavigate();
 
@@ -74,7 +76,8 @@ const TeamList = ({}) => {
                 if (newTeamList.length === 0) {
                     setNoNewData(true);
                 }
-                setTeamList((prevTeamList) => [...prevTeamList, ...newTeamList]);
+                cachedTeamList.push(...newTeamList);
+                setTeamList(cachedTeamList);
             }
             setIsLoading(false);
         } catch (error) {
@@ -143,25 +146,26 @@ const TeamList = ({}) => {
                 </select>
                     <TeamSearch /> 
             </div>
+
             {teamList.map((team) => (
                 <div className={styles.teamCard} key={team.id} onClick={() => handleTeamClick(team.id)}>
                     <div className={styles.teamInfoContainer}>
-                    <div className={styles.circularImageContainer}>
-                        <div className={styles.circularImage}>
-                            <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} alt={team.teamName} />
+                        <div className={styles.circularImageContainer}>
+                            <div className={styles.circularImage}>
+                                <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} alt={team.teamName} />
+                            </div>
+                        </div>
+                        <div className={styles.teamInfo}>
+                            <h3>{team.teamName}</h3>
+                                <p>
+                                    <span>{team.area}</span><span>{team.averageAge}</span><span>{team.entryGender}</span>                                
+                                    <span className={team.recruiting ? styles.teamRecruiting : ''}>
+                                        {team.recruiting ? ' 모집중' : ' 모집종료'}
+                                    </span>
+                                </p>
                         </div>
                     </div>
-                    <div className={styles.teamInfo}>
-                        <h3>{team.teamName}</h3>
-                            <p>
-                                <span>{team.area}</span><span>{team.averageAge}</span><span>{team.entryGender}</span>                                
-                                <span className={team.recruiting ? styles.teamRecruiting : ''}>
-                                    {team.recruiting ? ' 모집중' : ' 모집종료'}
-                                </span>
-                            </p>
-                    </div>
                 </div>
-            </div>
             ))}
             <div className={styles.loading}>
                 {isLoading ? ( 
