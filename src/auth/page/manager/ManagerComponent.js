@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Collapse, Alert } from '@mui/material';
 import styles from './Manager.module.css';
 
 function ManagerComponent({ managerId }) {
@@ -8,6 +8,10 @@ function ManagerComponent({ managerId }) {
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
   const [matchParticipants, setMatchParticipants] = useState([]);
+
+  const [open, setOpen] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertMsg, setAlertMsg] = useState("");
 
   useEffect(() => {
     // 초기 매치 목록을 불러옵니다.
@@ -65,7 +69,11 @@ function ManagerComponent({ managerId }) {
     try {
       const response = await axios.post('/manager/increaseNoShowCount', selectedUserIds);
       console.log('노쇼 횟수가 증가되었습니다.', response.data);
-      // 필요한 추가 동작 수행
+      setSelectedMatch(null);
+      setSelectedUserIds([]);
+      setOpen(true);
+      setAlertSeverity("success");
+      setAlertMsg("미참여 유저 등록이 완료되었습니다.");
     } catch (error) {
       console.error('노쇼 횟수 증가 중 오류 발생:', error);
       // 오류 처리 로직 추가
@@ -74,6 +82,11 @@ function ManagerComponent({ managerId }) {
 
   return (
     <div className={styles.managerContainer}>
+        <Collapse in={open}>
+        <Alert severity={alertSeverity}>
+            {alertMsg}
+        </Alert>
+        </Collapse>
       <h1>매치결과 관리</h1>
       <div>
         <h2>매치 목록</h2>
@@ -137,7 +150,7 @@ function ManagerComponent({ managerId }) {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button variant="contained" onClick={handleNoShowCountIncrease} fullWidth color='success'>미참여 유저 등록</Button>
+          <Button variant="contained" onClick={handleNoShowCountIncrease} fullWidth color="inherit">미참여 유저 등록</Button>
         </div>
       )}
     </div>
