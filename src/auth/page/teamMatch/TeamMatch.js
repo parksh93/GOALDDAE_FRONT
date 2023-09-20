@@ -10,7 +10,7 @@ import TeamMatchImage from "./image/TeamMatchImage";
 import NaviBar from "../main/naviBar/NaviBar";
 import Footer from '../../footer/Footer';
 import { useLocation } from 'react-router-dom'; 
-import Loading from '../../../loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
   const provinces = [
     "서울", "경기", "인천", "강원", "대전",
@@ -32,6 +32,7 @@ const TeamMatch = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = React.useState(false);
   const observer = useRef();
+  const navigate = useNavigate();
 
   const lastMatchElementRef = useCallback(node => {
     if (isLoading) return; 
@@ -304,7 +305,11 @@ const TeamMatch = () => {
                   <div>{match.fieldName}</div>
                   <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
                 </Box>
-                <Button style={buttonStyle} disabled={isDisabled}>
+                <Button 
+                  style={buttonStyle} 
+                  disabled={isDisabled}
+                  onClick={() => navigate(`/match/team/detail/${match.id}`)}
+                >
                   {match.status}
                 </Button>
               </Box> 
