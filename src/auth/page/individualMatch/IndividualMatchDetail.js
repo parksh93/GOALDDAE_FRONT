@@ -21,6 +21,8 @@ import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import IndividualMatchCancelModal from "./IndividualMatchCancelModal";
 import axios from "axios";
+import Loading from "../../../loading/Loading"
+import Footer from "../../footer/Footer";
 
 const IndividualMatchDetail = () => {
   const { matchId } = useParams();
@@ -39,20 +41,27 @@ const IndividualMatchDetail = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data !== null) {
-          console.log(data)
           setMatchInfo(data);
         }
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       });
   }, []);
 
   useEffect(() => {
+    getMatchPlayer();
+  },[]);
+  
+  const getMatchPlayer = () => {
     fetch(`/match//individual/getPlayer/${matchId}`, {method: "GET"})
     .then(res => res.json())
     .then(data => {
       setMatchPlayerList(data)
     });
-  },[]);
-  
+  }
+
   useEffect(() => {
     if(userInfo !== null){
       for (let i = 0; i < matchPlayerList.length; i++) {
@@ -64,9 +73,9 @@ const IndividualMatchDetail = () => {
     }
   },[matchPlayerList, userInfo]);
 
-  const on = { color: "#444444", marginBottom: "-3px" };
+  const on = { color: "#444444", marginBottom: "-3px", fontSize: "14px"};
 
-  const off = { color: "#aaaaaa", marginBottom: "-3px" };
+  const off = { color: "#aaaaaa", marginBottom: "-3px", fontSize: "14px" };
 
   const timeFormat = (time) => {
     if (time) {
@@ -104,29 +113,35 @@ const IndividualMatchDetail = () => {
       },1000)
     }else{
       axios.put("/match/individual/request", {
-      //   method: "PUT",
-      // headers: {"Content-Type": "application/json"},
-      // body: JSON.stringify({
         matchId: matchId,
         userId: userInfo.id
-      // })
       }).then(() => {
         setOpen(true);
         setAlertText("해당 경기에 참가신청이 완료되었습니다.");
         setAlertSeverity("success");
         setTimeout(() => {
           setOpen(false);
-          window.location.reload();
+          getMatchPlayer();
         },1000)
       })
-      .catch(() => {
-        setOpen(true);
-        setAlertText("해당 경기에 정원이 다 찼습니다.");
-        setAlertSeverity("error");
-        setTimeout(() => {
-          setOpen(false);
-          window.location.reload();
-        },1000)
+      .catch((error) => {
+        console.log(error);
+        if(error.request.status === 400){
+          setOpen(true);
+          setAlertText("해당 경기의 요구조건과 일치하지 않아 신청이 불가합니다.");
+          setAlertSeverity("error");
+          setTimeout(() => {
+            setOpen(false);
+          },1000)
+        }else if(error.request.status === 423){
+          setOpen(true);
+          setAlertText("해당 경기에 정원이 다 찼습니다.");
+          setAlertSeverity("error");
+          setTimeout(() => {
+            setOpen(false);
+            getMatchPlayer();
+          },1000)
+        }
       });
     }
   }
@@ -160,7 +175,7 @@ const IndividualMatchDetail = () => {
 
   const cancelMatchRequestFecth = () => {
     const now = new Date();
-    const matchStartDate = new Date(matchInfo.startDate);
+    const matchStartDate = new Date(matchInfo.playDate);
 
     if(now.getDate() !== matchStartDate.getDate()){
       fetch("/match/individual/cancelRequest", {
@@ -173,7 +188,7 @@ const IndividualMatchDetail = () => {
       }).then(() => {
         setModalOpen(false);
         setOpen(true);
-        setAlertText("매치 참가가 취소되었습니다.");
+        setAlertText("경기 참가를 취소했습니다.");
         setAlertSeverity("success");
         setTimeout(() => {
           setOpen(false);
@@ -183,7 +198,7 @@ const IndividualMatchDetail = () => {
     }else {
       setModalOpen(false);
       setOpen(true);
-      setAlertText("당일 매치 취소는 불가합니다.");
+      setAlertText("경기 당일은 취소불가합니다.");
       setAlertSeverity("error");
       setTimeout(() => {
         setOpen(false);
@@ -195,12 +210,13 @@ const IndividualMatchDetail = () => {
   return (
     <div>
         <Collapse in={open}>
-          <Alert severity={alertSeverity} sx={{width: "30%", position: "fixed",marginLeft: "35%", zIndex: "999", borderRadius: "30px", top: "0", marginTop: "20px"}}>
+          <Alert severity={alertSeverity} sx={{width: "35%", position: "fixed",marginLeft: "33%", zIndex: "999", borderRadius: "30px", top: "0", marginTop: "20px"}}>
             {alertText}
           </Alert>
       </Collapse>
       <IndividualMatchCancelModal modalOpen={modalOpen} setModalOpen={setModalOpen} cancelMatchRequestFecth={cancelMatchRequestFecth}/>
       {matchInfo !== null ? (
+        <>
         <div className={styles.container}>
           <IndividualMatchDetailSlide matchInfo={matchInfo} />
           <div className={styles.flexContainer}>
@@ -223,26 +239,26 @@ const IndividualMatchDetail = () => {
                 <div className={styles.matchInfoDiv}>
                   <div>
                     <BiCalendarCheck  className={styles.matchInfoIcon}/>{" "}
-                    <span>날짜 : {matchInfo.playDate}</span>
+                    <span style={on}>날짜 : {matchInfo.playDate}</span>
                   </div>
                   <div>
                     <BsAlarm className={styles.matchInfoIcon} />{" "}
-                    <span>
+                    <span style={on}>
                      시간 : {timeFormat(matchInfo.startTime)} ~{" "}
                       {timeFormat(matchInfo.endTime)}
                     </span>
                   </div>
                   <div>
                     <BsGenderAmbiguous className={styles.matchInfoIcon} />{" "}
-                    <span>성별 : {matchInfo.gender} </span>
+                    <span style={on}>성별 : {matchInfo.gender} </span>
                   </div>
                   <div>
                     <BsFillPeopleFill className={styles.matchInfoIcon} />{" "}
-                    <span>참가 인원 : {matchInfo.playerNumber}명</span>
+                    <span style={on}>참가 인원 : {matchInfo.playerNumber}명</span>
                   </div>
                   <div>
                     <BsGlobeAmericas className={styles.matchInfoIcon} />{" "}
-                    <span>제한 레벨 : {matchInfo.limitLevel}</span>
+                    <span style={on}>제한 레벨 : {matchInfo.limitLevel}</span>
                   </div>
                 </div>
                 <div>
@@ -250,39 +266,39 @@ const IndividualMatchDetail = () => {
                   <h3>구장 정보</h3>
                   {matchInfo.parkingStatus ? (
                     <>
-                      <DirectionsCarIcon sx={on} />{" "}
-                      <span className={styles.on}>주차장 - 사용가능</span>
+                      <DirectionsCarIcon sx={on} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.on} style={on}>주차장 - 사용가능</span>
                     </>
                   ) : (
                     <>
-                      <DirectionsCarIcon sx={off} />{" "}
-                      <span className={styles.off}>주차장</span>
+                      <DirectionsCarIcon sx={off} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.off} style={off}>주차장</span>
                     </>
                   )}
                 </div>
                 <div>
                   {matchInfo.showerStatus ? (
                     <>
-                      <ShowerIcon sx={on} />{" "}
-                      <span className={styles.on}>샤워실 - 사용가능</span>
+                      <ShowerIcon sx={on} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.on} style={on}>샤워실 - 사용가능</span>
                     </>
                   ) : (
                     <>
-                      <ShowerIcon sx={off} />{" "}
-                      <span className={styles.off}>샤워실</span>
+                      <ShowerIcon sx={off} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.off} style={off}>샤워실</span>
                     </>
                   )}
                 </div>
                 <div>
                   {matchInfo.toiletStatus ? (
                     <>
-                      <WcIcon sx={on} />{" "}
-                      <span className={styles.on}>화장실 - 사용가능</span>
+                      <WcIcon sx={on} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.on} style={on}>화장실 - 사용가능</span>
                     </>
                   ) : (
                     <>
-                      <WcIcon sx={off} />{" "}
-                      <span className={styles.off}>화장실</span>
+                      <WcIcon sx={off} style={{fontSize: "18px"}}/>{" "}
+                      <span className={styles.off} style={off}>화장실</span>
                     </>
                   )}
                 </div>
@@ -345,7 +361,9 @@ const IndividualMatchDetail = () => {
                    }
                 </div>
               </div>
-              {
+              { matchInfo.status === "종료" ? 
+                <button className={styles.matchEndBtn}>종료</button>
+                :
                 userInfo === null && matchInfo.status !== "마감"? 
                 <button className={styles.matchRequestBtn} onClick={onClickMatchRequest}>참가 신청</button>
                 :
@@ -360,8 +378,10 @@ const IndividualMatchDetail = () => {
             </div>
           </div>
         </div>
+          {/* <Footer/> */}
+          </> 
       ) : (
-        ""
+        <Loading/>
       )}
     </div>
   );
