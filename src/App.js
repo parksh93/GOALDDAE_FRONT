@@ -25,6 +25,7 @@ import ReservationList from './auth/page/reservationList/ReservationList';
 import { AdminProvier } from './auth/page/admin/AdminContext';
 import AdminLogin from './auth/page/admin/login/AdminLogin';
 import AdminHeader from './auth/page/admin/header/AdminHeader';
+import Manager from './auth/page/manager/Manager';
 
 const App = () => {
   return (
@@ -57,6 +58,8 @@ const App = () => {
             <Route path='/admin/login' element={<AdminLogin />} /> 
             <Route path="/match/team/list" element={<TeamMatch />} />
             <Route path="/reservation/list" element={<ReservationList />} />
+
+            <Route path="/manager" element={<Manager />} />
           </Routes>
         </AdminProvier>
         {/* <Footer/>  */}

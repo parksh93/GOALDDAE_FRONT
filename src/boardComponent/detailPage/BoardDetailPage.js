@@ -10,7 +10,7 @@ import styles from "./detailPage.module.css";
 
 const BoardDetailPage = () => {
   const { id } = useParams();
-  const { userInfo} = useUser();
+  const { userInfo } = useUser();
   const [boardDetail, setBoardDetail] = useState({});
   const [user, setUser] = useState([])
 
