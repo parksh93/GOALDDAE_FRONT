@@ -79,9 +79,9 @@ const TeamMatch = () => {
           province: selectedProvince,
           startTime,
           gender: selectedGender ? selectedGender : '',    
-          pageNumber, 
-          pageSize   
-        }
+          page: pageNumber - 1, 
+          size: pageSize  
+        },
       });
       return response.data;
     } catch (error) {
