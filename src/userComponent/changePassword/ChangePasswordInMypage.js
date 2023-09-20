@@ -6,12 +6,10 @@ import { Button, TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function ChangePasswordInMypage() {
   const { userId } = useParams();
-
-  console.log("userId:", userId);
-
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,6 +17,13 @@ function ChangePasswordInMypage() {
   const [alertTitle, setAlertTitle] = useState('');
   const [alertContent, setAlertContent] = useState('');
   const navigate = useNavigate();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#4caf50', 
+      },
+    },
+  });
 
 
   const onClick = () => {
@@ -81,7 +86,8 @@ function ChangePasswordInMypage() {
   })
 
   return (
-    <div style={{ position: "relative" }}>
+    <ThemeProvider theme={theme}>
+    <div style={{ position: "relative", marginLeft: '50px' }}>
       <Collapse in={open}>
         <Alert severity={"error"}>
           <AlertTitle>
@@ -135,6 +141,7 @@ function ChangePasswordInMypage() {
         </CheckBtn>
       </div>
     </div>
+    </ThemeProvider>
   );
 }
 
