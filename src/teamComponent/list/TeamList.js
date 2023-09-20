@@ -5,6 +5,7 @@ import throttle from 'lodash/throttle';
 import styles from './List.module.css';
 import TeamSearch from './TeamSearch';
 import MyTeam from './MyTeam';
+import Loading from '../../loading/Loading';
 
 
 
@@ -101,7 +102,7 @@ const TeamList = ({}) => {
         );
         const clientHeight = document.documentElement.clientHeight;
 
-        if (scrollTop + clientHeight >= scrollHeight - 600 && !isLoading) {
+        if (scrollTop + clientHeight >= scrollHeight - 700 && !isLoading) {
             setPage((prevPage) => prevPage + 1);
         }
     }, 300);
@@ -169,7 +170,7 @@ const TeamList = ({}) => {
             ))}
             <div className={styles.loading}>
                 {isLoading ? ( 
-                    <h3>불러오는 중...</h3>
+                    <Loading />
                 ) : (
                     noNewData && <h3>팀 데이터가 없습니다.</h3>
                 )}

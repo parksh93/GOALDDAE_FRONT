@@ -19,11 +19,12 @@ const TeamEditModal = ({ open, onClose, teamInfo, onSubmit }) => {
     const [recruiting, setRecruiting] = useState(teamInfo.recruiting !== null && teamInfo.recruiting !== undefined ? teamInfo.recruiting : true); 
     const [isRecruiting, setIsRecruiting] = useState(teamInfo.recruiting !== null && teamInfo.recruiting !== undefined ? teamInfo.recruiting : true);
     const [teamIntroduce, setTeamIntroduce] = useState(teamInfo.teamIntroduce !== null && teamInfo.teamIntroduce !== undefined ? teamInfo.teamIntroduce : '');
-   
+    
+    const currentTime = new Date();
+
     const { userInfo } = useUser();
  
 
-  
   const isFemale = userInfo && userInfo.gender === '여성';
   const isMale = userInfo && userInfo.gender === '남성';
 
@@ -67,18 +68,29 @@ const TeamEditModal = ({ open, onClose, teamInfo, onSubmit }) => {
         entryGender,
         recruiting: isRecruiting,
         teamIntroduce,
+        teamProfileUpdate: currentTime.toISOString(),
     };
 
     axios
       .put('/team/update', updatedTeamInfo)
       .then((response) => {
-        console.log('팀 정보가 성공적으로 업데이트되었습니다.', response);
-        onSubmit(updatedTeamInfo); 
+        console.log('팀 정보가 성공적으로 업데이트되었습니다.');
+        console.log('서버 응답:', response.data);
+        onSubmit(updatedTeamInfo);
+
+        window.location.reload();
+
       })
       .catch((error) => {
         console.error('팀 정보 업데이트 중 오류 발생:', error);
-      });
-    onClose();
+      })
+      .finally(()=>{
+            onClose();
+      })
+  };
+
+  const handleCancel = () => {
+    onClose(); // 모달을 닫습니다.
   };
   
 
@@ -210,37 +222,12 @@ const TeamEditModal = ({ open, onClose, teamInfo, onSubmit }) => {
                   max={10}
                   step={1}
                 />
-                
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">*입단 성별</FormLabel>
-                  <RadioGroup
-                    row
-                    value={entryGender}
-                    onChange={(e) => setEntryGender(e.target.value)}
-                  >
-                    <FormControlLabel value="남성" control={<Radio />} label="남성" disabled={isFemale} />
-                    <FormControlLabel value="여성" control={<Radio />} label="여성" disabled={isMale} />
-                    <FormControlLabel value="남녀 모두" control={<Radio />} label="남녀모두" />
-                  </RadioGroup>
-                </FormControl>
-                <TextField
-                    sx={{ width: '50%' }}
-
-                    value={teamIntroduce}
-                    onChange={(e) => setTeamIntroduce(e.target.value)}
-                    label="팀 소개글"
-                    variant="outlined"
-                    multiline
-                    rows={4} // 원하는 높이로 조절하세요
-                    fullWidth
-                    className="input-field"
-                />
                 <Box mb={2} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
                         variant={isRecruiting ? 'contained' : 'outlined'}
                         color="primary"
                         onClick={() => setIsRecruiting(true)}
-                        sx={{ marginRight: '10px',
+                        sx={{ marginRight: '5px',
                             '&.MuiButton-contained': {
                                 color: 'white',
                             }, 
@@ -261,9 +248,38 @@ const TeamEditModal = ({ open, onClose, teamInfo, onSubmit }) => {
                         모집안하기
                     </Button>
                 </Box>
-                <Box mb={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff' }}>
+
+                <TextField
+                    sx={{ width: '50%' }}
+
+                    value={teamIntroduce}
+                    onChange={(e) => setTeamIntroduce(e.target.value)}
+                    label="팀 소개글"
+                    variant="outlined"
+                    multiline
+                    rows={4} // 원하는 높이로 조절하세요
+                    fullWidth
+                    className="input-field"
+                />
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">*입단 성별</FormLabel>
+                  <RadioGroup
+                    row
+                    value={entryGender}
+                    onChange={(e) => setEntryGender(e.target.value)}
+                  >
+                    <FormControlLabel value="남성" control={<Radio />} label="남성" disabled={isFemale} />
+                    <FormControlLabel value="여성" control={<Radio />} label="여성" disabled={isMale} />
+                    <FormControlLabel value="남녀 모두" control={<Radio />} label="남녀모두" />
+                  </RadioGroup>
+                </FormControl>       
+                
+                <Box mb={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                  <Button variant="contained" color="primary" type="submit" className="submit-button" style={{ color: '#fff', marginRight: '10px' }}>
                     저장
+                  </Button>
+                  <Button variant="outlined" color="primary" onClick={handleCancel}>
+                    취소
                   </Button>
                 </Box>
               </Box>

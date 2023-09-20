@@ -3,20 +3,24 @@ import axios from 'axios';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import TeamEditModal from '../save/TeamEditModal';
+import TeamEditModal from './TeamEditModal';
+import ProfileImageEdit from './ProfileImgEdit';
 
 
 const MyTeamDetail = () => {
   const { userInfo } = useUser();
   const [teamInfo, setTeamInfo] = useState(null);
-  const [error, setError] = useState(false);
-  const [selectedTab, setSelectedTab] = useState('info');
   const [isTeamManager, setIsTeamManager] = useState(false);
+  const [error, setError] = useState(false);
+  const { tabName } = useParams();
+  const [selectedTab, setSelectedTab] = useState('info');
   const [applyList, setApplyList] = useState([]);
   const [memberList, setMemberList] = useState([]);
-  const { tabName } = useParams();
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedTeamInfo, setEditedTeamInfo] = useState(null);
+
+  const [isProfileImageEditOpen, setIsProfileImageEditOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,7 +46,6 @@ const MyTeamDetail = () => {
         });
     }
   },[userInfo]);
-
 
   // 멤버 리스트
   const fetchMemberList = (teamId) => {
@@ -70,6 +73,7 @@ const MyTeamDetail = () => {
     }
   }, [userInfo]);
 
+  // 가입신청 리스트
   const fetchApplyList = (teamId) => {
     axios.get(`/team/checkApply?teamId=${teamId}`)
       .then(response => {
@@ -103,6 +107,7 @@ const MyTeamDetail = () => {
     }
   }, [userInfo]);
 
+  // 팀원 강퇴
   const handleRemoveMember = (userId) => {
     console.log('handleRemoveMember 함수 호출됨'); 
 
@@ -122,6 +127,7 @@ const MyTeamDetail = () => {
       });
   } 
 
+  // 팀 탈퇴
   const handleLeaveTeam = (userId) => {
     const confirmation = window.confirm("정말로 팀을 탈퇴하시겠습니까?");
     if (confirmation) {
@@ -144,6 +150,7 @@ const MyTeamDetail = () => {
     }
   };
 
+  // 가입수락
   const handleAccept = (apply) => {
     const requestData1 = {
       teamApplyDTO: {
@@ -175,6 +182,7 @@ const MyTeamDetail = () => {
       
   };
   
+  // 가입 거절 
   const handleReject = (apply) => {
     axios.patch('/team/rejectApply', { userId: apply.userId,
                                        teamId: apply.teamId}
@@ -190,7 +198,7 @@ const MyTeamDetail = () => {
       })
   };
 
-
+  // tab 설정
   const handleTabChange = (tabName) => {
     setSelectedTab(tabName);
 
@@ -203,19 +211,25 @@ const MyTeamDetail = () => {
     }
   };
 
-    // 수정 모달 열기
-    const openEditModal = (teamInfo) => {
-      setEditedTeamInfo(teamInfo);
-      setIsEditModalOpen(true);
-    };
-  
-    // 수정 모달 닫기
-    const closeEditModal = () => {
-      setIsEditModalOpen(false);
-      setEditedTeamInfo(null);
-    };
+  // 수정 모달 열기
+  const openEditModal = (teamInfo) => {
+    setEditedTeamInfo(teamInfo);
+    setIsEditModalOpen(true);
+  };
 
+  // 수정 모달 닫기
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditedTeamInfo(null);
+  };
 
+  const handleProfileImageEditOpen = () => {
+    setIsProfileImageEditOpen(true);
+  };
+
+  const handleProfileImageEditClose = () => {
+    setIsProfileImageEditOpen(false);
+  };
 
   return (
     <div>
@@ -225,24 +239,29 @@ const MyTeamDetail = () => {
       <div className={styles.myTeamContainer}>
         <div className={styles.myTeamLeftContainer}>
           <div className={styles.myTeamInfoContainer}>
-              <h2 className={styles.myTeamProfile}>
+              <h1 className={styles.myTeamProfile}>
               <div className={styles.circularImageContainer}>
                 <div className={styles.circularImage}>
                   <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
                 </div>
               </div>
                 {teamInfo.teamName}
-              </h2>          
+              </h1>          
               {isTeamManager && (
-              <button className={styles.teamDetailUpdateBtn} onClick={() => openEditModal(teamInfo)}>
-                팀 설정
-              </button>
+                <>
+                  <button onClick={handleProfileImageEditOpen}>
+                    프로필 이미지 수정
+                    </button>
+                  <button className={styles.teamDetailUpdateBtn} onClick={() => openEditModal(teamInfo)}>
+                    팀 설정
+                  </button>
+                </>
               )}
           </div>
           <div className={styles.myTeamInfo}>
             <p>지역 | {teamInfo.area}</p>
             <p>평균나이 | {teamInfo.averageAge} 세</p>
-            <p>입단비 | {teamInfo.entryfee} 원</p>
+            <p>입단비 | {teamInfo.entryFee} 원</p>
             <p>입단성별 | {teamInfo.entryGender}</p>
           </div> 
 
@@ -300,14 +319,14 @@ const MyTeamDetail = () => {
               <div className={styles.myTeamInfoBox}>
                 <p>지역 | {teamInfo.area}</p>
                 <p>평균나이 | {teamInfo.averageAge} 세</p>
-                <p>입단비 | {teamInfo.entryfee} 원</p>
+                <p>입단비 | {teamInfo.entryFee} 원</p>
                 <p>입단성별 | {teamInfo.entryGender}</p>
                 <p>선호시간 | {teamInfo.preferredTime} 시</p>
                 <p>선호요일 | {teamInfo.preferredDay}</p>
                 <p>모집여부 | {teamInfo.recruiting ? ' 모집중' : ' 모집종료'}</p>
-                <pre className={styles.myTeamIntroduce}>
+                <div className={styles.myTeamIntroduce}>
                   {teamInfo.teamIntroduce}
-                </pre>
+                </div>
               </div>
             )}
             {selectedTab === 'recentMatch' && (
@@ -399,6 +418,15 @@ const MyTeamDetail = () => {
           }}
         />
       )}
+
+      {/* 프로필 이미지 수정 모달 */}
+      {isProfileImageEditOpen && (
+        <ProfileImageEdit
+          teamId={userInfo.teamId}
+          onCancel={handleProfileImageEditClose}
+        />
+      )}
+
     </div>
     
   );
