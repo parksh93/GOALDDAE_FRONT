@@ -9,7 +9,7 @@ const SoccerFieldDetail = ({row, timeFormat, setPageState, setSelectSoccerField}
     const on = { color : "#444444", marginBottom : "-3px"};
       const off = { color : "#aaaaaa", marginBottom : "-3px"};
     return (
-            <div style={{backgroundColor:"#F5F5F5"}}>      
+            <div>      
     <div className={styles.container}>                
     {row && 
     <SoccerFieldImageSlide fieldInfo={row} />}
