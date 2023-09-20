@@ -71,7 +71,7 @@ const TimeLine = () => {
       return response.data;
     } catch (error) {
       // 에러 확인
-      // console.error("에러:", error);
+      console.error("에러:", error);
       return [];
     }
   };
