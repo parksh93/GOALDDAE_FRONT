@@ -5,24 +5,45 @@ import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
 import BestBoard from './bestBoard/BestBoard';
 import Article from './article/Article';
+import Loading from '../../../loading/Loading';
+import { useLocation } from 'react-router-dom'; 
 import './Main.css';
+import Footer from '../../footer/Footer';
 
 const Main = () => {
+    const location = useLocation();
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000); 
+    }, [location]);
+
     return (
         <div>
             <NaviBar />
-            <ImageSlide />
-            <div className="article-board-container">
-                <div className="Article">
-                    <Article />
-                </div>
-                <div className="BestBoard">
-                    <BestBoard />
-                </div>
-            </div>
-            <TimeLine />
-            {/* <MatchListMoreDetails /> */}
-            
+            {isLoading ? (
+              <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+                  <Loading />
+              </div>
+            ) : (
+                <>
+                    <ImageSlide />
+                    <div className="article-board-container">
+                        <div className="Article">
+                            <Article />
+                        </div>
+                        <div className="BestBoard">
+                            <BestBoard />
+                        </div>
+                    </div>
+                    <TimeLine />
+//                     <MatchListMoreDetails />
+                    <Footer />
+                </>
+            )}
         </div>
     );
 }

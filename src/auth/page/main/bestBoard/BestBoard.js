@@ -45,7 +45,6 @@ const BestBoard = () => {
                         fontSize:  { xs: "10px", sm: "12px"},
                         width: { xs: "353px", sm: "460px"},
                         borderRadius:'10px',
-                        fontWeight: "bold"
                     }} 
                 >
                     {boardTop5.map((communicationBoard) => (

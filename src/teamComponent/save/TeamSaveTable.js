@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Paper ,Button, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputAdornment, Slider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../../../userComponent/userContext/UserContext';
+import { useUser } from '../../userComponent/userContext/UserContext';
 
 const TeamSaveTable = () => {
   const [teamName, setTeamName] = useState('');
@@ -108,14 +108,15 @@ const TeamSaveTable = () => {
                   const updatedUserTeamId = updateIdResponse.data;
                   console.log("updatedUserTeamId: ",updatedUserTeamId)
 
-                  navigate(`/team/myTeamDetail/${updatedUserTeamId}/info`); 
+                  navigate(`/team/myTeamDetail/${userInfo.teamId}/info`); 
 
                 }else{
                   console.log("유저의 teamId 업데이트 실패");
                 }
 
               const newMemberResponse = await axios.post('/teamMember/add', { userId: userInfo.id,
-                                                                              teamId: newTeamId});
+                                                                              teamId: newTeamId,
+                                                                              teamManager: 0});
               console.log("newMemberResponse : ", newMemberResponse);
 
                 if(newMemberResponse.status === 200){

@@ -13,7 +13,9 @@ import UserChatMain from './chat/UserChatMain';
 import Footer from './auth/footer/Footer';
 import Admin from './auth/page/admin/Admin';
 import SocialSignupMain from './userComponent/signup/SocialSignupMain';
-import TeamSaveTable from './auth/page/admin/tableTeam/TeamSaveTable';
+
+import TeamSaveTable from './teamComponent/save/TeamSaveTable';
+
 import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
@@ -24,6 +26,7 @@ import { AdminProvier } from './auth/page/admin/AdminContext';
 import AdminLogin from './auth/page/admin/login/AdminLogin';
 import AdminHeader from './auth/page/admin/header/AdminHeader';
 import IndividualMatchDetail from './auth/page/individualMatch/IndividualMatchDetail';
+import Manager from './auth/page/manager/Manager';
 
 const App = () => {
   return (
@@ -50,16 +53,18 @@ const App = () => {
             <Route path='/team/list' element={<TeamMain/>}/>
             <Route path='/team/detail/:id' element={<TeamDetail />} />
             <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
-            
+
             <Route path="/team/save" element={<TeamSaveTable/>} />
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
             <Route path="/match/team/list" element={<TeamMatch />} />
             <Route path="/reservation/list" element={<ReservationList />} />
             <Route path='/match/individual/detail/:matchId' element={<IndividualMatchDetail />} />
+
+            <Route path="/manager" element={<Manager />} />
           </Routes>
         </AdminProvier>
-        <Footer/> 
+        {/* <Footer/>  */}
       </>
   );
 }
