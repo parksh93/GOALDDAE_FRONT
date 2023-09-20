@@ -13,58 +13,64 @@ const NaviBar = () => {
 
   return (
       <>
-        <Box sx={{ height: '50px',bgcolor:"#4BAF4B", color:"white", display: "flex", justifyContent:"center" }}>
+        <Box sx={{ height: '50px', textAlign: "center", justifyContent:"center", boxShadow: "0 3px 3px -2.5px lightgray", paddingBottom: "10px", marginTop: "10px" }}>
             <Button 
                 sx={{ 
-                    color:"white",
-                    fontSize: isSmallScreen ? "12px" : "16px",
-                    marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "65px",
-                    backgroundColor: location.pathname === '/' ? '#64CD3C' : 'transparent', 
-                    '&:hover': {backgroundColor: '#64CD3C'}
+                    color: "black",
+                    height: "100%",
+                    width: "10%",
+                    fontSize: location.pathname === '/' ? "20px" : "17px",
+                    fontWeight: location.pathname === '/' ? '600' : '0', 
+                    '&:hover': {fontSize: '20px', background: "none"},
+                    marginRight: "20px"
                 }}onClick={() => navigate('/')}>개인매치
             </Button>
 
             <Button 
                 sx={{ 
-                    color:"white",
-                    fontSize: isSmallScreen ? "12px" : "16px",
-                    marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "75px",
-                    backgroundColor: location.pathname === '/match/team/list' ? '#64CD3C' : 'transparent', 
-                    '&:hover': {backgroundColor: '#64CD3C'}
+                    color:"black",
+                    height: "100%",
+                    width: "10%",
+                    fontSize: location.pathname === '/match/team/list' ? "20px" : "17px",
+                    fontWeight: location.pathname === '/match/team/list' ? '600' : '0', 
+                    '&:hover': {fontSize: '20px', background: "none"},
+                    marginRight: "20px"
                 }} onClick={() => navigate('/match/team/list')}>팀매치
             </Button>
 
             <Button 
                 sx={{ 
-                    color:"white",
-                    fontSize: isSmallScreen ? "12px" : "16px",
-                    marginRight: isSmallScreen ? "8px" : "1px",
-                    paddingX: isSmallScreen ? "10px" : "85px",
-                    backgroundColor: location.pathname === '/team/list' ? '#64CD3C' : 'transparent', 
-                    '&:hover': {backgroundColor: '#64CD3C'}
+                    color:"black",
+                    height: "100%",
+                    fontSize: location.pathname === '/team/list' ? "20px" : "17px",
+                    width: "10%",
+                    fontWeight: location.pathname === '/team/list' ? '600' : '0', 
+                    '&:hover': {fontSize: '20px', background: "none"},
+                    marginRight: "20px"
                 }} onClick={() => navigate('/team/list')}>팀
             </Button>
 
             <Button 
                 sx={{ 
-                color:"white",
-                fontSize: isSmallScreen ? "12px" : "16px",
-                marginRight: isSmallScreen ? "8px" : "1px",
-                paddingX: isSmallScreen ? "10px" : "67px",
-                backgroundColor: location.pathname === '/reservation/list' ? '#64CD3C' : 'transparent', 
-                '&:hover': {backgroundColor: '#64CD3C'}
+                color: "black",
+                height: "100%",
+                fontSize: location.pathname === '/reservation/list' ? "20px" : "17px",
+                width: "10%",
+                fontWeight: location.pathname === '/reservation/list' ? '600' : '0', 
+                '&:hover': {fontSize: '20px', background: "none"},
+                marginRight: "20px"
                 }} onClick={() => navigate('/reservation/list')}>구장예약
             </Button>
 
             <Button 
                 sx={{ 
-                    color:"white",
-                    fontSize: isSmallScreen ? "12px" : "16px",
-                    paddingX: isSmallScreen ? "10px" : "75px",
-                    backgroundColor: location.pathname === '/board' ? '#64CD3C' : 'transparent', 
-                    '&:hover': {backgroundColor: '#64CD3C'}
+                    color: "black",
+                    height: "100%",
+                    width: "10%",
+                    fontSize: location.pathname === 'board' ? "20px" : "17px",
+                    fontWeight: location.pathname === '/board' ? '600' : '0', 
+                    '&:hover': {fontSize: '20px', background: "none"},
+                    marginRight: "20px"
                 }} onClick={() => navigate('/board')}>게시판
             </Button>   
           </Box>

@@ -1,13 +1,17 @@
 /* 이미지 크기 조절은 주석 참고 */
 .image-slide-container {
-  display: flex;
-  justify-content: center;
-  max-width: 1000px; 
-  margin: auto; 
-  margin-top: 3%;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* max-width: 1000px;  */
+  padding-top: 2%;
+  padding-bottom: 2%;
+  /* margin-top: 3%; */
+  background: rgb(243, 243, 243);
 }
 
 .image-slide-container .slick-slider {
+  margin: 0 auto;
+  max-width: 1000px; 
   width: 100%;
 }
   
@@ -15,6 +19,7 @@
   width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
   max-height: 300px; /* 높이 */
   border-radius: 10px; /* 모서리 둥글기 */
+  object-fit:cover;
 }
   
 .slick-next,

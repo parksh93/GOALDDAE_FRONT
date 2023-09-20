@@ -185,7 +185,11 @@ const UserChatRoom = ({
         onClick={toggleDrawer(true)}
         className={styles.openDrawerToggle}
       />
-      {openLoading ? <Loading/> :
+      {openLoading ? 
+      <div style={{ marginTop:'50px', marginLeft:'5px',position: "fixed", top: "40px", width: "60%", zIndex:"9999"}}>
+        <Loading/> 
+      </div>
+      :
       <div ref={messageRef} className={styles.messagesMainDiv}>
         {messageList.map((messageInfo) => (
           <div

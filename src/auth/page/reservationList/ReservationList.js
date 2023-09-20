@@ -97,7 +97,7 @@ return (
     <div> 
       <NaviBar />
       {isLoading ? (
-      <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+      <div style={{ marginTop:'100px', marginLeft:'29%', left: "0px", width: "40%", height:"30%", zIndex:"9999"}}>
         <Loading />
       </div>
       ) : (
