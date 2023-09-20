@@ -21,7 +21,7 @@ const LoginInfo = () => {
     },
   }));
 
-  const {userInfo, getUserInfo} = useUser();
+  const {userInfo, getUserInfo, logout} = useUser();
 
   useEffect(() => {
     getUserInfo();
@@ -48,7 +48,7 @@ const LoginInfo = () => {
                   <br/>
                   <Link to={`/myPage`} className={styles.tootipText}>내 정보</Link>
                   <br />
-                  <Link to="/logOut" className={styles.tootipText}>로그아웃</Link>
+                  <span className={styles.tootipText} onClick={() => logout()}>로그아웃</span>
                 </React.Fragment>
               }
               >

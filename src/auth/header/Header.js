@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
 import LoginInfo from "./loginInfo/LoginInfo";
 import Weather from "./weather/Weather";
-import WeatherLoading from "./weather/WeatherLoading";
-import {useState} from 'react';
 
 const Header = () => {
-  const [loading, setLoading] = useState(false);
-
+  // 관리자 페이지에서는 안보이게 설정
+  if(window.location.pathname.startsWith('/admin')) return null;
   return (
     <>
       <div className="navbar">

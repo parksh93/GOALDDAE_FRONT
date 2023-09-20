@@ -1,11 +1,15 @@
 
 .container {
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 1000px;
     padding: 20px;
     position: relative;
     color: #242424;
     font-size: 15px;
+  }
+
+  .listContainer {
+    margin-top: 35px;
   }
   
   table {

@@ -30,15 +30,25 @@ const SoccerFieldMain = () => {
     }
   }
 
+  const handleCopyClipBoard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('클립보드에 링크가 복사되었습니다.');
+    } catch (e) {
+      alert('복사에 실패하였습니다');
+    }
+  };
+
   return (
-    <div style={{backgroundColor:"#F5F5F5"}}>      
-      <div className={styles.container}>
-        <SoccerFieldImageSlide />
+    <div>      
+      <div className={styles.container}>                
+      {fieldInfo && 
+      <SoccerFieldImageSlide fieldInfo={fieldInfo} />}
         {fieldInfo && 
             <div className={styles.flexContainer}>
               <div className={styles.infoContainer}>
                 <div className={styles.info}>
-                  <div className={styles.infoText}>{fieldInfo.region} / {fieldInfo.province}</div>
+                  <div className={styles.infoText}>{fieldInfo.province} / {fieldInfo.region}</div>
                   <div className={styles.infoTitle}>{fieldInfo.fieldName}</div>
                   <div className={styles.infoText}>
                     <span>{fieldInfo.fieldSize} / </span>                
@@ -93,7 +103,12 @@ const SoccerFieldMain = () => {
                     <MapComponent fieldInfo={fieldInfo} />
                     <br></br>
                     <br></br>
-                    <div className={styles.infoText}>상세주소 - {fieldInfo.address}</div>
+                    <div className={styles.infoText}>
+                      {fieldInfo.address}
+                      <span onClick={() => {handleCopyClipBoard(fieldInfo.address)}} style={{color : "#777777", textDecoration : "underline", marginLeft : "10px"}}>
+                        주소 복사
+                      </span>
+                    </div>
                   </> 
                   }
                 </div>                            

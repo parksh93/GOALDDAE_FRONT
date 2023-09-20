@@ -1,0 +1,64 @@
+.LoginMainDiv {
+    height: 500px;
+}
+
+.logo {
+    width: auto;
+    height: 80px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.logoSection{
+    width: 100%;
+    text-align: center;
+}
+
+
+.loginSection {
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 12px;
+}
+
+.loginBtn:hover {
+    color: black;
+}
+
+.input {
+    width: 40%;
+}
+.loginBtnSection{
+    text-align: center;
+    width: 80%;
+    margin-left: 34%;
+}
+
+.msg {
+    margin-left: 34%;
+    color: red;
+    font-size: 13px;
+}
+
+.etcBtnSection {
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.etcBtn {
+    margin-right: 12px;
+    text-decoration: none;
+    color: green;
+}
+
+.etcBtn:hover {
+    color: lightgray;
+    text-decoration: none;
+}
+
+.screen {
+    color: lightgray;
+}
+

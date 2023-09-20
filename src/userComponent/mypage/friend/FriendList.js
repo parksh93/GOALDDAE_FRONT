@@ -141,24 +141,24 @@ const FriendList = ({
                 ))
             }
             <Modal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <b>{friendNickname}</b>님을 차단하시겠습니까?
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        차단시 더이상 검색에서 해당 사용자가 표시되지 않으며, 채팅이 불가합니다.
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <button onClick={() => onClickBlockFriend(friendId, friendNickname)} className={styles.blockOkBtn}>확인</button>
-                        <button onClick={() => setModalOpen(false)} className={styles.blockNoBtn}>취소</button>
-                    </Typography>
-                    </Box>
-                </Modal>
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                    <b>{friendNickname}</b>님을 차단하시겠습니까?
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    차단시 더이상 검색에서 해당 사용자가 표시되지 않으며, 채팅이 불가합니다.
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <button onClick={() => onClickBlockFriend(friendId, friendNickname)} className={styles.blockOkBtn}>확인</button>
+                    <button onClick={() => setModalOpen(false)} className={styles.blockNoBtn}>취소</button>
+                </Typography>
+                </Box>
+            </Modal>
         </div>
     )
 }

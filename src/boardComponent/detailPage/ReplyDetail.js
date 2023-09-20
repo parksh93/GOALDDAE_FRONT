@@ -94,6 +94,11 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
       };
 
       const handleReport = (replyId, userId) => {
+
+        if(userId === 0){
+          return;
+        }
+
         const reason = window.prompt("신고 사유를 입력하세요:", reportReason);
         if (reason !== null) {
           const requestData = {
@@ -103,7 +108,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
             reason: reason
           };
           // 댓글 신고 요청 처리
-          axios.post(`/board/report`, requestData).then(() => {
+          axios.post(`/reply/report`, requestData).then(() => {
             // 처리 후 작업 수행
           });
         }
@@ -256,7 +261,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
                   </div>
                 ))}
               {/* 답글 폼 */}
-              {newReplyParentId === reply.id && (
+              {userInfo.id !== 0 && newReplyParentId === reply.id && (
                   <div>
                     <tr>
                       <td className={styles.textArea}>
@@ -284,7 +289,7 @@ const ReplyDetail = ({ boardDetail, userInfo }) => {
           {/* 댓글 작성 폼 */}
           <br/>
           <hr className={styles.separator} />
-          {newReplyParentId === 0 && (
+          {userInfo.id !== 0 && newReplyParentId === 0 && (
                 <div>
                 <tr>
                   <td className={styles.textArea}>

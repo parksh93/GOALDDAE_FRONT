@@ -1,28 +1,49 @@
 import React from 'react';
-import { UserProvider } from "../../../userComponent/userContext/UserContext";
 import ImageSlide from './imageSlide/ImageSlide'
 import TimeLine from './timeLine/TimeLine';
 import MatchListMoreDetails from './timeLine/MatchListMoreDetails';
 import NaviBar from './naviBar/NaviBar';
 import BestBoard from './bestBoard/BestBoard';
 import Article from './article/Article';
+import Loading from '../../../loading/Loading';
+import { useLocation } from 'react-router-dom'; 
 import './Main.css';
+import Footer from '../../footer/Footer';
 
 const Main = () => {
+    const location = useLocation();
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000); 
+    }, [location]);
+
     return (
         <div>
             <NaviBar />
-            <ImageSlide />
-            <TimeLine />
-            <MatchListMoreDetails />
-            <div className="article-board-container">
-                <div className="Article">
-                    <Article />
-                </div>
-                <div className="BestBoard">
-                    <BestBoard />
-                </div>
-            </div>
+            {isLoading ? (
+              <div style={{ marginTop:'10%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+                  <Loading />
+              </div>
+            ) : (
+                <>
+                    <ImageSlide />
+                    <div className="article-board-container">
+                        <div className="Article">
+                            <Article />
+                        </div>
+                        <div className="BestBoard">
+                            <BestBoard />
+                        </div>
+                    </div>
+                    <TimeLine />
+                    {/* <MatchListMoreDetails /> */}
+                    <Footer />
+                </>
+            )}
         </div>
     );
 }

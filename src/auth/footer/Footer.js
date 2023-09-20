@@ -12,9 +12,9 @@ const Footer = () => {
     return (
         <Box sx={{
             bgcolor: "#3a3a3a", 
-            height : isSmallScreen? "120%" : "50vh", 
+            height : isSmallScreen? "120%" : "360px", 
             paddingBottom:"7%", color:"white",
-            paddingLeft: '5%' 
+            paddingLeft : isSmallScreen? '10%' : '3%'
             }}>
         {isSmallScreen ? (
             <Box sx={{
@@ -43,11 +43,12 @@ const Footer = () => {
             </Box>
         ) : (
             <Box sx={{
-                marginTop: "20%",
+                marginTop: "30%",
                 display:"flex", 
                 flexDirection: "row", 
                 justifyContent:"flex-start",
-                width: "1400px"
+                width: "1400px",
+                marginLeft: '250px'
               }}>
                 <Match />
                 <ServiceField />

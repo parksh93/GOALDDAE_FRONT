@@ -1,5 +1,4 @@
 import { useUser } from "../../../userComponent/userContext/UserContext";
-import moment from 'moment';
 import {useState, useEffect, useCallback} from 'react';
 import styles from "./Weather.module.css";
 import {BsBrightnessHigh, BsCloudRain, BsCloudSun, BsCloudHaze} from 'react-icons/bs';
@@ -7,12 +6,8 @@ import {AiOutlineReload} from 'react-icons/ai';
 import WeatherLoading from "./WeatherLoading";
 
 const Weather = () => {
-    // const [nowMinute, setNowMinute] = useState(moment().format("m"));
     const [sky, setSky] = useState("");
     const [temperature, setTemperature] = useState("");
-    // const [windDirection, setWindDirection] = useState("");
-    // const [windSpeed, setWindSpeed] = useState("");
-    // const [precipitation, setPrecipitation] = useState("");
     const [time, setTime] = useState("");
     const [city, setCity] = useState("");
     const [loading, setLoading] = useState(false);
@@ -24,22 +19,22 @@ const Weather = () => {
     },[]);
 
     useEffect(() => {
-        let city;
         if(userInfo !== null){
             if(userInfo.preferredCity !== ""){
-                city = userInfo.preferredCity;
-            }else{
-                city = "서울";
+                setCity(userInfo.preferredCity);
+            }else {
+                setCity("서울");
             }
-        }else{
-            city = "서울";
+        }else {
+            setCity("서울");
         }
-    
-        setCity(city);
-        getNowWeather(city);
     },[userInfo])
 
-    const getNowWeather = useCallback((city) => {
+    useEffect(() => {
+        getNowWeather();
+    },[city])
+
+    const getNowWeather = useCallback(() => {
         fetch("/weather/getNowWeather", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -70,7 +65,7 @@ const Weather = () => {
 
     return (
         <div className={styles.weatherMainDiv}>
-            {loading ? 
+            {loading && city !== ""? 
             <>
             { sky === 0 ? <BsCloudRain className={styles.skyImg}/>
             : sky <= 5 ? <BsBrightnessHigh className={styles.skyImg}/>
