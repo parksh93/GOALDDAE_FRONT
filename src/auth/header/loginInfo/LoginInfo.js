@@ -46,7 +46,7 @@ const LoginInfo = () => {
                 <React.Fragment>
                   <Link to="/userChat" className={styles.tootipText}>채팅</Link>
                   <br/>
-                  <Link to="/myPage" className={styles.tootipText}>내 정보</Link>
+                  <Link to={`/myPage`} className={styles.tootipText}>내 정보</Link>
                   <br />
                   <span className={styles.tootipText} onClick={() => logout()}>로그아웃</span>
                 </React.Fragment>
