@@ -1,7 +1,7 @@
 
 .weatherMainDiv {
     display: inline;
-    margin-left: 20.3%;
+    margin-left: 110px;
     position: absolute;
     width: 50%;
     /* 드래그 방지 */
@@ -21,6 +21,10 @@
 
 .otherDiv *{
     vertical-align: middle;
+}
+
+.otherDiv {
+    width: 200px;
 }
 
 .weatherTitle {

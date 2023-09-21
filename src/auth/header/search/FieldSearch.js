@@ -165,7 +165,7 @@ return (
             onBlur={handleInputBlur}
             // placeholder='지역, 구장 찾기'
             />
-        <div className="DeleteButton" onClick={() => setInputValue('')}>
+        <div className="DeleteButton" onClick={() => setInputValue('지역, 구장 찾기')}>
           &times;
         </div>
       </div>

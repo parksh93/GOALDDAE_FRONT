@@ -9,7 +9,7 @@ const Weather = () => {
     const [sky, setSky] = useState("");
     const [temperature, setTemperature] = useState("");
     const [time, setTime] = useState("");
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("서울");
     const [loading, setLoading] = useState(false);
 
     const {getUserInfo, userInfo} = useUser();
@@ -22,17 +22,11 @@ const Weather = () => {
         if(userInfo !== null){
             if(userInfo.preferredCity !== ""){
                 setCity(userInfo.preferredCity);
-            }else {
-                setCity("서울");
             }
-        }else {
-            setCity("서울");
         }
-    },[userInfo])
 
-    useEffect(() => {
         getNowWeather();
-    },[city])
+    },[userInfo])
 
     const getNowWeather = useCallback(() => {
         fetch("/weather/getNowWeather", {
@@ -65,7 +59,7 @@ const Weather = () => {
 
     return (
         <div className={styles.weatherMainDiv}>
-            {loading && city !== ""? 
+            {loading ? 
             <>
             { sky === 0 ? <BsCloudRain className={styles.skyImg}/>
             : sky <= 5 ? <BsBrightnessHigh className={styles.skyImg}/>

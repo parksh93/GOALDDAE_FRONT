@@ -40,6 +40,7 @@ const IndividualMatchDetail = () => {
     fetch(`/match/individual/detail/${matchId}`, { method: "GET" })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data !== null) {
           setMatchInfo(data);
         }
@@ -260,6 +261,17 @@ const IndividualMatchDetail = () => {
                     <BsGlobeAmericas className={styles.matchInfoIcon} />{" "}
                     <span style={on}>제한 레벨 : {matchInfo.limitLevel}</span>
                   </div>
+                  <div>
+                    <br/>
+                    <strong>매니저</strong><br/>
+                    <span>
+                      {matchInfo.managerId === 0 ?
+                        "아직 배정된 매니저가 없습니다."
+                        :
+                        `${matchInfo.managerName} 매니저가 배정되었습니다.`
+                    }
+                    </span>
+                  </div>
                 </div>
                 <div>
                   <hr className={styles.separator} />
@@ -381,7 +393,9 @@ const IndividualMatchDetail = () => {
           {/* <Footer/> */}
           </> 
       ) : (
-        <Loading/>
+        <div style={{ marginTop:'100px', marginLeft:'29%', left: "0px", width: "40%", height:"30%", zIndex:"9999"}}>
+          <Loading/>
+        </div>
       )}
     </div>
   );

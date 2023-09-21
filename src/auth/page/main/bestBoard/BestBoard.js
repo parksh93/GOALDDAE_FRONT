@@ -19,10 +19,10 @@ const BestBoard = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'start' }}>
     <Box sx={{ 
-            height: { xs: '180px', sm:"200px" },
-            margin: "1%",
-            marginRight: "39px",
-            maxWidth: '100%',
+            height: { xs: '180px', sm:"204px" },
+            width: { xs: '350px', sm:"570px" },
+            // margin: "1%",
+            maxWidth: '1000px',
             padding:'3%',
             boxShadow:'2px 2px 3px 3px #ccc',
             borderRadius:'15px'}}
@@ -43,7 +43,7 @@ const BestBoard = () => {
                     sx={{
                         margin:{ xs: "2%", sm: "0%"},
                         fontSize:  { xs: "10px", sm: "12px"},
-                        width: { xs: "353px", sm: "460px"},
+                        width: { xs: "353px", sm: "470px"},
                         borderRadius:'10px',
                     }} 
                 >
