@@ -220,13 +220,13 @@ export default function ReplyTable() {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right" sx={{maxWidth: "150px"}}><b className={commonStyle.title} onClick={() => onClickOpenDetail(row.id)}>{row.content}</b></TableCell>
+                    <TableCell align="right" sx={{maxWidth: "150px"}}><b className={commonStyle.title} onClick={() => onClickOpenDetail(index)}>{row.content}</b></TableCell>
                     <TableCell align="right">{row.writer}</TableCell>
                     <TableCell align="right">{formatDate(row.replyWriteDate)}</TableCell>
                     <TableCell align="right">{row.reporter}</TableCell>
                     <TableCell align="right">{formatDate(row.reportDate)}</TableCell>
                   </TableRow>
-                  <TableRow className={commonStyle.dropDownTr} sx={{display: "none"}} id={`replyDetail${row.id}`} onClick={() => onClickCloseDetail(row.id)}>
+                  <TableRow className={commonStyle.dropDownTr} sx={{display: "none"}} id={`replyDetail${index}`} onClick={() => onClickCloseDetail(index)}>
                     <TableCell colSpan={10} className={commonStyle.dropDownTd}>
                       <AiOutlineClose className={commonStyle.closeBtn}/>
                       <p className={commonStyle.dropDownText}>신고사유</p>

@@ -8,11 +8,11 @@ const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomS
   const [chatType, setChatType] = useState(0);
 
   const selectChat = () => {
-    if(chatType === 0){
-      setChatType(1);
-    }else{
-      setChatType(0);
-    }
+    // if(chatType === 0){
+    //   setChatType(1);
+    // }else{
+    //   setChatType(0);
+    // }
   }
 
   return (
@@ -24,7 +24,7 @@ const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomS
         </h2>
         <div className={styles.selectChatDiv}>
           <span className={styles.selectChat} style={chatType === 0 ? {color: "black"} : {color: "lightgray"}} onClick={selectChat}>개인<BiUser onClick={selectChat}/></span>
-          <span className={styles.selectChat} style={chatType === 1 ? {color: "black"} : {color: "lightgray"}} onClick={selectChat}>팀<BiGroup onClick={selectChat}/></span>
+          {/* <span className={styles.selectChat} style={chatType === 1 ? {color: "black"} : {color: "lightgray"}} onClick={selectChat}>팀<BiGroup onClick={selectChat}/></span> */}
         </div>
       </div>
       <div className={styles.chatListMain}>
@@ -45,8 +45,6 @@ const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomS
               className={styles.channelDiv}
               style={channel.channelId === channelInfo.channelId ? {background: "#CAEECC"} : {}}
             >
-              {/* <div className={styles.profileImgDiv}>
-              </div> */}
               <div>
                 <img
                   src={channel.channelImgUrl}
@@ -55,27 +53,6 @@ const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomS
                 <span className={styles.channelName}>
                   {channel.channelName}
                 </span>
-                {/* <br /> */}
-                {/* <span className={styles.lastContent}> */}
-                  {/* {lastMessageList.length !== 0 ?
-                    lastMessageList.map(lastMessage => {
-                      if(lastMessage.id === channel.channelId){
-                        <span>{lastMessage.content}</span>
-                      }
-                    })
-                  :""  
-                } */}
-                {/* </span> */}
-                {/* <span
-                  className={styles.unReadCnt}
-                  style={
-                    myChannel.unReadCnt > 0
-                      ? { background: "#FF5656", color: "white" }
-                      : {}
-                  }
-                >
-                  {myChannel.unReadCnt > 0 ? myChannel.unReadCnt : ""}
-                </span> */}
               </div>
             </div>
           ))

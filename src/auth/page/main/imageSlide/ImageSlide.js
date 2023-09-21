@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import './ImageSlide.css';
 
 // 임시 이미지 불러오기 추후 백엔드에서 저장 예정
-import TestImg1 from "./image/testImg1.jpg";
+import TestImg1 from "./image/mainPost.png";
 import TestImg2 from "./image/testImg2.jpg";
 import TestImg3 from "./image/testImg3.jpg";
 import TestImg4 from "./image/testImg4.jpg";
