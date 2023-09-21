@@ -5,6 +5,21 @@ import "./MyPage.css";
 import line from '../mypage/img/Untitled_line.png';
 import { formatDate } from '../../boardComponent/dateUtils';
 import heartIcon from '../mypage/img/free-icon-heart-833472.png';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Pagination from '@mui/material/Pagination';
+
+import { styled } from '@mui/material/styles';
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  textAlign: 'justify',
+  color: theme.palette.text.secondary,
+  boxShadow: '0px 5px 15px 0px rgba(0, 0, 0, 0.1)'
+}));
 
 function BoardList({ userId }) {
   const [board, setBoard] = useState([]);
@@ -77,26 +92,37 @@ function BoardList({ userId }) {
 
   return (
     <div className='user-card-board'>
+      <Box sx={{ width: '100%' }}>
+      <Stack>
       {board.slice(startIndex, endIndex).map((post, index) =>
         <div className="post-item" key={post.id} onClick={() => handlePostClick(post.id)}>
-          <p> <span className='my-board-list' style={{ alignItems: 'center' }}>
+          <Item style={{ marginBottom: '20px'}}>
+          <p> <span className='my-board-list' style={{ alignItems: 'center'}}>
             {/* 제목 */}
-            <div style={{ flex: 1 }}> <b>{truncateContent(post.title)}</b> </div>
+            <div style={{ flex: 1, marginLeft: '10px'}}> <b>{truncateContent(post.title)}</b> </div>
 
             {/* 댓글 수 좋아요 수 조회수 */}
-            <div style={{ flex: 1 }}>
-              <span style={{ flex: 1, marginRight: '10px' }}>댓글 {post.replyCount}</span>
-              <span><img src={heartIcon} alt="heart" style={{ width: '20px', height: '20px', objectFit: 'contain' }} /> {post.heartCount}</span>
-              <span style={{ flex: 1, marginLeft: '10px' }}>조회수 {post.count}</span> </div>
+            <div style={{ flex: 1, marginTop: '20px'}}>
+              <span className="player-number" style={{ flex: 1, marginRight: '20px' }}>댓글 {post.replyCount}개</span>
+              <span className="player-number"><img src={heartIcon} alt="heart" style={{ width: '20px', height: '20px', objectFit: 'contain', marginBottom: '-5px' }} /> {post.heartCount}개</span>
+              <span className="player-number" style={{ flex: 1, marginLeft: '20px' }}>조회수 {post.count}회</span> </div>
 
             {/* 작성일자 */}
-            <div style={{ flex: 1, textAlign: 'right', color: 'grey' }}> 작성일자 {formatDate(post.writeDate)} </div>
-          </span></p><p><img src={line} alt="line" /></p>
+            <div style={{ flex: 1, textAlign: 'right', color: 'grey', marginTop: '-18px' }}> 작성일자 {formatDate(post.writeDate)} </div>
+          </span></p>
+          </Item>
         </div>
+      )}
+      </Stack>
+      </Box>
+
+      {/* 게시물이 없는 경우 텍스트를 표시 */}
+        {board.length === 0 && (
+        <h2 className="no-boards-message" style={{ color: 'grey' }}>아직 쓴 글이 없네요 .. 😞</h2>
       )}
 
       {/* 페이지 번호 버튼 */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
         {renderPaginationButtons()}
       </div>
     </div>

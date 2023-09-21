@@ -17,7 +17,6 @@ function FriendList({ userId }) {
   return (
     
       <div className='user-card-friends'>
-        <p><b>친구리스트</b></p>
         {/* <text>{userId.friends}</text> */}
     </div>
   

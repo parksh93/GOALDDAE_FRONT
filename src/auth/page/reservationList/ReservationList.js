@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { useUser } from '../../../userComponent/userContext/UserContext';
-import NaviBar from '../main/naviBar/NaviBar';
 import { Box, Chip } from '@mui/material';
-import FieldImg1 from './FieldImg1.jpeg';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import Loading from '../../../loading/Loading';
 import { useLocation } from 'react-router-dom'; 
 import Footer from '../../footer/Footer';
+import NaviBar from '../main/naviBar/NaviBar';
 
 const provinces = [
   "서울", "경기", "인천", "강원", "대전",
@@ -32,15 +31,14 @@ const ReservationList = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-        setIsLoading(false);
-    }, 1000); 
+      setIsLoading(true);
+      setTimeout(() => {
+          setIsLoading(false);
+      }, 1000); 
   }, [location]);
 
   useEffect(() => {
     if (selectedProvince) {
-      setIsLoading(true); // API 요청 시작 전에 isLoading을 true로 설정
       axios.get('/field/reservation/list', { 
         params: {
           userId: null,
@@ -55,23 +53,21 @@ const ReservationList = () => {
       })
       .then(response => {
         if (pageNumber === 1) {
-            setFields(response.data.content); 
+            setFields(response.data.content); // 첫 페이지일 경우에는 새로운 데이터만 설정
         } else {
-            setFields(prevFields => [...prevFields, ...response.data.content]);
+            setFields(prevFields => [...prevFields, ...response.data.content]); // 그 외의 경우에는 이전 데이터와 합침
         }
       })
-      .catch(error => console.error(`Error: ${error}`))
-      .finally(() => setIsLoading(false)); // API 요청 종료 후에 isLoading을 false로 설정
+      .catch(error => console.error(`Error: ${error}`));
     }
-  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod]);
-
+  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod, pageNumber]);
   
   useEffect(() => {
-    if (selectedProvince !== defaultProvince) { 
+    if (selectedProvince !== defaultProvince) { // defaultProvince와 다르면 fields와 pageNumber 초기화
       setFields([]);
       setPageNumber(1);
     }
-  }, [selectedProvince, inOutWhether, grassWhether, reservationDate, reservationPeriod]);
+  }, [selectedProvince]);
   
   const observer = useRef();
   const lastFieldElementRef = useCallback(
@@ -139,7 +135,8 @@ return (
               fontSize: '14px',
               fontFamily: 'bold',
               outline: 'none',
-              textAlign: 'center'
+              textAlign: 'center',
+              color: '#505050'
             }}
           />
         </label>
@@ -154,6 +151,7 @@ return (
             borderRadius: "120px",
             boxShadow: "0 5px 10px rgba(0, 0, 0, .15)",
             fontSize: '14px',
+            color: '#505050'
           }}
         >
           <option value="">시간대 선택</option>
@@ -196,9 +194,13 @@ return (
           <option value="인조">인조 잔디</option>
         </select>
     
-      {fields.map((field, index) =>
+      {isLoading ? (
+          <div style={{ marginTop:'12%', marginLeft:'29%', top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+            <Loading />
+          </div>
+        ) : fields.map((field, index) =>
         <div key={field.id} ref={index === fields.length - 1 ? lastFieldElementRef : null}>
-            <Box key={field.id} sx={{marginLeft:'14%', borderBottom: `1px solid ${grey[500]}`, width: '1100px', marginTop:'40px'}}>
+            <Box key={field.id} sx={{marginLeft:'15%', borderBottom: `1px solid ${grey[500]}`, width: '1100px', marginTop:'40px'}}>
             <Box sx={{marginTop:'2%', fontSize:'20px', fontWeight:'bold'}}>
               <Link to={`/soccer_field/${field.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 {field.fieldName}
@@ -219,7 +221,7 @@ return (
                   <Box>구장 크기: {field.fieldSize}</Box>
                   <Box>대관비: {field.reservationFee}</Box>
                 </Box>
-                <img src={FieldImg1} alt="구장 이미지" style={{width:'120px', marginLeft:'80%'}}/>
+                <img src={field.fieldImg1} alt="구장 이미지" style={{width:'120px', marginLeft:'80%'}}/>
               </Box>  
 
               {field.reservationInfo && (
@@ -247,13 +249,12 @@ return (
                   )}
                 </>
               )}
+              
             </Box>
-       </div>)}
-    </div> 
-    <Footer />
-    </>
+       </div>
       )}
-    </div>
+        <Footer />
+    </div> 
   )}
 
 export default ReservationList;
