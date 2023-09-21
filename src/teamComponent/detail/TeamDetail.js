@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
+import Loading from '../../loading/Loading';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -68,14 +69,14 @@ const TeamDetail = () => {
         <div className={styles.container}>
           <div className={styles.leftContainer}>
             <div className={styles.teamInfo1}>
-              <h2 className={styles.teamProfile}>
+              <h1 className={styles.teamProfile}>
               <div className={styles.circularImageContainer}>
                 <div className={styles.circularImage}>
                   <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
                 </div>
               </div>
                 {teamInfo.teamName}
-              </h2>
+              </h1>
                 <p className={styles.teamInfoText}>지역 | {teamInfo.area}</p>
                 <p className={styles.teamInfoText}>평균나이 | {teamInfo.averageAge} 세</p>
                 <p className={styles.teamInfoText}>입단비 | {teamInfo.entryfee} 원</p>
@@ -111,13 +112,13 @@ const TeamDetail = () => {
 
           <div className={styles.teamIntroduce}>
             {teamInfo.teamIntroduce !== null ? (
-              <pre
+              <div
                 className={`${styles.teamIntroduceContent} ${
                   isModalOpen || successModalOpen ? styles.expanded : ''
                 }`}
                 >
                 {teamInfo.teamIntroduce}
-              </pre>
+              </div>
             ) : (
               <p className={styles.noTeamIntroduce}> 팀 소개글이 없습니다. </p>
             )}
@@ -153,7 +154,7 @@ const TeamDetail = () => {
           )}
         </div>
       ) : (
-        <p>팀 정보를 불러오는 중...</p>
+        <Loading />
       )}
     </div>
   )

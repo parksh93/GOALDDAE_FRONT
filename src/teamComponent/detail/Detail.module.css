@@ -57,20 +57,49 @@
     padding-left: 15px;
 }
 
-.teamInfoText{
+.teamProfile{
+    display: flex;
+    text-align: center;
+    align-items: center;
     
 }
 
+.circularImageContainer {
+    position: relative;
+    display: inline-block;
+
+    width: 100px;
+    margin-right: 20px;
+    
+    /* background-color: rgb(98, 113, 97); */
+}
+  
+.circularImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+}
+  
+.circularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .teamIntroduce {
-    padding: 30px;
-    width: 300px;
+    width: 70%;
     border: 1px solid #cccccc;
     flex-grow: 1;
     font-size: 20px;
     border-radius: 5px;
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+
+    padding: 30px;
     max-height: 1000px;
-    overflow: hidden;
+
+    overflow-y: auto;
     transition: max-height 0.3s ease-in-out;
     background-color: white;
 
@@ -96,7 +125,7 @@
     border: 1px solid green;
     transition: background-color 0.3s;
     width: 95%;
-    height: 150%;
+    height: 100%;
     border-radius: 3px;
     cursor: pointer;
 }
@@ -107,8 +136,8 @@
 }
 
 .recruitingFalseBtn{
-    width: 320px;
-    height: 50px;
+    width: 95%;
+    height: 100%;
     border-radius: 3px;
 
     background-color: #cccccc;
@@ -243,7 +272,7 @@
     padding: 5%;
 }
 
-.circularImageContainer {
+.myTeamCircularImageContainer {
     position: relative;
     display: inline-block;
 
@@ -253,20 +282,20 @@
     /* background-color: rgb(98, 113, 97); */
 }
   
-.circularImage {
+.myTeamCircularImage {
     width: 100px;
     height: 100px;
     border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
     overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
     margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+
+    cursor: pointer;
 }
   
-.circularImage img {
+.myTeamCircularImage img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
-    cursor: pointer;
 }
 
 .teamDetailUpdateBtn{
@@ -277,7 +306,7 @@
     border-radius: 10px;
     border: 2px green;
 
-    width: 20%;
+    width: 23%;
     height: 50px;
     font-size: 16px;
     

@@ -5,6 +5,7 @@ import styles from './Detail.module.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import TeamEditModal from './TeamEditModal';
 import ProfileImageEdit from './ProfileImgEdit';
+import Loading from '../../loading/Loading';
 
 
 const MyTeamDetail = () => {
@@ -18,9 +19,8 @@ const MyTeamDetail = () => {
   const [memberList, setMemberList] = useState([]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editedTeamInfo, setEditedTeamInfo] = useState(null);
-
   const [isProfileImageEditOpen, setIsProfileImageEditOpen] = useState(false);
+  const [editedTeamInfo, setEditedTeamInfo] = useState(null);
 
   const navigate = useNavigate();
 
@@ -219,14 +219,17 @@ const MyTeamDetail = () => {
 
   // 수정 모달 닫기
   const closeEditModal = () => {
-    setIsEditModalOpen(false);
     setEditedTeamInfo(null);
+    setIsEditModalOpen(false);
   };
 
-  const handleProfileImageEditOpen = () => {
+  // 프로필 이미지 수정 모달 열기
+  const handleProfileImageEditOpen = (teamInfo) => {
+    setEditedTeamInfo(teamInfo)
     setIsProfileImageEditOpen(true);
   };
 
+  // 프로필 이미지 수정 모달 닫기
   const handleProfileImageEditClose = () => {
     setIsProfileImageEditOpen(false);
   };
@@ -240,18 +243,18 @@ const MyTeamDetail = () => {
         <div className={styles.myTeamLeftContainer}>
           <div className={styles.myTeamInfoContainer}>
               <h1 className={styles.myTeamProfile}>
-              <div className={styles.circularImageContainer}>
-                <div className={styles.circularImage}>
-                  <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
+              <div className={styles.myTeamCircularImageContainer}>
+                <div className={styles.myTeamCircularImage}>
+                  <img className={styles.teamProfileImgUrl} 
+                      src={teamInfo.teamProfileImgUrl}
+                      onClick={isTeamManager ? () => handleProfileImageEditOpen(teamInfo) : null}
+                   />
                 </div>
               </div>
                 {teamInfo.teamName}
               </h1>          
               {isTeamManager && (
                 <>
-                  <button onClick={handleProfileImageEditOpen}>
-                    프로필 이미지 수정
-                    </button>
                   <button className={styles.teamDetailUpdateBtn} onClick={() => openEditModal(teamInfo)}>
                     팀 설정
                   </button>
@@ -309,7 +312,7 @@ const MyTeamDetail = () => {
             <button 
               className={`${styles.leaveTeamFilter} ${selectedTab === 'leaveTeam' ? styles.activeTab : ''}`}
               onClick={() => handleLeaveTeam(userInfo.userId)}>
-              팀 탈퇴하기 >
+              팀 탈퇴 {'>'}
             </button>
           
             </div>
@@ -402,7 +405,7 @@ const MyTeamDetail = () => {
 
       </div>
         ) : (
-        <p>팀 정보를 불러오는 중...</p>
+        <Loading />
       )}
       
       {/* 수정 모달 */}
@@ -422,8 +425,8 @@ const MyTeamDetail = () => {
       {/* 프로필 이미지 수정 모달 */}
       {isProfileImageEditOpen && (
         <ProfileImageEdit
-          teamId={userInfo.teamId}
           onCancel={handleProfileImageEditClose}
+          teamInfo={editedTeamInfo}
         />
       )}
 

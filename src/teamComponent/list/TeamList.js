@@ -4,7 +4,6 @@ import axios from 'axios';
 import throttle from 'lodash/throttle';
 import styles from './List.module.css';
 import TeamSearch from './TeamSearch';
-import MyTeam from './MyTeam';
 import Loading from '../../loading/Loading';
 
 
@@ -40,6 +39,10 @@ const TeamList = ({}) => {
     const [recruiting, setRecruiting] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchTeamList(page, selectedArea, recruiting); 
+    }, []);
 
     const fetchTeamList = async (pageNum, area = '', recruiting = true) => {
         try {
@@ -156,9 +159,9 @@ const TeamList = ({}) => {
                                 <img className={styles.teamProfileImgUrl} src={team.teamProfileImgUrl} alt={team.teamName} />
                             </div>
                         </div>
-                        <div className={styles.teamInfo}>
+                        <div>
                             <h3>{team.teamName}</h3>
-                                <p>
+                                <p className={styles.teamInfo}>
                                     <span>{team.area}</span><span>{team.averageAge}</span><span>{team.entryGender}</span>                                
                                     <span className={team.recruiting ? styles.teamRecruiting : ''}>
                                         {team.recruiting ? ' 모집중' : ' 모집종료'}
