@@ -352,10 +352,10 @@ const numberToTimeString = (number) => {
                     aria-label="inOutWhether"
                     name="inout-whether"
                     value={inOutWhether}
-                    onChange={(e) => setInOutWhether(parseInt(e.target.value))}
+                    onChange={(e) => setInOutWhether(e.target.value)}
                   >
-                    <FormControlLabel value={1} control={<Radio />} label="실내" />
-                    <FormControlLabel value={0} control={<Radio />} label="실외" />
+                    <FormControlLabel value={"실내"} control={<Radio />} label="실내" />
+                    <FormControlLabel value={"실외"} control={<Radio />} label="실외" />  
                   </RadioGroup>
                 </FormControl>
               </Box>
@@ -367,10 +367,10 @@ const numberToTimeString = (number) => {
                     aria-label="grassWhether"
                     name="grass-whether"
                     value={grassWhether}
-                    onChange={(e) => setGrassWhether(parseInt(e.target.value))}
+                    onChange={(e) => setGrassWhether(e.target.value)}
                   >
-                    <FormControlLabel value={1} control={<Radio />} label="천연" />
-                    <FormControlLabel value={0} control={<Radio />} label="인조" />
+                    <FormControlLabel value={"천연"} control={<Radio />} label="천연" />
+                    <FormControlLabel value={"인조"} control={<Radio />} label="인조" />
                   </RadioGroup>
                 </FormControl>
               </Box>
