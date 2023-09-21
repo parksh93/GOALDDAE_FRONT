@@ -90,8 +90,6 @@ const TeamMatch = () => {
       fetchAndAppendMatchList();
     }
   }, [selectedDate, selectedProvince, selectedGender, pageNumber]);
-  
-  
 
   // 웹소켓으로 매치 목록을 실시간으로 업데이트
   useEffect(() => {

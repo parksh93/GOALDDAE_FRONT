@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { useUser } from '../../../userComponent/userContext/UserContext';
 import { Box, Chip } from '@mui/material';
-import FieldImg1 from './FieldImg1.jpeg';
 import { grey } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import Loading from '../../../loading/Loading';
@@ -215,7 +214,7 @@ return (
                   <Box>구장 크기: {field.fieldSize}</Box>
                   <Box>대관비: {field.reservationFee}</Box>
                 </Box>
-                <img src={FieldImg1} alt="구장 이미지" style={{width:'120px', marginLeft:'80%'}}/>
+                <img src={field.fieldImg1} alt="구장 이미지" style={{width:'120px', marginLeft:'80%'}}/>
               </Box>  
 
               {field.reservationInfo && (
