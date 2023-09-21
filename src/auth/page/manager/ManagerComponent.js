@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Collapse, Alert } from '@mui/material';
 import styles from './Manager.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function ManagerComponent({ managerId }) {
   const [matchList, setMatchList] = useState([]);
@@ -13,6 +14,8 @@ function ManagerComponent({ managerId }) {
   const [alertSeverity, setAlertSeverity] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     // 초기 매치 목록을 불러옵니다.
     const getMatches = async () => {
@@ -22,6 +25,7 @@ function ManagerComponent({ managerId }) {
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching matches:', error);
+        navigate("/");
       }
     };
 
@@ -47,7 +51,6 @@ function ManagerComponent({ managerId }) {
     try {
       const response = await axios.get(`/manager/matchParticipants?matchId=${matchId}`);
       setMatchParticipants(response.data);
-      console.log(response.data);
       setSelectedMatch(matchId);
     } catch (error) {
       console.error('Error fetching match participants:', error);
@@ -81,15 +84,13 @@ function ManagerComponent({ managerId }) {
   };
 
   return (
-    <div className={styles.managerContainer}>
+    <div>
         <Collapse in={open}>
         <Alert severity={alertSeverity}>
             {alertMsg}
         </Alert>
-        </Collapse>
-      <h1>매치결과 관리</h1>
+        </Collapse>      
       <div>
-        <h2>매치 목록</h2>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
