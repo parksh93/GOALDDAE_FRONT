@@ -30,18 +30,18 @@
   margin-top: 13px;
   background-color: white;
   box-shadow: 0 1px 3px rgba(32,33,36,0.28); 
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 /* 입력창의 비활성화된 상태의 테두리 스타일 */
 .TextInput-inactiveBorderRadius {
   border-radius: 24px;
-  width: 405px;
+  width: 385px;
 }
 
 /* 입력창의 활성화 된 상태의 테두리 스타일 */
 .TextInput-activeBorderRadius {
-  width: 405px;
+  width: 385px;
   border-radius: 24px 24px 0 0; 
   background-color: white; 
 }

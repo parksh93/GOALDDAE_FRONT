@@ -11,13 +11,13 @@
 
 .image-slide-container .slick-slider {
   margin: 0 auto;
-  max-width: 1000px; 
+  max-width: 1200px; 
   width: 100%;
 }
   
 .img {
   width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
-  max-height: 300px; /* 높이 */
+  max-height: 350px; /* 높이 */
   border-radius: 10px; /* 모서리 둥글기 */
   object-fit:cover;
 }

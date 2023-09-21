@@ -22,7 +22,7 @@ const NaviBar = () => {
                     fontSize: location.pathname === '/' ? "20px" : "17px",
                     fontWeight: location.pathname === '/' ? '600' : '0', 
                     '&:hover': {fontSize: '20px', background: "none"},
-                    marginRight: "20px"
+                    marginRight: "50px"
                 }}onClick={() => navigate('/')}>개인매치
             </Button>
 
@@ -34,7 +34,7 @@ const NaviBar = () => {
                     fontSize: location.pathname === '/match/team/list' ? "20px" : "17px",
                     fontWeight: location.pathname === '/match/team/list' ? '600' : '0', 
                     '&:hover': {fontSize: '20px', background: "none"},
-                    marginRight: "20px"
+                    marginRight: "50px"
                 }} onClick={() => navigate('/match/team/list')}>팀매치
             </Button>
 
@@ -46,7 +46,7 @@ const NaviBar = () => {
                     width: "10%",
                     fontWeight: location.pathname === '/team/list' ? '600' : '0', 
                     '&:hover': {fontSize: '20px', background: "none"},
-                    marginRight: "20px"
+                    marginRight: "50px"
                 }} onClick={() => navigate('/team/list')}>팀
             </Button>
 
@@ -58,7 +58,7 @@ const NaviBar = () => {
                 width: "10%",
                 fontWeight: location.pathname === '/reservation/list' ? '600' : '0', 
                 '&:hover': {fontSize: '20px', background: "none"},
-                marginRight: "20px"
+                marginRight: "50px"
                 }} onClick={() => navigate('/reservation/list')}>구장예약
             </Button>
 
@@ -70,7 +70,7 @@ const NaviBar = () => {
                     fontSize: location.pathname === 'board' ? "20px" : "17px",
                     fontWeight: location.pathname === '/board' ? '600' : '0', 
                     '&:hover': {fontSize: '20px', background: "none"},
-                    marginRight: "20px"
+                    marginRight: "50px"
                 }} onClick={() => navigate('/board')}>게시판
             </Button>   
           </Box>

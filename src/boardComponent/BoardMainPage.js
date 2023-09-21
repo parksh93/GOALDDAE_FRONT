@@ -29,9 +29,9 @@ const BoardMainPage = () => {
       </div>
       ) : (
       <>
-      <Link to={`/board`}>
+      {/* <Link to={`/board`}>
         <h2 style={{marginLeft : '20%',marginTop:"40px", color : '#333333'}}><ChevronRightIcon /> 자유게시판</h2>
-      </Link>
+      </Link> */}
       <Routes>
         <Route path="/" element={<BoardListPage />} />
         <Route path="/detail/:id" element={<BoardDetailPage />} />

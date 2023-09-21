@@ -102,7 +102,7 @@ return (
       </div>
       ) : (
       <>
-      <div style={{marginLeft:'10%'}}>
+      <div>
       <select
           value={selectedProvince}
           onChange={e => setSelectedProvince(e.target.value)}
