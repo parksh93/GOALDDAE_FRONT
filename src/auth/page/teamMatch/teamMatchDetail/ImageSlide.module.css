@@ -1,0 +1,14 @@
+/* 이미지 크기 조절은 주석 참고 */
+
+.imageSlideContainer {
+    max-width: 900px; /* 가로 */
+    margin-bottom: 40px;
+    z-index: 1;
+    box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+  }
+  
+  .img {
+    width: 100%; /* 이미지의 가로 길이를 100%로 유지 */
+    max-height: 450px; /* 높이 */
+  }
+  
