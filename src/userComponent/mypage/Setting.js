@@ -17,10 +17,10 @@ import Button from '@mui/material/Button';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  boxShadow: '0px 2px 14px 0px rgba(0, 0, 0, 0.2)'
+  // boxShadow: '0px 2px 14px 0px rgba(0, 0, 0, 0.2)'
 }));
 
 function Setting({ userId, userInfo }) {

@@ -257,7 +257,7 @@
     justify-content: center;
     align-items: left;
     width: 700px;
-    height: 800px;
+    height: 100%;
     padding: 2em;
     background-color: #fff;
     margin-top : -1.5%;
@@ -298,4 +298,9 @@
   background-color: #ffffff;
   margin-top : -1.5%;
   box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+}
+
+.post-item:hover {
+  transform: scale(1.05); /* 확대 비율 조절 */
+  transition: transform 0.2s ease-in-out; /* 애니메이션 속성 추가 */
 }

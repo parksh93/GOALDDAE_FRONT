@@ -121,7 +121,7 @@ function UserPage() {
                           </Stack>
                         </div>
                         <span>{pageInfo.nickname}</span>
-                        <p>{pageInfo.gender}</p>
+                        <p style={{ marginTop:'15px', marginBottom: '15px'}}>{pageInfo.gender}</p>
                         <p>노쇼 횟수 : 
                           <span style={{ color: pageInfo.noShowCnt > 0 ? 'green' : 'gray' }}>
                             {' ' + pageInfo.noShowCnt }
@@ -132,13 +132,13 @@ function UserPage() {
 
                     <div className='user-card-2'>
                       <p><b>이메일</b><text>{pageInfo.email}</text></p>
-                      <p><b>생년월일</b><span>{pageInfo.birth}</span></p>
+                      <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>생년월일</b><span>{pageInfo.birth}</span></p>
                       <p><b>전화번호</b><span>{pageInfo.phoneNumber}</span></p>
                     </div>
 
                     <div className='user-card-3'>
                     <p><b>선호도시</b>  <span>{pageInfo.preferredCity}</span> </p>
-                    <p><b>선호지역</b>  <span>{pageInfo.preferredArea}</span> </p>
+                    <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>선호지역</b>  <span>{pageInfo.preferredArea}</span> </p>
                     <p><b>활동반경</b>  <span>{pageInfo.activityClass}</span> km </p>
                     </div>
                   </>

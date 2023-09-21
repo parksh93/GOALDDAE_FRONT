@@ -103,9 +103,9 @@ function BoardList({ userId }) {
 
             {/* 댓글 수 좋아요 수 조회수 */}
             <div style={{ flex: 1, marginTop: '20px'}}>
-              <span className="player-number" style={{ flex: 1, marginRight: '20px' }}>댓글 {post.replyCount}</span>
-              <span className="player-number"><img src={heartIcon} alt="heart" style={{ width: '20px', height: '20px', objectFit: 'contain', marginBottom: '-5px' }} /> {post.heartCount}</span>
-              <span className="player-number" style={{ flex: 1, marginLeft: '20px' }}>조회수 {post.count}</span> </div>
+              <span className="player-number" style={{ flex: 1, marginRight: '20px' }}>댓글 {post.replyCount}개</span>
+              <span className="player-number"><img src={heartIcon} alt="heart" style={{ width: '20px', height: '20px', objectFit: 'contain', marginBottom: '-5px' }} /> {post.heartCount}개</span>
+              <span className="player-number" style={{ flex: 1, marginLeft: '20px' }}>조회수 {post.count}회</span> </div>
 
             {/* 작성일자 */}
             <div style={{ flex: 1, textAlign: 'right', color: 'grey', marginTop: '-18px' }}> 작성일자 {formatDate(post.writeDate)} </div>

@@ -54,7 +54,7 @@ const App = () => {
             <Route path='/team/detail/:id' element={<TeamDetail />} />
             <Route path='/team/myTeamDetail/:id/:tabName' element={<MyTeamDetail />} />
             <Route path="/team/save" element={<TeamSaveTable/>} />
-            
+
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
             <Route path="/match/team/list" element={<TeamMatch />} />
@@ -64,7 +64,7 @@ const App = () => {
             <Route path="/manager" element={<Manager />} />
           </Routes>
         </AdminProvier>
-        {/* <Footer/>  */}
+        <Footer/> 
       </>
   );
 }

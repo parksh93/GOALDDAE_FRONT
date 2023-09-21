@@ -31,6 +31,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Slider from '@mui/material/Slider';
 import NativeSelect from '@mui/material/NativeSelect';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Loading from '../../loading/Loading';
+
 
 function Mypage() {
   const [userInfo, setUserInfo] = useState("");
@@ -398,7 +400,7 @@ function Mypage() {
                       id={userInfo.nickname}
                       defaultValue={userInfo.nickname}
                       onChange={(e) => handleInputChange('nickname', e.target.value)}
-                      style={{ width: '80%'}}
+                      style={{ width: '80%', marginTop: '25px'}}
                     />
                     <Button
                       className='duplicate-check-btn'
@@ -407,7 +409,7 @@ function Mypage() {
                         color: 'grey',
                         height: '56px',
                         marginLeft: '20px',
-                        marginTop: '0px'
+                        marginTop: '25px'
                       }}
                       variant="outlined"
                       onClick={handleDuplicateCheck}
@@ -422,20 +424,20 @@ function Mypage() {
                   </div>
 
                   <p></p>
-                  <div className='phonenumber-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '20px'}}>전화번호</div>
+                  <div className='phonenumber-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '40px'}}>전화번호</div>
                   <span style={{ fontSize: '12px', color: '#b6b6b6'}}>* 핸드폰 번호는 "-" 이나 문자 없이 입력해주세요.</span>
                   <p><TextField id={userInfo.phoneNumber}
                                             defaultValue={userInfo.phoneNumber}
                                             onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                                            style={{ width: '80%'}} /></p> 
+                                            style={{ width: '80%', marginTop: '25px'}} /></p> 
                     
                     <div> <p></p>
-                    <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '30px'}}>선호도시</div>
+                    <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '48px'}}>선호도시</div>
                     <p></p>   
                     <NativeSelect
                     value={userInfo.preferredCity}
                     onChange={handleCityAreaChange}
-                    style={{ width: '80%'}}
+                    style={{ width: '80%', marginTop: '15px'}}
                     >
                     <option value={""}>선택안함</option>
                     <option value={"서울"}>서울</option>
@@ -457,13 +459,13 @@ function Mypage() {
                   </NativeSelect>
                   </div> <p></p>
 
-                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '25px'}}>선호지역</div>
+                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '48px'}}>선호지역</div>
                   <p>                  
                     <NativeSelect
                       value={userInfo.preferredArea}
                       defaultValue={userInfo.preferredArea}
                       onChange={(e) => handleInputChange('preferredArea', e.target.value)}
-                      style={{ width: '80%' }}
+                      style={{ width: '80%', marginTop: '15px'}}
                     >
                       <option value={""}>선택안함</option>
                       {availableAreas.map(area => (
@@ -477,7 +479,7 @@ function Mypage() {
                                 <Form>
                                 <Form.Group controlId="formRange">
                                   <Form.Label>
-                                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '30px'}}>활동반경</div>
+                                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '48px'}}>활동반경</div>
                                   </Form.Label>
                                   <Slider
                                 aria-label="Temperature"
@@ -488,13 +490,13 @@ function Mypage() {
                                 min={0}
                                 max={50}
                                 onChange={handleChange}
-                                style={{ width: '80%' }}
+                                style={{ width: '80%', marginTop: '15px' }}
                               /> {rangeValue}
                                 </Form.Group>
                               </Form>
                               </p>
 
-                    <div className="buttons-modify" style={{ marginLeft: '-5px' }}>
+                    <div className="buttons-modify" style={{ marginLeft: '-5px', marginTop: '80px' }}>
                     <Button variant="outlined" onClick={handleCancelClick} style={{ width: '260px', marginRight: '50px'}}>취소</Button>
                     <Button variant="contained" onClick={handleSaveClick} style={{ width: '260px', color: 'white'}}>저장</Button>
                     </div>
@@ -578,7 +580,7 @@ function Mypage() {
                           </Stack>
                         </div>
                         <span>{userInfo.nickname}</span>
-                        <p>{userInfo.gender}</p>
+                        <p style={{ marginTop:'15px', marginBottom: '15px'}} >{userInfo.gender}</p>
                         <p>노쇼 횟수 : 
                           <span style={{ color: userInfo.noShowCnt > 0 ? 'green' : 'gray' }}>
                             {' ' + userInfo.noShowCnt }
@@ -589,13 +591,13 @@ function Mypage() {
 
                     <div className='user-card-2'>
                       <p><b>이메일</b><text>{userInfo.email}</text></p>
-                      <p><b>생년월일</b><span>{userInfo.birth}</span></p>
+                      <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>생년월일</b><span>{userInfo.birth}</span></p>
                       <p><b>전화번호</b><span>{userInfo.phoneNumber}</span></p>
                     </div>
 
                     <div className='user-card-3'>
                     <p><b>선호도시</b>  <span>{userInfo.preferredCity}</span> </p>
-                    <p><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
+                    <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
                     <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
                     </div>
 
@@ -606,12 +608,13 @@ function Mypage() {
                   )}
 
                 </div>
-                
                 </React.Fragment>
               )}
             </React.Fragment>
           ) : (
-            <p>로딩중...</p>
+            <div style={{ marginTop:'10%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+            <Loading />
+        </div>
           )}
         </div>
       </div>
