@@ -1,5 +1,6 @@
 .managerContainer {
-    max-width: 500px;
+    max-width: 600px;
     color: #222222;
     font-family: 'Orbit', sans-serif;
+    margin: 10px;
 }
