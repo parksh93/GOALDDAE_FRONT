@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
+import Loading from '../../loading/Loading';
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -38,7 +39,22 @@ const TeamDetail = () => {
     // 가입신청 로직 구현
     setApplicationSubmitted(true);
     setIsModalOpen(false); // 모달닫기
-    setSuccessModalOpen(true); // 모달열기   
+
+    const applicationData = {
+      teamAcceptStatus: 0,
+      teamId: teamInfo.id,
+      userId: userInfo.id
+    }
+
+    axios.post('/team/addApply', applicationData)
+    .then(response => {
+      setSuccessModalOpen(true);
+      console.log('가입신청 완료')
+    })
+    .catch(error=> {
+      console.error('가입 신청 실패')
+      alert('가입 신청에 실패했습니다.')
+    })
   };
 
   const closeSuccessModal = () => {
@@ -53,14 +69,14 @@ const TeamDetail = () => {
         <div className={styles.container}>
           <div className={styles.leftContainer}>
             <div className={styles.teamInfo1}>
-              <h2 className={styles.teamProfile}>
+              <h1 className={styles.teamProfile}>
               <div className={styles.circularImageContainer}>
                 <div className={styles.circularImage}>
                   <img className={styles.teamProfileImgUrl} src={teamInfo.teamProfileImgUrl}/>
                 </div>
               </div>
                 {teamInfo.teamName}
-              </h2>
+              </h1>
                 <p className={styles.teamInfoText}>지역 | {teamInfo.area}</p>
                 <p className={styles.teamInfoText}>평균나이 | {teamInfo.averageAge} 세</p>
                 <p className={styles.teamInfoText}>입단비 | {teamInfo.entryfee} 원</p>
@@ -69,33 +85,40 @@ const TeamDetail = () => {
                 <p className={styles.teamInfoText}>선호요일 | {teamInfo.preferredDay}</p>
               </div>
                 <div className={styles.recruitingBtn}>
-                {userInfo && userInfo.teamId ? ( 
+                  {userInfo && userInfo.teamId ? ( 
                     <button className={styles.recruitingFalseBtn} disabled>
                       모집중
                     </button>
                   ) : (
-                    teamInfo.recruiting ? (
-                      <button className={styles.recruitingTrueBtn} onClick={openModal}>
-                        모집중
-                      </button>
-                    ) : (
+                    !teamInfo.recruiting ? (
                       <button className={styles.recruitingFalseBtn} disabled>
                         모집종료
                       </button>
+                    ) : (
+                      (userInfo.gender === '남성' && teamInfo.entryGender === '여성') ||
+                      (userInfo.gender === '여성' && teamInfo.entryGender === '남성') ? (
+                        <button className={styles.recruitingFalseBtn} disabled>
+                          가입신청 불가
+                        </button>
+                      ) : (
+                        <button className={styles.recruitingTrueBtn} onClick={openModal}>
+                          모집중
+                        </button>
+                      )
                     )
                   )}
-            </div>
+                </div>
           </div>
 
           <div className={styles.teamIntroduce}>
             {teamInfo.teamIntroduce !== null ? (
-              <pre
+              <div
                 className={`${styles.teamIntroduceContent} ${
                   isModalOpen || successModalOpen ? styles.expanded : ''
                 }`}
                 >
                 {teamInfo.teamIntroduce}
-              </pre>
+              </div>
             ) : (
               <p className={styles.noTeamIntroduce}> 팀 소개글이 없습니다. </p>
             )}
@@ -131,7 +154,7 @@ const TeamDetail = () => {
           )}
         </div>
       ) : (
-        <p>팀 정보를 불러오는 중...</p>
+        <Loading />
       )}
     </div>
   )

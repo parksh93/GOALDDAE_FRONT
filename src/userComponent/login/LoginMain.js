@@ -26,6 +26,13 @@ const UserLogin = () => {
     }
   });
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  },[])
+
   const getLoginCheck = async () => {
     await fetch("/user/login", {
       method: "POST",

@@ -30,6 +30,7 @@ const FriendSearch = ({
                 })
             }).then(res => res.json())
             .then(data => {
+                console.log(data)
                 setSearchResultList(data);
             })
         }

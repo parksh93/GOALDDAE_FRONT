@@ -32,7 +32,7 @@
 }
 
 
-/* 팀 디테일 TeamDetail */
+/* ===================팀 디테일 TeamDetail================= */
 .container {
     width: 80%;
     display: flex;
@@ -57,20 +57,49 @@
     padding-left: 15px;
 }
 
-.teamInfoText{
+.teamProfile{
+    display: flex;
+    text-align: center;
+    align-items: center;
     
 }
 
+.circularImageContainer {
+    position: relative;
+    display: inline-block;
+
+    width: 100px;
+    margin-right: 20px;
+    
+    /* background-color: rgb(98, 113, 97); */
+}
+  
+.circularImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+}
+  
+.circularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .teamIntroduce {
-    padding: 30px;
-    width: 300px;
+    width: 70%;
     border: 1px solid #cccccc;
     flex-grow: 1;
     font-size: 20px;
     border-radius: 5px;
     box-shadow: 0px 4px 8px rgba(128, 128, 128, 0.2);
+
+    padding: 30px;
     max-height: 1000px;
-    overflow: hidden;
+
+    overflow-y: auto;
     transition: max-height 0.3s ease-in-out;
     background-color: white;
 
@@ -96,7 +125,7 @@
     border: 1px solid green;
     transition: background-color 0.3s;
     width: 95%;
-    height: 150%;
+    height: 100%;
     border-radius: 3px;
     cursor: pointer;
 }
@@ -107,14 +136,15 @@
 }
 
 .recruitingFalseBtn{
-    width: 320px;
-    height: 50px;
+    width: 95%;
+    height: 100%;
     border-radius: 3px;
 
     background-color: #cccccc;
 
 }
-/* 가입신청 모달 */
+
+/* =========================가입신청 모달============================ */
 .teamName{
     font-Weight: bold;
 }
@@ -169,7 +199,7 @@
 }
 
 
-/* 실패 모달(failModal) */
+/* =========================실패 모달(failModal) ========================*/
 .failModalContainer {
     position: fixed;
     top: 0;
@@ -192,92 +222,91 @@
 
 
 
-/* 내 팀 디테일(myTeamDetail) */
+/* ====================내 팀 디테일(myTeamDetail)======================= */
+
+/* ========== 간략 팀 정보 ========== */
+
 .myTeamContainer{
-    width: 100%;
     display: flex;
-    width: 80%;
-    display: flex;
-    gap: 10px;
     margin: 0 auto;
-    margin-bottom: 60px;
-    padding: 30px;
-    
+
+    width: 80%;
+    gap: 10px;
+    padding: 30px;   
 }
 
 .myTeamLeftContainer {
-    width: 40%;
-    padding-bottom: 10px;
-    border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
+
+    width: 40%;
+    height: 330px;
     gap: 10px;
-    height: 280px;
+
     border-radius: 5px;
+    border: 1px solid #cccccc;
     box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+
 }
 
 .myTeamInfoContainer{
-    padding-left: 15px;
-    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between; /* 자식 요소 사이에 공간을 만들어 오른쪽으로 정렬합니다. */
+    align-items: center;
+
+    height: 30%;
+    
 }
 
-.circularImageContainer {
+.myTeamProfile{
+    display: flex;
+    text-align: center;
+    align-items: center; /* 세로로 가운데 정렬 */
+}
+
+.myTeamInfoContainer h1{
+    margin: 0;
+}
+
+.myTeamInfoContainer{
+    padding: 5%;
+}
+
+.myTeamCircularImageContainer {
     position: relative;
     display: inline-block;
-  }
+
+    width: 100px;
+    margin-right: 20px;
+    
+    /* background-color: rgb(98, 113, 97); */
+}
   
-.circularImage {
-    width: 60px;
-    height: 60px;
+.myTeamCircularImage {
+    width: 100px;
+    height: 100px;
     border-radius: 50%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
     overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
     margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+
+    cursor: pointer;
 }
   
-.circularImage img {
+.myTeamCircularImage img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.myTeamRightContainer{
-    border-radius: 5px;
-    border: 1px solid #cccccc;
-    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
-}
-
-.myTeamFilters{
-    margin: 30px;
-}
-
-.myTeamInfoFilter, .myTeamRecentMatchFilter, .myTeamReservMatchFilter, .myTeamMemberFilter, .myTeamApplyListFilter{
-    background-color: #ffffff;
-    color: #000000;
-    margin-right: 2px;
-    font-size: large;
-    border: none;
-    cursor: pointer;
-}
-
-.activeTab {
-    font-weight: bold;
-}
-
-.myTeamInfoBox, .myTeamRecentMatch, .myTeamReservMatch, .myTeamMembers, .myTeamApplyListFilter{
-    padding-bottom: 20px;
-}
-
 .teamDetailUpdateBtn{
     background-color: green;
     color: #fff;
-
-    margin-top: 20px;
-
+    
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 2px green;
-    width: 100%;
+
+    width: 23%;
     height: 50px;
     font-size: 16px;
     
@@ -289,25 +318,237 @@
     color: green;
 }
 
+.myTeamInfo{
+    padding: 5%;
+}
+
+.myTeamInfo p{
+    margin-top: 3%;
+}
+
+
+/* 오른쪽 컨테이너 */
+
+.myTeamRightContainer{
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+}
+
+.myTeamFilters{
+    margin: 5%;
+}
+
+.myTeamInfoFilter, .myTeamRecentMatchFilter, .myTeamReservMatchFilter, .myTeamMemberFilter, .myTeamApplyListFilter{
+    background-color: #ffffff;
+    color: #000000;
+    margin-right: 2px;
+    font-size: large;
+    border: none;
+    cursor: pointer;
+}
+
+.leaveTeamFilter{
+    background-color: #ffffff;
+    color: #b0b0b0;
+    margin-right: 2px;
+    border: none;
+    
+    font-size: 1px;
+}
+
+.leaveTeamFilter:hover{
+    color: #7a7a7a;
+}
+
+.activeTab {
+    font-weight: bold;
+}
+
+.myTeamInfoBox, .myTeamRecentMatch, .myTeamReservMatch, .myTeamMembers, .myTeamApplyListFilter{
+    padding-bottom: 5%;
+}
+
+/* ======= 팀 정보 =======*/
+
+.myTeamInfoBox p{
+    margin-bottom: 5%;
+}
+
 .myTeamBox {
     margin-left: 20px;
     padding-left: 20px;
     width: 600px;
     flex-grow: 1;
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
 }
 
 .myTeamIntroduce{
-    margin-top: 30px;
-    font-size: 20px;
+    width: 80%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    box-shadow: 0 3px 3px rgba(196, 196, 196, 0.3);
+
+    padding: 20px;
+    margin-top: 35px;
+    font-size: 15px;
+
+    max-height: 300px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-in-out;
 }
 
-/* 모달 전체 적용 
-.closeBtn {
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-    cursor: pointer;
+.myTeamIntroduceContent.expanded {
+    max-height: none;
+    overflow: auto;
 }
-*/
+
+
+/* ======= 팀멤버 리스트 =======*/
+
+.myTeamMembers{
+    padding-bottom: 10%;
+}
+
+.teamMemberInfoContainer{
+    display: flex; /* flexbox 사용 */
+    align-items: center; /* 요소들을 세로 중앙 정렬 */
+    gap: 1px; /* 이미지와 팀 정보 간격 설정 */
+    
+    width: 90%;
+    margin-bottom: 5%;
+    padding-bottom: 2%;
+
+}
+
+.teamMemberCirclarImageContainer{
+    position: relative;
+    display: inline-block;
+}
+
+.teamMemberCirclarImage{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+
+    /* border: 1px solid #000000; */
+}
+
+.teamMemberProfileImgUrl img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teamMemberInfo{
+    width: 70%;
+}
+
+.teamMemberInfo h3,p {
+    margin: 0;
+}
+
+.teamMemberInfo span::after {
+    content: "·";
+    margin: 0 4px;
+    color: #b0b0b0;
+}
+  
+.teamMemberInfo span:last-child::after {
+    content: "";
+    margin: 0;
+}
+
+.removeButton{
+    display: flex;
+    align-items: flex-end;
+    
+}
+
+.removeButton:hover{
+    border: 1px solid green;
+    background-color: #fff;
+    color: green;
+
+}
+
+
+/* ======= 가입신청 =======*/
+
+.myTeamApplyList{
+    padding-bottom: 10%;
+
+}
+
+.applyUserInfoContainer {
+    display: flex; /* flexbox 사용 */
+    align-items: center; /* 요소들을 세로 중앙 정렬 */
+    gap: 1px; /* 이미지와 팀 정보 간격 설정 */
+
+    width: 90%;
+    margin-bottom: 5%;
+    padding-bottom: 2%;
+
+}
+  
+.applyUserCircularImageContainer {
+    position: relative;
+    display: inline-block;
+}
+  
+.applyUserCircularImage{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%; /* 원 형태로 이미지를 렌더링하기 위해 border-radius 설정 */
+    overflow: hidden; /* 부모 컨테이너를 벗어나는 부분은 보이지 않도록 설정 */
+    margin-right: 10px; /* 이미지와 팀 이름 사이의 간격 설정 */
+
+    /* border: 1px solid #000000; */
+}
+
+.applyUserProfileImgUrl img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.applyUserInfo {
+    width: 60%;
+}
+
+.applyUserInfo h3,p {
+    margin: 0;
+}
+
+.applyUserInfo span::after {
+    content: "·";
+    margin: 0 4px;
+    color: #b0b0b0;
+}
+  
+.applyUserInfo span:last-child::after {
+    content: "";
+    margin: 0;
+}
+
+.applyButtons {
+    display: flex;
+    align-items: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    width: 22%;
+}
+
+.acceptButtons{
+    margin-right: 10px; 
+}
+
+.acceptButtons, .rejectButtons{
+}
+
+.acceptButtons:hover, .rejectButtons:hover{
+    border: 1px solid green;
+    background-color: #fff;
+    color: green;
+
+}

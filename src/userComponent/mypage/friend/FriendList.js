@@ -111,7 +111,17 @@ const FriendList = ({
                 friendList.map(friend => (
                     <div className={styles.contentDiv}>
                         <img src={friend.profileImgUrl} className={styles.profile}/>
-                        <span className={styles.nickname}>{friend.nickname}</span>
+                        <span 
+                            className={styles.nickname}
+                            onClick={() => {
+                                // 해당 사람의 페이지로 이동하기
+                                navigate(`/myPage/${friend.id}`);
+                                window.location.reload();
+                            }}
+                            style={{ cursor: 'pointer' }} 
+                        >
+                            {friend.nickname}
+                        </span>
                         <div className={styles.btnDiv}>
                             <BsSend className={styles.chatBtn} 
                                     onClick={() => 
@@ -123,6 +133,7 @@ const FriendList = ({
                                             }
                                         )
                             }/>
+                    
                             <BsPersonDash className={styles.deleteBtn} onClick={() => onClickDeleteFriend(friend.id, friend.nickname)}/>
                             <BsPersonSlash className={styles.blockBtn} onClick={() => blockModal(friend.id, friend.nickname)}/>
                         </div>

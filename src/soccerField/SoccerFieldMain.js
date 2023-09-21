@@ -40,7 +40,7 @@ const SoccerFieldMain = () => {
   };
 
   return (
-    <div style={{backgroundColor:"#F5F5F5"}}>      
+    <div>      
       <div className={styles.container}>                
       {fieldInfo && 
       <SoccerFieldImageSlide fieldInfo={fieldInfo} />}

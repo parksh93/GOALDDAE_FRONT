@@ -19,9 +19,7 @@ const MyTeam = () => {
         .catch(error => {
           console.error('팀 정보를 가져올 수 없습니다.', error);
         })
-        .finally(() => {
-          setLoading(false);  // 로딩 완료 후 로딩상태 변경
-        });
+       
     }
   }, [userInfo]);
 
@@ -41,18 +39,14 @@ const MyTeam = () => {
     <div className={`${styles.myCard} ${styles.paperEffect}`}>
       {userInfo ? (
         <div>
-          {loading ? ( // 로딩 중일 때
-            <div className={styles.noticeCheckTeam} > 
-              <p>팀을 확인하는 중...</p>
-            </div>
-          ) : teamInfo ? (
+         {teamInfo ? (
             <div className={styles.myTeamContainer}>
                 <div className={styles.myTeamProfileContainer}>
                     <div className={styles.teamCircularImageContainer}>
                         <div className={styles.teamCircularImage}>
-                          <img className={styles.teamProfileImgUrl} 
-                          src="/img/Yorkshire-Terrier-glasses-fluffy-wind-5120x3414.jpg" 
-                          alt={teamInfo.teamName} />
+                          <img className={styles.teamProfileImgUrl}
+                            src={teamInfo.teamProfileImgUrl} 
+                            alt={teamInfo.teamName} />
                         </div>
                     </div>
                     <h2>{teamInfo.teamName}</h2>
@@ -72,9 +66,10 @@ const MyTeam = () => {
                     </div>
                 </div>  
                 <div className={styles.viewDetails} onClick={() => handleMyTeamClick(teamInfo.id)}> 
-                      상세보기 {'>'}
-                </div>  
+                        상세보기 {'>'}
               </div>
+              </div>
+              
           ) : (
             
             <div className={styles.noticeNoTeam}> 

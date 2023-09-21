@@ -108,7 +108,7 @@ function AdminAddModal({ modalOpen, setModalOpen, getAdminList}) {
       >
         <Box sx={style}>
             <Collapse  in={openAlert}>
-                <Alert variant="filled" severity="error" sx={{position: "absolute", width: "77%", borderRadius:"30px"}}>
+                <Alert severity="error" sx={{position: "absolute", width: "77%", borderRadius:"30px"}}>
                     {alertText}
                 </Alert>
             </Collapse >
