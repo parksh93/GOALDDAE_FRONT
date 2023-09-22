@@ -319,6 +319,7 @@ const MyTeamDetail = () => {
               
           <div className={styles.myTeamBox}>
             {selectedTab === 'info' && (
+
               <div className={styles.myTeamInfoBox}>
                 <p>지역 | {teamInfo.area}</p>
                 <p>평균나이 | {teamInfo.averageAge} 세</p>
@@ -327,11 +328,21 @@ const MyTeamDetail = () => {
                 <p>선호시간 | {teamInfo.preferredTime} 시</p>
                 <p>선호요일 | {teamInfo.preferredDay}</p>
                 <p>모집여부 | {teamInfo.recruiting ? ' 모집중' : ' 모집종료'}</p>
+                
                 <div className={styles.myTeamIntroduce}>
-                  {teamInfo.teamIntroduce}
+                  {teamInfo.teamIntroduce !== null ? (
+                    <div className={styles.myTeamIntroduceContent}>
+                     {teamInfo.teamIntroduce}
+                    </div>
+                  ) : (
+                    <p className={styles.noMyTeamIntroduce}> 팀 소개글이 없습니다. </p>
+                  )}
                 </div>
+
               </div>
+
             )}
+
             {selectedTab === 'recentMatch' && (
               <div className={styles.myTeamRecentMatch}>
                 최근 매치 내역이 없습니다.
@@ -351,14 +362,16 @@ const MyTeamDetail = () => {
                     <div className={styles.teamMemberInfoContainer}>
                       <div className={styles.teamMemberCirclarImageContainer}>
                         <div className={styles.teamMemberCirclarImage}>
-                          <img className={styles.teamMemberProfileImgUrl} src={member.ProfileImgUrl} alt={member.name}  />
+                          <img className={styles.teamMemberProfileImgUrl} src={member.profileImgUrl} alt={member.name}  />
                         </div>
                       </div>
                       <div className={styles.teamMemberInfo}>
                         <h3>{member.name} </h3>
-                          <div className={styles.memberInfoRow}>
-                            <span>{member.preferredCity}</span><span>{member.preferredArea}</span>
-                          </div>
+                        <div className={styles.memberInfoRow}>
+                          {member.nickname && <span>{member.nickname}</span>}
+                          {member.preferredCity && <span>{member.preferredCity}</span>}
+                          {member.preferredArea && <span>{member.preferredArea}</span>}
+                        </div>
                       </div>
                       {userInfo.id !== member.userId && member.teamManager === 1 && (
                         <div className={styles.removeMember}>
@@ -380,13 +393,15 @@ const MyTeamDetail = () => {
                       <div key={applyIndex} className={styles.applyUserInfoContainer}>
                         <div className={styles.applyUserCircularImageContainer}>
                           <div className={styles.applyUserCircularImage}>
-                            <img className={styles.applyUserProfileImgUrl} src={apply.ProfileImgUrl} alt={apply.name} />
+                            <img className={styles.applyUserProfileImgUrl} src={apply.profileImgUrl} alt={apply.name} />
                           </div>
                         </div> 
                         <div className={styles.applyUserInfo}>
                           <h3>{apply.name}</h3>
                           <div className={styles.applyUserInfoRow}>
-                            <span>{apply.preferredCity}</span><span>{apply.preferredArea}</span>
+                            {apply.nickname && <span>{apply.nickname}</span>}
+                            {apply.preferredCity && <span>{apply.preferredCity}</span>}
+                            {apply.preferredArea && <span>{apply.preferredArea}</span>}
                           </div>
                         </div>
                         <div className={styles.applyButtons}>

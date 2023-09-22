@@ -76,7 +76,7 @@ const ProfileImageEdit = ({ onCancel, teamInfo}) => {
     <ThemeProvider theme={theme}>
 
     <div className={styles.modalContainer}>
-      <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} />
        {/* 미리보기 이미지 */}
       {imageUrl && 
         <img 

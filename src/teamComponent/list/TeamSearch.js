@@ -132,7 +132,7 @@ const TeamSearch = () => {
 
 return (
     <div className={`${styles.WholeBox} ${styles.paperEffect}`} ref={wholeBoxRef}>
-        <div className={`InputBox ${styles.InputBox}`} isHaveInputValue={isHaveInputValue}>
+    <div className={`InputBox ${styles.InputBox}`} data-ishaveinputvalue={isHaveInputValue}>
         <input
             className={styles.Input}
             type='text'

@@ -42,7 +42,7 @@
 }
   
 .leftContainer {
-    width: 30%;
+    width: 40%;
     border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
@@ -108,10 +108,11 @@
 .teamIntroduceContent.expanded {
     max-height: none;
     overflow: auto;
+    
 }
 
 .noTeamIntroduce{
-    color: slategray;
+    color: #9b9b9b;
 }
 
 .recruitingBtn{
@@ -403,6 +404,10 @@
     overflow: auto;
 }
 
+.noMyTeamIntroduce{
+    color: #9b9b9b;
+}
+
 
 /* ======= 팀멤버 리스트 =======*/
 
@@ -458,6 +463,11 @@
   
 .teamMemberInfo span:last-child::after {
     content: "";
+    margin: 0;
+}
+
+.teamMemberInfo span:empty::after {
+    content: ""; /* 내용이 비어 있을 때는 점 추가하지 않음 */
     margin: 0;
 }
 

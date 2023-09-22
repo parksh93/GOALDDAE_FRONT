@@ -120,14 +120,18 @@ const TeamList = ({}) => {
     const handleAreaChange = (event) => {
         const newSelectedArea = event.target.value;
         setSelectedArea(newSelectedArea);
+        
         setTeamList([]);
+        cachedTeamList = [];
         setPage(1);
         setNoNewData(false);
     };
 
     const handleRecruitingChange = (event) => {
         setRecruiting(event.target.value === 'recruiting');
+
         setTeamList([]); // 팀리스트 리셋
+        cachedTeamList = [];
         setPage(1); // 페이지 리셋
         setNoNewData(false);
     };
@@ -177,7 +181,7 @@ const TeamList = ({}) => {
                         <TimeLineLoading />
                     </div>
                 ) : (
-                    noNewData && <h3>팀 데이터가 없습니다.</h3>
+                    noNewData && <h3>해당하는 팀이 없습니다.</h3>
                 )}
             </div>
         </div>
