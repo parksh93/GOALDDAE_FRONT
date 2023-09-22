@@ -466,6 +466,11 @@
     margin: 0;
 }
 
+.teamMemberInfo span:empty::after {
+    content: ""; /* 내용이 비어 있을 때는 점 추가하지 않음 */
+    margin: 0;
+}
+
 .removeButton{
     display: flex;
     align-items: flex-end;
