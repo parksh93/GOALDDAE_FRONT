@@ -42,7 +42,7 @@
 }
   
 .leftContainer {
-    width: 30%;
+    width: 40%;
     border: 1px solid #cccccc;
     display: flex;
     flex-direction: column;
@@ -108,10 +108,11 @@
 .teamIntroduceContent.expanded {
     max-height: none;
     overflow: auto;
+    
 }
 
 .noTeamIntroduce{
-    color: slategray;
+    color: #9b9b9b;
 }
 
 .recruitingBtn{
@@ -401,6 +402,10 @@
 .myTeamIntroduceContent.expanded {
     max-height: none;
     overflow: auto;
+}
+
+.noMyTeamIntroduce{
+    color: #9b9b9b;
 }
 
 
