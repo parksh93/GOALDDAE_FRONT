@@ -181,7 +181,7 @@ const TeamList = ({}) => {
                         <TimeLineLoading />
                     </div>
                 ) : (
-                    noNewData && <h3>팀 데이터가 없습니다.</h3>
+                    noNewData && <h3>해당하는 팀이 없습니다.</h3>
                 )}
             </div>
         </div>
