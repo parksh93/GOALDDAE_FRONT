@@ -8,17 +8,60 @@ import axios from "axios";
 import { useUser } from "../../../../userComponent/userContext/UserContext";
 import ImageSlide from "./ImageSlide";
 import styles from "./TeamMatchDetail.module.css";
+import defaultProfile from './goalddae_title_logo.png';
+import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 const TeamMatchDetail = () => {
   const { teamMatchId } = useParams(); 
   const [ teamMatchInfo, setTeamMatchInfo ] = useState(null);
   const { userInfo } = useUser();
-  const [ isTeamLeader, setIsTeamLeader ] = useState(false); // 팀장 여부 상태 추가
-  const [ showAlert, setShowAlert ] = useState(false); // 알림 상태 추가
-  const [ homeTeamStatus, setHomeTeamStatus ] = useState(null);
-  const [ awayTeamStatus, setAwayTeamStatus ] = useState(null);
-  const [ selectedTeam, setSelectedTeam ] = useState('home'); // 'home' 또는 'away'
+  const [ selectedTeam, setSelectedTeam ] = useState('home'); 
+  const [ isTeamLeader, setIsTeamLeader ] = useState(false); 
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const openSnackbar = (message) => {
+    setMessage(message);
+    setOpen(true);
+  };
+  
+  const closeSnackbar = () => {
+    setOpen(false);
+  };
+  
+  
+  // 신청하기
+  const handleRequestJoin = async () => {
+    if (!userInfo) { 
+      openSnackbar('로그인 후 사용 가능합니다.');
+      return;
+    }
+    
+    if (!userInfo.teamId) {
+      openSnackbar('팀이 없습니다.');
+      return;
+    }
+
+    try{
+      await axios.put(`/team/match/request/${teamMatchId}`, { 
+        awayUserId: userInfo.id,
+        awayTeamId: userInfo.teamId // 로그인한 유저의 팀 ID를 사용합니다.
+      });
+      
+      openSnackbar('팀매치 신청이 완료되었습니다.');
+      
+    } catch(error){
+      console.error(error);
+      openSnackbar('신청에 실패하였습니다.');
+    }
+  }
+
+
+  useEffect(() => {
+    setIsTeamLeader(userInfo?.isLeader ?? false);
+}, [userInfo]);
+
 
   useEffect(() => {
     const requestTeamMatch = async () => {
@@ -30,58 +73,10 @@ const TeamMatchDetail = () => {
       }
     };
   
-    const checkIfTeamLeader = async () => {
-      if (userInfo) { // 로그인한 사용자만 팀장 여부 확인
-        try {
-          const response = await axios.get(`/team/checkIfTeamLeader/${userInfo.id}`);
-          setIsTeamLeader(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      }   
-    }
-  
-    const fetchApplicationStatus = async () => {
-      try{
-        const responseHome = await axios.get(`/team/match/detail/${teamMatchId}/home`);
-        setHomeTeamStatus(responseHome.data);
-        
-        const responseAway = await axios.get(`/team/match/detail/${teamMatchId}/away`);
-        setAwayTeamStatus(responseAway.data);
-        
-      }catch(error){
-        console.error(error);
-      }
-    }
-  
     requestTeamMatch();
-    checkIfTeamLeader();
     
-    if (userInfo) { // 로그인한 사용자만 신청 현황 확인
-      fetchApplicationStatus();
-    }
   }, [teamMatchId, userInfo]);
   
-  // 신청하기
-  const handleRequestJoin = async () => {
-    if (userInfo) {
-      if (!isTeamLeader) { // 팀원 또는 비회원일 경우
-        setShowAlert(true);
-        return;
-      }
-
-      try{
-        await axios.post(`/team/match/request/${teamMatchId}`, { userId: userInfo.id });
-        alert('팀매치에 신청이 완료되었습니다.');
-      }catch(error){
-        console.error(error);
-      }
-    } else{
-      alert('로그인 후 사용 가능합니다.');
-    }
-  }
-
-
   const handleSelectHomeTeam = () => {
     setSelectedTeam('home');
   };
@@ -111,11 +106,6 @@ const TeamMatchDetail = () => {
 
  return (
     <div style={{backgroundColor:"#F5F5F5"}}>      
-      {showAlert && 
-        <Alert severity="warning" onClose={() => setShowAlert(false)}>
-          최초 신청은 팀장만 가능합니다!
-        </Alert>
-      }
       <div className={styles.container}>                
       {teamMatchInfo && 
          <ImageSlide fieldInfo={teamMatchInfo} />
@@ -191,53 +181,54 @@ const TeamMatchDetail = () => {
               </div>
               <div className={styles.reservationContainer}>
               <div className={styles.infoTitle}>신청 현황</div>
-              
-              <div>
-                <span 
-                  onClick={handleSelectHomeTeam} 
-                  style={{ color: selectedTeam === 'home' ? 'blue' : 'black', cursor: 'pointer' }}
-                >
-                  Home 팀원
-                </span>
-                
-                <span> / </span>
-
-                <span 
-                  onClick={handleSelectAwayTeam} 
-                  style={{ color: selectedTeam === 'away' ? 'blue' : 'black', cursor: 'pointer' }}
-                >
-                  Away 팀원
-                </span>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div>
+                  <div style={{fontSize:'16px'}}>Home 팀</div>
+                  {teamMatchInfo && (
+                    <>
+                      <div>{teamMatchInfo.homeTeamName}</div>
+                      <img 
+                        src={teamMatchInfo.homeTeamProfileImg || defaultProfile} 
+                        alt="Home Team Profile" 
+                      />
+                    </>
+                  )}
+                </div>
+                <div>
+                  <div style={{fontSize:'16px'}}>Away 팀</div>
+                  {teamMatchInfo && teamMatchInfo.awayTeamName && (
+                    <>
+                      <div>이름: {teamMatchInfo.awayTeamName}</div>
+                      <img 
+                        src={teamMatchInfo.awayTeamProfileImg || defaultProfile} 
+                        alt="Away Team Profile" 
+                      />
+                    </>
+                  )}
+                </div>
               </div>
-
-              {selectedTeam === 'home' && homeTeamStatus && 
-                <>
-                  <h4>홈팀 신청 현황</h4>
-                  {homeTeamStatus.map((status, index) =>
-                    <p key={index}>{status.userName} ({status.userId})</p>
-                  )}
-                </>
-              }
-              
-              {selectedTeam === 'away' && awayTeamStatus && 
-                <>
-                  <h4>어웨이팀 신청 현황</h4>
-                  {awayTeamStatus.map((status, index) =>
-                    <p key={index}>{status.userName} ({status.userId})</p>
-                  )}
-                </>
-              }
               {teamMatchInfo &&
                 <>
-                  <button onClick={handleRequestJoin}>신청하기</button>
+                  <button style={{marginTop:'200px'}} onClick={handleRequestJoin}>신청하기</button>
                 </>
                 }
               </div>
             </div>
         }
       </div>
-    </div>
-  );
+        <Snackbar 
+          open={open} 
+          autoHideDuration={6000} 
+          onClose={closeSnackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          style={{marginTop:'500px'}}
+        >
+          <Alert onClose={closeSnackbar} severity="info" sx={{ width: '400%' }}>
+            {message}
+          </Alert>
+        </Snackbar>
+      </div>  
+    );
 };
 
 export default TeamMatchDetail;
