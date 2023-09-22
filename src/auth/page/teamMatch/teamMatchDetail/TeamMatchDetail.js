@@ -8,6 +8,9 @@ import axios from "axios";
 import { useUser } from "../../../../userComponent/userContext/UserContext";
 import ImageSlide from "./ImageSlide";
 import styles from "./TeamMatchDetail.module.css";
+import defaultProfile from './goalddae_title_logo.png';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const TeamMatchDetail = () => {
   const { teamMatchId } = useParams(); 
@@ -15,23 +18,45 @@ const TeamMatchDetail = () => {
   const { userInfo } = useUser();
   const [ selectedTeam, setSelectedTeam ] = useState('home'); 
   const [ isTeamLeader, setIsTeamLeader ] = useState(false); 
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
+  const openSnackbar = (message) => {
+    setMessage(message);
+    setOpen(true);
+  };
+  
+  const closeSnackbar = () => {
+    setOpen(false);
+  };
+  
+  
   // 신청하기
   const handleRequestJoin = async () => {
-    if (userInfo) { 
-        try{
-          await axios.put(`/team/match/request/${teamMatchId}`, { 
-            awayUserId: userInfo.id,
-            awayTeamId: userInfo.teamId // 로그인한 유저의 팀 ID를 사용합니다.
-          });
-          alert('팀매치 신청이 완료되었습니다.');
-        }catch(error){
-          console.error(error);
-        }
-    } else{
-        alert('로그인 후 사용 가능합니다.');
+    if (!userInfo) { 
+      openSnackbar('로그인 후 사용 가능합니다.');
+      return;
+    }
+    
+    if (!userInfo.teamId) {
+      openSnackbar('팀이 없습니다.');
+      return;
+    }
+
+    try{
+      await axios.put(`/team/match/request/${teamMatchId}`, { 
+        awayUserId: userInfo.id,
+        awayTeamId: userInfo.teamId // 로그인한 유저의 팀 ID를 사용합니다.
+      });
+      
+      openSnackbar('팀매치 신청이 완료되었습니다.');
+      
+    } catch(error){
+      console.error(error);
+      openSnackbar('신청에 실패하였습니다.');
     }
   }
+
 
   useEffect(() => {
     setIsTeamLeader(userInfo?.isLeader ?? false);
@@ -156,35 +181,54 @@ const TeamMatchDetail = () => {
               </div>
               <div className={styles.reservationContainer}>
               <div className={styles.infoTitle}>신청 현황</div>
-              
-              <div>
-                <span 
-                  onClick={handleSelectHomeTeam} 
-                  style={{ color: selectedTeam === 'home' ? 'blue' : 'black', cursor: 'pointer' }}
-                >
-                  Home 팀원
-                </span>
-                
-                <span> / </span>
-
-                <span 
-                  onClick={handleSelectAwayTeam} 
-                  style={{ color: selectedTeam === 'away' ? 'blue' : 'black', cursor: 'pointer' }}
-                >
-                  Away 팀원
-                </span>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div>
+                  <div style={{fontSize:'16px'}}>Home 팀</div>
+                  {teamMatchInfo && (
+                    <>
+                      <div>{teamMatchInfo.homeTeamName}</div>
+                      <img 
+                        src={teamMatchInfo.homeTeamProfileImg || defaultProfile} 
+                        alt="Home Team Profile" 
+                      />
+                    </>
+                  )}
+                </div>
+                <div>
+                  <div style={{fontSize:'16px'}}>Away 팀</div>
+                  {teamMatchInfo && teamMatchInfo.awayTeamName && (
+                    <>
+                      <div>이름: {teamMatchInfo.awayTeamName}</div>
+                      <img 
+                        src={teamMatchInfo.awayTeamProfileImg || defaultProfile} 
+                        alt="Away Team Profile" 
+                      />
+                    </>
+                  )}
+                </div>
               </div>
               {teamMatchInfo &&
                 <>
-                  <button onClick={handleRequestJoin}>신청하기</button>
+                  <button style={{marginTop:'200px'}} onClick={handleRequestJoin}>신청하기</button>
                 </>
                 }
               </div>
             </div>
         }
       </div>
-    </div>
-  );
+        <Snackbar 
+          open={open} 
+          autoHideDuration={6000} 
+          onClose={closeSnackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          style={{marginTop:'500px'}}
+        >
+          <Alert onClose={closeSnackbar} severity="info" sx={{ width: '400%' }}>
+            {message}
+          </Alert>
+        </Snackbar>
+      </div>  
+    );
 };
 
 export default TeamMatchDetail;
