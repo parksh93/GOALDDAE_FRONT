@@ -18,13 +18,20 @@ import Box from '@mui/material/Box';
 import shadows from '@mui/material/styles/shadows';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { Select } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate, Link } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import FriendMain from './friend/FriendMain';
+import Setting from './Setting';
 import editIcon from '../mypage/img/write.png';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import Slider from '@mui/material/Slider';
+import NativeSelect from '@mui/material/NativeSelect';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Loading from '../../loading/Loading';
 
 
 function Mypage() {
@@ -41,7 +48,8 @@ function Mypage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [viewMode, setViewMode] = useState('USER_INFO');
   const navigate = useNavigate();
-
+  const [duplicateAlert, setDuplicateAlert] = useState(null);
+  const [showAlert, setShowAlert] = useState(null);
 
   const seoulAreas = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
   const gyeonggiAreas = ["가평군", "고양시", "과천시", "광명시", "광주시", "구리시", "군포시", "김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시", "연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "하남시", "화성시"];
@@ -59,25 +67,16 @@ function Mypage() {
   const jeonnamAreas = ["목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군"];
   const jeonbukAreas = ["전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군"];
   const jejuAreas = ["제주시", "서귀포시"];
-
-  //  회원탈퇴
-  const handleDeleteAccount = async (event) => {
-    event.preventDefault();
   
-    const confirmed = window.confirm("정말로 탈퇴하시겠습니까?");
-    if (confirmed) {
-      try {
-        await axios.post('/user/logout');
-        await axios.post(`/user/deleteAccount/${userInfo.id}`);
-        window.location.href = '/'; 
-        
-      } catch (error) {
-        console.error("회원 탈퇴 중 오류가 발생했습니다. :", error);
-      }
-    }
-  };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#4caf50', 
+      },
+    },
+  });
 
-
+  
 
   // 프로필사진 수정
   const handleFileChange = (event) => {
@@ -110,7 +109,7 @@ function Mypage() {
   };
 
 
-  // 프로필사진 조회
+  // 프로필사진 저장전 조회
   useEffect(() => {
     async function fetchProfileImageUrl() {
       try {
@@ -209,32 +208,40 @@ function Mypage() {
   };
 
 
-  // 닉네임 중복체크
+  // 닉네임 중복 체크
   const handleDuplicateCheck = async () => {
-    const response = await axios.post('/user/checkNickname', {nickname: userInfo.nickname});
-
+    const response = await axios.post('/user/checkNickname', { nickname: userInfo.nickname });
+  
     if (response.status === 200) {
-      setIsDuplicate(response.data[0]);
-
-      if (response.data[0]) {
-        alert('사용 가능한 닉네임입니다.');
-        setIsDuplicate(true);
+      const isDuplicate = response.data[0];
+      setIsDuplicate(isDuplicate);
+  
+      if (isDuplicate) {
+        const successAlert = { message: '사용 가능한 닉네임입니다.', type: 'success' };
+        setDuplicateAlert(successAlert.message);
       } else {
-        alert('이미 사용중인 닉네임입니다.');
-         setIsDuplicate(false);
+        const errorAlert = { message: '이미 사용중인 닉네임입니다.', type: 'error' };
+        setDuplicateAlert(errorAlert.message);
       }
     } else {
-      console.error('닉네임 중복 확인 에러 : ', response.statusText);
+      console.error('닉네임 중복 확인 에러: ', response.statusText);
     }
-}
+  }
+  
 
   // 백엔드로 수정사항 전달
   const handleSaveClick = async () => {
     if(nicknameChanged && !isDuplicate){
-      alert("닉네임 중복체크를 해주세요!");
+      const errorAlert = { message: '닉네임 중복체크를 해주세요!', type: 'error' };
+      setDuplicateAlert(errorAlert.message);
     return;
   }
-
+    if (userInfo.nickname.length > 5) {
+      const errorAlert = { message: '5글자를 초과한 닉네임은 사용할 수 없습니다.', type: 'error' };
+      setDuplicateAlert(errorAlert.message);
+      return;
+    }
+    try{
       const response = await axios.put('/user/update', userInfo);
       
       if (response.status === 200) {
@@ -244,11 +251,30 @@ function Mypage() {
           top: 0,
           behavior: "smooth",
         });
-      } else {
-        console.error('수정된 정보가 전달이 안됐어요! : ', response.statusText);
-      }
+      // 정보 수정이 성공했을 때 새로운 알림 설정
+      const successAlert = { message: '정보가 수정되었습니다.', type: 'success' };
+      setShowAlert(successAlert);
+
+      // 스낵바를 2초 후에 닫도록 설정
+      setTimeout(() => {
+        setShowAlert(null);
+      }, 2000); // 2초 후 스낵바 닫기
+    } else {
+      console.error('수정된 정보가 전달이 안됐어요! : ', response.statusText);
+
+      // 정보 수정이 실패했을 때 새로운 알림 설정
+      const errorAlert = { message: '정보 수정에 실패했습니다.', type: 'error' };
+      setShowAlert(errorAlert);
+    }
+  } catch (error) {
+    console.error('수정된 정보 전송 에러: ', error);
+
+    // 정보 수정이 실패했을 때 새로운 알림 설정
+    const errorAlert = { message: '정보 수정에 실패했습니다.', type: 'error' };
+    setShowAlert(errorAlert);
+  }
   };
-  
+    
 
   // 유저정보 수정
   const handleInputChange = (key, value) => {
@@ -273,11 +299,40 @@ function Mypage() {
     fetchUserData();
   }, [setUserInfo]);
 
+  // 레벨 자동갱신
+  useEffect(() => {
+    const updateUserLevel = async () => {
+      try {
+        await axios.post('/user/updateLevel', userInfo);
+      } catch (error) {
+        console.error('유저 레벨 업데이트 오류:', error);
+      }
+    };
+    updateUserLevel();
+  }, [userInfo]);
+
 
 
   return (
+    <ThemeProvider theme={theme}>
     <UserProvider>    
     <div className="my-page">
+
+         {/* 수정 성공 또는 실패 알림 표시 */}
+         <Snackbar
+          open={showAlert !== null}
+          autoHideDuration={5000}
+          onClose={() => setShowAlert(null)}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={() => setShowAlert(null)}
+            severity={showAlert?.type || 'success'}
+            sx={{ width: '100%' }}
+          >
+            {showAlert?.message || ''}
+          </Alert>
+        </Snackbar>
 
         <div className="user-card">
           {userInfo ? (
@@ -285,90 +340,169 @@ function Mypage() {
               {isEditing ? (
                 <React.Fragment>
 
+                {/* 사이드메뉴 */}
+                <div className='side-menu' style={{position: 'absolute'}}> 
+                <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
+                <List component="nav" aria-label="side-nav" className="side-nav">
+                <ListItem button   onClick={() => {
+                  if (viewMode !== 'USER_INFO') {
+                    window.location.reload();
+                  }
+                }}
+                sx={{ backgroundColor: viewMode === "USER_INFO" ? " #f2f2f2" : "inherit", color:viewMode === "USER_INFO" ? "black" : "inherit"}}>
+                  <ListItemText primary="내 정보" />
+                </ListItem>
+                <Divider />
+                <ListItem button onClick={() => setViewMode('MATCH_LIST')}
+                sx={{ backgroundColor: viewMode === "MATCH_LIST" ? "green" : "inherit", color:viewMode === "MATCH_LIST" ? "white" : "inherit"}}>
+                  <ListItemText primary="신청 매치" />
+                </ListItem>
+                <Divider />
+                <ListItem button divider onClick={() => setViewMode('BOARD_LIST')}
+                sx={{ backgroundColor: viewMode === "BOARD_LIST" ? "green" : "inherit", color:viewMode === "BOARD_LIST" ? "white" : "inherit"}}>
+                  <ListItemText primary="내가 쓴 글" />
+                </ListItem>
+                <ListItem button onClick={() => setViewMode('FRIEND_LIST')}
+                sx={{ backgroundColor: viewMode === "FRIEND_LIST" ? "green" : "inherit", color:viewMode === "FRIEND_LIST" ? "white" : "inherit"}}>
+                  <ListItemText primary="친구" />
+                </ListItem>
+                <Divider />
+                <ListItem button onClick={() => setViewMode('SETTING')}
+                sx={{ backgroundColor: viewMode === "SETTING" ? "green" : "inherit", color:viewMode === "SETTING" ? "white" : "inherit"}}>
+                  <ListItemText primary="설정" />
+                </ListItem>
+                </List>
+                </Box>
+                </div>
+
+                <div className="user-cards-wrapper">
+
+                {/* 사이드메뉴 상세보기 */}
+                {viewMode === "MATCH_LIST" ? (
+                  <MatchList userId={userInfo.id}/>
+                ) : viewMode === "BOARD_LIST" ? (
+                  <BoardList userId={userInfo.id} /> 
+                ) : viewMode === "FRIEND_LIST" ? (
+                  <FriendMain />
+                ): viewMode === "SETTING" ? (
+                  <Setting userId={userInfo.id}/>
+                ) : (
+                  <> 
+
                   {/* 사용자 수정 페이지 */}
-                  <div className='user-card-modify'> 
+                  <div className='user-card-modify'>                
+                  <div className="inline-form">
 
-                  <div className='inline-form'>   
-                  <b>닉네임</b><p><TextField id={userInfo.nickname}
-                                            defaultValue={userInfo.nickname}
-                                            onChange={(e) => handleInputChange('nickname', e.target.value)} /></p>    
-                                            
-                  <Button style={{borderColor: 'grey', color: 'grey', marginRight: '10px', height: '30px'}}
-                          variant="outlined"
-                          onClick={handleDuplicateCheck}>
-                          중복체크
-                  </Button>
-                  </div><p></p>
+                    <div className='nickname-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold'}}>닉네임</div>
+                    <span style={{ fontSize: '12px', color: '#b6b6b6'}}>* 닉네임은 5글자까지 입력 가능합니다.</span>
+                    <p></p>
+                    <TextField
+                      id={userInfo.nickname}
+                      defaultValue={userInfo.nickname}
+                      onChange={(e) => handleInputChange('nickname', e.target.value)}
+                      style={{ width: '80%', marginTop: '25px'}}
+                    />
+                    <Button
+                      className='duplicate-check-btn'
+                      style={{
+                        borderColor: '#b6b6b6',
+                        color: 'grey',
+                        height: '56px',
+                        marginLeft: '20px',
+                        marginTop: '25px'
+                      }}
+                      variant="outlined"
+                      onClick={handleDuplicateCheck}
+                    >
+                      중복체크
+                    </Button>
+                    {duplicateAlert && (
+                      <Alert severity={isDuplicate ? 'success' : 'error'} style={{ width: '75%'}}>
+                        {duplicateAlert}
+                      </Alert>
+                    )}
+                  </div>
 
-                  <b>전화번호</b><p><TextField id={userInfo.phoneNumber}
+                  <p></p>
+                  <div className='phonenumber-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '40px'}}>전화번호</div>
+                  <span style={{ fontSize: '12px', color: '#b6b6b6'}}>* 핸드폰 번호는 "-" 이나 문자 없이 입력해주세요.</span>
+                  <p><TextField id={userInfo.phoneNumber}
                                             defaultValue={userInfo.phoneNumber}
-                                            onChange={(e) => handleInputChange('phoneNumber', e.target.value)} /></p> 
-                    <b>선호도시</b><p> <Select
-                    labelId="선호도시"
-                    id="select-preferredCity"
+                                            onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                                            style={{ width: '80%', marginTop: '25px'}} /></p> 
+                    
+                    <div> <p></p>
+                    <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold', marginTop: '48px'}}>선호도시</div>
+                    <p></p>   
+                    <NativeSelect
                     value={userInfo.preferredCity}
                     onChange={handleCityAreaChange}
-                    style={{ outline: '1px solid #f4f4f4', outlineOffset: '-2px' }}
+                    style={{ width: '80%', marginTop: '15px'}}
                     >
-                   
-                    <MenuItem value={""}>선택안함</MenuItem>
-                    <MenuItem value={"서울"}>서울</MenuItem>
-                    <MenuItem value={"경기"}>경기</MenuItem>
-                    <MenuItem value={"인천"}>인천</MenuItem>
-                    <MenuItem value={"강원"}>강원</MenuItem>
-                    <MenuItem value={"대전"}>대전</MenuItem>
-                    <MenuItem value={"충남"}>충남</MenuItem>
-                    <MenuItem value={"충북"}>충북</MenuItem>
-                    <MenuItem value={"대구"}>대구</MenuItem>
-                    <MenuItem value={"경북"}>경북</MenuItem>
-                    <MenuItem value={"부산"}>부산</MenuItem>
-                    <MenuItem value={"울산"}>울산</MenuItem>
-                    <MenuItem value={"경남"}>경남</MenuItem>
-                    <MenuItem value={"광주"}>광주</MenuItem>
-                    <MenuItem value={"전남"}>전남</MenuItem>
-                    <MenuItem value={"전북"}>전북</MenuItem>
-                    <MenuItem value={"제주"}>제주</MenuItem>
-                  
-                  </Select></p>
+                    <option value={""}>선택안함</option>
+                    <option value={"서울"}>서울</option>
+                    <option value={"경기"}>경기</option>
+                    <option value={"인천"}>인천</option>
+                    <option value={"강원"}>강원</option>
+                    <option value={"대전"}>대전</option>
+                    <option value={"충남"}>충남</option>
+                    <option value={"충북"}>충북</option>
+                    <option value={"대구"}>대구</option>
+                    <option value={"경북"}>경북</option>
+                    <option value={"부산"}>부산</option>
+                    <option value={"울산"}>울산</option>
+                    <option value={"경남"}>경남</option>
+                    <option value={"광주"}>광주</option>
+                    <option value={"전남"}>전남</option>
+                    <option value={"전북"}>전북</option>
+                    <option value={"제주"}>제주</option>
+                  </NativeSelect>
+                  </div> <p></p>
 
-                  <b>선호지역</b>
+                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '48px'}}>선호지역</div>
                   <p>                  
-                    <Select
-                      labelId="선호지역"
-                      id="select-preferredArea"
+                    <NativeSelect
                       value={userInfo.preferredArea}
                       defaultValue={userInfo.preferredArea}
                       onChange={(e) => handleInputChange('preferredArea', e.target.value)}
-                      style={{ outline: '1px solid #f4f4f4', outlineOffset: '-2px' }}
+                      style={{ width: '80%', marginTop: '15px'}}
                     >
-                      <MenuItem value={""}>선택안함</MenuItem>
+                      <option value={""}>선택안함</option>
                       {availableAreas.map(area => (
-                        <MenuItem key={area} value={area}>
+                        <option key={area} value={area}>
                           {area}
-                        </MenuItem>
+                        </option>
                       ))}
-                    </Select>
+                    </NativeSelect>
                   </p>
                                 <p>
                                 <Form>
                                 <Form.Group controlId="formRange">
-                                  <Form.Label><b>활동반경</b></Form.Label>
-                                  <Form.Range
-                                    min="0"
-                                    max="50"
-                                    step="5"
-                                    value={rangeValue}
-                                    defaultValue={rangeValue}
-                                    onChange={handleChange}
-                                  /> {rangeValue}
+                                  <Form.Label>
+                                  <div className='prefferedcity-text' style={{ fontSize: '16px', color: '#a4a4a4', fontWeight: 'bold',  marginTop: '48px'}}>활동반경</div>
+                                  </Form.Label>
+                                  <Slider
+                                aria-label="Temperature"
+                                defaultValue={rangeValue}
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={0}
+                                max={50}
+                                onChange={handleChange}
+                                style={{ width: '80%', marginTop: '15px' }}
+                              /> {rangeValue}
                                 </Form.Group>
-                              </Form></p>
+                              </Form>
+                              </p>
 
-                    <div className="buttons-modify">
-                      <div className='button-cancle' onClick={handleCancelClick}>취소</div>
-                      <div className='button-save' onClick={handleSaveClick}>저장</div>
+                    <div className="buttons-modify" style={{ marginLeft: '-5px', marginTop: '80px' }}>
+                    <Button variant="outlined" onClick={handleCancelClick} style={{ width: '260px', marginRight: '50px'}}>취소</Button>
+                    <Button variant="contained" onClick={handleSaveClick} style={{ width: '260px', color: 'white'}}>저장</Button>
                     </div>
 
+                </div> </>
+                )}
                 </div>
                 </React.Fragment>
               ) : (
@@ -376,7 +510,7 @@ function Mypage() {
                 <React.Fragment>
 
                 {/* 사이드메뉴 */}
-                <div style={{position: 'relative'}}> 
+                <div className='side-menu' style={{position: 'absolute'}}> 
                 <Box sx={{ position: 'relative', top: '110px', left: '80px', width: '100%', maxWidth: '320px', bgcolor: 'background.paper', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', transform: 'translate(20px, 20px)' }}>
                 <List component="nav" aria-label="side-nav" className="side-nav">
                 <ListItem button onClick={() => setViewMode('USER_INFO')}
@@ -397,14 +531,14 @@ function Mypage() {
                 sx={{ backgroundColor: viewMode === "FRIEND_LIST" ? "green" : "inherit", color:viewMode === "FRIEND_LIST" ? "white" : "inherit"}}>
                   <ListItemText primary="친구" />
                 </ListItem>
+                <Divider />
+                <ListItem button onClick={() => setViewMode('SETTING')}
+                sx={{ backgroundColor: viewMode === "SETTING" ? "green" : "inherit", color:viewMode === "SETTING" ? "white" : "inherit"}}>
+                  <ListItemText primary="설정" />
+                </ListItem>
                 </List>
                 </Box>
-                
-                <Link to="#" onClick={handleDeleteAccount} className="delete-account-link">
-                  회원 탈퇴
-                </Link>
                 </div>
-               
 
                 <div className="user-cards-wrapper">
 
@@ -415,6 +549,8 @@ function Mypage() {
                   <BoardList userId={userInfo.id} /> 
                 ) : viewMode === "FRIEND_LIST" ? (
                   <FriendMain />
+                ): viewMode === "SETTING" ? (
+                  <Setting userId={userInfo.id}/>
                   ) : (
                     <>
                     <div className='user-card-1'>
@@ -444,44 +580,46 @@ function Mypage() {
                           </Stack>
                         </div>
                         <span>{userInfo.nickname}</span>
-                        <p>{userInfo.gender}</p>
-                        <p>노쇼 
+                        <p style={{ marginTop:'15px', marginBottom: '15px'}} >{userInfo.gender}</p>
+                        <p>노쇼 횟수 : 
                           <span style={{ color: userInfo.noShowCnt > 0 ? 'green' : 'gray' }}>
-                            {userInfo.noShowCnt}
-                          </span>
+                            {' ' + userInfo.noShowCnt }
+                          </span>회
                         </p>
                       </div>
                     </div> 
 
                     <div className='user-card-2'>
                       <p><b>이메일</b><text>{userInfo.email}</text></p>
-                      <p><b>생년월일</b><span>{userInfo.birth}</span></p>
+                      <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>생년월일</b><span>{userInfo.birth}</span></p>
                       <p><b>전화번호</b><span>{userInfo.phoneNumber}</span></p>
                     </div>
 
                     <div className='user-card-3'>
                     <p><b>선호도시</b>  <span>{userInfo.preferredCity}</span> </p>
-                    <p><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
+                    <p style={{ marginTop:'20px', marginBottom: '20px'}}><b>선호지역</b>  <span>{userInfo.preferredArea}</span> </p>
                     <p><b>활동반경</b>  <span>{userInfo.activityClass}</span> km </p>
                     </div>
 
                   <div className="buttons">
-                      <div className='button-modify' button onClick={handleEditClick}>수정</div>
+                  <Button variant="outlined" style={{ width: '260px', height: '50px', marginLeft: '260px'}} onClick={handleEditClick}>수정하기</Button>
                   </div>
                   </>
                   )}
 
                 </div>
-                
                 </React.Fragment>
               )}
             </React.Fragment>
           ) : (
-            <p>로딩중...</p>
+            <div style={{ marginTop:'10%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+            <Loading />
+        </div>
           )}
         </div>
       </div>
     </UserProvider>
+    </ThemeProvider>
   );
 }
 

@@ -9,7 +9,7 @@ const Weather = () => {
     const [sky, setSky] = useState("");
     const [temperature, setTemperature] = useState("");
     const [time, setTime] = useState("");
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState("서울");
     const [loading, setLoading] = useState(false);
 
     const {getUserInfo, userInfo} = useUser();
@@ -19,23 +19,16 @@ const Weather = () => {
     },[]);
 
     useEffect(() => {
+        if(userInfo !== null){
+            if(userInfo.preferredCity !== ""){
+                setCity(userInfo.preferredCity);
+            }
+        }
 
         getNowWeather();
     },[userInfo])
 
     const getNowWeather = useCallback(() => {
-        let city;
-        if(userInfo !== null){
-            if(userInfo.preferredCity !== null){
-                city = userInfo.preferredCity;
-            }else{
-                city = "서울";
-            }
-        }else{
-            city = "서울";
-        }
-    
-        setCity(city);
         fetch("/weather/getNowWeather", {
             method: "POST",
             headers: {"Content-Type": "application/json"},

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import "./TeamMatch.css";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,7 +10,7 @@ import TeamMatchImage from "./image/TeamMatchImage";
 import NaviBar from "../main/naviBar/NaviBar";
 import Footer from '../../footer/Footer';
 import { useLocation } from 'react-router-dom'; 
-import Loading from '../../../loading/Loading';
+import { useNavigate } from 'react-router-dom';
 
   const provinces = [
     "서울", "경기", "인천", "강원", "대전",
@@ -31,6 +31,22 @@ const TeamMatch = () => {
   const pageSize = 10; 
   const location = useLocation();
   const [isLoading, setIsLoading] = React.useState(false);
+  const observer = useRef();
+  const navigate = useNavigate();
+
+  const lastMatchElementRef = useCallback(node => {
+    if (isLoading) return; 
+    if (observer.current) observer.current.disconnect(); 
+
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && matchList.length >= pageSize * pageNumber) { 
+        setPageNumber(prevPageNumber => prevPageNumber + 1);
+      }
+    });
+
+    if (node) observer.current.observe(node); 
+
+  }, [isLoading]); 
 
     React.useEffect(() => {
       setIsLoading(true);
@@ -44,16 +60,36 @@ const TeamMatch = () => {
     return teamSize + "대" + teamSize;
   };
 
-  // 필터를 재 선택할때마다 데이터 조회 갱신 
+  // 필터 변경 시 데이터 조회 갱신 
   useEffect(() => {
     const fetchAndSetMatchList = async () => {
+      setPageNumber(1); // 페이지 번호 초기화
+      setIsLoading(true);
       const matchData = await fetchMatchList();
       setMatchList(matchData.content || []);
+      setIsLoading(false);
     };
     
     fetchAndSetMatchList();
   }, [selectedDate, selectedProvince, selectedGender]);
-  
+
+  // 필터 변경 혹은 페이지 수 변경 시 데이터 조회 갱신 
+  useEffect(() => {
+    const fetchAndAppendMatchList = async () => {
+      setIsLoading(true);
+      const newMatches = await fetchMatchList();
+      
+      if (newMatches.content.length > 0) { // 받아온 데이터가 있으면 추가
+        setMatchList(prevMatches => [...prevMatches, ...newMatches.content]);
+      }
+      
+      setIsLoading(false);
+    };
+    
+    if (pageNumber > 1) { // 첫 페이지 로드 후에만 실행
+      fetchAndAppendMatchList();
+    }
+  }, [selectedDate, selectedProvince, selectedGender, pageNumber]);
 
   // 웹소켓으로 매치 목록을 실시간으로 업데이트
   useEffect(() => {
@@ -73,7 +109,7 @@ const TeamMatch = () => {
   const fetchMatchList = async () => {
     try {
       const startTime = `${selectedDate}T00:00:00`;
-    
+  
       const response = await axios.get("/team/match/list", {
         params: { 
           province: selectedProvince,
@@ -87,10 +123,9 @@ const TeamMatch = () => {
     } catch (error) {
       // 에러 확인
       // console.error("에러:", error);
-      return [];
+      return { content: [] }; // 에러가 발생했을 경우 빈 배열을 포함하는 객체 반환
     }
   };
-  
 
   const generateDates = () => {
     const now = new Date();
@@ -172,13 +207,6 @@ const TeamMatch = () => {
   return (
     <>
       <NaviBar />
-
-      {isLoading ? (
-      <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
-        <Loading />
-      </div>
-      ) : (
-      <>
         <TeamMatchImage />
         <div className="timeline">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
@@ -248,8 +276,7 @@ const TeamMatch = () => {
               </select>
             </div>
 
-            {matchList.length > 0 && matchList.map((match) => {
-
+            {matchList.length > 0 && matchList.map((match, index) => {
             let buttonStyle, isDisabled;
             switch(match.status) {
               case '신청가능':
@@ -268,7 +295,7 @@ const TeamMatch = () => {
             }
 
             return (
-              <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
+              <Box key={match.id} ref={index === matchList.length -1 ? lastMatchElementRef : null} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
                 <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
                   {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
                 </Box>
@@ -276,7 +303,11 @@ const TeamMatch = () => {
                   <div>{match.fieldName}</div>
                   <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
                 </Box>
-                <Button style={buttonStyle} disabled={isDisabled}>
+                <Button 
+                  style={buttonStyle} 
+                  disabled={isDisabled}
+                  onClick={() => navigate(`/match/team/detail/${match.id}`)}
+                >
                   {match.status}
                 </Button>
               </Box> 
@@ -286,8 +317,7 @@ const TeamMatch = () => {
         </div>
         <Footer />
       </>
-    )}
-  </>
-)}
+    )
+  }
 
 export default TeamMatch;

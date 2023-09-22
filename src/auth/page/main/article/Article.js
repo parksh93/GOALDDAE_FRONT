@@ -34,12 +34,12 @@ const Article = () => {
 
    
   return (
-    <div style={{ display: 'flex', justifyContent: 'start' }}>
+    <div style={{ display: 'flex', justifyContent: 'start'}}>
       <Box sx={{ 
         height: { xs: '180px', sm:"204px" },
-        width: { xs: '350px', sm:"470px" },
-        margin: "1%",
-        maxWidth: '100%',
+        width: { xs: '350px', sm:"575px" },
+        // margin: "1%",
+        maxWidth: '1000px',
         padding:'3%',
         boxShadow:'2px 2px 3px 3px #ccc',
         borderRadius:'15px'
@@ -61,7 +61,7 @@ const Article = () => {
           <Box 
             sx={{
               margin:{ xs: "2%", sm: "2%"},
-              width: { xs: "353px", sm: "460px"},
+              width: { xs: "353px", sm: "470px"},
               borderRadius:'10px',
               fontSize: {xs: "", sm: "12px"},
               fontWeight: "bold"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./TimeLine.css";
 import IconButton from "@material-ui/core/IconButton";
@@ -6,6 +6,9 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import UseWebSocket from "../../../../webSocket/UseWebSocket";
 import { Box, Button } from "@material-ui/core";
+import {useUser} from '../../../../userComponent/userContext/UserContext'
+import {Link, useNavigate} from 'react-router-dom'
+import TimeLineLoading from "./TimeLineLoading";
 
   const provinces = [
     "서울", "경기", "인천", "강원", "대전",
@@ -24,7 +27,11 @@ const TimeLine = () => {
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedLevel, setSelectedLevel] = useState('');
   const [selectedGender, setSelectedGender] = useState('');
+  const [lastMatchId, setLastMatchId] = useState(0);
+  const [loading, setLoading] = useState(false);
   
+  const navigate = useNavigate();
+
   const getPlayerFormat = (playerNumber) => {
     const teamSize = playerNumber / 2;
     return teamSize + "대" + teamSize;
@@ -32,7 +39,10 @@ const TimeLine = () => {
 
   // 필터를 재 선택할때마다 데이터 조회 갱신 
   useEffect(() => {
-    fetchMatchList().then(setMatchList);
+    setLoading(true);
+    setMatchList([]);
+    setLastMatchId(0);
+    fetchMatchList();
   }, [selectedProvince, selectedGender, selectedLevel, selectedDate]);
 
   // 웹소켓으로 매치 목록을 실시간으로 업데이트
@@ -51,32 +61,49 @@ const TimeLine = () => {
   }, [matchStatusMessage]);    
 
   const fetchMatchList = async () => {
-    try {
-      // 타임라인 선택된 시간 00:00:00 ~ 24:00:00
-      const startTime = `${selectedDate}T00:00:00`;
-  
-      const response = await axios.get("/match/individual", {
-        // 서버에 전달할 쿼리
-        params: { 
-          province: selectedProvince,
-          startTime,
-          level: selectedLevel ? selectedLevel : '', 
-          gender: selectedGender ? selectedGender : '' 
-        },
-      });
-      return response.data;
-    } catch (error) {
-      // 에러 확인
-      // console.error("에러:", error);
-      return [];
-    }
-  };
+    // 타임라인 선택된 시간 00:00:00 ~ 24:00:00
+    const startTime = `${selectedDate}T00:00:00`;
+    await axios.get("/match/individual", {
+          // 서버에 전달할 쿼리
+          params: { 
+            province: selectedProvince,
+            startTime,
+            level: selectedLevel ? selectedLevel : '', 
+            gender: selectedGender ? selectedGender : '' ,
+            lastMatchId
+          },
+        }).then(res => {
+          if(selectedDate !== null){
+            if(res.data.length !== 0){
+                setLastMatchId(res.data[res.data.length -1].id);
+                  
+                if(matchList.length === 0){
+                  setMatchList(res.data);
+                }else{
+                  res.data.map((match) => {
+                    let startDate = new Date(match.startTime).getDate();
+                    let nowSelectDate = new Date(selectedDate).getDate();
+                    
+                    console.log("startDate : ",startDate)
+                    console.log("selectDate : " , nowSelectDate);
+                    if(startDate === nowSelectDate) {
+                      setMatchList((prev) => [...prev, match]);
+                    }
+                  })
+                }
+              }
+          }
+          setLoading(false);
+        }).catch((error) => {
+          console.log(error);
+        })
+    };
 
   const generateDates = () => {
     const now = new Date();
     const timezoneOffset = now.getTimezoneOffset() * 60 * 1000;
     now.setTime(now.getTime() + timezoneOffset);
-
+    
     const datesArray = [];
     // 타임라인 금일부터 15일 뒤까지 조회
     for (let i = 0; i < 16; i++) {
@@ -89,20 +116,19 @@ const TimeLine = () => {
         year: `${currentTime.getFullYear()}`,
         day 
       });
-  }
-
-  setDates(datesArray);
+    }
+    
+    setDates(datesArray);
   };
 
   // 임의 날짜 선택했을때 데이터 출력
   const handleDateClick = async (date, month, year, day) => {
+    setSelectedDate(null);
     // console.log(`선택된 날짜: ${year}-${month}-${date}, 요일: ${day}`);
     const selectedDateStr = `${year}-${month.padStart(2,'0')}-${date.padStart(2,'0')}`; 
     setSelectedDate(selectedDateStr); 
-    const fetchedMatches = await fetchMatchList(selectedProvince, selectedDateStr); 
-    setMatchList(fetchedMatches);
   };
-
+  
   useEffect(() => {
     generateDates();
 
@@ -110,44 +136,69 @@ const TimeLine = () => {
     const timer = setInterval(() => {
       generateDates();
     }, 24 * 60 * 60 * 1000);
-
+    
     // 유저가 페이지 첫 접속 했을 때 금일 매치리스트 조회
-    const fetchTodayMatchList = async () => {
       const today = new Date();
       const date = String(today.getDate()).padStart(2,'0');
       const month = String(today.getMonth() + 1).padStart(2,'0'); 
       const year = today.getFullYear();
-
+      
       // selectedDate가 null인 경우에만 오늘 날짜로 설정
       if (!selectedDate) {
         const selectedDateStr = `${year}-${month}-${date}`;
         setSelectedDate(selectedDateStr);
       }
-
-     // 함수 호출 - 금일 매치리스트 
-     fetchMatchList();
-
-   };
-
-   fetchTodayMatchList();
-
-   return () => { clearInterval(timer); };
-}, [selectedProvince]);
+      
+      return () => { clearInterval(timer); };
+    }, [selectedProvince]);
+    
+    useEffect(() => {
+      setLastMatchId(0);
+      setMatchList([]);
+      setLoading(true);
+      fetchMatchList();
+    },[selectedDate])
 
   const handleNextDate = () => {
     if (currentIndex < dates.length - 8) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
-
+  
   const handlePrevDate = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   };
-
+  
   // 슬라이드 7개까지만 보이게
   const visibleDates = dates.slice(currentIndex, currentIndex + 7);
+
+  
+  let options = {
+    threshold: 0.5,
+    rootMargin: '0px'
+  }
+  
+  const callback = () => {
+    if(!loading){
+      setLoading(true);
+    }
+  }
+  
+  useEffect(() => {
+    if(loading){
+      fetchMatchList();
+    }
+  }, [loading])
+
+  
+  let target = useRef();
+  let observer = new IntersectionObserver(callback, options);
+  
+  useEffect(() => {
+    observer.observe(target.current);
+  },[]);
 
   return (
       <div className="timeline">
@@ -164,9 +215,11 @@ const TimeLine = () => {
                 ${item.day === "토" ? "saturday" : item.day === "일" ? "sunday" : ""}
                 ${`${item.year}-${String(item.month).padStart(2,'0')}-${String(item.date).padStart(2,'0')}` === selectedDate ? "selected-date" : ""} 
               `}
-              onClick={() => handleDateClick(item.date, item.month, item.year, item.day)}
+              onClick={() => {
+                handleDateClick(item.date, item.month, item.year, item.day)
+              }}
             >
-            <div style={{ width: '30px', textAlign: 'center' }}> 
+            <div style={{ width: '80px', textAlign: 'center' }}> 
               <div>{item.date}</div>
               <div>{item.day}</div>
             </div>  
@@ -241,35 +294,43 @@ const TimeLine = () => {
         let buttonStyle, isDisabled;
         switch(match.status) {
           case '신청가능':
-            buttonStyle = {backgroundColor:'green', color:'white', fontSize:'10px', width:'100px'};
-            isDisabled = false;
-            break;
-
+          buttonStyle = {backgroundColor:'green', color:'white', fontSize:'10px', width:'100px'};
+          isDisabled = false;
+          break;
+          
           case '마감임박': 
-            buttonStyle = {backgroundColor:'red', color:'white', fontSize:'10px', width:'100px'};
-            isDisabled = false;
-            break;
-
+          buttonStyle = {backgroundColor:'red', color:'white', fontSize:'10px', width:'100px'};
+          isDisabled = false;
+          break;
+          
           default:
-            buttonStyle ={backgroundColor:'grey', color:'black', fontSize:'10px', width:'100px'};
+            buttonStyle = {backgroundColor:'grey', color:'black', fontSize:'10px', width:'100px'};
             isDisabled = true; 
-        }
-
+          }
+          
+        
         return (
-          <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
-            <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
-              {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
-            </Box>
-            <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
-              <div>{match.fieldName}</div>
-              <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
-            </Box>
+          <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }} onClick={() => navigate(`/match/individual/detail/${match.id}`)}>
+              <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
+                {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
+              </Box>
+              <Box sx={{ paddingX:[2,5],width:['100%','700px'] ,fontSize :'12px'}}>
+                <div style={{fontSize: "17px", marginBottom: "5px"}}>{match.fieldName}</div>
+                <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
+              </Box>
             <Button style={buttonStyle} disabled={isDisabled}>
               {match.status}
             </Button>
           </Box> 
         );
         })}
+          <div ref={target}>
+          {loading ?
+            <TimeLineLoading />
+          :
+              ""
+          }
+            </div>
       </Box>
     </div>
     );

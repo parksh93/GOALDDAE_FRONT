@@ -18,27 +18,27 @@ const style = {
 const SoccerFieldModal = ({modalOpen, setModalOpen, deleteSoccerField}) => {
     return (
         <Modal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-    >
-        <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h7" component="h3">
-            해당 구장을 삭제하시겠습니까?
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            삭제시 복구되지 않습니다.
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <button onClick={() => {
-                deleteSoccerField()
-                setModalOpen(false);
-            }} className={styles.modalDeleteBtn}>확인</button>
-            <button onClick={() => setModalOpen(false)} className={styles.modalDeleteBtn}>취소</button>
-        </Typography>
-        </Box>
-    </Modal>
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h7" component="h3">
+                해당 구장을 삭제하시겠습니까?
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                삭제시 복구되지 않습니다.
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <button onClick={() => {
+                    deleteSoccerField()
+                    setModalOpen(false);
+                }} className={styles.modalDeleteBtn}>확인</button>
+                <button onClick={() => setModalOpen(false)} className={styles.modalDeleteBtn}>취소</button>
+            </Typography>
+            </Box>
+        </Modal>
     )
 }
 
