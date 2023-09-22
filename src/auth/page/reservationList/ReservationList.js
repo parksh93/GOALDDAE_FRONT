@@ -92,13 +92,6 @@ const ReservationList = () => {
 return (
     <div> 
       <NaviBar />
-      {isLoading ? (
-      <div style={{ marginTop:'100px', marginLeft:'29%', left: "0px", width: "40%", height:"30%", zIndex:"9999"}}>
-        <Loading />
-      </div>
-      ) : (
-      <>
-      <div>
       <select
           value={selectedProvince}
           onChange={e => setSelectedProvince(e.target.value)}

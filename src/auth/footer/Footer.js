@@ -48,7 +48,7 @@ const Footer = () => {
                 flexDirection: "row", 
                 justifyContent:"flex-start",
                 width: "1400px",
-                marginLeft: '250px'
+                marginLeft: '150px'
               }}>
                 <Match />
                 <ServiceField />

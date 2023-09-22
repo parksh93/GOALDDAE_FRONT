@@ -66,7 +66,7 @@ const App = () => {
             <Route path="/manager" element={<Manager />} />
           </Routes>
         </AdminProvier>
-        <Footer/> 
+        {/* <Footer/>  */}
       </>
   );
 }

@@ -5,12 +5,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import './ImageSlide.css';
 
 // 임시 이미지 불러오기 추후 백엔드에서 저장 예정
-import TestImg1 from "./image/mainPost.png";
-import TestImg2 from "./image/testImg2.jpg";
-import TestImg3 from "./image/testImg3.jpg";
-import TestImg4 from "./image/testImg4.jpg";
-import TestImg5 from "./image/testImg5.jpg";
-import TestImg6 from "./image/testImg6.jpg";
+import TestImg1 from "./image/mainSlide01.Webp";
+import TestImg2 from "./image/mainSlide02.Webp";
+import TestImg3 from "./image/mainSlide03.Webp";
+import TestImg4 from "./image/mainSlide04.Webp";
+import TestImg5 from "./image/mainSlide05.Webp";
+import TestImg6 from "./image/mainSlide06.Webp";
 
 const ImageSlide = () => {
   const [settings] = useState({

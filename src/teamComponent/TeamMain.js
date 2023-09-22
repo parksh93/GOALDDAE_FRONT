@@ -26,8 +26,8 @@ const TeamMain = () => {
             </div>
 
             {isLoading ? (
-                <div style={{ marginTop:'6.5%', marginLeft:'29%',position: "fixed", top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
-                    <Loading />
+                <div style={{ marginTop:'12%', marginLeft:'29%', top: "40px", left: "0px", width: "40%", height: "calc(100% - 50px)", zIndex:"9999"}}>
+                   <Loading />
                 </div>
 
                 ) : (

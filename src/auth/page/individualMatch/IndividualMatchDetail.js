@@ -342,7 +342,7 @@ const IndividualMatchDetail = () => {
             <div className={styles.playerContainer}>
               <div className={styles.infoTitle}>참가인원</div>
               <div className={styles.playerInfoDiv}> 
-                <div className={styles.roomManagerInfo}>
+                <div className={styles.roomManagerInfo} onClick={() => navigate(`/mypage/${matchInfo.userId}`)}>
                   <div className={styles.profileImgDiv}>
                     <img
                       src={matchInfo.profileImgUrl}
@@ -359,7 +359,7 @@ const IndividualMatchDetail = () => {
                 <div>
                    {matchPlayerList.length !== 0 ? 
                     matchPlayerList.map(player => (
-                      <div>
+                      <div onClick={() => navigate(`/mypage/${player.id}`)}>
                         <div className={styles.profileImgDiv}>
                           <img src={player.profileImgUrl}  className={styles.userProfile}/>
                         </div>

@@ -207,12 +207,6 @@ const TeamMatch = () => {
   return (
     <>
       <NaviBar />
-      {isLoading ? (
-      <div style={{ marginTop:'100px', marginLeft:'29%', left: "0px", width: "40%", height:"30%", zIndex:"9999"}}>
-        <Loading />
-      </div>
-      ) : (
-      <>
         <TeamMatchImage />
         <div className="timeline">
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>

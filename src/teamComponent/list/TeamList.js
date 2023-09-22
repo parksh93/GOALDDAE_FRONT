@@ -4,7 +4,7 @@ import axios from 'axios';
 import throttle from 'lodash/throttle';
 import styles from './List.module.css';
 import TeamSearch from './TeamSearch';
-import Loading from '../../loading/Loading';
+import TimeLineLoading from '../../auth/page/main/timeLine/TimeLineLoading';
 
 
 
@@ -173,7 +173,9 @@ const TeamList = ({}) => {
             ))}
             <div className={styles.loading}>
                 {isLoading ? ( 
-                    <Loading />
+                    <div className={styles.loadingDiv}>
+                        <TimeLineLoading />
+                    </div>
                 ) : (
                     noNewData && <h3>팀 데이터가 없습니다.</h3>
                 )}
