@@ -19,7 +19,7 @@ import TeamMain from './teamComponent/TeamMain';
 import TeamDetail from './teamComponent/detail/TeamDetail';
 import MyTeamDetail from './teamComponent/detail/MyTeamDetail';
 import Main from './auth/page/main/Main';
-import TeamMatch from './auth/page/teamMatch/TeamMatch';
+import TeamMatchMain from './auth/page/teamMatch/TeamMatchMain';
 import ReservationList from './auth/page/reservationList/ReservationList';
 import { AdminProvier } from './auth/page/admin/AdminContext';
 import AdminLogin from './auth/page/admin/login/AdminLogin';
@@ -58,7 +58,7 @@ const App = () => {
 
             <Route path="/admin" element={<Admin />} />
             <Route path='/admin/login' element={<AdminLogin />} /> 
-            <Route path="/match/team/list" element={<TeamMatch />} />
+            <Route path="/match/team/list" element={<TeamMatchMain />} />
             <Route path="/match/team/detail/:teamMatchId" element={<TeamMatchDetail />} />
             <Route path="/reservation/list" element={<ReservationList />} />
             <Route path='/match/individual/detail/:matchId' element={<IndividualMatchDetail />} />

@@ -1,0 +1,53 @@
+@keyframes ldio-ilb5me94hle {
+    0% { transform: translate(12px,32px) scale(0); }
+   25% { transform: translate(12px,32px) scale(0); }
+   50% { transform: translate(12px,32px) scale(1); }
+   75% { transform: translate(35px,32px) scale(1); }
+  100% { transform: translate(60.7px,32px) scale(1); }
+ }
+ @keyframes ldio-ilb5me94hle-r {
+    0% { transform: translate(80.7px,32px) scale(1); }
+  100% { transform: translate(80.7px,32px) scale(0); }
+ }
+ @keyframes ldio-ilb5me94hle-c {
+    0% { background: #c8c8c8 }
+   25% { background: #c8c8c8 }
+   50% { background: #c8c8c8 }
+   75% { background: #c8c8c8 }
+  100% { background: #c8c8c8 }
+ }
+ .ldio-ilb5me94hle div {
+   position: absolute;
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   transform: translate(82px,82px) scale(1);
+   background: #c8c8c8;
+   animation: ldio-ilb5me94hle 1.8518518518518516s infinite cubic-bezier(0,0.5,0.5,1);
+ }
+ .ldio-ilb5me94hle div:nth-child(1) {
+   background: #c8c8c8;
+   transform: translate(151.7px,82px) scale(1);
+   animation: ldio-ilb5me94hle-r 0.4629629629629629s infinite cubic-bezier(0,0.5,0.5,1), ldio-ilb5me94hle-c 1.8518518518518516s infinite step-start;
+ }.ldio-ilb5me94hle div:nth-child(2) {
+   animation-delay: -0.4629629629629629s;
+   background: #c8c8c8;
+ }.ldio-ilb5me94hle div:nth-child(3) {
+   animation-delay: -0.9259259259259258s;
+   background: #c8c8c8;
+ }.ldio-ilb5me94hle div:nth-child(4) {
+   animation-delay: -1.3888888888888888s;
+   background: #c8c8c8;
+ }.ldio-ilb5me94hle div:nth-child(5) {
+   animation-delay: -1.8518518518518516s;
+   background: #c8c8c8;
+ }
+ .loadingio-spinner-ellipsis-hy4oxyeiuc {
+   width: 85px;
+   overflow: hidden;
+   background: #ffffff;
+ }
+ .ldio-ilb5me94hle {
+   backface-visibility: hidden;
+   transform-origin: 0 0; /* see note above */
+ }
