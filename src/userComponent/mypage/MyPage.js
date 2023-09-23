@@ -32,6 +32,7 @@ import Slider from '@mui/material/Slider';
 import NativeSelect from '@mui/material/NativeSelect';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Loading from '../../loading/Loading';
+import Footer from '../../auth/footer/Footer';
 
 
 function Mypage() {
@@ -618,6 +619,7 @@ function Mypage() {
           )}
         </div>
       </div>
+      <Footer />
     </UserProvider>
     </ThemeProvider>
   );
