@@ -8,7 +8,6 @@ import axios from "axios";
 import { useUser } from "../../../../userComponent/userContext/UserContext";
 import ImageSlide from "./ImageSlide";
 import styles from "./TeamMatchDetail.module.css";
-import defaultProfile from './goalddae_title_logo.png';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
@@ -188,7 +187,7 @@ const TeamMatchDetail = () => {
                     <>
                       <div>{teamMatchInfo.homeTeamName}</div>
                       <img 
-                        src={teamMatchInfo.homeTeamProfileImg || defaultProfile} 
+                        src={teamMatchInfo.homeTeamProfileImg} 
                         alt="Home Team Profile" 
                       />
                     </>
@@ -200,7 +199,7 @@ const TeamMatchDetail = () => {
                     <>
                       <div>이름: {teamMatchInfo.awayTeamName}</div>
                       <img 
-                        src={teamMatchInfo.awayTeamProfileImg || defaultProfile} 
+                        src={teamMatchInfo.awayTeamProfileImg} 
                         alt="Away Team Profile" 
                       />
                     </>
