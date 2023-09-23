@@ -1,6 +1,7 @@
 FROM node:18-alpine
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package.json ./
+RUN rm -rf package-lock.json
 RUN npm install --legacy-peer-deps
 COPY . ./
 EXPOSE 3000
