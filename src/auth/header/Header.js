@@ -1,5 +1,4 @@
 import "./Header.css";
-import logo from "./image/goalddaeLogo.png"
 import { Link } from "react-router-dom";
 import FieldSearch from "./search/FieldSearch";
 import LoginInfo from "./loginInfo/LoginInfo";
@@ -14,7 +13,7 @@ const Header = () => {
         <div className="logoAndSearchDiv">
           <div className="logo">
             <Link to="/">
-              <img src="/img/goalddaeLogo.png" alt="로고" />
+              <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/public/goalddaeLogo.webp" alt="로고" />
             </Link>
           </div>
           <Weather />

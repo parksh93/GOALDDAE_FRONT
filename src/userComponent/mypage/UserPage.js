@@ -23,7 +23,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import Userpage_FriendMain from '../mypage/friend/Userpage_FriendMain';
-import editIcon from '../mypage/img/write.png';
 import Footer from '../../auth/footer/Footer';
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import TestImg1 from "./testImg1.jpg";
+// import TestImg1 from "https://kr.object.ncloudstorage.com/goalddae-bucket/team-match-detail/testImg1.webp";
 
 const TeamMatchImage = () => {
   return (
@@ -9,7 +9,7 @@ const TeamMatchImage = () => {
       alignItems: 'center', 
     }}>
       <img 
-        src={TestImg1} alt="이미지" className="img" 
+        src="https://kr.object.ncloudstorage.com/goalddae-bucket/team-match-detail/testImg1.webp" alt="이미지" className="img" 
         style={{
           marginTop: '3%', 
           width: '1000px',

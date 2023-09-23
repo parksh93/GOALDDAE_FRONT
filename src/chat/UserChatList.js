@@ -60,7 +60,7 @@ const UserChatList = ({channelList, setOpenLoading, setChannelInfo, setOpenRoomS
       </div>
 
       <div className={styles.channelListFooter}>
-        <img src="./img/chatMainFooter2.Webp" className={styles.footerImg} />
+        <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/public/chatMainFooter2.Webp" className={styles.footerImg} />
       </div>
     </div>
   );

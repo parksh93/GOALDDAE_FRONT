@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./MyPage.css";
-import line from '../mypage/img/Untitled_line.png';
-import icon1 from '../mypage/img/team.png'
-import icon2 from '../mypage/img/gender-symbols.png';
 import { formatDate } from '../../boardComponent/dateUtils';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
@@ -115,8 +112,12 @@ function MatchList({ userId }) {
                     </p>
                   </div>
                   <div className='player' style={{ flex: 1, marginTop: '30px', marginLeft: '20px' }}>
-                    <span className="player-number"><img src={icon1} style={{ width: '20px', height: '20px', marginBottom: '-5px'}}/> 인원 <b>{match.playerNumber}</b>명</span>
-                    <span className="match-gender"><img src={icon2} style={{ width: '20px', height: '20px', marginBottom: '-5px'}}/> 성별 <b>{match.gender}</b> </span>
+                    <span className="player-number">
+                      <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/mypage/AnyConv.com__team.webp" 
+                      style={{ width: '20px', height: '20px', marginBottom: '-5px'}}/> 인원 <b>{match.playerNumber}</b>명</span>
+                    <span className="match-gender">
+                      <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/mypage/AnyConv.com__gender-symbols.webp"
+                      style={{ width: '20px', height: '20px', marginBottom: '-5px'}}/> 성별 <b>{match.gender}</b> </span>
                     <span className="match-level"> <Chip label={match.level} color="success" /> </span>
                   </div>
                 </div>
