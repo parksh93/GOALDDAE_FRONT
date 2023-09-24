@@ -22,7 +22,7 @@ const TimeLine = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [matchList, setMatchList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const matchStatusMessage = UseWebSocket('http://223.130.137.115/webSocket');
+  const matchStatusMessage = UseWebSocket('http://223.130.137.115:80/webSocket');
 
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedLevel, setSelectedLevel] = useState('');
