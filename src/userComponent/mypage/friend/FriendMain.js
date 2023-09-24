@@ -37,7 +37,7 @@ const FriendMain = () => {
                                             // })
                                             // }); 
                                             
-    const sock = new SockJS("http://223.130.137.115/friend");
+    const sock = new SockJS("http://223.130.137.115:8080/friend");
     let client = Stomp.over(sock) ;
     useEffect(() => {
         const temp = JSON.stringify(new Date().toLocaleString());

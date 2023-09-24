@@ -6,7 +6,7 @@ const useWebSocket = (url) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const socket = new SockJS('http://223.130.137.115/webSocket');
+    const socket = new SockJS('http://223.130.137.115:8080/webSocket');
     const stompClient = new Client({
       webSocketFactory: () => socket,
       onConnect: (frame) => {
