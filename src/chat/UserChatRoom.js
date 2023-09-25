@@ -48,7 +48,7 @@ const UserChatRoom = ({
     })
   }, [channelInfo, openLoading]);
 
-  const sock = new SockJS("http://223.130.137.115:80/chat");
+  const sock = new SockJS("http://223.130.137.115/chat");
   let client = Stomp.over(sock) ;
 
   useEffect(() => {
