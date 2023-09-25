@@ -72,7 +72,7 @@ const TeamMatchDetail = () => {
         console.error(error); 
       }
     };
-  
+
     requestTeamMatch();
     
   }, [teamMatchId, userInfo]);
@@ -182,30 +182,19 @@ const TeamMatchDetail = () => {
               <div className={styles.reservationContainer}>
               <div className={styles.infoTitle}>신청 현황</div>
               <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <div>
-                  <div style={{fontSize:'16px'}}>Home 팀</div>
-                  {teamMatchInfo && (
+              {teamMatchInfo && (
+                <>
+                  <div>홈 팀 이름: {teamMatchInfo.homeTeamName}</div>
+                  <img src={teamMatchInfo.homeTeamProfileImg} alt="홈 팀 프로필 이미지" />
+                  
+                  {teamMatchInfo.awayTeamName && (
                     <>
-                      <div>{teamMatchInfo.homeTeamName}</div>
-                      <img 
-                        src={teamMatchInfo.homeTeamProfileImg || defaultProfile} 
-                        alt="Home Team Profile" 
-                      />
+                      <div>원정 팀 이름: {teamMatchInfo.awayTeamName}</div>
+                      <img src={teamMatchInfo.awayTeamProfileImg} alt="원정 팀 프로필 이미지" />
                     </>
                   )}
-                </div>
-                <div>
-                  <div style={{fontSize:'16px'}}>Away 팀</div>
-                  {teamMatchInfo && teamMatchInfo.awayTeamName && (
-                    <>
-                      <div>이름: {teamMatchInfo.awayTeamName}</div>
-                      <img 
-                        src={teamMatchInfo.awayTeamProfileImg || defaultProfile} 
-                        alt="Away Team Profile" 
-                      />
-                    </>
-                  )}
-                </div>
+                </>
+              )}
               </div>
               {teamMatchInfo &&
                 <>

@@ -295,7 +295,10 @@ const Filter = () => {
                 {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
               </Box>
               <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
-                <div>{match.fieldName}</div>
+              <Box sx={{ display: 'flex', flexDirection: 'row', gap: 160}}>
+                  <div>{match.fieldName}</div>
+                  <div style={{ fontSize: '15px', fontWeight: 'bold' }}>{match.homeTeamName} vs {match.awayTeamName}</div>
+              </Box>
                 <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
               </Box>
               <Button 
