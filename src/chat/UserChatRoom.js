@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from "./UserChatRoom.module.css";
 import {
   AiOutlineArrowUp,
@@ -8,12 +7,7 @@ import {
   AiOutlineExport,
 } from "react-icons/ai";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';

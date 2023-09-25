@@ -6,8 +6,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import UseWebSocket from "../../../../webSocket/UseWebSocket";
 import { Box, Button } from "@material-ui/core";
-import {useUser} from '../../../../userComponent/userContext/UserContext'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import TimeLineLoading from "./TimeLineLoading";
 
   const provinces = [
@@ -202,7 +201,7 @@ const TimeLine = () => {
 
   return (
       <div className="timeline">
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <IconButton onClick={handlePrevDate} className="prev-date-btn">
               <ArrowBackIosIcon />
@@ -331,7 +330,7 @@ const TimeLine = () => {
               ""
           }
             </div>
-      </Box>
+      </div>
     </div>
     );
   }

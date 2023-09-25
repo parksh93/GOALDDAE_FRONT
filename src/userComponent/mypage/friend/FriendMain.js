@@ -1,7 +1,7 @@
 import { useUser } from "../../userContext/UserContext";
 import FriendList from "./FriendList";
 import FriendSearch from "./FriendSearch";
-import {useState, useEffect, useRef, useCallback} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import styles from './FriendMain.module.css';
 import SelectBar from "./SelectBar";
 import FriendAccept from "./FriendAccept";

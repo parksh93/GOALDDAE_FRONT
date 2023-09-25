@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import useWebSocket from "../../../../webSocket/UseWebSocket";
-import { Box, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { useLocation } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
 import TimeLineLoading from "../timeLineLoading/TimeLineLoading";
@@ -205,7 +205,7 @@ const Filter = () => {
   return (
     <>
       <div className="timeline">
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2, justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <IconButton onClick={handlePrevDate} className="prev-date-btn">
                   <ArrowBackIosIcon />
@@ -290,14 +290,14 @@ const Filter = () => {
           }
 
           return (
-            <Box key={match.id} ref={index === matchList.length -1 ? lastMatchElementRef : null} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
-              <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
+            <div key={match.id} ref={index === matchList.length -1 ? lastMatchElementRef : null} style={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }}>
+              <div style={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
                 {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
-              </Box>
-              <Box sx={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
+              </div>
+              <div style={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
                 <div>{match.fieldName}</div>
                 <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
-              </Box>
+              </div>
               <Button 
                 style={buttonStyle} 
                 disabled={isDisabled}
@@ -305,11 +305,11 @@ const Filter = () => {
               >
                 {match.status}
               </Button>
-            </Box> 
+            </div> 
           );
           })}
            {isLoading && <TimeLineLoading />}
-        </Box>
+        </div>
       </div>
       </>
     )

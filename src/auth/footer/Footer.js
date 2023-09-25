@@ -1,4 +1,4 @@
-import { Box, Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import { Grid, useMediaQuery, useTheme } from '@mui/material';
 import Match from './match/match';
 import ServiceField from './serviceField/serviceField';
 import Introduce from './introduce/introduce';
@@ -10,14 +10,14 @@ const Footer = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <Box sx={{
-            bgcolor: "#3a3a3a", 
+        <div style={{
+            background: "#3a3a3a", 
             height : isSmallScreen? "120%" : "360px", 
             paddingBottom:"7%", color:"white",
             paddingLeft : isSmallScreen? '10%' : '3%'
             }}>
         {isSmallScreen ? (
-            <Box sx={{
+            <div style={{
                 marginTop: "20%",
                 display:"flex", 
                 flexDirection: "row", 
@@ -40,9 +40,9 @@ const Footer = () => {
                           <Goalddae />
                         </Grid>
                     </Grid>
-            </Box>
+            </div>
         ) : (
-            <Box sx={{
+            <div style={{
                 marginTop: "30%",
                 display:"flex", 
                 flexDirection: "row", 
@@ -55,9 +55,9 @@ const Footer = () => {
                 <Introduce />
                 <SocialMedia />
                 <Goalddae />
-             </Box>
+             </div>
         )}
-        </Box>
+        </div>
     );
 }
 

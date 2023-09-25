@@ -65,7 +65,7 @@
   },
   "proxy": "http://223.130.137.115",
   "eslintConfig": {
-    "extends": [
+    "extends": [     
       "react-app",
       "react-app/jest"
     ]
