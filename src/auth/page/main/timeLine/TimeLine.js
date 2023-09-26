@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import UseWebSocket from "../../../../webSocket/UseWebSocket";
-import { Box, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import {useNavigate} from 'react-router-dom'
 import TimeLineLoading from "./TimeLineLoading";
 
@@ -309,18 +309,18 @@ const TimeLine = () => {
           
         
         return (
-          <Box key={match.id} sx={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }} onClick={() => navigate(`/match/individual/detail/${match.id}`)}>
-              <Box sx={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
+          <div key={match.id} style={{ display: 'flex', padding: "12px", marginTop: '16px', borderBottom: '1px solid lightgrey' }} onClick={() => navigate(`/match/individual/detail/${match.id}`)}>
+              <div style={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
                 {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
-              </Box>
-              <Box sx={{ paddingX:[2,5],width:['100%','700px'] ,fontSize :'12px'}}>
+              </div>
+              <div style={{ paddingX:[2,5],width:['100%','700px'] ,fontSize :'12px'}}>
                 <div style={{fontSize: "17px", marginBottom: "5px"}}>{match.fieldName}</div>
                 <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
-              </Box>
+              </div>
             <Button style={buttonStyle} disabled={isDisabled}>
               {match.status}
             </Button>
-          </Box> 
+          </div> 
         );
         })}
           <div ref={target}>
