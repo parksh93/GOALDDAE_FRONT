@@ -1,7 +1,7 @@
 import { useUser } from "../../userContext/UserContext";
 import FriendList from "./FriendList";
 import FriendSearch from "./FriendSearch";
-import {useState, useEffect, useRef, useCallback} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import styles from './FriendMain.module.css';
 import SelectBar from "./SelectBar";
 import FriendAccept from "./FriendAccept";
@@ -21,23 +21,8 @@ const FriendMain = () => {
     const [friendId, setFriendId] = useState(0);
 
     const [socketData, setSocketData] = useState();
-    //const ws = useRef(null);    //webSocket을 담는 변수, 
-                                //컴포넌트가 변경될 때 객체가 유지되어야하므로 'ref'로 저장
-
-                                
-                                // const webSocketLogin = useCallback(() => {
-                                    // ws.current = new WebSocket("ws://localhost:8080/socket/friend");
-                                    
-                                    // ws.current.onmessage = (message) => {
-                                        //     const dataSet = JSON.parse(message.data);
-                                        //     setSocketData(dataSet);
-                                        // }
-                                        // client.connect({}, () => {
-                                            //     client.send("/app/friend/join", {}, JSON.stringify(userInfo.id))
-                                            // })
-                                            // }); 
                                             
-    const sock = new SockJS("http://localhost:8080/friend");
+    const sock = new SockJS("http://223.130.137.115/friend");
     let client = Stomp.over(sock) ;
     useEffect(() => {
         const temp = JSON.stringify(new Date().toLocaleString());
@@ -57,19 +42,6 @@ const FriendMain = () => {
         
     const sendWebSocket = useCallback((friendId) => {
         setFriendId(friendId)
-        // if(ws.current.readyState === 0) {   //readyState는 웹 소켓 연결 상태를 나타냄
-        //                                     // 0은 연결되어 있지 않은 상태
-        //     ws.current.onopen = () => { //webSocket이 맺어지고 난 후, 실행
-        //         ws.current.send(temp);
-        //     }
-        // }else {
-        //     ws.current.send(temp);
-        // }
-        
-        // ws.current.onmessage = (message) => {
-            //     const dataSet = JSON.parse(message.data);
-            //     setSocketData(dataSet);
-            // )
     });
     
     useEffect(() => {

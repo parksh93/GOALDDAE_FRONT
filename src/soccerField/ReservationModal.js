@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import { Box, InputLabel, Select } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import Payment from "../payment/Payment";
 import { useState } from "react";
 import styles from "./SoccerField.module.css";
@@ -7,7 +7,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-import { Alert, AlertTitle, Collapse, FormControl, MenuItem } from "@mui/material";
+import { Alert, Collapse, MenuItem } from "@mui/material";
 
 const ReservationModal = ( props ) => {
 

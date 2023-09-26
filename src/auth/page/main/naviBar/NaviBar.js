@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box } from '@material-ui/core';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -13,7 +12,7 @@ const NaviBar = () => {
 
   return (
       <>
-        <Box sx={{ height: '50px', textAlign: "center", justifyContent:"center", boxShadow: "0 3px 3px -2.5px lightgray", paddingBottom: "10px", marginTop: "10px" }}>
+        <div style={{ height: '50px', textAlign: "center", justifyContent:"center", boxShadow: "0 3px 3px -2.5px lightgray", paddingBottom: "10px", marginTop: "10px" }}>
             <Button 
                 sx={{ 
                     color: "black",
@@ -73,7 +72,7 @@ const NaviBar = () => {
                     marginRight: "50px"
                 }} onClick={() => navigate('/board')}>게시판
             </Button>   
-          </Box>
+          </div>
       </>
     )
 }

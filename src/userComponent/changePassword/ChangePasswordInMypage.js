@@ -7,6 +7,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Collapse from "@mui/material/Collapse";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Footer from "../../auth/footer/Footer";
 
 function ChangePasswordInMypage() {
   const { userId } = useParams();
@@ -107,7 +108,7 @@ function ChangePasswordInMypage() {
             fullWidth
             onChange={(e) => setOldPassword(e.target.value)}
             onKeyDown={onKeyPress}
-            style={{ maxWidth: "300px" }}
+            style={{ maxWidth: "300px", marginBottom: '20px' }}
           />
         </p>
         <p>
@@ -119,7 +120,7 @@ function ChangePasswordInMypage() {
             fullWidth
             onChange={(e) => setNewPassword(e.target.value)}
             onKeyDown={onKeyPress}
-            style={{ maxWidth: "300px" }}
+            style={{ maxWidth: "300px", marginBottom: '20px' }}
           />
         </p>
         <p>
@@ -131,7 +132,7 @@ function ChangePasswordInMypage() {
             fullWidth
             onChange={(e) => setConfirmPassword(e.target.value)}
             onKeyDown={onKeyPress}
-            style={{ maxWidth: "300px" }}
+            style={{ maxWidth: "300px", marginBottom: '20px' }}
           />
         </p>
       </section>
@@ -141,6 +142,7 @@ function ChangePasswordInMypage() {
         </CheckBtn>
       </div>
     </div>
+    <Footer />
     </ThemeProvider>
   );
 }

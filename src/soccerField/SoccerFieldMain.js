@@ -7,10 +7,16 @@ import ShowerIcon from '@mui/icons-material/Shower';
 import WcIcon from '@mui/icons-material/Wc';
 import SoccerFieldTimeLine from "./SoccerFieldTimeLine";
 import MapComponent from "./MapComponent";
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+
 
 const SoccerFieldMain = () => {
   let { fieldId } = useParams();
   const [fieldInfo, setFieldInfo] = useState({});
+  const [open, setOpen] = useState(false);
+  const [alertText, setAlertText] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success")
 
   useEffect(() => {
     fetch(`/field/getFieldInfo/${fieldId}`, { method: "get" })
@@ -33,15 +39,30 @@ const SoccerFieldMain = () => {
   const handleCopyClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-      alert('클립보드에 링크가 복사되었습니다.');
+      setOpen(true);
+      setAlertText("클립보드에 주소가 복사되었습니다.");
+      setAlertSeverity("info");
+      setTimeout(() => {
+        setOpen(false);
+      },1000)
     } catch (e) {
-      alert('복사에 실패하였습니다');
+      setOpen(true);
+      setAlertText("복사에 실패했습니다.");
+      setAlertSeverity("error");
+      setTimeout(() => {
+        setOpen(false);
+      },1000)
     }
   };
 
   return (
     <div>      
-      <div className={styles.container}>                
+      <div className={styles.container}>    
+      <Collapse in={open}>
+          <Alert severity={alertSeverity} sx={{width: "30%", position: "fixed",marginLeft: "15%", zIndex: "999", borderRadius: "30px", top: "0", marginTop: "20px"}}>
+              {alertText}
+          </Alert>
+      </Collapse>            
       {fieldInfo && 
       <SoccerFieldImageSlide fieldInfo={fieldInfo} />}
         {fieldInfo && 

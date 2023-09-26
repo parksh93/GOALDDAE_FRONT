@@ -22,7 +22,6 @@ import Collapse from '@mui/material/Collapse';
 import IndividualMatchCancelModal from "./IndividualMatchCancelModal";
 import axios from "axios";
 import Loading from "../../../loading/Loading"
-import Footer from "../../footer/Footer";
 
 const IndividualMatchDetail = () => {
   const { matchId } = useParams();

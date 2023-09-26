@@ -1,5 +1,5 @@
 import "./FriendSearch.css";
-import {useState, useCallback, useEffect} from 'react'
+import {useState, useCallback} from 'react'
 import {AiOutlineClose} from 'react-icons/ai'
 import {BsPersonAdd, BsPersonExclamation, BsSend, BsEmojiSmile} from 'react-icons/bs'
 import {Link} from 'react-router-dom'

@@ -2,10 +2,8 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import styled from "@emotion/styled";
-import FormControl from "@mui/material/FormControl";
 import { CiCircleRemove } from "react-icons/ci";
 
 const style = {
@@ -71,4 +69,4 @@ const CheckBnt = styled(Button)`
   margin-top: 20px;
 `;
 
-export default React.memo(FindSuccessModal);
+export default FindSuccessModal;

@@ -9,12 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import { grey, red } from "@mui/material/colors";
 import styles from "./detailPage.module.css";
 import ShareIcon from '@mui/icons-material/Share';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 
 const HeartDetail = ({ boardDetail, userInfo }) => {
 
     const [heartInfo, setHeartInfo] = useState(null);
-
-    
+    const [open, setOpen] = useState(false);
+    const [alertText, setAlertText] = useState("");
+    const [alertSeverity, setAlertSeverity] = useState("success")
 
     useEffect(() => {
 
@@ -63,9 +66,19 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
         const handleCopyClipBoard = async (text) => {
             try {
               await navigator.clipboard.writeText(text);
-              alert('클립보드에 링크가 복사되었습니다.');
+              setOpen(true);
+              setAlertText("클립보드에 주소가 복사되었습니다.");
+              setAlertSeverity("info");
+              setTimeout(() => {
+                setOpen(false);
+              },1000)
             } catch (e) {
-              alert('복사에 실패하였습니다');
+                setOpen(true);
+                setAlertText("복사에 실패했습니다.");
+                setAlertSeverity("error");
+                setTimeout(() => {
+                  setOpen(false);
+                },1000)
             }
         };
 
@@ -73,6 +86,11 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
 
   return (
     <div className={styles.heartSection}>
+        <Collapse in={open}>
+            <Alert severity={alertSeverity} sx={{width: "30%", position: "fixed",marginLeft: "15%", zIndex: "999", borderRadius: "30px", top: "0", marginTop: "20px"}}>
+                {alertText}
+            </Alert>
+        </Collapse>
         {heartInfo && (
             <>
                 <span onClick={handleLike}>
@@ -97,7 +115,7 @@ const HeartDetail = ({ boardDetail, userInfo }) => {
                 </span>
                 <Tooltip title="공유하기">
                     <IconButton sx={{marginLeft : "20px"}} size="large"  className={styles.shareIcon}>
-                    <ShareIcon sx={{color : grey[850]}} onClick={() => {handleCopyClipBoard(`/board/${boardDetail.id}`)}}/>             
+                    <ShareIcon sx={{color : grey[850]}} onClick={() => {handleCopyClipBoard(`http://goalddae.shop/board/${boardDetail.id}`)}}/>             
                     </IconButton>                    
                 </Tooltip>
             </>            

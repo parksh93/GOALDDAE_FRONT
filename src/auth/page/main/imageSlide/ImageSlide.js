@@ -5,12 +5,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import './ImageSlide.css';
 
 // 임시 이미지 불러오기 추후 백엔드에서 저장 예정
-import TestImg1 from "./image/mainSlide01.Webp";
-import TestImg2 from "./image/mainSlide02.Webp";
-import TestImg3 from "./image/mainSlide03.Webp";
-import TestImg4 from "./image/mainSlide04.Webp";
-import TestImg5 from "./image/mainSlide05.Webp";
-import TestImg6 from "./image/mainSlide06.Webp";
+// import TestImg1 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide01.Webp";
+// import TestImg2 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide02.Webp";
+// import TestImg3 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide03.Webp";
+// import TestImg4 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide04.Webp";
+// import TestImg5 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide05.Webp";
+// import TestImg6 from "https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide06.Webp";
 
 const ImageSlide = () => {
   const [settings] = useState({
@@ -27,12 +27,12 @@ const ImageSlide = () => {
   return (
     <div className="image-slide-container">
       <Slider {...settings}>
-           <img src={TestImg1} alt="이미지" className="img" />
-           <img src={TestImg2} alt="이미지" className="img" />
-           <img src={TestImg3} alt="이미지" className="img" />
-           <img src={TestImg4} alt="이미지" className="img" />
-           <img src={TestImg5} alt="이미지" className="img" />
-           <img src={TestImg6} alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide01.Webp" alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide02.Webp" alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide03.Webp" alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide04.Webp" alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide05.Webp" alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/image-slide/mainSlide06.Webp" alt="이미지" className="img" />
       </Slider>
     </div>
   );

@@ -86,7 +86,7 @@ const UserLogin = () => {
       </Collapse>
       <section className={styles.logoSection}>
         <a href="/">
-          <img src="./img/goalddaeLogo.png" className={styles.logo} />
+          <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/public/goalddaeLogo.webp" className={styles.logo} />
         </a>
       </section>
       <section className={styles.loginSection}>

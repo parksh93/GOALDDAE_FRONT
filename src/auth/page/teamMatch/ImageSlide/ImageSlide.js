@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './ImageSlide.css';
-import TeamLeageImage from "./TeamLeageImage.jpg";
 
 const ImageSlide = () => {
   const [settings] = useState({
@@ -20,7 +19,7 @@ const ImageSlide = () => {
   return (
     <div className="image-slide-container">
       <Slider {...settings}>
-           <img src={TeamLeageImage} alt="이미지" className="img" />
+           <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/team-match/KakaoTalk_20230923_223625579.webp" alt="이미지" className="img" />
       </Slider>
     </div>
   );

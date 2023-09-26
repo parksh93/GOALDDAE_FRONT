@@ -173,6 +173,7 @@ return (
                 <ShowerIcon sx={off}/> <span className={styles.off}>샤워실</span>
                 </>
                 }
+
                 </div>
                 <div>
                   {teamMatchInfo.toiletStatus ?

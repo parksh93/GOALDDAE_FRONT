@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import "./MyPage.css";
-import profileImg from '../mypage/img/goalddae_default_profile.Webp';
-import Nav from 'react-bootstrap/Nav';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -15,17 +13,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
-import shadows from '@mui/material/styles/shadows';
 import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import { Select } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
 import { useNavigate, Link } from 'react-router-dom';
 import MatchList from './MatchList';
 import BoardList from './BoardList';
 import FriendMain from './friend/FriendMain';
 import Setting from './Setting';
-import editIcon from '../mypage/img/write.png';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Slider from '@mui/material/Slider';
@@ -562,7 +555,8 @@ function Mypage() {
                     <form onSubmit={handleSubmit}>
                     <input type="file" style={{ display: "none" }} id="fileInput" onChange={handleFileChange} />
                     <label htmlFor="fileInput" className="profileImg-edit">
-                    <img src={editIcon} alt="edit icon" style={{ width: "20px", height: "20px", borderRadius: "0" }} />
+                    <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/mypage/AnyConv.com__write.webp" alt="edit icon"
+                    style={{ width: "20px", height: "20px", borderRadius: "0" }} />
                     </label>
                     {chosenFile && (
                       <>
