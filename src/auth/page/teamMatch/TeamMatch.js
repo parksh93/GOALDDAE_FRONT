@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import useWebSocket from "../../../webSocket/UseWebSocket";
-import { Box, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import TeamMatchImage from "./image/TeamMatchImage";
 import NaviBar from "../main/naviBar/NaviBar";
 import Footer from '../../footer/Footer';
@@ -24,7 +24,7 @@ const TeamMatch = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [matchList, setMatchList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const matchStatusMessage = useWebSocket('http://localhost:8080/webSocket');
+  const matchStatusMessage = useWebSocket('http://223.130.137.115/webSocket');
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedGender, setSelectedGender] = useState('');
   const [pageNumber, setPageNumber] = useState(1);

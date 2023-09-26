@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../../userComponent/userContext/UserContext';
 import styles from './Detail.module.css';
 import Loading from '../../loading/Loading';
+import Alert from "@mui/material/Alert";
+import Collapse from "@mui/material/Collapse";
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -12,6 +14,8 @@ const TeamDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   
   const { userInfo } = useUser();
 
@@ -28,7 +32,16 @@ const TeamDetail = () => {
   }, [id]);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    if(userInfo === null){
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+        navigate("/login");
+      }, 1000);
+
+    }else{
+      setIsModalOpen(true);
+    }
   };
 
   const closeModal = () => {
@@ -63,6 +76,11 @@ const TeamDetail = () => {
 
   return (
     <div className={styles.teamDetailBody}>
+      <Collapse in={open} sx={{position: "fixed", width: "30%", marginLeft:"35%"}}>
+        <Alert severity={"error"} sx={{borderRadius: "30px"}}>
+          로그인 후 신청 가능합니다.
+        </Alert>
+      </Collapse>
       {error ? (
         <p>존재하지 않는 팀입니다.</p>
       ) : teamInfo ? (
@@ -85,7 +103,8 @@ const TeamDetail = () => {
                 <p className={styles.teamInfoText}>선호요일 | {teamInfo.preferredDay}</p>
               </div>
                 <div className={styles.recruitingBtn}>
-                  {userInfo && userInfo.teamId ? ( 
+                  { userInfo !== null ? 
+                  userInfo && userInfo.teamId ? ( 
                     <button className={styles.recruitingFalseBtn} disabled>
                       모집중
                     </button>
@@ -106,7 +125,11 @@ const TeamDetail = () => {
                         </button>
                       )
                     )
-                  )}
+                  ):
+                  <button className={styles.recruitingTrueBtn} onClick={openModal}>
+                    모집중
+                  </button>
+                  }
                 </div>
           </div>
 
