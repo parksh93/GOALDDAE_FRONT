@@ -294,8 +294,11 @@ const Filter = () => {
               <div style={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
                 {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
               </div>
-              <div style={{ paddingX:[2,5],width:['100%','500px'] ,fontSize :'13px'}}>
-                <div>{match.fieldName}</div>
+              <div style={{width:['900px'] ,fontSize :'12px'}}>
+                <div style={{display:'flex', flexDirection:'row', gap: 160}}>
+                  <div style={{fontSize: "15px", fontFamily: 'bold', marginBottom: "5px"}}>{match.fieldName}</div>
+                  <div style={{ fontSize: '15px', fontWeight: 'bold' }}>{match.homeTeamName} vs {match.awayTeamName}</div>
+                </div>
                 <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
               </div>
               <Button 

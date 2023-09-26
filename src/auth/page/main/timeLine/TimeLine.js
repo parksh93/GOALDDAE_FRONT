@@ -313,8 +313,8 @@ const TimeLine = () => {
               <div style={{ marginLeft:['10px','40px'], marginRight: '20px' ,marginTop : '8px' ,fontWeight : 'bold' ,fontSize :'14px'}}>
                 {new Date(match.startTime).toLocaleTimeString([], { hour :'2-digit' ,minute :'2-digit' ,hour12 :false })}
               </div>
-              <div style={{ paddingX:[2,5],width:['100%','700px'] ,fontSize :'12px'}}>
-                <div style={{fontSize: "17px", marginBottom: "5px"}}>{match.fieldName}</div>
+              <div style={{width:['900px'] ,fontSize :'12px'}}>
+                <div style={{fontSize: "15px", fontFamily: 'bold', marginBottom: "5px"}}>{match.fieldName}</div>
                 <div> &middot; {getPlayerFormat(match.playerNumber)} &middot;{match.gender} &middot;</div>
               </div>
             <Button style={buttonStyle} disabled={isDisabled}>

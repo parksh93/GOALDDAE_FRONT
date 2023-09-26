@@ -12,6 +12,12 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Button } from "react-bootstrap";
 import { BiCalendarCheck } from "react-icons/bi";
+import { BsAlarm } from "react-icons/bs";
+import { BsGenderAmbiguous } from "react-icons/bs";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { BsGlobeAmericas } from "react-icons/bs";
+import Footer from "../../../footer/Footer";
+
 const TeamMatchDetail = () => {
   const { teamMatchId } = useParams(); 
   const [ teamMatchInfo, setTeamMatchInfo ] = useState(null);
@@ -109,10 +115,13 @@ const TeamMatchDetail = () => {
   const off = { color : "#aaaaaa", marginBottom : "-3px"};
 
   const timeFormat = (time) => {
-    if(time){
-      return time.substring(0, 5); 
+    if (time) {
+        const date = new Date(time);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
     }
-  }
+}
 
   const handleCopyClipBoard = async (text) => {
     try {
@@ -123,9 +132,8 @@ const TeamMatchDetail = () => {
     }
   };
 
-
 return (
-  <div style={{backgroundColor:"#F5F5F5"}}>      
+  <div>      
     <div className={styles.container}>                
     {teamMatchInfo && 
       <ImageSlide fieldInfo={teamMatchInfo} />
@@ -135,7 +143,7 @@ return (
             <div className={styles.infoContainer}>
               <div className={styles.info}>
                 <div className={styles.infoText}>{teamMatchInfo.province} / {teamMatchInfo.region}</div>
-                <div className={styles.infoTitle}>{teamMatchInfo.fieldName}</div>
+                <div className={styles.infoTitle} style={{fontSize:'20px'}}>{teamMatchInfo.fieldName}</div>
                 <div className={styles.infoText}>
                   <span>{teamMatchInfo.fieldSize} / </span>                
                   <span>{teamMatchInfo.grassWhether === "1" ? "천연잔디 / " : "인조잔디 / "}</span>                
@@ -144,17 +152,42 @@ return (
               </div>
               <div className={styles.info}>
                 <h3>경기 정보</h3>
+                <div style={{fontSize:'14px'}}>
+                    <BiCalendarCheck className={styles.matchInfoIcon} />{" "}
+                    <span style={on}>날짜 : {new Date(teamMatchInfo.startTime).toLocaleDateString('ko-KR')}</span>
+                </div>
+                <div style={{fontSize:'14px', marginTop:'8px'}}>
+                    <BsAlarm className={styles.matchInfoIcon} />{" "}
+                    <span style={on}>
+                        시간 : {timeFormat(teamMatchInfo.startTime)} ~ {timeFormat(teamMatchInfo.endTime)}
+                    </span>
+                </div>
+                <div style={{fontSize:'14px', marginTop:'8px'}}>
+                  <BsGenderAmbiguous className={styles.matchInfoIcon} />{" "}
+                  <span style={on}>성별 : {teamMatchInfo.gender} </span>
+                </div>
+                <div style={{fontSize:'14px', marginTop:'8px'}}>
+                  <BsFillPeopleFill className={styles.matchInfoIcon} />{" "}
+                  <span style={on}>참가 인원 : {teamMatchInfo.playerNumber}명</span>
+                </div>
+                {/* <div>
+                  <BsGlobeAmericas className={styles.matchInfoIcon} />{" "}
+                  <span style={on}>제한 레벨 : {teamMatchInfo.lever}</span>
+                </div> */}
                 <div>
-                    <BiCalendarCheck  className={styles.matchInfoIcon}/>{" "}
-                    <span style={on}>날짜 : {new Date(teamMatchInfo.startTime).toLocaleDateString()} {new Date(teamMatchInfo.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  <br/>
+                  {/* <strong>매니저</strong><br/>
+                  <span>
+                    {teamMatchInfo.managerId === 0 ?
+                      "아직 배정된 매니저가 없습니다."
+                      :
+                      `${teamMatchInfo.managerName} 매니저가 배정되었습니다.`
+                  }
+                  </span> */}
                 </div>
                 <hr className={styles.separator}/>
-                <h3>시설 이용 정보</h3>
-                <div>
-                  <span className={styles.on}> 영업시간 : {timeFormat(teamMatchInfo.operatingHours)} ~ {timeFormat(teamMatchInfo.closingTime)}</span>
-                </div>
-                <br/>
-                <div>
+                <h3>구장 정보</h3>
+                <div style={{fontSize:'14px'}}>
                   {teamMatchInfo.parkingStatus ?
                 <>
                 <DirectionsCarIcon sx={on}/> <span className={styles.on}>주차장 - 사용가능</span>
@@ -164,7 +197,7 @@ return (
                 </>
                 }
                 </div>
-                <div>
+                <div style={{fontSize:'14px'}}>
                   {teamMatchInfo.showerStatus ?
                 <>
                 <ShowerIcon sx={on}/> <span className={styles.on}>샤워실 - 사용가능</span>
@@ -175,7 +208,7 @@ return (
                 }
 
                 </div>
-                <div>
+                <div style={{fontSize:'14px'}}>
                   {teamMatchInfo.toiletStatus ?
                 <>
                 <WcIcon sx={on}/> <span className={styles.on}>화장실 - 사용가능</span>
@@ -186,7 +219,7 @@ return (
                 }
                 </div>
                 <hr className={styles.separator}/>
-                <h3>시설 특이사항</h3>
+                <div style={{fontSize:'16px', fontWeight:'bold'}}>특이사항</div>
                 <div>{teamMatchInfo.content && teamMatchInfo.content}</div>                  
               </div>
               <div className={styles.info}>
@@ -210,21 +243,22 @@ return (
             <div className={styles.infoTitle}>신청 현황</div>
             {teamMatchInfo && (
               <div style={{ marginTop:'30px', fontSize: '13px', display: 'flex', justifyContent: 'center'}}>
-                <div style={{marginRight: '50px'}}>
-                  <div style={{fontSize:'16px', fontWeight:'bold'}}>홈팀: {teamMatchInfo.homeTeamName}</div>
-                  <img src={teamMatchInfo.homeTeamProfileImg} alt="홈 팀 프로필 이미지" />
-                </div>
-
-                {teamMatchInfo.awayTeamName && (
-                  <div>
-                    <div style={{fontSize:'16px', fontWeight:'bold'}}>원정팀: {teamMatchInfo.awayTeamName}</div>
-                    <img src={teamMatchInfo.awayTeamProfileImg} alt="원정 팀 프로필 이미지" />
-                  </div>
-                )}
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '50px' }}>
+                  <img src={teamMatchInfo.homeTeamProfileImg} alt="홈 팀 프로필 이미지" style={{ width: '60px', height: '60px', borderRadius:'50%' }} />
+                  <div style={{ fontSize:'16px', fontWeight:'bold', marginLeft: '10px' }}>홈팀</div>
               </div>
+              <div style={{ fontSize:'16px', fontWeight:'bold', marginTop:'14px'}}>vs</div>
+              {teamMatchInfo.awayTeamName && (
+                  <div style={{ display: 'flex', alignItems: 'center', marginLeft:'30px'}}>
+                      <img src={teamMatchInfo.awayTeamProfileImg} alt="원정 팀 프로필 이미지" style={{width: '60px', height: '60px', borderRadius:'50%'}} />
+                      <div style={{fontSize:'16px', fontWeight:'bold', marginLeft: '10px' }}>원정팀</div>
+                  </div>
+              )}
+          </div>
+          
             )}
             {teamMatchInfo && (
-              <div style={{ display: 'flex', justifyContent:'center', gap: '10px', marginTop:'68%'}}>
+              <div style={{ display: 'flex', justifyContent:'center', gap: '10px', marginTop:'30%'}}>
                 {teamMatchInfo.hasApplied ? (
                   <>
                     <Button disabled>신청하기</Button>
@@ -249,6 +283,7 @@ return (
           {message}
         </Alert>
       </Snackbar>
+      <Footer />
     </div>  
   );
 };
