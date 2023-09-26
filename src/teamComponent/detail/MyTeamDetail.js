@@ -362,7 +362,7 @@ const MyTeamDetail = () => {
                     <div className={styles.teamMemberInfoContainer}>
                       <div className={styles.teamMemberCirclarImageContainer}>
                         <div className={styles.teamMemberCirclarImage}>
-                          <img className={styles.teamMemberProfileImgUrl} src={member.profileImgUrl} alt={member.name}  />
+                          <img className={styles.teamMemberProfileImgUrl} src={member.profileImgUrl} alt={member.name} style={{ width: '100%', height: '100%'}}  />
                         </div>
                       </div>
                       <div className={styles.teamMemberInfo}>

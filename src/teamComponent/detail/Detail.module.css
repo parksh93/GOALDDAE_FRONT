@@ -441,11 +441,11 @@
     /* border: 1px solid #000000; */
 }
 
-.teamMemberProfileImgUrl img {
+/* .teamMemberProfileImgUrl img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
+} */
 
 .teamMemberInfo{
     width: 70%;
