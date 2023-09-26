@@ -12,7 +12,6 @@ const FieldSearch = () => {
   const [dropDownItemIndex, setDropDownItemIndex] = useState(-1);
   const [completedCityName, setCompletedCityName] = useState('');
   const [dropDownCache, setDropDownCache] = useState({});
-
   const wholeBoxRef = useRef(null);
   const navigate = useNavigate();
 
@@ -88,11 +87,10 @@ const FieldSearch = () => {
     setCompletedCityName(completedName);
   };
 
-  /* Dropdown list의 각 요소를 클릭하면, 클릭한 요소에 대응하는 필드 ID를 이용해 /Match?fieldId=${fieldId} 이동*/
-  const clickDropDownItem = (clickedItem, fieldId) => {
+  const clickDropDownItem = (clickedItem, id) => {
     // setInputValue('지역, 구장 찾기');
     setIsHaveInputValue(false);
-    navigate(`/Match?fieldId=${fieldId}`);
+    navigate(`/soccer_field/${id}`);
   };
 
   /* 검색창에서 엔터키, 방향키 사용하게끔 */
@@ -111,7 +109,7 @@ const FieldSearch = () => {
 
       if (event.key === 'Enter' && dropDownItemIndex >= 0) {
         if (dropDownItemIndex === -1) {
-          console.log(`${inputValue}시의 매치 모두 보기가 선택되었습니다.`);
+          console.log(`${inputValue}의 매치 모두 보기가 선택되었습니다.`);
         } else {
           clickDropDownItem(
             dropDownList[dropDownItemIndex].fieldName,
@@ -181,7 +179,7 @@ return (
                     className="fas fa-search"
                     style={{ marginRight: '5px' }}
                   ></i>
-                  <span className="EmphasizedText">{completedCityName}시</span>
+                  <span className="EmphasizedText">{completedCityName}</span>
                   의 매치 모두 보기
                 </li>
               )}
@@ -192,6 +190,7 @@ return (
                     onClick={() =>
                       clickDropDownItem(
                         dropDownItem.fieldName,
+                        dropDownItem.id,
                         dropDownItem.fieldId
                       )
                     }
