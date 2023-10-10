@@ -22,7 +22,7 @@ const Filter = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [matchList, setMatchList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
-  const matchStatusMessage = useWebSocket('http://localhost:8080/webSocket');
+  const matchStatusMessage = useWebSocket('http://223.130.137.115/webSocket');
   const [selectedProvince, setSelectedProvince] = useState('서울');
   const [selectedGender, setSelectedGender] = useState('');
   const [pageNumber, setPageNumber] = useState(1);

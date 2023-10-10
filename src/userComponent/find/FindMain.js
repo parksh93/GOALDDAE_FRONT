@@ -87,7 +87,7 @@ const FindMain = () => {
       </Collapse>
       <section className={styles.logoSection}>
         <Link to="/">
-          <img src="../img/goalddaeLogo.png" className={styles.logo} />
+          <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/public/goalddaeLogo.webp" className={styles.logo} />
         </Link>
       </section>
       <section className={styles.findBtnSection}>

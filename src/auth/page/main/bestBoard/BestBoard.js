@@ -47,13 +47,14 @@ const BestBoard = () => {
                         borderRadius:'10px',
                     }} 
                 >
-                    {boardTop5.map((communicationBoard) => (
+                {boardTop5.length !== 0 ?
+                    boardTop5.map((communicationBoard) => (
                       <ul key={communicationBoard.id} style={{ margin: '3%' }}>
                           <a href={`/board/detail/${communicationBoard.id}`} className="top5Boards">
                               {communicationBoard.title} [{communicationBoard.replyCount}]
                           </a>
                       </ul>
-                    ))}
+                    )): "베스트 게시글이 없습니다."}
                 </Box>
             </Box>
         </div>

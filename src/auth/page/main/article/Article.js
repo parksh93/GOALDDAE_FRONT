@@ -17,6 +17,7 @@ const Article = () => {
     // 25개 렌더링 다 하면 강제적으로 처음부터 다시 렌더링 진행
     // 15초마다 다음 기사 보여줌
     useEffect(() => {
+      console.log("===================" , articles)
         if (articles.length === 0) return;  
         const timerId = setInterval(() => {
             if (idxRef.current.end >= articles.length) {
@@ -57,7 +58,8 @@ const Article = () => {
             }}
             >전체뉴스보기</Button>
         </div>
-        {articles.slice(idxRef.current.start,idxRef.current.end).map((article) =>
+        {articles.length !== 0 ?
+          articles.slice(idxRef.current.start,idxRef.current.end).map((article) =>
           <Box 
             sx={{
               margin:{ xs: "2%", sm: "2%"},
@@ -71,7 +73,7 @@ const Article = () => {
                   <ul><a href={article.url} className="newsLink">{article.title}</a></ul>
               </div>
           </Box>
-        )}
+        ): "새로운 기사가 없습니다."}
       </Box>
     </div>
   );

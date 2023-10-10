@@ -66,7 +66,7 @@ function ChangeLostPasswordMain() {
     }
   })
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", height: "500px" }}>
       <Collapse in={open}>
         <Alert severity={"error"}>
           <AlertTitle>
@@ -77,11 +77,11 @@ function ChangeLostPasswordMain() {
       </Collapse>
       <section className={styles.logoSection}>
         <a href="/">
-          <img src="../img/goalddaeLogo.png" className={styles.logo} />
+          <img src="https://kr.object.ncloudstorage.com/goalddae-bucket/public/goalddaeLogo.webp" className={styles.logo} />
         </a>
       </section>
       <section className={styles.section}>
-      <h2 style={{color:'lightgray'}}>비밀번호 변경</h2>
+      <h2 style={{color:'lightgray', marginTop: "40px"}}>비밀번호 변경</h2>
         <ChangeLostPasswordInput
           label="비밀번호"
           type="password"
